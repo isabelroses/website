@@ -1,0 +1,46 @@
+name: Deploy on Release
+
+on:
+  release:
+  # push:
+  #   branches: [main, master]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build and deploy main
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4.0.0
+
+      - name: Cache node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/node_modules
+          key: cache-${{ hashFiles('**/package-lock.json') }}
+
+      - name: Install and build
+        run: |
+          yarn install
+          yarn build
+
+          # Enable Vue Router history mode with 404.html hack for Github Pages
+          cd dist
+          ln -s index.html 404.html
+
+      - name: Deploy to github pages
+        uses: JamesIves/github-pages-deploy-action@v4.5.0
+        with:
+          branch: gh-pages
+          folder: dist
+
+      - name: Publish deployed code
+        uses: actions/upload-artifact@v3
+        with:
+          name: published
+          path: dist

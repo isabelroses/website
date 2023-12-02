@@ -1,0 +1,7 @@
+{
+  "tags": [["nixos", 1], ["postgresql", 1]],
+  "pins": [1],
+  "posts": [
+    {"id": 1, "title": "NixOS and PostgreSQL", "subtitle": "Migrating from PostgreSQL 14 to 15", "date": "27/11/2023", "tags": ["nixos", "postgresql"], "file": "posts/nixos-and-postgresql.md", "slug": "nixos-and-postgresql", "pinned": 0, "content": "When upgrading to version 15 from 14, there was an issue. None of my data was transferred. To fix this issue i swapped to the `posgres` user who is a superuser on the PostgreSQL databases.\n\nThen to preform the migration I ran:\n\n```sql\n-- to do this without swapping user you can use the flag -U\npg_dumpall > sqldump\n```\n\nthen when I had the sqldump file, the following command was run from the command line to get use the sqldump file to recover the previous data\n\n```bash\npsql -f sqldump\n```"}
+  ]
+}

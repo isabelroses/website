@@ -1,0 +1,84 @@
+@import colors
+
+$width: 600px
+
+.general-page
+  text-align: left
+  width: $width
+  margin: 2em auto 0
+
+.title
+  margin-bottom: 2em
+
+  h2
+    margin-bottom: 0
+
+  .subtitle
+    color: $color-text-light
+
+// Disable animations for users that prefer reduced motion
+@media (prefers-reduced-motion)
+  *
+    animation: none !important
+    transition: none !important
+
+// Desktop layout
+@media screen and (min-width: 800px)
+  #nav
+    #menu
+      opacity: 0
+
+// Tablet layout
+@media screen and (max-width: 800px)
+  #nav
+    #menu
+      opacity: 1
+
+      .router-link
+        margin: 10px 0
+
+    #nav.home
+      #menu, #nav-background
+        opacity: 0
+
+    #nav:not(.home).open
+      #items, #nav-bookmark, #nav-background
+        opacity: 1
+        animation: fade-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+
+    #nav:not(.home)
+      #items, #nav-bookmark, #nav-background
+        opacity: 0
+        animation: fade-out-left 1s 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+
+// Phone layout
+@media screen and (max-width: 500px), (max-height: 660px)
+  .general-page
+    margin: 2em 20px 0
+    width: unset
+
+  #app
+    font-size: 14px
+
+    #nav
+      #nav-bookmark
+        width: 10px
+
+// Smaller phone layout
+@media screen and (max-width: 370px)
+  #nav #menu
+    opacity: unset
+
+    #nav.home
+      #menu, #nav-background
+        opacity: unset
+
+    #nav.open
+      #items, #nav-bookmark, #nav-background
+        opacity: 1
+        animation: fade-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+
+    #nav
+      #items, #nav-bookmark, #nav-background
+        opacity: 0
+        animation: fade-out-left 1s 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
