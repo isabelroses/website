@@ -278,10 +278,12 @@
   dependencies:
     "@types/jquery" "*"
 
-"@types/marked@^4.0.7":
-  version "4.3.2"
-  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-4.3.2.tgz#e2e0ad02ebf5626bd215c5bae2aff6aff0ce9eac"
-  integrity sha512-a79Yc3TOk6dGdituy8hmTTJXjOkZ7zsFYV10L337ttq/rec8lRMDBpV7fL3uLx6TgbFCa5DU/h8FmIBQPSbU0w==
+"@types/marked@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@types/marked/-/marked-6.0.0.tgz#4dbc7df4add578ef87eb6ca2c6927c97b0531abf"
+  integrity sha512-jmjpa4BwUsmhxcfsgUit/7A9KbrC48Q0q8KvnY107ogcjGgTFDlIL3RpihNpx2Mu1hM4mdFQjoVc4O6JoGKHsA==
+  dependencies:
+    marked "*"
 
 "@types/node@^20":
   version "20.10.2"
@@ -989,7 +991,7 @@ marked-highlight@^2.0.8:
   resolved "https://registry.yarnpkg.com/marked-highlight/-/marked-highlight-2.0.8.tgz#e37a94d9069ab4363588c0ce845cf5058176fded"
   integrity sha512-AcZbUPXMODcR504hOaGwGuiYJcPcWyxJIKjIY/a7xLC9e2q9MBG/yDJvon/6W7xTzvk9RDf3nE2w1FNLQG4diA==
 
-marked@^11.0.0:
+marked@*, marked@^11.0.0:
   version "11.0.0"
   resolved "https://registry.yarnpkg.com/marked/-/marked-11.0.0.tgz#02e63c4352a59a268e2e5b3afb7a46851c0b446d"
   integrity sha512-2GsW34uXaFEGTQ/+3rCnNC6vUYTAgFuDLGl70v/aWinA5mIJtTrrFAmfbLOfVvgPyxXuDVL9He/7reCK+6j3Sw==
