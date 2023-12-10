@@ -1,5 +1,5 @@
 <template>
-    <router-link :to="'/blog/' + meta.slug" id="BlogPostPreview" class="card" :class="elClass">
+    <router-link :to="'/blog/' + meta.slug + '-' + meta.id" id="BlogPostPreview" class="card" :class="elClass">
         <img class="title-image" :src="image" v-if="image && imageOnTop" alt="Title Image">
 
         <div id="titles" class="unselectable">

@@ -32,7 +32,15 @@ export default class BlogPost extends Vue {
     }
 
     get post() {
-        return meta.posts.find((post: any) => post.slug == this.$route.params.slug);
+        const id = (this.$route.params.slug).toString().split("-").slice(-1)[0];
+        const post = meta.posts.find((post: any) => post.id == id);
+
+        if (this.$route.params.slug != post?.slug) {
+            const slug = post?.slug + "-" + id;
+            this.$router.push({ name: "BlogPost", params: { slug: slug } });
+        }
+
+        return post;
     }
 
     async mounted() {
