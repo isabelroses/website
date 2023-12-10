@@ -4,6 +4,18 @@
 @import "./responsive"
 @import url("//unpkg.com/@catppuccin/highlightjs@0.1.4/css/catppuccin-mocha.css")
 
+/* Scrollbar */
+::-webkit-scrollbar
+  width: 10px
+  height: 10px
+
+::-webkit-scrollbar-track
+  background: transparent
+
+::-webkit-scrollbar-thumb
+  border-radius: 10px
+  background: $color-special
+
 html
   font-family: 'Roboto', sans-serif
   height: 100%
@@ -139,14 +151,14 @@ img
   box-sizing: border-box
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 10%), 0 2px 4px -1px rgb(0 0 0 / 6%)
 
+a
+  color: $color-special
+  text-decoration: none
+
 // Markdown style
 .markdown-content
   text-align: justify
   text-justify: inter-word
-
-  a
-    color: $color-special
-    text-decoration: none
 
   h1, h2
     border-bottom: 1px solid $color-special
