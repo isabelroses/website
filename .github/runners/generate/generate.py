@@ -41,18 +41,19 @@ if __name__ == '__main__':
             post['content'] = re.sub(r'!\[\[\.\/(.*)\|(.*)\]\]', r'<figure><img src="{src}/posts/\1" /><caption>\2</caption></figure>', post['content'])
             post['content'] = re.sub(r'!\[\[\.\/(.*)\]\]', r'<img src="{src}/posts/\1" />', post['content'])
 
+    # Sort posts by date, such that we have the newst posts first, so that when we loop through them we can give them an id based on their date
     posts.sort(key=lambda x: x['date'], reverse=True)
 
-    # Give every post an id based on index
+    # Give every post an id based on the date it was posted
     for i, post in enumerate(posts):
-        post['id'] = len(posts) - i
+        post['id'] = i + 1
 
     # Count tags
     tags = Counter([tag for post in posts for tag in post['tags']])
     tags = list(tags.items())
 
     # Pins
-    pins = [p for p in posts if 'pinned' in p]
+    pins = [p for p in posts if p['pinned'] != 0]
     pins.sort(key=lambda x: x['pinned'])
     pins = [p['id'] for p in pins]
 
