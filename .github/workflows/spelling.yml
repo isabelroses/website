@@ -4,6 +4,7 @@ on:
   workflow_dispatch:
   push:
     paths:
+      - "github/workflows/spelling.yml"
       - "**.md"
 
 jobs:
