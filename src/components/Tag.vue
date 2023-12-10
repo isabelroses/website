@@ -1,6 +1,6 @@
 <template>
     <div class="tag-wrap unselectable clickable">
-        <div class="tag fbox-vcenter" :class="direction">
+        <div class="tag fbox-vcenter" :class="props.direction">
             <div>
                 <slot></slot>
             </div>
@@ -12,7 +12,6 @@
 <script lang="ts" setup>
 const props = defineProps({
     direction: { type: String, default: 'left' }, // 'left' | 'right'
-    tagName: String
 })
 </script>
 
