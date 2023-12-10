@@ -9,7 +9,7 @@ I have been working on the creation of this [version](https://github.com/isabelr
 
 Self-healing URLs are designed in a way that if a user was to type in a URL as long as a certain part of the URL is correct, the user will be redirected to the correct page. This is useful for when a user is trying to access a page that has been moved or deleted.
 
-For example, if a user was to type in [`https://isaberoses.com/blog/gaoengioa-2`](https://isaberoses.com/blog/gaoengioa-2) they would be redirected to [`https://isabelroses.com/blog/self-healing-urls-2`](https://isabelroses.com/blog/self-healing-urls-2) as the only important part of the URL is the "2" in this case, which refers to the second blog post by ID.
+For example, if a user was to type in [`https://isabelroses.com/blog/gaoengioa-2`](https://isabelroses.com/blog/gaoengioa-2) they would be redirected to [`https://isabelroses.com/blog/self-healing-urls-2`](https://isabelroses.com/blog/self-healing-urls-2) as the only important part of the URL is the "2" in this case, which refers to the second blog post by ID.
 
 To implement this I had to make a few changes to my code. The original way that the post data was being fetched was by using the slug of the post. This meant that if the slug was incorrect, the post would not be found and the user would be redirected to a 404 page. To fix this I had to change the way that the post was being fetched to use the ID of the post instead. This meant that if the slug was incorrect, the post would still be found and the user would be redirected to the correct page.
 
