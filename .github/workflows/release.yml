@@ -2,8 +2,10 @@ name: Deploy on Release
 
 on:
   release:
-  # push:
-  #   branches: [main, master]
+  push:
+    paths:
+      - "public/posts/**"
+      - "src/gen/metas.json"
   workflow_dispatch:
 
 permissions:
