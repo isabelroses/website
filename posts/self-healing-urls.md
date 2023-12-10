@@ -21,20 +21,20 @@ get post() {
 
 // the new code
 get post() {
-        // get the id from the slug
-        const id = (this.$route.params.slug).toString().split("-").slice(-1)[0];
-        // find the post using the id
-        const post = meta.posts.find((post: any) => post.id == id);
+    // get the id from the slug
+    const id = (this.$route.params.slug).toString().split("-").slice(-1)[0];
+    // find the post using the id
+    const post = meta.posts.find((post: any) => post.id == id);
 
-        if (this.$route.params.slug != post?.slug) {
-            // create the correct slug
-            const slug = post?.slug + "-" + id;
-            // redirect to the correct page
-            this.$router.push({ name: "BlogPost", params: { slug: slug } });
-        }
-
-        return post;
+    if (this.$route.params.slug != post?.slug) {
+        // create the correct slug
+        const slug = post?.slug + "-" + id;
+        // redirect to the correct page
+        this.$router.push({ name: "BlogPost", params: { slug: slug } });
     }
+
+    return post;
+}
 ```
 
 Then all that was left was to ensure all links were using the new slug format. This was done by changing the way that the slug was being created. Instead of using the title of the post, the slug was created using the title and the id of the post. This meant that the slug would always be unique and would always be the same for the same post.
