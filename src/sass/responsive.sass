@@ -37,19 +37,19 @@ $width: 600px
       .router-link
         margin: 10px 0
 
-    #nav.home
-      #menu, #nav-background
-        opacity: 0
+  #nav.home
+    #menu, #nav-background
+      opacity: 0
 
-    #nav:not(.home).open
-      #items, #nav-bookmark, #nav-background
-        opacity: 1
-        animation: fade-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+  #nav:not(.home).open
+    #items, #nav-bookmark, #nav-background
+      opacity: 1
+      animation: fade-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
-    #nav:not(.home)
-      #items, #nav-bookmark, #nav-background
-        opacity: 0
-        animation: fade-out-left 1s 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+  #nav:not(.home)
+    #items, #nav-bookmark, #nav-background
+      opacity: 0
+      animation: fade-out-left 1s 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
 // Phone layout
 @media screen and (max-width: 500px), (max-height: 660px)
@@ -66,19 +66,19 @@ $width: 600px
 
 // Smaller phone layout
 @media screen and (max-width: 370px)
-  #nav #menu
-    opacity: unset
+  #nav
+    #menu
+      opacity: 1
 
-    #nav.home
-      #menu, #nav-background
-        opacity: unset
+    #items, #nav-bookmark, #nav-background
+      opacity: 0
+      animation: fade-out-left 1s 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
-    #nav.open
-      #items, #nav-bookmark, #nav-background
-        opacity: 1
-        animation: fade-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+  #nav.home
+    #menu, #nav-background
+      opacity: 1
 
-    #nav
-      #items, #nav-bookmark, #nav-background
-        opacity: 0
-        animation: fade-out-left 1s 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
+  #nav.open
+    #items, #nav-bookmark, #nav-background
+      opacity: 1
+      animation: fade-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
