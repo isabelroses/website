@@ -13,15 +13,15 @@ import { Vue } from "vue-class-component";
  * @param step Step
  */
 export function range(fromOrTo: number, to?: number, step = 1): number[] {
-    const from = to ?? 0;
-    to = to ?? fromOrTo;
+  const from = to ?? 0;
+  to = to ?? fromOrTo;
 
-    if (to == from) return [];
-    const mul = to > from ? 1 : -1;
+  if (to == from) return [];
+  const mul = to > from ? 1 : -1;
 
-    return [...Array(Math.floor(Math.abs(to - from) / step))].map(
-        (_, i) => from + i * step * mul
-    );
+  return [...Array(Math.floor(Math.abs(to - from) / step))].map(
+    (_, i) => from + i * step * mul
+  );
 }
 
 /**
@@ -32,17 +32,17 @@ export function range(fromOrTo: number, to?: number, step = 1): number[] {
  * @param max
  */
 export function minMax(val: number, min: number, max: number): number {
-    let result: number;
+  let result: number;
 
-    if (val > max) {
-        result = max;
-    } else if (val < min) {
-        result = min;
-    } else {
-        result = val;
-    }
+  if (val > max) {
+    result = max;
+  } else if (val < min) {
+    result = min;
+  } else {
+    result = val;
+  }
 
-    return result;
+  return result;
 }
 
 /**
@@ -54,61 +54,61 @@ export type Keybinds = { [id: string]: (e: KeyboardEvent) => unknown };
  * Key handler mixin
  */
 export class KeyHandler extends Vue {
-    keybinds: Keybinds = {};
-    _keybinds: Keybinds = {};
+  keybinds: Keybinds = {};
+  _keybinds: Keybinds = {};
 
-    initKeybinds(): void {
-        return;
+  initKeybinds(): void {
+    return;
+  }
+
+  mounted(): void {
+    document.addEventListener("keydown", this.keyListener);
+    this.initKeybinds();
+    Object.keys(this.keybinds).forEach(
+      (it) => (this._keybinds[it.toLowerCase()] = this.keybinds[it])
+    );
+  }
+
+  unmounted(): void {
+    document.removeEventListener("keydown", this.keyListener);
+  }
+
+  keyListener(e: KeyboardEvent): void {
+    let key = e.key;
+    if (e.shiftKey) key = "Shift" + key;
+    if (e.altKey) key = "Alt" + key;
+    if (e.ctrlKey) key = "Ctrl" + key;
+    if (e.metaKey) key = "Cmd" + key;
+    key = key.toLowerCase();
+
+    if (key in this._keybinds) {
+      if (this._keybinds[key](e) !== false) {
+        e.preventDefault();
+      }
     }
-
-    mounted(): void {
-        document.addEventListener("keydown", this.keyListener);
-        this.initKeybinds();
-        Object.keys(this.keybinds).forEach(
-            (it) => (this._keybinds[it.toLowerCase()] = this.keybinds[it])
-        );
-    }
-
-    unmounted(): void {
-        document.removeEventListener("keydown", this.keyListener);
-    }
-
-    keyListener(e: KeyboardEvent): void {
-        let key = e.key;
-        if (e.shiftKey) key = "Shift" + key;
-        if (e.altKey) key = "Alt" + key;
-        if (e.ctrlKey) key = "Ctrl" + key;
-        if (e.metaKey) key = "Cmd" + key;
-        key = key.toLowerCase();
-
-        if (key in this._keybinds) {
-            if (this._keybinds[key](e) !== false) {
-                e.preventDefault();
-            }
-        }
-    }
+  }
 }
 
 export function capitalize(s: string): string {
-    return s.charAt(0).toUpperCase() + s.slice(1);
+  return s.charAt(0).toUpperCase() + s.slice(1);
 }
 
 export function shuffle(array: any[]) {
-    let currentIndex = array.length,
-        randomIndex;
+  let currentIndex = array.length,
+    randomIndex;
 
-    // While there remain elements to shuffle.
-    while (currentIndex != 0) {
-        // Pick a remaining element.
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
+  // While there remain elements to shuffle.
+  while (currentIndex != 0) {
+    // Pick a remaining element.
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex--;
 
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [
-            array[randomIndex],
-            array[currentIndex],
-        ];
-    }
+    // And swap it with the current element.
+    [array[currentIndex], array[randomIndex]] = [
+      array[randomIndex],
+      array[currentIndex],
+    ];
+  }
 
-    return array;
+  return array;
 }
