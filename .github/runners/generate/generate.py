@@ -1,10 +1,19 @@
-import json, yaml, os, re
+import json, yaml, os, re, pytz
 from collections import Counter
 from datetime import datetime
 from pathlib import Path
+from feedgen.feed import FeedGenerator
 
 if __name__ == '__main__':
+    timezone = pytz.timezone('UTC')
     posts = []
+
+    # Generate RSS feed
+    fg = FeedGenerator()
+    fg.id('https://isabelroses.com/rss')
+    fg.title("Isabel Roses' blog")
+    fg.link(href='https://isabelroses.com', rel='alternate')
+    fg.description("Isabel Roses' blog")
 
     # Loop through all blog posts
     for b in os.listdir('public/posts'):
@@ -44,9 +53,16 @@ if __name__ == '__main__':
     # Sort posts by date, such that we have the newst posts first, so that when we loop through them we can give them an id based on their date
     posts.sort(key=lambda x: x['date'], reverse=True)
 
-    # Give every post an id based on the date it was posted
     for i, post in enumerate(posts):
         post['id'] = i + 1
+        fe = fg.add_entry()
+        url = f'https://isabelroses.com/posts/{post["slug"]}-{post["id"]}'
+        fe.id(url)
+        fe.title(post['title'])
+        fe.link(href=url, rel='alternate')
+        fe.description(post['content'])
+        date = datetime.strptime(post['date'], '%d/%m/%Y').replace(tzinfo=timezone)
+        fe.published(date)
 
     # Count tags
     tags = Counter([tag for post in posts for tag in post['tags']])
@@ -69,3 +85,6 @@ if __name__ == '__main__':
     meta_path = Path('src/gen/metas.json')
     meta_path.parent.mkdir(exist_ok=True, parents=True)
     meta_path.write_text(json_text, 'utf-8')
+
+    # Generate the RSS feed as a string
+    fg.rss_file('public/rss.xml')
