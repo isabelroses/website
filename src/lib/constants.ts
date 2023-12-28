@@ -3,8 +3,9 @@ import { Project } from "@/types/projects";
 const production = true;
 
 export const hosts = {
-  readme:
-    "https://raw.githubusercontent.com/isabelroses/isabelroses/main/README.md",
+  readme: production
+    ? "https://isabelroses.com/isabelroses/README.md"
+    : "http://localhost:3000/isabelroses/README.md",
   content: production ? "https://isabelroses.com" : "http://localhost:3000/",
 };
 
