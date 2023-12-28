@@ -44,6 +44,11 @@ export default class BlogPost extends Vue {
     }
 
     async mounted() {
+        if (this.post?.title) {
+            const DEFAULT_TITLE = 'Blog';
+            document.title = DEFAULT_TITLE + ' > ' + this.post.title || DEFAULT_TITLE;
+        }
+
         const content = document.getElementById("content");
         if (this.post?.content && content) {
             content.innerHTML = await parseMarkdown(this.post.content);
