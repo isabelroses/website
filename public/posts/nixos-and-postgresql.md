@@ -5,7 +5,7 @@ date: 27/11/2023
 tags: ["nixos", "postgresql"]
 ---
 
-When upgrading to version 15 from 14, there was an issue. None of my data was transferred. To fix this issue i swapped to the `posgres` user who is a superuser on the PostgreSQL databases.
+When upgrading to version 15 from 14, there was an issue. None of my data was transferred. To fix this issue I swapped to the `posgres` user who is a superuser on the PostgreSQL databases.
 
 Then to preform the migration I ran:
 
