@@ -62,7 +62,7 @@ if __name__ == "__main__":
             )
 
     # Sort posts by date, such that we have the newst posts first, so that when we loop through them we can give them an id based on their date
-    posts.sort(key=lambda x: datetime.strptime(x["date"], "%d/%m/%Y"), reverse=True)
+    posts.sort(key=lambda x: datetime.strptime(x["date"], "%d/%m/%Y"), reverse=False)
 
     for i, post in enumerate(posts):
         post["id"] = i + 1
