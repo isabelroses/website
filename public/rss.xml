@@ -1,5 +1,18 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Isabel Roses' blog</title><link>https://isabelroses.com</link><description>Isabel Roses' blog</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><lastBuildDate>Fri, 29 Dec 2023 09:45:57 +0000</lastBuildDate><item><title>Self-Healing URLs</title><link>https://isabelroses.com/posts/self-healing-urls-3</link><description>I have been working on the creation of this [version](https://github.com/isabelroses/website/commit/8c53b9f3576d98a2ebe71976a3f921a30e6ad052) of my website for a while and when I finally thought I was done, I was introduced to the concept of self-healing URLs.
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Isabel Roses' blog</title><link>https://isabelroses.com</link><description>Isabel Roses' blog</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><lastBuildDate>Fri, 29 Dec 2023 09:50:38 +0000</lastBuildDate><item><title>NixOS and PostgreSQL</title><link>https://isabelroses.com/posts/nixos-and-postgresql-3</link><description>When upgrading to version 15 from 14, there was an issue. None of my data was transferred. To fix this issue I swapped to the `posgres` user who is a superuser on the PostgreSQL databases.
+
+Then to preform the migration I ran:
+
+```sql
+-- to do this without swapping user you can use the flag -U
+pg_dumpall &gt; sqldump
+```
+
+then when I had the sqldump file, the following command was run from the command line to get use the sqldump file to recover the previous data
+
+```bash
+psql -f sqldump
+```</description><guid isPermaLink="false">https://isabelroses.com/posts/nixos-and-postgresql-3</guid><pubDate>Mon, 27 Nov 2023 00:00:00 +0000</pubDate></item><item><title>Self-Healing URLs</title><link>https://isabelroses.com/posts/self-healing-urls-2</link><description>I have been working on the creation of this [version](https://github.com/isabelroses/website/commit/8c53b9f3576d98a2ebe71976a3f921a30e6ad052) of my website for a while and when I finally thought I was done, I was introduced to the concept of self-healing URLs.
 
 Self-healing URLs are designed in a way that if a user was to type in a URL as long as a certain part of the URL is correct, the user will be redirected to the correct page. This is useful for when a user is trying to access a page that has been moved or deleted.
 
@@ -35,20 +48,7 @@ Then all that was left was to ensure all links were using the new slug format. T
 
 #### Inspiration
 
-The original idea for this post comes from: [https://www.youtube.com/watch?v=a6lnfyES-LA](https://www.youtube.com/watch?v=a6lnfyES-LA)</description><guid isPermaLink="false">https://isabelroses.com/posts/self-healing-urls-3</guid><pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate></item><item><title>NixOS and PostgreSQL</title><link>https://isabelroses.com/posts/nixos-and-postgresql-2</link><description>When upgrading to version 15 from 14, there was an issue. None of my data was transferred. To fix this issue I swapped to the `posgres` user who is a superuser on the PostgreSQL databases.
-
-Then to preform the migration I ran:
-
-```sql
--- to do this without swapping user you can use the flag -U
-pg_dumpall &gt; sqldump
-```
-
-then when I had the sqldump file, the following command was run from the command line to get use the sqldump file to recover the previous data
-
-```bash
-psql -f sqldump
-```</description><guid isPermaLink="false">https://isabelroses.com/posts/nixos-and-postgresql-2</guid><pubDate>Mon, 27 Nov 2023 00:00:00 +0000</pubDate></item><item><title>My workflow</title><link>https://isabelroses.com/posts/my-workflow-1</link><description>In order to keep myself on track I wanted to document my workflow. So in order to do that this post will be kept up to date every 3 months or so with additional input and changes to how I work.
+The original idea for this post comes from: [https://www.youtube.com/watch?v=a6lnfyES-LA](https://www.youtube.com/watch?v=a6lnfyES-LA)</description><guid isPermaLink="false">https://isabelroses.com/posts/self-healing-urls-2</guid><pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate></item><item><title>My workflow</title><link>https://isabelroses.com/posts/my-workflow-1</link><description>In order to keep myself on track I wanted to document my workflow. So in order to do that this post will be kept up to date every 3 months or so with additional input and changes to how I work.
 Currently, I use NixOS and have my neovim config managed through nix, a big thanks to [@nekowinson](https://github.com/nekowinston) for all their help.
 
 To start right away with things that I wish to get better at:
