@@ -1,13 +1,11 @@
 ---
-id: my-workflow
-aliases: []
+title: My workflow
+subtitle: Keeping on track with workflow
+date: 28/12/2023
 tags:
   - meta
   - vim
   - nixos
-date: 28/12/2023
-subtitle: Keeping on track with work
-title: My workflow
 ---
 In order to keep myself on track I wanted to document my workflow. So in order to do that this post will be kept up to date every 3 months or so with additional input and changes to how I work.
 Currently, I use NixOS and have my neovim config managed through nix, a big thanks to [@nekowinson](https://github.com/nekowinston) for all their help.
