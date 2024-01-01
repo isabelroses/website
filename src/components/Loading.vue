@@ -1,8 +1,8 @@
 <template>
-    <div id="Loading">
-        <img src="/loading.svg" alt="loading">
-        <div class="text">Loading~</div>
-    </div>
+  <div id="Loading">
+    <img src="/loading.svg" alt="loading" />
+    <div class="text">Loading~</div>
+  </div>
 </template>
 
 <style lang="sass" scoped>

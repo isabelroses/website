@@ -1,11 +1,8 @@
 @import colors
 
-$width: 600px
-
 .general-page
   text-align: left
-  width: $width
-  margin: 2em auto 0
+  flex: 0.6
 
 .title
   margin-bottom: 2em
@@ -26,29 +23,29 @@ $width: 600px
 @media screen and (min-width: 800px)
   #nav
     #menu
-      opacity: 0
+      display: none
 
 // Tablet layout
 @media screen and (max-width: 800px)
   #nav
     #menu
-      opacity: 1
+      display: block
 
       .router-link
         margin: 10px 0
 
   #nav.home
-    #menu, #nav-background
-      opacity: 0
+    #menu
+      display: none
 
   #nav:not(.home).open
-    #items, #nav-bookmark, #nav-background
-      opacity: 1
+    #items
+      display: flex
       animation: fade-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
   #nav:not(.home)
-    #items, #nav-bookmark, #nav-background
-      opacity: 0
+    #items
+      display: none
       animation: fade-out-left 1s 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
 // Phone layout
@@ -59,10 +56,7 @@ $width: 600px
 
   #app
     font-size: 14px
-
-    #nav
-      #nav-bookmark
-        width: 10px
+    flex-flow: column !important
 
 // Smaller phone layout
 @media screen and (max-width: 370px)
@@ -70,15 +64,16 @@ $width: 600px
     #menu
       opacity: 1
 
-    #items, #nav-bookmark, #nav-background
-      opacity: 0
+    #items
+      display: none
       animation: fade-out-left 1s 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both
 
   #nav.home
-    #menu, #nav-background
-      opacity: 1
+    #menu
+      display: flex
 
   #nav.open
-    #items, #nav-bookmark, #nav-background
-      opacity: 1
+    #items
+      display: flex 
+      z-index: 2
       animation: fade-in-left .5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both

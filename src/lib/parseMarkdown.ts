@@ -92,7 +92,7 @@ export async function parseMarkdown(raw: string): Promise<string> {
         const language = hljs.getLanguage(lang) ? lang : "plaintext";
         return hljs.highlight(code, { language }).value;
       },
-    })
+    }),
   );
 
   return await marked.parse(lines.join("\n"));

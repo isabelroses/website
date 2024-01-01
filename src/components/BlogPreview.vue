@@ -1,47 +1,62 @@
 <template>
-    <router-link :to="'/blog/' + meta.slug + '-' + meta.id" id="BlogPostPreview" class="card" :class="elClass">
-        <img class="title-image" :src="image" v-if="image && imageOnTop" alt="Title Image">
+  <router-link
+    :to="'/blog/' + meta.slug + '-' + meta.id"
+    id="BlogPostPreview"
+    class="card"
+    :class="elClass"
+  >
+    <img
+      class="title-image"
+      :src="image"
+      v-if="image && imageOnTop"
+      alt="Title Image"
+    />
 
-        <div id="titles" class="unselectable">
-            <div id="date">{{ meta.date }}</div>
-            <div id="title">{{ meta.title }}</div>
-            <div id="subtitle" v-if="meta.subtitle">{{ meta.subtitle }}</div>
-            <div class="tags">
-                <div v-if="tagOnTop" style="display: inline-block">
-                    <Tag v-for="t in meta.tags" :key="t" direction="left">{{ t }}</Tag>
-                </div>
-                <i id="pin" class="fas fa-thumbtack" v-if="meta.pinned"></i>
-            </div>
+    <div id="titles" class="unselectable">
+      <div id="date">{{ meta.date }}</div>
+      <div id="title">{{ meta.title }}</div>
+      <div id="subtitle" v-if="meta.subtitle">{{ meta.subtitle }}</div>
+      <div class="tags">
+        <div v-if="tagOnTop" style="display: inline-block">
+          <Tag v-for="t in meta.tags" :key="t" direction="left">{{ t }}</Tag>
         </div>
-    </router-link>
+        <i id="pin" class="fas fa-thumbtack" v-if="meta.pinned"></i>
+      </div>
+    </div>
+  </router-link>
 </template>
 
 <script lang="ts" setup>
 import Tag from "@/components/Tag.vue";
 import { BlogPost } from "@/types/blog";
 import { hosts } from "@/lib/constants";
-import { computed } from 'vue';
+import { computed } from "vue";
 
-const p = withDefaults(defineProps<{
-    meta: BlogPost
-    imageOnTop?: boolean
-    tagOnTop?: boolean
-}>(), {
+const p = withDefaults(
+  defineProps<{
+    meta: BlogPost;
+    imageOnTop?: boolean;
+    tagOnTop?: boolean;
+  }>(),
+  {
     imageOnTop: false,
     tagOnTop: true,
-})
+  },
+);
 
-const uid = (Math.random() + 1).toString(36).substring(7)
+const uid = (Math.random() + 1).toString(36).substring(7);
 
 // Element classes
 const elClass = computed(() => {
-    let classes = [uid]
-    if (p.imageOnTop) classes.push('image-top')
-    if (p.tagOnTop) classes.push('tag-top')
-    return classes
-})
+  let classes = [uid];
+  if (p.imageOnTop) classes.push("image-top");
+  if (p.tagOnTop) classes.push("tag-top");
+  return classes;
+});
 
-const image = p.meta.title_image ? hosts.content + '/' + p.meta.title_image : null;
+const image = p.meta.title_image
+  ? hosts.content + "/" + p.meta.title_image
+  : null;
 </script>
 
 <style lang="sass" scoped>
@@ -132,5 +147,4 @@ const image = p.meta.title_image ? hosts.content + '/' + p.meta.title_image : nu
             border-radius: 10px
             margin-left: -$margin
             margin-right: -$margin
-
 </style>

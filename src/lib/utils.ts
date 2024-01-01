@@ -20,7 +20,7 @@ export function range(fromOrTo: number, to?: number, step = 1): number[] {
   const mul = to > from ? 1 : -1;
 
   return [...Array(Math.floor(Math.abs(to - from) / step))].map(
-    (_, i) => from + i * step * mul
+    (_, i) => from + i * step * mul,
   );
 }
 
@@ -65,7 +65,7 @@ export class KeyHandler extends Vue {
     document.addEventListener("keydown", this.keyListener);
     this.initKeybinds();
     Object.keys(this.keybinds).forEach(
-      (it) => (this._keybinds[it.toLowerCase()] = this.keybinds[it])
+      (it) => (this._keybinds[it.toLowerCase()] = this.keybinds[it]),
     );
   }
 

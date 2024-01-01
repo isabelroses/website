@@ -18,13 +18,11 @@
 
 html
   font-family: 'Roboto', system-ui, sans-serif
-  height: 100%
 
 // Remove UA body margin
 body
   background: $color-bg
   margin: 0
-  height: 100%
   overscroll-behavior-y: none
 
 // Non-selectable text
@@ -113,21 +111,6 @@ body
 .nowrap.e
   text-overflow: ellipsis
 
-#app
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
-  text-align: center
-  color: $color-text-main
-
-  // Max width and center
-  max-width: 900px
-  margin: auto
-
-  // Vertical flex box
-  display: flex
-  flex-flow: column
-  height: 100%
-
 // Make images not draggable
 img
   -webkit-user-drag: none
@@ -207,73 +190,65 @@ a
     font-size: 0.8em
     color: $color-text-light
 
-#nav
-  position: fixed
-  left: 0
-  height: 100%
-  font-size: 1.4em
-  align-items: flex-start
-  z-index: 100
-  pointer-events: none
+#app
+  color: $color-text-main
+  -webkit-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  display: flex 
+  flex-flow: row
+  text-align: center
+  justify-content: center
+  gap: 3em
+  width: 80%
+  margin: 2em auto 0
 
-  *
-    transition: all .25s ease-in-out
-
-  #menu
-    padding: 5px 10px
-    margin: 15px 10px
-    background-color: $color-card
-    border-radius: 10px
-    text-shadow: 1px 1px 1px $color-bg-dark
-    filter: drop-shadow(0 0 30px $color-bg-dark)
+  #nav
+    font-size: 1.4em
+    align-items: flex-start
     z-index: 100
-    pointer-events: auto
-
-  #nav-bookmark
-    position: absolute
-    left: 0
-    width: 60px
-    height: 0
-    z-index: 5
-    border-color: $color-card transparent $color-card $color-card
-    border-style: solid
-    border-width: 20px
-
-  #items
-    z-index: 10
-
-  .router-link
-    color: $color-text-light
-    position: relative
-    text-decoration: none
-    padding-left: 15px
-    margin: 15px 0
-    z-index: 100
-    pointer-events: auto
-
-  #nav-background
-    position: absolute
-    height: 100%
-    width: 100px
-    left: 0
-    border-left: 20px solid $color-bg
-    background: linear-gradient(to right, $color-bg, transparent)
-    z-index: 4
     pointer-events: none
 
-  svg
-    display: inline-block
-    height: 1em
-
     *
-      box-sizing: inherit
+      transition: all .25s ease-in-out
+
+    #menu
+      background-color: $color-card
+      border-radius: 10px
+      text-shadow: 1px 1px 1px $color-bg-dark
+      filter: drop-shadow(0 0 30px $color-bg-dark)
+      z-index: 100
+      pointer-events: auto
+
+    #items
+      z-index: 10
+
+    .router-link
+      color: $color-text-light
+      position: relative
+      text-decoration: none
+      padding: 0.5em
+      margin-top: 0.5em
+      z-index: 100
+      pointer-events: auto
+
+    .router-link-active, .active
+      border-radius: 15px
+      background-color: $color-card
+
+    svg
+      display: inline-block
+      height: 1em
+
+      *
+        box-sizing: inherit
 
 #content pre
-  background-color: $color-card !important
+  // background: $color-bg
+  border:  2px solid $color-card !important
   padding: 10px
   border-radius: 10px
   overflow-x: auto
   @extend .font-code
 
   code
-    background-color: $color-card !important
+    background: $color-bg

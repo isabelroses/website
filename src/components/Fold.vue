@@ -1,34 +1,36 @@
 <template>
-    <div class="fold">
-        <h3 v-html="displayTitle" class="clickable"></h3>
-        <div class="content">
-            <slot></slot>
-        </div>
+  <div class="fold">
+    <h3 v-html="displayTitle" class="clickable"></h3>
+    <div class="content">
+      <slot></slot>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import { Options, Vue } from "vue-class-component";
 import { Prop } from "vue-property-decorator";
-import { $ } from '@/lib/constants';
+import { $ } from "@/lib/constants";
 
 @Options({ components: {} })
 export default class Fold extends Vue {
-    @Prop() title!: string
-    @Prop({ default: false }) active = false
+  @Prop() title!: string;
+  @Prop({ default: false }) active = false;
 
-    show = false
+  show = false;
 
-    get displayTitle(): string {
-        return decodeURIComponent(this.title)
-    }
+  get displayTitle(): string {
+    return decodeURIComponent(this.title);
+  }
 
-    mounted(): void {
-        $('.fold').accordion({
-            collapsible: true, header: 'h3', heightStyle: 'content',
-            active: this.active
-        })
-    }
+  mounted(): void {
+    $(".fold").accordion({
+      collapsible: true,
+      header: "h3",
+      heightStyle: "content",
+      active: this.active,
+    });
+  }
 }
 </script>
 

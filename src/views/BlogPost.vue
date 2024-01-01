@@ -1,59 +1,55 @@
 <template>
-    <div class="general-page" v-if="post">
-        <div class="title unselectable tag-top">
-            <h2>{{ post.title }}</h2>
-            <div class="subtitle" v-if="post.subtitle">{{ post.subtitle }}</div>
-            <div id="date">{{ post.date }}</div>
-            <div class="tags">
-                <Tag v-for="t in post.tags" :key="t" direction="left">{{ t }}</Tag>
-            </div>
-        </div>
-
-        <div id="content" />
+  <div class="general-page" v-if="post">
+    <div class="title unselectable tag-top">
+      <h2>{{ post.title }}</h2>
+      <div class="subtitle" v-if="post.subtitle">{{ post.subtitle }}</div>
+      <div id="date">{{ post.date }}</div>
+      <div class="tags">
+        <Tag v-for="t in post.tags" :key="t" direction="left">{{ t }}</Tag>
+      </div>
     </div>
 
-    <div v-else>
-        <div class="title unselectable">
-            <h2>404</h2>
-            <div class="subtitle">Post not found</div>
-        </div>
+    <div id="content" />
+  </div>
+
+  <div v-else>
+    <div class="title unselectable">
+      <h2>404</h2>
+      <div class="subtitle">Post not found</div>
     </div>
+  </div>
 </template>
 
 <script lang="ts">
 import meta from "@/gen/metas.json";
 import { parseMarkdown } from "@/lib/parseMarkdown";
-import { Vue, Options } from 'vue-property-decorator';
+import { Vue, Options } from "vue-property-decorator";
 
 @Options({ components: {} })
 export default class BlogPost extends Vue {
-    postId(): any {
-        return this.$route.params;
+  get post() {
+    const id = this.$route.params.slug.toString().split("-").slice(-1)[0];
+    const post = meta.posts.find((post: any) => post.id == id);
+
+    if (this.$route.params.slug != post?.slug) {
+      const slug = post?.slug + "-" + id;
+      this.$router.push({ name: "BlogPost", params: { slug: slug } });
     }
 
-    get post() {
-        const id = (this.$route.params.slug).toString().split("-").slice(-1)[0];
-        const post = meta.posts.find((post: any) => post.id == id);
+    return post;
+  }
 
-        if (this.$route.params.slug != post?.slug) {
-            const slug = post?.slug + "-" + id;
-            this.$router.push({ name: "BlogPost", params: { slug: slug } });
-        }
-
-        return post;
+  async mounted() {
+    if (this.post?.title) {
+      const DEFAULT_TITLE = "Blog";
+      document.title = DEFAULT_TITLE + " > " + this.post.title || DEFAULT_TITLE;
     }
 
-    async mounted() {
-        if (this.post?.title) {
-            const DEFAULT_TITLE = 'Blog';
-            document.title = DEFAULT_TITLE + ' > ' + this.post.title || DEFAULT_TITLE;
-        }
-
-        const content = document.getElementById("content");
-        if (this.post?.content && content) {
-            content.innerHTML = await parseMarkdown(this.post.content);
-        }
+    const content = document.getElementById("content");
+    if (this.post?.content && content) {
+      content.innerHTML = await parseMarkdown(this.post.content);
     }
+  }
 }
 </script>
 
@@ -67,7 +63,7 @@ export default class BlogPost extends Vue {
     padding-left: $padding
     margin-right: -$padding
     padding-right: $padding
-        
+
     img
         $margin: 10px
         max-width: calc(100% + 2 * $margin)

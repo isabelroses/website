@@ -1,35 +1,40 @@
 <template>
-    <div id="index" class="index index-tags card">
-        <div id="titles" class="unselectable">
-            <div id="title">Index</div>
-            <div id="subtitle">Quickly search for posts by tag</div>
-        </div>
-
-        <div id="content">
-            <div class="tags">
-                <Tag v-for="t in tags" :key="t" :tag-name="t[0]" direction="right"
-                    @click="(e: MouseEvent) => clickTag(e, t)">
-                    {{ t[0] }} ({{ t[1] }})
-                </Tag>
-            </div>
-        </div>
+  <div id="index" class="index index-tags card">
+    <div id="titles" class="unselectable">
+      <div id="title">Index</div>
+      <div id="subtitle">Quickly search for posts by tag</div>
     </div>
+
+    <div id="content">
+      <div class="tags">
+        <Tag
+          v-for="t in tags"
+          :key="t"
+          :tag-name="t[0]"
+          direction="right"
+          @click="(e: MouseEvent) => clickTag(e, t)"
+        >
+          {{ t[0] }} ({{ t[1] }})
+        </Tag>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import { Options, Vue } from "vue-class-component";
 import { Prop } from "vue-property-decorator";
 import Tag from "@/components/Tag.vue";
 import { pushQuery } from "@/lib/router";
 
 @Options({ components: { Tag } })
 export default class BlogIndexLinks extends Vue {
-    @Prop({ default: 'tag' }) tags!: [string, number][]
+  @Prop({ default: "tag" }) tags!: [string, number][];
 
-    clickTag(e: MouseEvent, tag: any): void {
-        e.stopPropagation()
-        pushQuery({ tag: tag[0] })
-    }
+  clickTag(e: MouseEvent, tag: any): void {
+    e.stopPropagation();
+    pushQuery({ tag: tag[0] });
+  }
 }
 </script>
 
