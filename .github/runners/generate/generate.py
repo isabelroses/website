@@ -104,6 +104,6 @@ if __name__ == "__main__":
     fg.rss_file("public/rss.xml")
 
     with open("public/isabelroses/README.md", "r", encoding="utf-8") as f:
-        me_json_text = "{ content: " + json.dumps(f.read(), ensure_ascii=False) + " }"
+        me_json_text = '{ "content": ' + json.dumps(f.read(), ensure_ascii=False) + " }"
 
     Path("src/gen/me.json").write_text(me_json_text, "utf-8")
