@@ -20,14 +20,14 @@
     "@types/jqueryui": "^1.12.16",
     "@types/marked": "^6.0.0",
     "@types/node": "^20",
-    "@vitejs/plugin-vue": "^5.0.0",
+    "@vitejs/plugin-vue": "^5.0.2",
     "eslint": "^8.56.0",
-    "sass": "^1.58.3",
+    "sass": "^1.69.6",
     "tslib": "^2.5.0",
     "typescript": "^5",
     "vite": "^5.0.10",
     "vue-class-component": "^8.0.0-rc.1",
     "vue-property-decorator": "^10.0.0-rc.3",
-    "vue-tsc": "^1.8.26"
+    "vue-tsc": "^1.8.27"
   }
 }
