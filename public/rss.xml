@@ -1,6 +1,9 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Isabel Roses' blog</title><link>https://isabelroses.com</link><description>Isabel Roses' blog</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><lastBuildDate>Fri, 29 Dec 2023 09:52:41 +0000</lastBuildDate><item><title>My workflow</title><link>https://isabelroses.com/posts/my-workflow-3</link><description>In order to keep myself on track I wanted to document my workflow. So in order to do that this post will be kept up to date every 3 months or so with additional input and changes to how I work.
-Currently, I use NixOS and have my neovim config managed through nix, a big thanks to [@nekowinson](https://github.com/nekowinston) for all their help.
+<rss xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/" version="2.0"><channel><title>Isabel Roses' blog</title><link>https://isabelroses.com</link><description>Isabel Roses' blog</description><docs>http://www.rssboard.org/rss-specification</docs><generator>python-feedgen</generator><lastBuildDate>Mon, 01 Jan 2024 01:08:21 +0000</lastBuildDate><item><title>My workflow</title><link>https://isabelroses.com/posts/my-workflow-3</link><description>In order to keep myself on track I wanted to document my workflow. So in order
+to do that this post will be kept up to date every 3 months or so with
+additional input and changes to how I work. Currently, I use NixOS and have my
+neovim config managed through nix, a big thanks to
+[@nekowinson](https://github.com/nekowinston) for all their help.
 
 To start right away with things that I wish to get better at:
 
@@ -10,17 +13,41 @@ To start right away with things that I wish to get better at:
 - rust
 - nix
 
-This list were created in order to improve my basic workflow to improve the generic speed that I work at. To start I barely use vim motions despite using neovim as my main editor, and touch typing goes along well with this.
-And despite using NixOS I feel like I barely know anything about nix.
+This list were created in order to improve my basic workflow to improve the
+generic speed that I work at. To start I barely use vim motions despite using
+neovim as my main editor, and touch typing goes along well with this. And
+despite using NixOS I feel like I barely know anything about nix.
 
-In order to also properly manage myself I have two main tools [bellado](https://github.com/isabelroses/bellado) and [vikunja](https://vikunja.io) having these two separate is really inconvenient but in order to use my to-do list well it needs to be accessible via the command line and through the web so whether I'm out and about or on my main work machine every will work well.
-One way I plan to improve this issue is to allow bellado to interact with my vikunja instance.</description><guid isPermaLink="false">https://isabelroses.com/posts/my-workflow-3</guid><pubDate>Thu, 28 Dec 2023 00:00:00 +0000</pubDate></item><item><title>Self-Healing URLs</title><link>https://isabelroses.com/posts/self-healing-urls-2</link><description>I have been working on the creation of this [version](https://github.com/isabelroses/website/commit/8c53b9f3576d98a2ebe71976a3f921a30e6ad052) of my website for a while and when I finally thought I was done, I was introduced to the concept of self-healing URLs.
+In order to also properly manage myself I have two main tools
+[bellado](https://github.com/isabelroses/bellado) and
+[vikunja](https://vikunja.io) having these two separate is really inconvenient
+but in order to use my to-do list well it needs to be accessible via the command
+line and through the web so whether I'm out and about or on my main work machine
+every will work well. One way I plan to improve this issue is to allow bellado
+to interact with my vikunja instance.</description><guid isPermaLink="false">https://isabelroses.com/posts/my-workflow-3</guid><pubDate>Thu, 28 Dec 2023 00:00:00 +0000</pubDate></item><item><title>Self-Healing URLs</title><link>https://isabelroses.com/posts/self-healing-urls-2</link><description>I have been working on the creation of this
+[version](https://github.com/isabelroses/website/commit/8c53b9f3576d98a2ebe71976a3f921a30e6ad052)
+of my website for a while and when I finally thought I was done, I was
+introduced to the concept of self-healing URLs.
 
-Self-healing URLs are designed in a way that if a user was to type in a URL as long as a certain part of the URL is correct, the user will be redirected to the correct page. This is useful for when a user is trying to access a page that has been moved or deleted.
+Self-healing URLs are designed in a way that if a user was to type in a URL as
+long as a certain part of the URL is correct, the user will be redirected to the
+correct page. This is useful for when a user is trying to access a page that has
+been moved or deleted.
 
-For example, if a user was to type in [&lt;domain&gt;/blog/gaoengioa-2](https://isabelroses.com/blog/gaoengioa-2) they would be redirected to [&lt;domain&gt;/blog/self-healing-urls-2](https://isabelroses.com/blog/self-healing-urls-2) as the only important part of the URL is the "2" in this case, which refers to the second blog post by ID.
+For example, if a user was to type in
+[&lt;domain&gt;/blog/gaoengioa-2](https://isabelroses.com/blog/gaoengioa-2) they would
+be redirected to
+[&lt;domain&gt;/blog/self-healing-urls-2](https://isabelroses.com/blog/self-healing-urls-2)
+as the only important part of the URL is the "2" in this case, which refers to
+the second blog post by ID.
 
-To implement this I had to make a few changes to my code. The original way that the post data was being fetched was by using the slug of the post. This meant that if the slug was incorrect, the post would not be found and the user would be redirected to a 404 page. To fix this I had to change the way that the post was being fetched to use the ID of the post instead. This meant that if the slug was incorrect, the post would still be found and the user would be redirected to the correct page.
+To implement this I had to make a few changes to my code. The original way that
+the post data was being fetched was by using the slug of the post. This meant
+that if the slug was incorrect, the post would not be found and the user would
+be redirected to a 404 page. To fix this I had to change the way that the post
+was being fetched to use the ID of the post instead. This meant that if the slug
+was incorrect, the post would still be found and the user would be redirected to
+the correct page.
 
 ```js
 // the old code
@@ -46,11 +73,18 @@ get post() {
 }
 ```
 
-Then all that was left was to ensure all links were using the new slug format. This was done by changing the way that the slug was being created. Instead of using the title of the post, the slug was created using the title and the id of the post. This meant that the slug would always be unique and would always be the same for the same post.
+Then all that was left was to ensure all links were using the new slug format.
+This was done by changing the way that the slug was being created. Instead of
+using the title of the post, the slug was created using the title and the id of
+the post. This meant that the slug would always be unique and would always be
+the same for the same post.
 
 #### Inspiration
 
-The original idea for this post comes from: [https://www.youtube.com/watch?v=a6lnfyES-LA](https://www.youtube.com/watch?v=a6lnfyES-LA)</description><guid isPermaLink="false">https://isabelroses.com/posts/self-healing-urls-2</guid><pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate></item><item><title>NixOS and PostgreSQL</title><link>https://isabelroses.com/posts/nixos-and-postgresql-1</link><description>When upgrading to version 15 from 14, there was an issue. None of my data was transferred. To fix this issue I swapped to the `posgres` user who is a superuser on the PostgreSQL databases.
+The original idea for this post comes from:
+[https://www.youtube.com/watch?v=a6lnfyES-LA](https://www.youtube.com/watch?v=a6lnfyES-LA)</description><guid isPermaLink="false">https://isabelroses.com/posts/self-healing-urls-2</guid><pubDate>Sun, 10 Dec 2023 00:00:00 +0000</pubDate></item><item><title>NixOS and PostgreSQL</title><link>https://isabelroses.com/posts/nixos-and-postgresql-1</link><description>When upgrading to version 15 from 14, there was an issue. None of my data was
+transferred. To fix this issue I swapped to the `posgres` user who is a
+superuser on the PostgreSQL databases.
 
 Then to preform the migration I ran:
 
@@ -59,7 +93,8 @@ Then to preform the migration I ran:
 pg_dumpall &gt; sqldump
 ```
 
-then when I had the sqldump file, the following command was run from the command line to get use the sqldump file to recover the previous data
+then when I had the sqldump file, the following command was run from the command
+line to get use the sqldump file to recover the previous data
 
 ```bash
 psql -f sqldump
