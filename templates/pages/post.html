@@ -1,0 +1,28 @@
+{{define "title"}}Blog > {{.Title}}{{end}} {{define "additionalhead"}}
+<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
+<script defer>
+  hljs.highlightAll();
+</script>
+{{end}} {{define "main"}}
+<div class="relative w-full text-left self-start pb-8">
+  <h2 class="text-2xl font-bold">{{.Title}}</h2>
+  <p class="text-subtext0">{{.Description}}</p>
+  <p class="text-subtext1 text-xs">{{.Date}}</p>
+
+  {{if .Tags}}
+  <div class="tags">
+    {{range .Tags}}
+    <div class="tag">
+      {{.}}
+      <div class="tag-after"></div>
+    </div>
+    {{end}}
+  </div>
+  {{end}}
+</div>
+
+<article id="blog-content" class="prose prose-invert mx-auto">
+  {{.Content}}
+</article>
+
+{{end}}

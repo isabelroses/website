@@ -1,0 +1,110 @@
+package pages
+
+import (
+	"bytes"
+	"errors"
+	"html/template"
+	"log"
+	"net/http"
+	"os"
+	"strings"
+
+	"github.com/labstack/echo/v4"
+	"github.com/yuin/goldmark"
+	"github.com/yuin/goldmark/extension"
+	"gopkg.in/yaml.v2"
+	"isabelroses.com/lib"
+)
+
+type PostProps struct {
+	Content template.HTML
+	ID      int
+	Title   string
+	Date    string
+	Tags    []string
+}
+
+func splitMeta(md []byte) (meta []byte, content []byte, err error) {
+	separator := []byte("---")
+	parts := bytes.SplitN(md, separator, 3)
+
+	if len(parts) < 3 {
+		return nil, nil, errors.New("invalid or missing blogmeta")
+	}
+
+	meta = parts[1]
+	content = parts[2]
+
+	return meta, content, nil
+}
+
+func Post(c echo.Context) error {
+	var (
+		posts    = lib.GetBlogPosts()
+		slug     = c.ParamValues()[0]
+		postName string
+	)
+
+	parts := strings.Split(slug, "-")
+	id := parts[len(parts)-1]
+
+	for _, post := range posts {
+		if id == post.ID {
+			postName = strings.ToLower(strings.ReplaceAll(post.Title, " ", "-"))
+
+			if post.Href != slug {
+				c.Redirect(http.StatusSeeOther, "/blog/"+post.Href)
+			}
+		}
+	}
+
+	filePath := "content/" + postName + ".md"
+
+	md, err := os.ReadFile(filePath)
+	if err != nil {
+		return err
+	}
+
+	metaBytes, content, err := splitMeta(md)
+	if err != nil {
+		return err
+	}
+
+	var meta lib.PostMeta
+	if err := yaml.Unmarshal(metaBytes, &meta); err != nil {
+		return err
+	}
+
+	markdown := goldmark.New(
+		goldmark.WithExtensions(extension.GFM),
+	)
+
+	// Convert the content to HTML
+	var buf bytes.Buffer
+	if err := markdown.Convert(content, &buf); err != nil {
+		return err
+	}
+
+	props := map[string]interface{}{
+		"Content":     template.HTML(buf.String()),
+		"ID":          meta.ID,
+		"Title":       meta.Title,
+		"Description": meta.Description,
+		"Date":        meta.Date,
+		"Tags":        meta.Tags,
+	}
+
+	templates := []string{
+		"./templates/layouts/base.html",
+		"./templates/partials/header.html",
+		"./templates/pages/post.html",
+	}
+
+	ts, err := template.ParseFiles(templates...)
+	if err != nil {
+		log.Print(err.Error())
+		return err
+	}
+
+	return ts.ExecuteTemplate(c.Response().Writer, "base", props)
+}
