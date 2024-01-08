@@ -4,33 +4,32 @@ import {
   NavigationFailure,
   RouteRecordRaw,
 } from "vue-router";
-import Home from "@/views/Home.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
     meta: { title: "Home", nav: true },
-    component: Home,
+    component: () => import("@/views/Home.vue"),
   },
   {
     path: "/projects",
     name: "Projects",
     meta: { title: "Projects", nav: true },
-    component: () => import("../views/Projects.vue"),
+    component: () => import("@/views/Projects.vue"),
   },
   {
     path: "/blog",
     name: "Blog",
     meta: { title: "Blog", nav: true },
-    component: () => import("../views/Blog.vue"),
+    component: () => import("@/views/Blog.vue"),
     props: (route) => route.query,
   },
   {
     path: "/blog/:slug",
     name: "BlogPost",
     meta: { title: "Blog", nav: true },
-    component: () => import("../views/BlogPost.vue"),
+    component: () => import("@/views/BlogPost.vue"),
   },
 ];
 
