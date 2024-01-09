@@ -21,6 +21,7 @@ func Blog(c echo.Context) error {
 	templates := []string{
 		"./templates/layouts/base.html",
 		"./templates/partials/header.html",
+		"./templates/partials/heading.html",
 		"./templates/partials/blogpreview.html",
 		"./templates/pages/blog.html",
 	}
