@@ -2,9 +2,9 @@
 title: Self-Healing URLs
 description: Creating self-healing URLs within my Vue.js website
 date: 10/12/2023
-tags: 
-    - vue
-    - webdev
+tags:
+  - vue
+  - webdev
 ---
 
 I have been working on the creation of this [version](https://github.com/isabelroses/website/commit/8c53b9f3576d98a2ebe71976a3f921a30e6ad052) of my website for a while and when I finally thought I was done, I was introduced to the concept of self-healing URLs.
