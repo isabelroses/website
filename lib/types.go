@@ -20,15 +20,11 @@ type Project struct {
 }
 
 type Post struct {
-	*PostMeta
-	Content template.HTML
-}
-
-type PostMeta struct {
-	ID          string
+	ID          int
 	Title       string
 	Description string
+	Content     template.HTML
 	Date        string
-	Tags        []string
-	Href        string
+	Tags        interface{}
+	Slug        string
 }
