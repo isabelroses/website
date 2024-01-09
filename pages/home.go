@@ -5,16 +5,7 @@ import (
 	"log"
 
 	"github.com/labstack/echo/v4"
-	"isabelroses.com/lib"
 )
-
-type HomeProps struct {
-	Socials      []lib.IconLink
-	Tech         []lib.IconLink
-	ContractLink string
-	ResumeURL    string
-	SupportLink  string
-}
 
 func Home(c echo.Context) error {
 	templates := []string{
