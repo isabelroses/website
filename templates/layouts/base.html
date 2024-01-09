@@ -1,31 +1,43 @@
 {{define "base"}}
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="icon" href="/public/favicon.ico" />
-    <title>{{template "title" .}}</title>
-    <meta name="description" content="Just here for the vibes..." />
-    <link rel="stylesheet" href="/public/styles.css" />
 
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
-    />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="color-scheme" content="dark">
 
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&display=swap"
-    />
+  <title>{{template "title" .}}</title>
+  <meta name="author" content="Isabel Roses" />
+  <meta name="description" content="{{template "description" . }}" />
 
-    {{template "additionalhead" .}}
-  </head>
+  <meta property="twitter:domain" content="isabelroses.com">
+  <meta name="twitter:image" content="/images/me.webp">
+  <meta name="twitter:card" content="{{template "description" .}}">
+  <meta property="og:title" content="{{template "title" .}}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="/images/me.webp">
+  
+  <link rel="icon" href="/public/icons/favicon.ico" />
+  <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="/public/icons/apple-icon-180.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/public/icons/favicon-16.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/public/icons/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="48x48" href="/public/icons/favicon-48.png">
+  <link rel="icon" type="image/png" sizes="64x64" href="/public/icons/favicon-64.png">
+  <link rel="icon" type="image/png" sizes="128x128" href="/public/icons/favicon-128.png">
+  <link rel="icon" type="image/png" sizes="256x256" href="/public/icons/favicon-256.png">
 
-  <body class="mocha">
-    {{template "header" .}}
+  <link rel="stylesheet" href="/public/styles.css" />
 
-    <main class="flex flex-col overflow-x-hidden">{{template "main" .}}</main>
-  </body>
+  {{template "additionalhead" .}}
+</head>
+
+<body
+  class="mocha">
+  {{template "header" .}}
+
+  <main class="flex flex-col overflow-x-hidden">{{template "main" .}}</main>
+</body>
+
 </html>
 {{end}}

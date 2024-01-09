@@ -1,13 +1,13 @@
 {{define "blogpreview"}}
 <a
-  class="flex flex-col px-4 py-5 bg-surface0 text-left w-full md:w-[620px] sm:w-full min-w-80 shadow-xl rounded-2xl overflow-auto overflow-x-hidden box-border"
-  href="blog/{{.Href}}"
+  class="flex flex-col px-4 py-5 bg-card text-left w-full md:w-[620px] sm:w-full min-w-80 shadow-xl rounded-2xl overflow-auto overflow-x-hidden box-border"
+  href="blog/{{.Slug}}"
 >
   <div class="relative">
-    <div class="text-subtext1 text-xs">{{.Date}}</div>
+    <div class="text-fg-lighter text-xs">{{.Date}}</div>
 
     <p class="text-lg">{{.Title}}</p>
-    <p class="text-subtext0">{{.Description}}</p>
+    <p class="text-fg-lighter">{{.Description}}</p>
 
     {{if .Tags}}
     <div class="tags">

@@ -1,11 +1,10 @@
 {{define "project"}}
 <div
-  class="bg-surface0 flex relative md:w-[620px] sm:w-full min-w-80 shadow-xl rounded-2xl overflow-auto overflow-x-hidden box-border text-left px-[15px] py-5"
+  class="bg-card flex relative md:w-[620px] sm:w-full min-w-80 shadow-xl rounded-2xl overflow-auto overflow-x-hidden box-border text-left px-[15px] py-5"
 >
   <div
     class="banner"
-    {{if
-    .Banner}}
+    {{if .Banner}}
     style='background-image: url("public/repos/{{.Banner}}");'
     {{end}}
   ></div>
@@ -18,9 +17,10 @@
   />
 
   <div class="flex w-full z-10 items-end">
+
     <div class="whitespace-nowrap overflow-hidden flex-grow">
       <span class="mr-5 text-lg">{{.Name}}</span>
-      <span class="text-sm">{{.Description}}</span>
+      <span class="text-sm hidden md:inline-flex">{{.Description}}</span>
     </div>
 
     {{if .Href}}
@@ -30,7 +30,7 @@
         height="16"
         width="16"
         viewBox="0 0 512 512"
-        class="fill-text hover:fill-sapphire"
+        class="fill-fg hover:fill-special"
       >
         <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
         <path
@@ -38,21 +38,21 @@
         />
       </svg>
     </a>
-    {{end}} {{if .Repo}}
+    {{end}}
+    
+    {{if .Repo}}
     <a
       role="button"
       href="{{.Repo}}"
       aria-label="{{.Name}}'s repo"
-      {{if
-      .Href}}class="ml-2"
-      {{end}}
+      {{if .Href}}class="ml-2"{{end}}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         height="16"
         width="15.5"
         viewBox="0 0 496 512"
-        class="fill-text hover:fill-sapphire"
+        class="fill-fg hover:fill-special"
       >
         <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
         <path
@@ -61,6 +61,7 @@
       </svg>
     </a>
     {{end}}
+
   </div>
 </div>
 {{end}}

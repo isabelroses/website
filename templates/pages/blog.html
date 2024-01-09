@@ -1,10 +1,10 @@
-{{define "title"}}Blog{{end}} {{define "additionalhead"}}{{end}} {{define
-"main"}}
+{{define "title"}}Blog{{end}}
+{{define "description"}}The parts of my life that I put out into the world{{end}}
+{{define "additionalhead"}}{{end}}
+
+{{define "main"}}
 <section class="flex flex-col gap-4">
-  <div class="text-left">
-    <h2 class="text-2xl font-bold">Projects</h2>
-    <p class="text-subtext0">A collection of projects that I maintain</p>
-  </div>
+  {{template "heading" .}}
   {{range .Posts}} {{template "blogpreview" .}} {{end}}
 </section>
 {{end}}
