@@ -1,15 +1,19 @@
 package lib
 
 import (
-	"bufio"
+	"bytes"
 	"fmt"
+	"html/template"
 	"log"
 	"os"
 	"sort"
 	"strings"
 	"time"
 
-	"gopkg.in/yaml.v2"
+	"github.com/yuin/goldmark"
+	meta "github.com/yuin/goldmark-meta"
+	"github.com/yuin/goldmark/extension"
+	"github.com/yuin/goldmark/parser"
 )
 
 func GetBlogPosts() []Post {
@@ -21,42 +25,49 @@ func GetBlogPosts() []Post {
 	}
 
 	for _, file := range files {
-		f, err := os.Open("./content/" + file.Name())
-		if err != nil {
-			log.Fatal(err)
-		}
-		defer f.Close()
-
-		// Extract the frontmatter
-		scanner := bufio.NewScanner(f)
-		var metaString string
-		isMeta := false
-		for scanner.Scan() {
-			line := scanner.Text()
-			if strings.TrimSpace(line) == "---" {
-				if isMeta {
-					break
-				} else {
-					isMeta = true
-					continue
-				}
+		if strings.HasSuffix(file.Name(), ".md") {
+			content, err := os.ReadFile("./content/" + file.Name())
+			if err != nil {
+				log.Fatal(err)
 			}
-			if isMeta {
-				metaString += line + "\n"
-			}
+
+			post := createPost(content, file.Name())
+			posts = append(posts, post)
 		}
-
-		// Parse the blog meta
-		meta := Post{}
-		if err := yaml.Unmarshal([]byte(metaString), &meta); err != nil {
-			log.Fatal(err)
-		}
-
-		meta.Href = fmt.Sprintf("%v-%v", strings.TrimSuffix(file.Name(), ".md"), meta.ID)
-
-		posts = append(posts, meta)
 	}
 
+	sortPosts(posts)
+
+	return posts
+}
+
+func createPost(content []byte, fileName string) Post {
+	markdown := goldmark.New(
+		goldmark.WithExtensions(
+			extension.GFM,
+			meta.Meta,
+		),
+	)
+
+	var buf bytes.Buffer
+	context := parser.NewContext()
+	if err := markdown.Convert(content, &buf, parser.WithContext(context)); err != nil {
+		log.Fatal(err)
+	}
+	metaData := meta.Get(context)
+
+	post := Post{}
+	post.Content = template.HTML(buf.String())
+	post.Title = metaData["title"].(string)
+	post.Date = metaData["date"].(string)
+	post.Description = metaData["description"].(string)
+	post.Tags = metaData["tags"]
+	post.Slug = fmt.Sprintf("%v", strings.TrimSuffix(fileName, ".md"))
+
+	return post
+}
+
+func sortPosts(posts []Post) {
 	const layout = "02/01/2006"
 
 	sort.Slice(posts, func(i, j int) bool {
@@ -74,14 +85,12 @@ func GetBlogPosts() []Post {
 	})
 
 	for i, post := range posts {
-		post.ID = fmt.Sprint(i + 1)
-		post.Href = fmt.Sprintf("%v%v", post.Href, post.ID)
+		post.ID = i + 1
+		post.Slug = fmt.Sprintf("%v-%v", post.Slug, post.ID)
 		posts[i] = post
 	}
 
 	for i := 0; i < len(posts)/2; i++ {
 		posts[i], posts[len(posts)-i-1] = posts[len(posts)-i-1], posts[i]
 	}
-
-	return posts
 }

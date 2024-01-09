@@ -1,78 +1,52 @@
 package pages
 
 import (
-	"bytes"
-	"errors"
 	"html/template"
 	"log"
 	"net/http"
-	"os"
+	"strconv"
 	"strings"
 
 	"github.com/labstack/echo/v4"
-	"github.com/yuin/goldmark"
-	"github.com/yuin/goldmark-meta"
-	"github.com/yuin/goldmark/extension"
-	"github.com/yuin/goldmark/parser"
 	"isabelroses.com/lib"
 )
 
 type PostProps struct {
-	Content template.HTML
-	ID      int
-	Title   string
-	Date    string
-	Tags    []string
+	*lib.Post
 }
 
 func Post(c echo.Context) error {
 	var (
-		posts    = lib.GetBlogPosts()
-		slug     = c.ParamValues()[0]
-		postName string
+		finalPost lib.Post
+		posts     []lib.Post = lib.GetBlogPosts()
+		slug      string     = c.Param("slug")
 	)
 
 	parts := strings.Split(slug, "-")
-	id := parts[len(parts)-1]
+	id, err := strconv.Atoi(parts[len(parts)-1])
+	if err != nil {
+		log.Print(err)
+	}
 
 	for _, post := range posts {
 		if id == post.ID {
-			postName = strings.ToLower(strings.ReplaceAll(post.Title, " ", "-"))
-
-			if post.Href != slug {
-				c.Redirect(http.StatusSeeOther, "/blog/"+post.Href)
+			// if the slug is not the same as the post's slug
+			if post.Slug != slug {
+				c.Redirect(http.StatusSeeOther, "/blog/"+post.Slug)
 			}
+
+			finalPost = post
 		}
 	}
 
-	filePath := "content/" + postName + ".md"
-
-	content, err := os.ReadFile(filePath)
-	if err != nil {
-		return err
-	}
-
-	markdown := goldmark.New(
-		goldmark.WithExtensions(
-			extension.GFM,
-			meta.Meta,
-		),
-	)
-
-	var buf bytes.Buffer
-	context := parser.NewContext()
-	if err := markdown.Convert(content, &buf); err != nil {
-		return err
-	}
-	metaData := meta.Get(context)
-
 	props := map[string]interface{}{
-		"Content":     template.HTML(buf.String()),
-		"ID":          metaData["ID"],
-		"Title":       metaData["title"],
-		"Description": metaData["description"],
-		"Date":        metaData["date"],
-		"Tags":        metaData["tags"],
+		"ID":          finalPost.ID,
+		"Title":       finalPost.Title,
+		"Description": finalPost.Description,
+		"Content":     finalPost.Content,
+		"Date":        finalPost.Date,
+		"Tags":        finalPost.Tags,
+		"Slug":        finalPost.Slug,
 	}
 
 	templates := []string{
