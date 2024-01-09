@@ -8,10 +8,28 @@
     @apply w-2 max-h-2;
   }
   ::-webkit-scrollbar-track {
-    @apply bg-transparent;
+    background: transparent;
   }
   ::-webkit-scrollbar-thumb {
-    @apply bg-sapphire rounded;
+    background: var(--special);
+
+    @apply rounded;
+  }
+
+  .mocha {
+    --fg: #cdd6f4;
+    --fg-lighter: #a6adc8;
+
+    --bg: #181825;
+    --bg-lighter: #1e1e2e;
+    --bg-darker: #11111b;
+
+    --card: #313244;
+    --card-border: #494d64;
+    --special: #74c7ec;
+
+    /* hljs */
+    code.hljs{color:#cdd6f4;}code .hljs-keyword{color:#cba6f7}code .hljs-built_in{color:#f38ba8}code .hljs-type{color:#f9e2af}code .hljs-literal{color:#fab387}code .hljs-number{color:#fab387}code .hljs-operator{color:#94e2d5}code .hljs-punctuation{color:#bac2de}code .hljs-property{color:#94e2d5}code .hljs-regexp{color:#f5c2e7}code .hljs-string{color:#a6e3a1}code .hljs-char.escape_{color:#a6e3a1}code .hljs-subst{color:#a6adc8}code .hljs-symbol{color:#f2cdcd}code .hljs-variable{color:#cba6f7}code .hljs-variable.language_{color:#cba6f7}code .hljs-variable.constant_{color:#fab387}code .hljs-title{color:#89b4fa}code .hljs-title.class_{color:#f9e2af}code .hljs-title.function_{color:#89b4fa}code .hljs-params{color:#cdd6f4}code .hljs-comment{color:#585b70}code .hljs-doctag{color:#f38ba8}code .hljs-meta{color:#fab387}code .hljs-section{color:#89b4fa}code .hljs-tag{color:#a6adc8}code .hljs-name{color:#cba6f7}code .hljs-attr{color:#89b4fa}code .hljs-attribute{color:#a6e3a1}code .hljs-bullet{color:#94e2d5}code .hljs-code{color:#a6e3a1}code .hljs-emphasis{color:#f38ba8;font-style:italic}code .hljs-strong{color:#f38ba8;font-weight:bold}code .hljs-formula{color:#94e2d5}code .hljs-link{color:#74c7ec;font-style:italic}code .hljs-quote{color:#a6e3a1;font-style:italic}code .hljs-selector-tag{color:#f9e2af}code .hljs-selector-id{color:#89b4fa}code .hljs-selector-class{color:#94e2d5}code .hljs-selector-attr{color:#cba6f7}code .hljs-selector-pseudo{color:#94e2d5}code .hljs-template-tag{color:#f2cdcd}code .hljs-template-variable{color:#f2cdcd}code .hljs-addition{color:#a6e3a1;}code .hljs-deletion{color:#f38ba8;}
   }
 
   html {
@@ -20,56 +38,59 @@
   }
 
   body {
-    @apply flex min-h-screen flex-col md:flex-row gap-y-2 md:gap-x-8 md:gap-y-0;
-    @apply mx-auto max-w-[80rem] px-8 pt-8;
-    @apply bg-mantle text-text;
+    background-color: var(--bg);
+    color: var(--fg);
+
+    @apply flex min-h-screen flex-col md:flex-row gap-y-2 md:gap-x-8 md:gap-y-0 mx-auto max-w-[80rem] px-8 pt-8;
   }
 
-  article {
-    @apply pb-8;
-  }
-
-  pre,
-  code {
-    font-family: 'Roboto Mono', system-ui, monospace;
-  }
-
-  #blog-content pre {
-    border: 2px solid rgb(var(--ctp-surface0)) !important;
-
-    @apply bg-mantle;
-  }
-
-  #blog-content a {
-    @apply text-sapphire;
+  .prose {
+    --tw-prose-body: var(--fg);
+    --tw-prose-headings: var(--fg);
+    --tw-prose-links: var(--special);
+    --tw-prose-code: var(--fg);
+    --tw-prose-pre-bg: var(--card);
+    --tw-prose-bold: var(--fg);
+    --tw-prose-quotes: var(--fg);
+    --tw-prose-quote-borders: var(--card);
+    --tw-prose-bullets: var(--fg);
+    --tw-prose-hr: var(--fg);
+    --tw-prose-captions: var(--card);
+    --tw-prose-th-borders: var(--card);
+    --tw-prose-td-borders: var(--fg);
+    --tw-prose-links: var(--special);
   }
 
   .banner {
     height: calc(68px + max(min(100vw, 600px), 360px) * 0.1);
+    background: var(--bg-lighter);
 
-    @apply absolute left-0 top-0 z-10 w-full bg-base bg-cover bg-center;
+    @apply absolute left-0 top-0 z-10 w-full bg-cover bg-center;
   }
 
-.tags {
-  top: 15px;
-  right: 20px;
+  .tags {
+    top: 15px;
+    right: 20px;
 
-  @apply absolute ml-1 inline-block text-sm;
-}
+    @apply absolute ml-1 inline-block text-sm;
+  }
 
   .tag {
     padding: 0 10px 0 6px;
-    border-radius: 0 3px 3px 0; 
+    border-radius: 0 3px 3px 0;
+    color: var(--bg-darker);
+    background-color: var(--special);
 
-    @apply ml-2 bg-sapphire text-crust relative inline-flex h-5; 
+    @apply ml-2 relative inline-flex h-5; 
   }
-  .tag-after {
-      transform: rotate(180deg);
-      left: -8px;
-      border-bottom: 10px solid transparent;
-      border-top: 10px solid transparent;
-      border-left: 8px solid rgb(var(--ctp-sapphire));
 
-      @apply absolute top-0;
-    }
+  .tag-after {
+    transform: rotate(180deg);
+    left: -8px;
+    border-bottom: 10px solid transparent;
+    border-top: 10px solid transparent;
+    border-left: 8px solid var(--special);
+
+    @apply absolute top-0;
+  }
 }
