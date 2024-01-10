@@ -19,14 +19,14 @@ import (
 func GetBlogPosts() []Post {
 	var posts []Post
 
-	files, err := os.ReadDir("./content/")
+	files, err := os.ReadDir(GetPath("content/"))
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	for _, file := range files {
 		if strings.HasSuffix(file.Name(), ".md") {
-			content, err := os.ReadFile("./content/" + file.Name())
+			content, err := os.ReadFile(GetPath("content/") + file.Name())
 			if err != nil {
 				log.Fatal(err)
 			}

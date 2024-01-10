@@ -5,13 +5,15 @@ import (
 	"log"
 
 	"github.com/labstack/echo/v4"
+
+	"isabelroses.com/lib"
 )
 
 func Home(c echo.Context) error {
 	templates := []string{
-		"./templates/layouts/base.html",
-		"./templates/partials/header.html",
-		"./templates/pages/home.html",
+		lib.GetPath("templates/layouts/base.html"),
+		lib.GetPath("templates/partials/header.html"),
+		lib.GetPath("templates/pages/home.html"),
 	}
 
 	ts, err := template.ParseFiles(templates...)

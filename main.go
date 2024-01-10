@@ -4,6 +4,7 @@ import (
 	"io"
 	"text/template"
 
+	"isabelroses.com/lib"
 	"isabelroses.com/pages"
 
 	"github.com/labstack/echo/v4"
@@ -30,7 +31,7 @@ func main() {
 	e.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(69)))
 
 	t := &Template{
-		templates: template.Must(template.ParseGlob("templates/**/*.html")),
+		templates: template.Must(template.ParseGlob(lib.GetPath("templates/**/*.html"))),
 	}
 
 	e.Renderer = t

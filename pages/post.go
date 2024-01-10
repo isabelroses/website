@@ -18,8 +18,8 @@ type PostProps struct {
 func Post(c echo.Context) error {
 	var (
 		finalPost lib.Post
-		posts     []lib.Post = lib.GetBlogPosts()
-		slug      string     = c.Param("slug")
+		posts     = lib.GetBlogPosts()
+		slug      = c.Param("slug")
 	)
 
 	parts := strings.Split(slug, "-")
@@ -50,9 +50,9 @@ func Post(c echo.Context) error {
 	}
 
 	templates := []string{
-		"./templates/layouts/base.html",
-		"./templates/partials/header.html",
-		"./templates/pages/post.html",
+		lib.GetPath("templates/layouts/base.html"),
+		lib.GetPath("templates/partials/header.html"),
+		lib.GetPath("templates/pages/post.html"),
 	}
 
 	ts, err := template.ParseFiles(templates...)

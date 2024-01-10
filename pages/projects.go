@@ -46,11 +46,11 @@ func Projects(c echo.Context) error {
 	}
 
 	templates := []string{
-		"./templates/layouts/base.html",
-		"./templates/partials/header.html",
-		"./templates/partials/heading.html",
-		"./templates/partials/project.html",
-		"./templates/pages/projects.html",
+		lib.GetPath("templates/layouts/base.html"),
+		lib.GetPath("templates/partials/header.html"),
+		lib.GetPath("templates/partials/heading.html"),
+		lib.GetPath("templates/partials/project.html"),
+		lib.GetPath("templates/pages/projects.html"),
 	}
 
 	ts, err := template.ParseFiles(templates...)

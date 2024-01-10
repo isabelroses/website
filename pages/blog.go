@@ -19,11 +19,11 @@ func Blog(c echo.Context) error {
 	}
 
 	templates := []string{
-		"./templates/layouts/base.html",
-		"./templates/partials/header.html",
-		"./templates/partials/heading.html",
-		"./templates/partials/blogpreview.html",
-		"./templates/pages/blog.html",
+		lib.GetPath("templates/layouts/base.html"),
+		lib.GetPath("templates/partials/header.html"),
+		lib.GetPath("templates/partials/heading.html"),
+		lib.GetPath("templates/partials/blogpreview.html"),
+		lib.GetPath("templates/pages/blog.html"),
 	}
 
 	ts, err := template.ParseFiles(templates...)
