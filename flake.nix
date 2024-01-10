@@ -26,7 +26,7 @@
           ];
         };
 
-        packages.default = pkgs.callPackage ./nix/serve.nix {};
+        packages.default = pkgs.callPackage ./default.nix {};
       };
     };
 }
