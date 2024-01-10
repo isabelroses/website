@@ -36,7 +36,7 @@ func main() {
 
 	e.Renderer = t
 
-	e.Static("/public", "public")
+	e.Static("/public", lib.GetPath("public"))
 
 	e.GET("/", pages.Home)
 	e.GET("/projects", pages.Projects)
