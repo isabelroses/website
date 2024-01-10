@@ -8,7 +8,6 @@
       systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
 
       perSystem = {
-        self,
         pkgs,
         system,
         ...
@@ -29,7 +28,7 @@
 
         packages.default = pkgs.callPackage ./default.nix {};
 
-        nixosModules.default = import ./module.nix self;
+        nixosModules.default = import ./module.nix;
       };
     };
 }
