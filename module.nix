@@ -1,7 +1,7 @@
-{
+self: {
+  pkgs,
   config,
   lib,
-  self',
   ...
 }: let
   inherit (lib) mkIf mkEnableOption;
@@ -16,13 +16,13 @@ in {
       after = ["network.target"];
       wantedBy = ["multi-user.target"];
       path = [
-        self'.packages.default
+        self.packages.${pkgs.stdenv.hostPlatform.system}.default
       ];
 
       serviceConfig = {
         Type = "simple";
         DynamicUser = true;
-        ExecStart = "${self'.packages.default}/bin/isabelroses.com";
+        ExecStart = "${self.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/isabelroses.com";
         Restart = "always";
       };
     };
