@@ -17,7 +17,7 @@
         };
 
         devShells.default = pkgs.mkShell {
-          name = "isabelroses.com";
+          name = "isabelroses-website";
           packages = with pkgs; [
             go
             gopls
