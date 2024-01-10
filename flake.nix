@@ -1,34 +1,20 @@
 {
   description = "isabelroses.com";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-23.11";
 
-  outputs = inputs @ {flake-parts, ...}:
-    flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux" "aarch64-linux" "aarch64-darwin"];
+  outputs = {nixpkgs, ...}: let
+    forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "x86_64-darwin" "i686-linux" "aarch64-linux" "aarch64-darwin"];
+    pkgsForEach = nixpkgs.legacyPackages;
+  in {
+    packages = forAllSystems (system: {
+      default = pkgsForEach.${system}.callPackage ./default.nix {};
+    });
 
-      perSystem = {
-        pkgs,
-        system,
-        ...
-      }: {
-        _module.args.pkgs = import inputs.nixpkgs {
-          inherit system;
-        };
+    devShells = forAllSystems (system: {
+      default = pkgsForEach.${system}.callPackage ./shell.nix {};
+    });
 
-        devShells.default = pkgs.mkShell {
-          name = "isabelroses-website";
-          packages = with pkgs; [
-            go
-            gopls
-            air
-            yarn
-          ];
-        };
-
-        packages.default = pkgs.callPackage ./default.nix {};
-
-        nixosModules.default = import ./module.nix;
-      };
-    };
+    nixosModules.default = import ./module.nix;
+  };
 }
