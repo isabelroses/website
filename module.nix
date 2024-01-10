@@ -1,5 +1,4 @@
-{
-  self,
+self: {
   pkgs,
   config,
   lib,
@@ -7,9 +6,7 @@
 }: let
   inherit (lib) mkIf mkEnableOption;
 in {
-  options = {
-    services.isabelroses-website.enable = mkEnableOption "isabelroses-website";
-  };
+  options.services.isabelroses-website.enable = mkEnableOption "isabelroses-website";
 
   config = mkIf config.services.isabelroses-website.enable {
     systemd.services."isabelroses-website" = {
