@@ -3,14 +3,12 @@ module isabelroses.com
 go 1.21.5
 
 require (
+	github.com/gorilla/feeds v1.1.2
 	github.com/labstack/echo/v4 v4.11.4
 	github.com/yuin/goldmark-meta v1.1.0
 )
 
-require (
-	github.com/kr/pretty v0.1.0 // indirect
-	gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
-)
+require gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127 // indirect
 
 require (
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
