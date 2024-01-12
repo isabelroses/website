@@ -14,11 +14,15 @@ buildGoModule {
 
   preBuild = ''
     substituteInPlace lib/settings.go \
-      --replace "./" "$out/"
+      --replace "./" "$out/share/"
   '';
 
   postInstall = ''
-    cp -r * $out/
+    mkdir -p $out/share
+
+    cp -r content $out/share/content
+    cp -r public $out/share/public
+    cp -r templates $out/share/templates
   '';
 
   meta = {
