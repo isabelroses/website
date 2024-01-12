@@ -2,6 +2,7 @@ package main
 
 import (
 	"io"
+	"net/http"
 	"text/template"
 
 	"isabelroses.com/lib"
@@ -39,10 +40,22 @@ func main() {
 	e.Static("/public", lib.GetPath("public"))
 
 	e.GET("/", pages.Home)
+
 	e.GET("/projects", pages.Projects)
 	e.GET("/projects/*", pages.Projects)
+
 	e.GET("/blog", pages.Blog)
 	e.GET("/blog/:slug", pages.Post)
+
+	// rss feeds for the blog
+	e.GET("/atom.xml", func(c echo.Context) error {
+		rss := lib.AtomFeed()
+		return c.XML(http.StatusOK, rss)
+	})
+	e.GET("/rss.xml", func(c echo.Context) error {
+		rss := lib.RssFeed()
+		return c.XML(http.StatusOK, rss)
+	})
 
 	e.Logger.Fatal(e.Start(":3000"))
 }
