@@ -1,7 +1,6 @@
 package lib
 
 import (
-	"strconv"
 	"time"
 
 	"github.com/gorilla/feeds"
@@ -10,7 +9,7 @@ import (
 func RssFeed() *feeds.RssFeedXml {
 	feed := &feeds.Feed{
 		Title:       "Isabel Roses",
-		Link:        &feeds.Link{Href: "https://isabelroses.com"},
+		Link:        &feeds.Link{Href: "https://isabelroses.com", Rel: "self"},
 		Description: "Isabel Roses' blog",
 		Author:      &feeds.Author{Name: "Isabel Roses", Email: "isabel@isabelroses.com"},
 		Created:     time.Now(),
@@ -21,10 +20,11 @@ func RssFeed() *feeds.RssFeedXml {
 	var feedItems []*feeds.Item
 	for _, post := range posts {
 		created, _ := time.Parse(time.RFC3339, post.Date)
+		href := "https://isabelroses.com/blog/" + post.Slug
 		feedItems = append(feedItems, &feeds.Item{
-			Id:          strconv.Itoa(post.ID),
+			Id:          href,
 			Title:       post.Title,
-			Link:        &feeds.Link{Href: "https://isabelroses.com/blog/" + post.Slug, Rel: "self"},
+			Link:        &feeds.Link{Href: href, Rel: "self"},
 			Description: string(post.Content),
 			Created:     created,
 		})
