@@ -21,7 +21,7 @@ yarn build
 yarn watch
 
 # then you can run the server using air
-air
+air # you can get this using `go install github.com/cosmtrek/air@latest`
 ```
 
 ### License
