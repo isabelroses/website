@@ -21,7 +21,6 @@ func Blog(c echo.Context) error {
 	templates := []string{
 		lib.GetPath("templates/layouts/base.html"),
 		lib.GetPath("templates/components/header.html"),
-		lib.GetPath("templates/components/heading.html"),
 		lib.GetPath("templates/components/blogpreview.html"),
 		lib.GetPath("templates/pages/blog.html"),
 	}
