@@ -47,9 +47,9 @@ func Projects(c echo.Context) error {
 
 	templates := []string{
 		lib.GetPath("templates/layouts/base.html"),
-		lib.GetPath("templates/partials/header.html"),
-		lib.GetPath("templates/partials/heading.html"),
-		lib.GetPath("templates/partials/project.html"),
+		lib.GetPath("templates/components/header.html"),
+		lib.GetPath("templates/components/heading.html"),
+		lib.GetPath("templates/components/project.html"),
 		lib.GetPath("templates/pages/projects.html"),
 	}
 

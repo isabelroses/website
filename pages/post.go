@@ -11,10 +11,6 @@ import (
 	"isabelroses.com/lib"
 )
 
-type PostProps struct {
-	*lib.Post
-}
-
 func Post(c echo.Context) error {
 	var (
 		finalPost lib.Post
@@ -39,19 +35,19 @@ func Post(c echo.Context) error {
 		}
 	}
 
-	props := map[string]interface{}{
-		"ID":          finalPost.ID,
-		"Title":       finalPost.Title,
-		"Description": finalPost.Description,
-		"Content":     finalPost.Content,
-		"Date":        finalPost.Date,
-		"Tags":        finalPost.Tags,
-		"Slug":        finalPost.Slug,
+	props := lib.Post{
+		ID:          finalPost.ID,
+		Title:       finalPost.Title,
+		Description: finalPost.Description,
+		Content:     finalPost.Content,
+		Date:        finalPost.Date,
+		Tags:        finalPost.Tags,
+		Slug:        finalPost.Slug,
 	}
 
 	templates := []string{
 		lib.GetPath("templates/layouts/base.html"),
-		lib.GetPath("templates/partials/header.html"),
+		lib.GetPath("templates/components/header.html"),
 		lib.GetPath("templates/pages/post.html"),
 	}
 

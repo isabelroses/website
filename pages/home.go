@@ -12,7 +12,7 @@ import (
 func Home(c echo.Context) error {
 	templates := []string{
 		lib.GetPath("templates/layouts/base.html"),
-		lib.GetPath("templates/partials/header.html"),
+		lib.GetPath("templates/components/header.html"),
 		lib.GetPath("templates/pages/home.html"),
 	}
 

@@ -21,7 +21,7 @@ func GetBlogPosts() []Post {
 
 	files, err := os.ReadDir(GetPath("content/"))
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("failed to open file: %v", err)
 	}
 
 	for _, file := range files {
