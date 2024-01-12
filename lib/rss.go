@@ -1,12 +1,13 @@
 package lib
 
 import (
+	"strconv"
 	"time"
 
 	"github.com/gorilla/feeds"
 )
 
-func setupFeed() *feeds.Feed {
+func RssFeed() *feeds.RssFeedXml {
 	feed := &feeds.Feed{
 		Title:       "Isabel Roses",
 		Link:        &feeds.Link{Href: "https://isabelroses.com"},
@@ -21,27 +22,17 @@ func setupFeed() *feeds.Feed {
 	for _, post := range posts {
 		created, _ := time.Parse(time.RFC3339, post.Date)
 		feedItems = append(feedItems, &feeds.Item{
+			Id:          strconv.Itoa(post.ID),
 			Title:       post.Title,
-			Link:        &feeds.Link{Href: "https://isabelroses.com/blog/" + post.Slug},
+			Link:        &feeds.Link{Href: "https://isabelroses.com/blog/" + post.Slug, Rel: "self"},
 			Description: string(post.Content),
 			Created:     created,
 		})
 	}
 	feed.Items = feedItems
 
-	return feed
-}
-
-func RssFeed() *feeds.RssFeedXml {
-	rssFeed := (&feeds.Rss{Feed: setupFeed()}).RssFeed()
+	rssFeed := (&feeds.Rss{Feed: feed}).RssFeed()
 	xmlRssFeeds := rssFeed.FeedXml()
 
 	return xmlRssFeeds.(*feeds.RssFeedXml)
-}
-
-func AtomFeed() *feeds.AtomFeed {
-	atomFeed := (&feeds.Atom{Feed: setupFeed()}).AtomFeed()
-	xmlAtomFeeds := atomFeed.FeedXml()
-
-	return xmlAtomFeeds.(*feeds.AtomFeed)
 }

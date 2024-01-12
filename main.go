@@ -47,11 +47,6 @@ func main() {
 	e.GET("/blog", pages.Blog)
 	e.GET("/blog/:slug", pages.Post)
 
-	// rss feeds for the blog
-	e.GET("/atom.xml", func(c echo.Context) error {
-		rss := lib.AtomFeed()
-		return c.XML(http.StatusOK, rss)
-	})
 	e.GET("/rss.xml", func(c echo.Context) error {
 		rss := lib.RssFeed()
 		return c.XML(http.StatusOK, rss)
