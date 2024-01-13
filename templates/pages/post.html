@@ -1,18 +1,14 @@
-{{define "title"}}Blog > {{.Title}}{{end}}
-{{define "description"}}{{.Description}}{{end}}
-
-{{define "additionalhead"}}
+{{define "title"}}Blog > {{.Title}}{{end}} {{define
+"description"}}{{.Description}}{{end}} {{define "additionalhead"}}
 <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
 <script defer>
   hljs.highlightAll();
 </script>
-{{end}}
-
-{{define "main"}}
-<div class="relative w-full text-left self-start pb-8">
+{{end}} {{define "main"}}
+<div class="relative self-start w-full pb-8 text-left">
   <h2 class="text-2xl font-bold">{{.Title}}</h2>
   <p class="text-fg-lighter">{{.Description}}</p>
-  <p class="text-fg-lighter text-xs">{{.Date}}</p>
+  <p class="text-xs text-fg-lighter">{{.Date}}</p>
 
   {{if .Tags}}
   <div class="tags">
@@ -26,10 +22,10 @@
   {{end}}
 </div>
 
-<article class="prose mx-auto">{{.Content}}</article>
+<article class="mx-auto prose">{{.Content}}</article>
 
-<footer class="mb-12 flex flex-col">
-  <ul class="flex flex-row gap-2 mb-4 justify-center">
+<footer class="flex flex-col mb-12">
+  <ul class="flex flex-row justify-center gap-2 mb-4">
     <li>
       <button
         onclick="navigator.share({url: 'https://isabelroses.com/blog/{{.Slug}}'})"
@@ -83,7 +79,7 @@
     </li>
   </ul>
 
-  <span class="text-fg-lighter text-xs text-center">
+  <span class="text-xs text-center text-fg-lighter">
     © Licensed under
     <a
       class="underline"

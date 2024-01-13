@@ -5,6 +5,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' https://p.isabelroses.com; script-src-elem 'self' https://p.isabelroses.com;">
   <meta name="color-scheme" content="dark">
 
   <title>{{template "title" .}}</title>
@@ -38,7 +39,7 @@
   class="mocha">
   {{template "header" .}}
 
-  <main class="flex flex-col overflow-x-hidden pb-8">{{template "main" .}}</main>
+  <main class="flex flex-col pb-8 overflow-x-hidden">{{template "main" .}}</main>
 </body>
 
 </html>
