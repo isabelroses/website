@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"io"
 	"net/http"
 	"text/template"
@@ -20,10 +21,22 @@ func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Con
 	return t.templates.ExecuteTemplate(w, name, data)
 }
 
+func customHTTPErrorHandler(err error, c echo.Context) {
+	code := http.StatusInternalServerError
+	if he, ok := err.(*echo.HTTPError); ok {
+		code = he.Code
+	}
+	c.Logger().Error(err)
+	if err := c.Render(code, fmt.Sprintf("%v", pages.ErrorPage(c, code)), nil); err != nil {
+		c.Logger().Error(err)
+	}
+}
+
 func main() {
 	e := echo.New()
 
 	e.Use(middleware.Logger())
+	e.Use(middleware.Recover())
 	e.Use(middleware.RequestID())
 	e.Use(middleware.Secure())
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
@@ -35,9 +48,9 @@ func main() {
 		templates: template.Must(template.ParseGlob(lib.GetPath("templates/**/*.html"))),
 	}
 
-	e.Renderer = t
+	e.HTTPErrorHandler = customHTTPErrorHandler
 
-	e.Static("/public", lib.GetPath("public"))
+	e.Renderer = t
 
 	e.GET("/", pages.Home)
 
@@ -50,6 +63,16 @@ func main() {
 	e.GET("/rss.xml", func(c echo.Context) error {
 		rss := lib.RssFeed()
 		return c.XML(http.StatusOK, rss)
+	})
+
+	e.Static("/public", lib.GetPath("public"))
+	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
+		return func(c echo.Context) error {
+			if c.Request().URL.Path == "/public/*" {
+				c.Response().Header().Set("Cache-Control", "public, max-age=86400")
+			}
+			return next(c)
+		}
 	})
 
 	e.Logger.Fatal(e.Start(":3000"))
