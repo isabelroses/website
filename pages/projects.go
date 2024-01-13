@@ -22,8 +22,8 @@ func Projects(c echo.Context) error {
 		},
 		{
 			Name:   "Userstyles",
-			Icon:   "userstyles-icon.png",
-			Banner: "userstyles-banner.jpg",
+			Icon:   "userstyles-icon.webp",
+			Banner: "userstyles-banner.webp",
 			Repo:   "https://github.com/catppuccin/userstyles",
 		},
 		{
@@ -35,8 +35,8 @@ func Projects(c echo.Context) error {
 		{
 			Name:        "Bellado",
 			Description: "A fast and once simple cli todo tool",
-			Icon:        "bellado-icon.png",
-			Banner:      "bellado-banner.png",
+			Icon:        "bellado-icon.webp",
+			Banner:      "bellado-banner.webp",
 			Repo:        "https://github.com/isabelroses/bellado",
 		},
 	}
