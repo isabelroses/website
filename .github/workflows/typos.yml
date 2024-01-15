@@ -1,0 +1,24 @@
+name: Typo Checker
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "*.md"
+
+jobs:
+  spellcheck:
+    name: Spellcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check for typos
+        uses: crate-ci/typos@master
+        id: typos
+        continue-on-error: true
+
+      - name: Fail when typos are found
+        if: ${{ steps.typos.outcome != 'success' }}
+        run: "exit 1"

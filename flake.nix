@@ -1,45 +1,24 @@
 {
-  description = "isabelroses.com flake";
+  description = "isabelroses.com";
 
-  inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs";
-    flake-utils.url = "github:numtide/flake-utils";
-  };
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
   outputs = {
     nixpkgs,
-    flake-utils,
+    self,
     ...
-  }:
-    flake-utils.lib.eachDefaultSystem (
-      system: let
-        pkgs = import nixpkgs {inherit system;};
-      in {
-        devShells.default = pkgs.mkShellNoCC {
-          name = "isabelroses.com";
-          packages = with pkgs; let
-            mkNpxAlias = name: writeShellScriptBin name "npx ${name} \"$@\"";
-          in [
-            (nodePackages.yarn.override {inherit nodejs_20;})
-            nodejs_20
-            eslint_d
-            prettierd
-            (mkNpxAlias "tsc")
-            (mkNpxAlias "tsserver")
+  }: let
+    forAllSystems = nixpkgs.lib.genAttrs ["x86_64-linux" "x86_64-darwin" "i686-linux" "aarch64-linux" "aarch64-darwin"];
+    pkgsForEach = nixpkgs.legacyPackages;
+  in {
+    packages = forAllSystems (system: {
+      default = pkgsForEach.${system}.callPackage ./default.nix {};
+    });
 
-            # for python gen script
-            python3
-            # python3.withPackages
-            # (
-            #   with python311Packages; [
-            #     pathlib
-            #     pyyaml
-            #     feedgen
-            #     pytz
-            #   ]
-            # )
-          ];
-        };
-      }
-    );
+    devShells = forAllSystems (system: {
+      default = pkgsForEach.${system}.callPackage ./shell.nix {};
+    });
+
+    nixosModules.default = import ./module.nix self;
+  };
 }

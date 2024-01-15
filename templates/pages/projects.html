@@ -1,0 +1,13 @@
+{{define "title"}}Projects{{end}}
+{{define "description"}}A collection of projects that I maintain{{end}}
+{{define "additionalhead"}}{{end}} 
+
+{{define "main"}}
+<section class="flex flex-col gap-4">
+  <div class="text-left">
+    <h1 class="text-2xl font-bold">{{template "title" .}}</h1>
+    <p class="text-fg-lighter">{{template "description" .}}</p>
+</div>
+  {{range .Projects}} {{template "project" .}} {{end}}
+</section>
+{{end}}

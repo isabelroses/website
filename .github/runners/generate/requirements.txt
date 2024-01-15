@@ -1,4 +1,0 @@
-pathlib
-pyyaml
-feedgen
-pytz
