@@ -16,7 +16,7 @@ buildGoModule {
   
   preBuild = ''
     substituteInPlace lib/settings.go \
-      --replace "./" "$out/share/"
+      --replace "." "$out/share/"
   '';
 
   postInstall = ''
