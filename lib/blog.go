@@ -16,17 +16,17 @@ import (
 	"github.com/yuin/goldmark/parser"
 )
 
-func GetBlogPosts() []Post {
-	var posts []Post
+func GetBlogPosts() Posts {
+	var posts Posts
 
-	files, err := os.ReadDir(GetPath("content/"))
+	files, err := os.ReadDir(GetPath("/content/"))
 	if err != nil {
 		log.Fatalf("failed to open file: %v", err)
 	}
 
 	for _, file := range files {
 		if strings.HasSuffix(file.Name(), ".md") {
-			content, err := os.ReadFile(GetPath("content/") + file.Name())
+			content, err := os.ReadFile(GetPath("/content/") + file.Name())
 			if err != nil {
 				log.Fatal(err)
 			}
@@ -61,13 +61,28 @@ func createPost(content []byte, fileName string) Post {
 	post.Title = metaData["title"].(string)
 	post.Date = metaData["date"].(string)
 	post.Description = metaData["description"].(string)
-	post.Tags = metaData["tags"]
 	post.Slug = fmt.Sprintf("%v", strings.TrimSuffix(fileName, ".md"))
+
+	tagsInterface, err := metaData["tags"].([]interface{})
+	if !err {
+		log.Fatal(err)
+	}
+
+	// Now, convert each element from interface{} to string
+	var tags []string
+	for _, tag := range tagsInterface {
+		if str, err := tag.(string); err {
+			tags = append(tags, str)
+		} else {
+			log.Fatal(err)
+		}
+	}
+	post.Tags = tags
 
 	return post
 }
 
-func sortPosts(posts []Post) {
+func sortPosts(posts Posts) {
 	const layout = "02/01/2006"
 
 	sort.Slice(posts, func(i, j int) bool {
@@ -93,4 +108,42 @@ func sortPosts(posts []Post) {
 	for i := 0; i < len(posts)/2; i++ {
 		posts[i], posts[len(posts)-i-1] = posts[len(posts)-i-1], posts[i]
 	}
+}
+
+func (posts Posts) FilterByTag(tag string) Posts {
+	var filteredPosts Posts
+
+	for _, post := range posts {
+		for _, postTag := range post.Tags {
+			if postTag == tag {
+				filteredPosts = append(filteredPosts, post)
+				break
+			}
+		}
+	}
+
+	return filteredPosts
+}
+
+func GetAllBlogTags() []string {
+	var tags []string
+
+	for _, post := range GetBlogPosts() {
+		for _, tag := range post.Tags {
+			if !contains(tags, tag) {
+				tags = append(tags, tag)
+			}
+		}
+	}
+
+	return tags
+}
+
+func contains(tags []string, tag string) bool {
+	for _, t := range tags {
+		if t == tag {
+			return true
+		}
+	}
+	return false
 }
