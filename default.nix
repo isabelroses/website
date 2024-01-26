@@ -14,11 +14,6 @@ buildGoModule {
 
   ldflags = ["-s" "-w"];
 
-  preBuild = ''
-    substituteInPlace lib/settings.go \
-      --replace "./" "$out/share/"
-  '';
-
   postInstall = ''
     mkdir -p $out/share
 
