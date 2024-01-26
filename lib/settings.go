@@ -1,8 +1,8 @@
 package lib
 
-// Default settings
-var RootDir string = "./" // remember trailing slash
+import "os"
 
 func GetPath(path string) string {
-	return RootDir + path
+	dir, _ := os.Getwd()
+	return dir + path
 }

@@ -25,6 +25,8 @@ type Post struct {
 	Description string
 	Content     template.HTML
 	Date        string
-	Tags        interface{}
+	Tags        []string
 	Slug        string
 }
+
+type Posts []Post
