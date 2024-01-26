@@ -63,23 +63,16 @@
     height: calc(68px + max(min(100vw, 600px), 360px) * 0.1);
     background: var(--bg-lighter);
 
-    @apply absolute left-0 top-0 z-10 w-full bg-cover bg-center;
+    @apply absolute top-0 left-0 z-10 w-full bg-center bg-cover;
   }
-
-  .tags {
-    top: 15px;
-    right: 20px;
-
-    @apply absolute ml-1 inline-block text-sm;
-  }
-
+  
   .tag {
     padding: 0 10px 0 6px;
     border-radius: 0 3px 3px 0;
     color: var(--bg-darker);
     background-color: var(--special);
 
-    @apply ml-2 relative inline-flex h-5; 
+    @apply relative inline-flex h-5 ml-2; 
   }
 
   .tag-after {
