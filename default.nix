@@ -4,7 +4,7 @@
 }:
 buildGoModule {
   pname = "isabelroses-website";
-  version = "0.0.1";
+  version = "0.0.2";
 
   src = ./.;
 
@@ -13,6 +13,11 @@ buildGoModule {
   vendorHash = "sha256-8XpNo4WDDgSxoGBWpOamue3I1BWP0xtU8IA9BCAgBnQ=";
 
   ldflags = ["-s" "-w"];
+  
+  preBuild = ''
+    substituteInPlace lib/settings.go \
+      --replace "./" "$out/share/"
+  '';
 
   postInstall = ''
     mkdir -p $out/share
