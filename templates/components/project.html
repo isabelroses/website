@@ -20,7 +20,7 @@
   <div class="z-10 flex items-end w-full">
     <div class="flex-grow overflow-hidden whitespace-nowrap">
       <span class="pr-5 text-lg">{{.Name}}</span>
-      <span class="hidden text-sm md:inline-flex">{{.Description}}</span>
+      <!-- <span class="hidden text-sm md:inline-flex">{{.Description}}</span> -->
     </div>
 
     <div class="flex flex-row gap-3">
@@ -39,7 +39,9 @@
           />
         </svg>
       </a>
-      {{end}} {{if .Repo}}
+      {{end}}
+      
+      {{if .Repo}}
       <a role="button" href="{{.Repo}}" aria-label="{{.Name}}'s repo">
         <svg
           xmlns="http://www.w3.org/2000/svg"

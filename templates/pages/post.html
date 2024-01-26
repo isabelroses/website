@@ -1,17 +1,19 @@
-{{define "title"}}Blog > {{.Title}}{{end}} {{define
-"description"}}{{.Description}}{{end}} {{define "additionalhead"}}
+{{define "title"}}Blog > {{.Title}}{{end}}
+{{define "description"}}{{.Description}}{{end}}
+{{define "additionalhead"}}
 <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
 <script defer>
   hljs.highlightAll();
 </script>
-{{end}} {{define "main"}}
+{{end}}
+
+{{define "main"}}
 <div class="relative self-start w-full pb-8 text-left">
   <h2 class="text-2xl font-bold">{{.Title}}</h2>
   <p class="text-fg-lighter">{{.Description}}</p>
   <p class="text-xs text-fg-lighter">{{.Date}}</p>
 
-  {{if .Tags}}
-  <div class="tags">
+  <div class="absolute ml-1 flex flex-row gap-2 text-sm top-[5px] right-[15px]">
     {{range .Tags}}
     <div class="tag">
       {{.}}
@@ -19,7 +21,6 @@
     </div>
     {{end}}
   </div>
-  {{end}}
 </div>
 
 <article class="mx-auto prose">{{.Content}}</article>
