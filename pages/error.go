@@ -1,8 +1,6 @@
 package pages
 
 import (
-	"html/template"
-	"log"
 	"strconv"
 
 	"github.com/labstack/echo/v4"
@@ -19,18 +17,8 @@ func ErrorPage(c echo.Context, code int) error {
 		Code: strconv.Itoa(code),
 	}
 
-	templates := []string{
-		lib.GetPath("templates/layouts/base.html"),
-		lib.GetPath("templates/components/header.html"),
-		lib.GetPath("templates/pages/error.html"),
-	}
-
-	ts, err := template.ParseFiles(templates...)
-	if err != nil {
-		log.Print(err.Error())
-		return err
-	}
-
 	c.Response().WriteHeader(code)
-	return ts.ExecuteTemplate(c.Response().Writer, "base", props)
+	components := []string{"header"}
+	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
+	
 }

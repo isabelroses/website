@@ -1,9 +1,6 @@
 package pages
 
 import (
-	"html/template"
-	"log"
-
 	"github.com/labstack/echo/v4"
 	"isabelroses.com/lib"
 )
@@ -45,18 +42,6 @@ func Projects(c echo.Context) error {
 		Projects: projects,
 	}
 
-	templates := []string{
-		lib.GetPath("templates/layouts/base.html"),
-		lib.GetPath("templates/components/header.html"),
-		lib.GetPath("templates/components/project.html"),
-		lib.GetPath("templates/pages/projects.html"),
-	}
-
-	ts, err := template.ParseFiles(templates...)
-	if err != nil {
-		log.Print(err.Error())
-		return err
-	}
-
-	return ts.ExecuteTemplate(c.Response().Writer, "base", props)
+	components := []string{"header", "project"}
+	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
 }

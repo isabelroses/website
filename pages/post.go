@@ -1,7 +1,6 @@
 package pages
 
 import (
-	"html/template"
 	"log"
 	"net/http"
 	"strconv"
@@ -45,17 +44,6 @@ func Post(c echo.Context) error {
 		Slug:        finalPost.Slug,
 	}
 
-	templates := []string{
-		lib.GetPath("templates/layouts/base.html"),
-		lib.GetPath("templates/components/header.html"),
-		lib.GetPath("templates/pages/post.html"),
-	}
-
-	ts, err := template.ParseFiles(templates...)
-	if err != nil {
-		log.Print(err.Error())
-		return err
-	}
-
-	return ts.ExecuteTemplate(c.Response().Writer, "base", props)
+	components := []string{"header"}
+	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
 }

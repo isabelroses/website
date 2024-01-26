@@ -1,35 +1,33 @@
 package pages
 
 import (
-	"html/template"
-	"log"
-
 	"github.com/labstack/echo/v4"
 
 	"isabelroses.com/lib"
 )
 
 type BlogProps struct {
-	Posts []lib.Post
+	Posts lib.Posts
+	Tags  []string
+	Tag string
 }
 
 func Blog(c echo.Context) error {
+	tag := c.Param("tag")
+	var posts lib.Posts
+
+	if tag == "" {
+		posts = lib.GetBlogPosts()
+	} else {
+		posts = lib.GetBlogPosts().FilterByTag(tag)
+	}
+
 	props := BlogProps{
-		Posts: lib.GetBlogPosts(),
+		Posts: posts,
+		Tags: lib.GetAllBlogTags(),
+		Tag:  tag,
 	}
 
-	templates := []string{
-		lib.GetPath("templates/layouts/base.html"),
-		lib.GetPath("templates/components/header.html"),
-		lib.GetPath("templates/components/blogpreview.html"),
-		lib.GetPath("templates/pages/blog.html"),
-	}
-
-	ts, err := template.ParseFiles(templates...)
-	if err != nil {
-		log.Print(err.Error())
-		return err
-	}
-
-	return ts.ExecuteTemplate(c.Response().Writer, "base", props)
+	components := []string{"header","blogpreview"}
+	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
 }

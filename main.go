@@ -44,13 +44,7 @@ func main() {
 	}))
 	e.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(69)))
 
-	t := &Template{
-		templates: template.Must(template.ParseGlob(lib.GetPath("templates/**/*.html"))),
-	}
-
 	e.HTTPErrorHandler = customHTTPErrorHandler
-
-	e.Renderer = t
 
 	e.GET("/", pages.Home)
 
@@ -58,6 +52,7 @@ func main() {
 	e.GET("/projects/*", pages.Projects)
 
 	e.GET("/blog", pages.Blog)
+	e.GET("/blog/tag/:tag", pages.Blog)
 	e.GET("/blog/:slug", pages.Post)
 
 	e.GET("/rss.xml", func(c echo.Context) error {
@@ -65,7 +60,7 @@ func main() {
 		return c.XML(http.StatusOK, rss)
 	})
 
-	e.Static("/public", lib.GetPath("public"))
+	e.Static("/public", lib.GetPath("/public"))
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			if c.Request().URL.Path == "/public/*" {
