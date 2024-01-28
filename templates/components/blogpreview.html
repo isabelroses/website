@@ -1,26 +1,24 @@
 {{define "blogpreview"}}
 <article>
   <a
-    class="flex flex-col px-4 py-5 bg-card text-left w-full md:w-[620px] sm:w-full min-w-80 shadow-xl rounded-2xl overflow-auto overflow-x-hidden box-border"
+    class="box-border flex flex-row w-full gap-4 px-4 py-5 overflow-auto overflow-x-hidden text-left shadow-xl bg-card sm:w-full min-w-80 rounded-2xl"
     href="blog/{{.Slug}}"
   >
-    <div class="relative">
+    <div class="flex flex-col gap-2">
       <p class="text-lg">{{.Title}}</p>
       <p class="text-fg-lighter">{{.Description}}</p>
+    </div>
 
-      <div
-        class="absolute ml-1 flex flex-col gap-2 text-sm top-[5px] right-[15px]"
-      >
-        <div class="text-xs text-right text-fg-lighter">{{.Date}}</div>
+    <div class="flex flex-col self-end gap-2 ml-auto text-sm">
+      <div class="text-xs text-right text-fg-lighter">{{.Date}}</div>
 
-        <div class="flex-row hidden gap-2 md:flex">
-          {{range .Tags}}
-          <div class="tag">
-            {{.}}
-            <div class="tag-after"></div>
-          </div>
-          {{end}}
+      <div class="flex-row hidden gap-2 md:flex">
+        {{range .Tags}}
+        <div class="tag">
+          {{.}}
+          <div class="tag-after"></div>
         </div>
+        {{end}}
       </div>
     </div>
   </a>
