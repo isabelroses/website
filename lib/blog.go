@@ -63,18 +63,18 @@ func createPost(content []byte, fileName string) Post {
 	post.Description = metaData["description"].(string)
 	post.Slug = fmt.Sprintf("%v", strings.TrimSuffix(fileName, ".md"))
 
-	tagsInterface, err := metaData["tags"].([]interface{})
-	if !err {
-		log.Fatal(err)
+	tagsInterface, ok := metaData["tags"].([]interface{})
+	if !ok {
+		log.Fatal(ok)
 	}
 
-	// Now, convert each element from interface{} to string
+	// Convert each element from interface{} to string
 	var tags []string
 	for _, tag := range tagsInterface {
-		if str, err := tag.(string); err {
+		if str, ok := tag.(string); ok {
 			tags = append(tags, str)
 		} else {
-			log.Fatal(err)
+			log.Fatal(ok)
 		}
 	}
 	post.Tags = tags
@@ -114,11 +114,8 @@ func (posts Posts) FilterByTag(tag string) Posts {
 	var filteredPosts Posts
 
 	for _, post := range posts {
-		for _, postTag := range post.Tags {
-			if postTag == tag {
-				filteredPosts = append(filteredPosts, post)
-				break
-			}
+		if contains(post.Tags, tag) {
+			filteredPosts = append(filteredPosts, post)
 		}
 	}
 
