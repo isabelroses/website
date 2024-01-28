@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"io"
 	"net/http"
-	"text/template"
 
 	"isabelroses.com/lib"
 	"isabelroses.com/pages"
@@ -12,14 +10,6 @@ import (
 	"github.com/labstack/echo/v4"
 	"github.com/labstack/echo/v4/middleware"
 )
-
-type Template struct {
-	templates *template.Template
-}
-
-func (t *Template) Render(w io.Writer, name string, data interface{}, c echo.Context) error {
-	return t.templates.ExecuteTemplate(w, name, data)
-}
 
 func customHTTPErrorHandler(err error, c echo.Context) {
 	code := http.StatusInternalServerError
@@ -49,10 +39,10 @@ func main() {
 	e.GET("/", pages.Home)
 
 	e.GET("/projects", pages.Projects)
-	e.GET("/projects/*", pages.Projects)
 
 	e.GET("/blog", pages.Blog)
 	e.GET("/blog/tag/:tag", pages.Blog)
+
 	e.GET("/blog/:slug", pages.Post)
 
 	e.GET("/rss.xml", func(c echo.Context) error {
@@ -64,7 +54,7 @@ func main() {
 	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
 		return func(c echo.Context) error {
 			if c.Request().URL.Path == "/public/*" {
-				c.Response().Header().Set("Cache-Control", "public, max-age=86400")
+				c.Response().Header().Set("Cache-Control", "public, max-age=3600")
 			}
 			return next(c)
 		}
