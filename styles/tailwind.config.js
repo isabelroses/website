@@ -23,8 +23,5 @@ module.exports = {
       mono: ['"Roboto Mono"', ...defaultTheme.fontFamily.mono],
 		},
   },
-  plugins: [
-    require("@tailwindcss/typography"),
-    require("tailwind-highlightjs"),
-  ],
+  plugins: [require("@tailwindcss/typography")],
 };
