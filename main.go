@@ -29,10 +29,11 @@ func main() {
 	e.Use(middleware.Recover())
 	e.Use(middleware.RequestID())
 	e.Use(middleware.Secure())
+	e.Pre(middleware.RemoveTrailingSlash())
 	e.Use(middleware.GzipWithConfig(middleware.GzipConfig{
 		Level: 5,
 	}))
-	e.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(69)))
+	e.Use(middleware.RateLimiter(middleware.NewRateLimiterMemoryStore(50)))
 
 	e.HTTPErrorHandler = customHTTPErrorHandler
 
@@ -51,14 +52,6 @@ func main() {
 	})
 
 	e.Static("/public", lib.GetPath("/public"))
-	e.Use(func(next echo.HandlerFunc) echo.HandlerFunc {
-		return func(c echo.Context) error {
-			if c.Request().URL.Path == "/public/*" {
-				c.Response().Header().Set("Cache-Control", "public, max-age=3600")
-			}
-			return next(c)
-		}
-	})
 
 	e.Logger.Fatal(e.Start(":3000"))
 }
