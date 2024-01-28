@@ -9,7 +9,7 @@ import (
 type BlogProps struct {
 	Posts lib.Posts
 	Tags  []string
-	Tag string
+	Tag   string
 }
 
 func Blog(c echo.Context) error {
@@ -24,10 +24,10 @@ func Blog(c echo.Context) error {
 
 	props := BlogProps{
 		Posts: posts,
-		Tags: lib.GetAllBlogTags(),
-		Tag:  tag,
+		Tags:  lib.GetAllBlogTags(),
+		Tag:   tag,
 	}
 
-	components := []string{"header","blogpreview"}
+	components := []string{"header", "blogpreview"}
 	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
 }

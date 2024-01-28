@@ -20,5 +20,5 @@ func ErrorPage(c echo.Context, code int) error {
 	c.Response().WriteHeader(code)
 	components := []string{"header"}
 	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
-	
+
 }

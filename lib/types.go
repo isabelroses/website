@@ -1,8 +1,6 @@
 package lib
 
-import (
-	"html/template"
-)
+import "html/template"
 
 type IconLink struct {
 	Name string
