@@ -3,7 +3,8 @@ title: Self-Healing URLs
 description: Creating self-healing URLs within my Vue.js website
 date: 10/12/2023
 tags:
-  - vue
+  - vuejs
+  - learning
   - webdev
 ---
 
