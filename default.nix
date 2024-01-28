@@ -4,7 +4,7 @@
 }:
 buildGoModule {
   pname = "isabelroses-website";
-  version = "0.0.2";
+  version = "0.0.3";
 
   src = ./.;
 
@@ -28,7 +28,7 @@ buildGoModule {
   '';
 
   meta = {
-    description = "Website for isabelroses.com";
+    description = "isabelroses.com";
     homepage = "https://isabelroses.com/";
     license = lib.licenses.gpl3;
     maintainers = with lib.maintainers; [isabelroses];
