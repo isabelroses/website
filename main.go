@@ -37,23 +37,21 @@ func main() {
 
 	e.HTTPErrorHandler = customHTTPErrorHandler
 
-	e.Use(middleware.StaticWithConfig(middleware.StaticConfig{	
-		Root: lib.GetPath("public"),
-	}))
-
 	e.GET("/", pages.Home)
-
+	
 	e.GET("/projects", pages.Projects)
-
+	
 	blogGroup := e.Group("blog")
 	blogGroup.GET("", pages.Blog)
 	blogGroup.GET("/:slug", pages.Post)
 	blogGroup.GET("/tag/:tag", pages.Blog)
-
+	
 	e.GET("/rss.xml", func(c echo.Context) error {
 		rss := lib.RssFeed()
 		return c.XML(http.StatusOK, rss)
 	})
 
+	e.Static("/public", lib.GetPath("/public"))
+		
 	e.Logger.Fatal(e.Start(":3000"))
 }
