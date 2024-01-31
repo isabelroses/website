@@ -11,14 +11,17 @@ git clone https://github.com/isabelroses/website
 cd website
 
 # Install dependencies (rejoice, nix users)
-nix develop # if you have nix installed, not a requirement though
-yarn install # needed for tailwindcss
+nix develop # if you have nix installed, not a requirement
+
 go mod tidy
 
+# tailwindcss
+cd styles
+bun install
 # you may need to recompile tailwindcss
-yarn build
+bun build
 # but if you want tailwindcss to recompile on changes
-yarn watch
+bun watch
 
 # then you can run the server using air
 air # you can get this using `go install github.com/cosmtrek/air@latest`
