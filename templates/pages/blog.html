@@ -1,6 +1,8 @@
-{{define "title"}}Blog{{end}} {{define "description"}}The parts of my life that
-I put out into the world{{end}} {{define "additionalhead"}}{{end}} {{define
-"main"}}
+{{define "title"}}Blog{{end}}
+{{define "description"}}The parts of my life that I put out into the world{{end}} 
+{{define "additionalhead"}}{{end}}
+
+{{define "main"}}
 <section class="flex flex-col gap-4">
   <div class="pb-4">
     <h1 class="text-4xl font-bold">
@@ -10,12 +12,12 @@ I put out into the world{{end}} {{define "additionalhead"}}{{end}} {{define
     <h2 class="text-xl text-fg-lighter">{{template "description" .}}</h2>
   </div>
 
-  <form name="tags" id="tags" class="flex flex-row w-full">
-    <label for="tags" class="w-1/2">Filter by tag: </label>
+  <form name="tags" id="tags" class="flex flex-row md:min-w-[620px] md:max-w-[620px]">
+    <label for="tags" class="w-1/2">Filter by 🏷️ tag: </label>
     <select
       name="tags"
       id="tags"
-      class="rounded-md w-full border border-fg-lighter bg-card text-fg-darker"
+      class="w-full border rounded-md border-fg-lighter bg-card text-fg-darker"
       aria-label="Filter by tag"
       onchange="window.location.href = this.value"
     >
@@ -23,12 +25,7 @@ I put out into the world{{end}} {{define "additionalhead"}}{{end}} {{define
       {{range .Tags}}
       <option
         value="/blog/tag/{{.}}"
-        {{if
-        eq
-        $.Tag
-        .
-        }}selected="selected"
-        {{else}}{{end}}
+        {{if eq $.Tag . }}selected="selected"{{end}}
       >
         {{.}}
       </option>
