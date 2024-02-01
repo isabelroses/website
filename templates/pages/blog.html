@@ -1,30 +1,41 @@
-{{define "title"}}Blog{{end}}
-{{define "description"}}The parts of my life that I put out into the world{{end}} 
-{{define "additionalhead"}}{{end}}
-
-{{define "main"}}
+{{define "title"}}Blog{{end}} {{define "description"}}The parts of my life that
+I put out into the world{{end}} {{define "additionalhead"}}{{end}} {{define
+"main"}}
 <section class="flex flex-col gap-4">
   <div class="pb-4">
-    <h1 class="text-4xl font-bold">{{template "title" .}} {{if .Tag}} > 🏷️ <span class="text-special">{{.Tag}}</span>{{end}} </h1>
+    <h1 class="text-4xl font-bold">
+      {{template "title" .}} {{if .Tag}} > 🏷️
+      <span class="text-special">{{.Tag}}</span>{{end}}
+    </h1>
     <h2 class="text-xl text-fg-lighter">{{template "description" .}}</h2>
   </div>
 
-  <div class="flex flex-row justify-between gap-2">
-    {{if .Tag}}
-    <a href="/blog" class="text-special hover:underline">🏠 All</a>
-    {{else}}
-    <span class="font-semibold text-text">🏠 All</span>
-    {{end}}
-    {{range .Tags}}
-    {{if eq . $.Tag}}
-    <span class="font-semibold text-text">🏷️ {{.}}</span>
-    {{else}}
-    <a href="/blog/tag/{{.}}" class="text-special hover:underline">🏷️ {{.}}</a>
-    {{end}}
-    {{end}}
-  </div>
-  
+  <form name="tags" id="tags" class="flex flex-row w-full">
+    <label for="tags" class="w-1/2">Filter by tag: </label>
+    <select
+      name="tags"
+      id="tags"
+      class="rounded-md w-full border border-fg-lighter bg-card text-fg-darker"
+      aria-label="Filter by tag"
+      onchange="window.location.href = this.value"
+    >
+      <option value="/blog">all</option>
+      {{range .Tags}}
+      <option
+        value="/blog/tag/{{.}}"
+        {{if
+        eq
+        $.Tag
+        .
+        }}selected="selected"
+        {{else}}{{end}}
+      >
+        {{.}}
+      </option>
+      {{end}}
+    </select>
+  </form>
+
   {{range .Posts}} {{template "blogpreview" .}} {{end}}
-  
 </section>
 {{end}}
