@@ -2,7 +2,7 @@
   callPackage,
   go,
   gopls,
-  yarn,
+  bun,
   air,
 }: let
   mainPkg = callPackage ./default.nix {};
@@ -12,7 +12,7 @@ in
       [
         go
         gopls
-        yarn
+        bun
         air
       ]
       ++ (oa.nativeBuildInputs or []);
