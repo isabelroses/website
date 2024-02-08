@@ -24,7 +24,7 @@ To start right away with things that I wish to get better at:
 
 This list were created in order to improve my basic workflow to improve the
 generic speed that I work at. To start I barely use vim motions despite using
-neovim as my main editor, and touch typing goes along well with this. And
+Neovim as my main editor, and touch typing goes along well with this. And
 despite using NixOS I feel like I barely know anything about Nix.
 
 In order to also properly manage myself I have two main tools

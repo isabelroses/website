@@ -8,7 +8,7 @@ tags:
 
 ## The prelude
 
-I started programming in scratch when I was 10 or so years old, all of which I taught myself (this is a recurring theme). I didn't touch programing again until year 9 which is when I started my GCSEs. I took computer science as one of my options since I liked computers and I thought it would be fun. It was not. My class was the eldest year in this new school, we had no teachers at the time that actually did computer science so we had a maths teacher cobble together what he could for us. And later when we did get a teacher, we were given a booklet and told to complete it by the end of the year, it was awful.
+I started programming in Scratch when I was 10 or so years old, all of which I taught myself (this is a recurring theme). I didn't touch programing again until year 9 which is when I started my GCSEs. I took computer science as one of my options since I liked computers and I thought it would be fun. It was not. My class was the eldest year in this new school, we had no teachers at the time that actually did computer science so we had a maths teacher cobble together what he could for us. And later when we did get a teacher, we were given a booklet and told to complete it by the end of the year, it was awful.
 
 Having completed my GCSEs, almost completely self taught, I started my A-levels and I took computer science again. To my great surprise I had an not one but two amazing teachers, who were able to teach me a lot. I was able to learn a lot about java, and the deeper concepts behind programing and computer science.
 
