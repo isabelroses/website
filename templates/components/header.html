@@ -11,7 +11,6 @@
       xmlns="http://www.w3.org/2000/svg"
       viewBox="0 0 640 512"
       class="w-10"
-      alt="Home"
     >
       <path
         fill="currentColor"
@@ -21,6 +20,21 @@
   </a>
   <a class="no-underline hover:text-special" href="/blog">Blog</a>
   <a class="no-underline hover:text-special" href="/projects">Projects</a>
+
+  <form name="themes" id="form-themes" class="flex flex-row">
+    <select
+      name="themes"
+      id="themes"
+      class="w-full rounded-sm bg-card text-fg-darker text-sm p-1"
+      aria-label="Change theme"
+      onchange="document.body.className = this.value; localStorage.setItem('theme', this.value);"
+    >
+      <option value="theme-ctp-mocha">Catppuccin Mocha</option>
+      <option value="theme-ctp-macchiato">Catppuccin Macchiato</option>
+      <option value="theme-ctp-frappe">Catppuccin Frappé</option>
+      <option value="theme-ctp-latte">Catppuccin Latte</option>
+    </select>
+  </form>
 
   <ul class="flex flex-row justify-center gap-2">
     <li>
@@ -137,4 +151,14 @@
     >
   </span>
 </header>
+
+<script>
+  let theme = localStorage.getItem("theme");
+  if (theme != null) {
+    document.body.className = theme;
+    document.getElementById("themes").value = theme;
+  } else {
+    document.body.className = "theme-ctp-mocha";
+  }
+</script>
 {{end}}

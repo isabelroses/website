@@ -1,11 +1,12 @@
-const defaultTheme = require('tailwindcss/defaultTheme');
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["../templates/**/*.{html,go}"],
-  safelist: [{
-    pattern: /hljs+/,
-  }],
+  safelist: [
+    { pattern: /hljs+/ },
+    { pattern: /theme+/ },
+  ],
   darkMode: "class",
   theme: {
     colors: {
@@ -19,9 +20,9 @@ module.exports = {
       "special": "var(--special)",
     },
     fontFamily: {
-			sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
+      sans: ['"Roboto"', ...defaultTheme.fontFamily.sans],
       mono: ['"Roboto Mono"', ...defaultTheme.fontFamily.mono],
-		},
+    },
   },
   plugins: [require("@tailwindcss/typography")],
 };

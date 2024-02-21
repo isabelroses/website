@@ -1,5 +1,5 @@
 {{define "title"}}Blog{{end}}
-{{define "description"}}The parts of my life that I put out into the world{{end}} 
+{{define "description"}}The parts of my life that I put out into the world{{end}}
 {{define "additionalhead"}}{{end}}
 
 {{define "main"}}
@@ -12,23 +12,24 @@
     <h2 class="text-xl text-fg-lighter">{{template "description" .}}</h2>
   </div>
 
-  <form name="tags" id="tags" class="flex flex-row md:min-w-[620px] md:max-w-[620px]">
+  <form
+    name="tags"
+    id="form-tags"
+    class="flex flex-row md:min-w-[620px] md:max-w-[620px]"
+  >
     <label for="tags" class="w-1/2">Filter by 🏷️ tag: </label>
     <select
       name="tags"
       id="tags"
-      class="w-full border rounded-md border-fg-lighter bg-card text-fg-darker"
+      class="w-full rounded-sm bg-card text-fg-darker"
       aria-label="Filter by tag"
       onchange="window.location.href = this.value"
     >
       <option value="/blog">all</option>
       {{range .Tags}}
-      <option
-        value="/blog/tag/{{.}}"
-        {{if eq $.Tag . }}selected="selected"{{end}}
-      >
-        {{.}}
-      </option>
+        <option value="/blog/tag/{{.}}" {{if eq $.Tag . }}selected="selected"{{end}}>
+          {{.}}
+        </option>
       {{end}}
     </select>
   </form>
