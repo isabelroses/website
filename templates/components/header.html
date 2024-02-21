@@ -25,10 +25,12 @@
     <select
       name="themes"
       id="themes"
-      class="w-full rounded-sm bg-card text-fg-darker text-sm p-1"
+      class="w-full p-1 text-sm rounded-sm bg-card text-fg-darker"
       aria-label="Change theme"
       onchange="document.body.className = this.value; localStorage.setItem('theme', this.value);"
     >
+      <option value="theme-dark">Dark</option>
+      <option value="theme-light">Light</option>
       <option value="theme-ctp-mocha">Catppuccin Mocha</option>
       <option value="theme-ctp-macchiato">Catppuccin Macchiato</option>
       <option value="theme-ctp-frappe">Catppuccin Frappé</option>
@@ -153,12 +155,34 @@
 </header>
 
 <script>
-  let theme = localStorage.getItem("theme");
-  if (theme != null) {
-    document.body.className = theme;
-    document.getElementById("themes").value = theme;
-  } else {
-    document.body.className = "theme-ctp-mocha";
-  }
+  const runColorMode = (fn) => {
+    let theme = localStorage.getItem("theme");
+    if (theme) {
+      document.body.className = theme;
+      document.getElementById("themes").value = theme;
+      return;
+    }
+
+    <!-- if media querys are not ussported use this as the default theme -->
+    if (!window.matchMedia) {
+      document.body.className = "theme-ctp-mocha";
+    }
+
+    const query = window.matchMedia("(prefers-color-scheme: dark)");
+
+    fn(query.matches);
+
+    query.addEventListener("change", (event) => fn(event.matches));
+  };
+
+  const isDarkMode = () =>
+    window.matchMedia &&
+    window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+  runColorMode((isDarkMode) => {
+    document.body.className = isDarkMode
+      ? "theme-ctp-mocha"
+      : "theme-ctp-latte";
+  });
 </script>
 {{end}}

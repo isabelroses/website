@@ -16,6 +16,32 @@
     @apply rounded;
   }
 
+  .theme-light {
+    --fg: #17181b;
+    --fg-lighter: #1e1f23;
+
+    --bg: #fff;
+    --bg-lighter: #f5f5f5;
+    --bg-darker: #f0f0f0;
+
+    --card: #dad9d9;
+    --card-border: #e0e0e0;
+    --special: #209fb5;
+  }
+
+  .theme-dark {
+    --fg: #fff;
+    --fg-lighter: #f5f5f5;
+
+    --bg: #17181b;
+    --bg-lighter: #1e1f23;
+    --bg-darker: #121214;
+
+    --card: #2f3036;
+    --card-border: #3f4046;
+    --special: #74c7ec;
+  }
+
   .theme-ctp-mocha {
     --fg: #cdd6f4;
     --fg-lighter: #a6adc8;
