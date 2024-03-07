@@ -16,8 +16,8 @@ buildGoModule {
 
   preBuild = ''
     substituteInPlace lib/settings.go \
-      --replace 'RootDir  string = "."' 'RootDir  string = "$out/share/"' \
-      --replace 'ServeDir string = "."' 'ServeDir string = "/srv/storage/isabelroses.com/"'
+      --replace 'RootDir  string = "."' 'RootDir  string = "$out/share"' \
+      --replace 'ServeDir string = "."' 'ServeDir string = "/srv/storage/isabelroses.com"'
   '';
 
   postInstall = ''
