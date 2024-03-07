@@ -2,7 +2,7 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["../templates/**/*.{html,go}"],
+  content: ["../templates/**/*.{tmpl,go}"],
   safelist: [
     { pattern: /hljs+/ },
     { pattern: /theme+/ },

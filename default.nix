@@ -13,10 +13,11 @@ buildGoModule {
   vendorHash = "sha256-8XpNo4WDDgSxoGBWpOamue3I1BWP0xtU8IA9BCAgBnQ=";
 
   ldflags = ["-s" "-w"];
-  
+
   preBuild = ''
     substituteInPlace lib/settings.go \
-      --replace "." "$out/share/"
+      --replace 'RootDir  string = "."' "$out/share/" \
+      --replace 'ServeDir  string = "."' "/srv/storage/isabelroses.com/"
   '';
 
   postInstall = ''

@@ -1,0 +1,32 @@
+{{define "title"}}Donations{{end}} 
+{{define "description"}}A thanks too all those who support me{{end}} 
+{{define "additionalhead"}}{{end}} 
+
+{{define "main"}}
+<section class="flex flex-col gap-4">
+  <div class="pb-2">
+    <h1 class="text-4xl font-bold">{{template "title" .}}</h1>
+    <h2 class="text-xl text-fg-lighter">{{template "description" .}}</h2>
+  </div>
+
+  <div class="flex flex-col gap-2">
+    {{if .Subscribers | len}}
+      <h3 class="text-2xl font-bold">Subscribers</h2>
+        {{range .Subscribers}} 
+          {{template "usercard" .}}
+        {{end}}
+      </div>
+    {{end}}
+
+  <div class="flex flex-col gap-2">
+    <h3 class="text-2xl font-bold">One Time Donors</h2>
+    {{if .OneTimeDonors | len}}
+      {{range .OneTimeDonors}} 
+        {{template "usercard" .}}
+      {{end}}
+    {{else}}
+      <p class="text-fg-light">No one time donors yet</p>
+    {{end}}
+  </div>
+</section>
+{{end}}
