@@ -14,12 +14,12 @@ func RenderTemplate(w http.ResponseWriter, layout string, components []string, p
 	page = page[:len(page)-len(filepath.Ext(page))]
 
 	templates := []string{
-		GetPath("/templates/layouts/" + layout + ".html"),
-		GetPath("/templates/pages/" + page + ".html"),
+		GetPath("/templates/layouts/" + layout + ".tmpl"),
+		GetPath("/templates/pages/" + page + ".tmpl"),
 	}
 
 	for _, component := range components {
-		templates = append(templates, GetPath("/templates/components/" + component + ".html"))
+		templates = append(templates, GetPath("/templates/components/"+component+".tmpl"))
 	}
 
 	ts, err := template.ParseFiles(templates...)
