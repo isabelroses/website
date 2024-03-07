@@ -19,7 +19,7 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ReadWritePaths = [ "/srv/storage/isabelroses.com" ]
+        ReadWritePaths = [ "/srv/storage/isabelroses.com" ];
         DynamicUser = true;
         ExecStart = "${self.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/isabelroses.com";
         Restart = "always";
