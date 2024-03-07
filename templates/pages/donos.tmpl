@@ -9,7 +9,7 @@
     <h2 class="text-xl text-fg-lighter">{{template "description" .}}</h2>
   </div>
 
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-row gap-2">
     {{if .Subscribers | len}}
       <h3 class="text-2xl font-bold">Subscribers</h2>
         {{range .Subscribers}} 
@@ -18,7 +18,7 @@
       </div>
     {{end}}
 
-  <div class="flex flex-col gap-2">
+  <div class="flex flex-row gap-2">
     <h3 class="text-2xl font-bold">One Time Donors</h2>
     {{if .OneTimeDonors | len}}
       {{range .OneTimeDonors}} 

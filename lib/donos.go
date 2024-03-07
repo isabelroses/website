@@ -54,7 +54,7 @@ func GetDonors() Donors {
 }
 
 func AppendTooDonos(newData map[string]interface{}) {
-	file, err := os.OpenFile(GetServePath("/donos.json"), os.O_RDWR|os.O_CREATE|os.O_APPEND, 0644)
+	file, err := os.OpenFile(GetServePath("/donos.json"), os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
