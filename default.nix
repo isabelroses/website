@@ -31,7 +31,7 @@ buildGoModule {
   meta = {
     description = "isabelroses.com";
     homepage = "https://isabelroses.com/";
-    license = lib.licenses.gpl3;
+    license = with lib.licenses; [gpl3 cc-by-nc-sa-40];
     maintainers = with lib.maintainers; [isabelroses];
     platforms = lib.platforms.all;
   };
