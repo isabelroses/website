@@ -10,7 +10,7 @@ buildGoModule {
 
   # lib.fakeSha256 should be used to when deps update, but its not working for me so im leaving this here
   #  sha256-0000000000000000000000000000000000000000000=
-  vendorHash = "sha256-8XpNo4WDDgSxoGBWpOamue3I1BWP0xtU8IA9BCAgBnQ=";
+  vendorHash = "sha256-HQOloxPcKLTEHshlIFfPX+EN2mPJgEzYSoxJ1AhDbbs=";
 
   ldflags = ["-s" "-w"];
 
