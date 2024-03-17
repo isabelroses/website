@@ -46,6 +46,7 @@ func createPost(content []byte, fileName string) Post {
 		goldmark.WithExtensions(
 			extension.GFM,
 			meta.Meta,
+			NewCodewrap(),
 		),
 	)
 

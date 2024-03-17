@@ -86,8 +86,21 @@
       class="underline"
       target="_blank"
       href="https://creativecommons.org/licenses/by/4.0"
-      >CC BY-SA4.0</a
+      >CC BY-NC-SA 4.0</a
     >
   </span>
 </footer>
+
+<script>
+  const codeblocks = document.querySelectorAll('div.codeblock');
+
+  codeblocks.forEach((block) => {
+    const btn = block.querySelector('button');
+
+    btn.onclick = () => {
+      navigator.clipboard.writeText(block.querySelector('code').innerText);
+    };
+  });
+
+</script>
 {{end}}
