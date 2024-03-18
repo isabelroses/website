@@ -14,7 +14,7 @@ From now on were going to swap to a list format as it will be easier to read, an
 
 ### New technologies
 
-- [Neovim](https://neovim.io), the best editor ever. This now is my main editor, and I'm really happy with it. I'm still learning how to use it properly but I'm getting there. In fact I'm writing this post in Neovim right now. Prior to this I was using [VC Code](https://code.visualstudio.com/) and from time to time I still do, but I find myself using Neovim more and more.
+- [Neovim](https://neovim.io), the best editor ever. This now is my main editor, and I'm really happy with it. I'm still learning how to use it properly but I'm getting there. In fact I'm writing this post in Neovim right now. Prior to this I was using [VS Code](https://code.visualstudio.com/) and from time to time I still do, but I find myself using Neovim more and more.
 - [NixOS](https://nixos.org/), my main operating system, and it has made development so much easier.
 - [Vikunja](https://vikunja.io), this functioned as my main to-do list manager, but I would like to start using [bellado](https://github.com/isabelroses/bellado) as a way to interact with my Vikunja instance. The reason for this is I need to use my to-do list on the move more often then not. But I also love being in the command line and a easy way to do this would be amazing.
 
