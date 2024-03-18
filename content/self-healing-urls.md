@@ -51,7 +51,7 @@ get post() {
 
 Then all that was left was to ensure all links were using the new slug format.
 This was done by changing the way that the slug was being created. Instead of
-using the title of the post, the slug was created using the title and the id of
+using the title of the post, the slug was created using the title and the ID of
 the post. This meant that the slug would always be unique and would always be
 the same for the same post.
 
