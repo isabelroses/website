@@ -91,6 +91,8 @@
   </span>
 </footer>
 
+<script id="comments"></script>
+
 <script>
   const codeblocks = document.querySelectorAll('div.codeblock');
 
@@ -102,5 +104,37 @@
     };
   });
 
+  let theme = localStorage.getItem('theme');
+  if (theme.includes('ctp')) {
+    theme = `https://ctp-giscus.uncenter.dev/${theme.split('-').pop()}.css`
+  } else {
+    theme = theme.split('-').pop();
+  }
+
+  if (theme == undefined) {
+    theme = 'light';
+  }
+
+	let attributes = {
+		'src': 'https://giscus.app/client.js',
+		'data-repo': 'isabelroses/website',
+		'data-repo-id': 'R_kgDOK09lKQ',
+    'data-category': 'General',
+		'data-category-id': 'DIC_kwDOK09lKc4CeIfv',
+		'data-mapping': 'title',
+    'data-strict': '1',
+		'data-reactions-enabled': '1',
+		'data-emit-metadata': '0',
+		'data-input-position': 'top',
+		'data-theme': theme,
+		'data-lang': 'en',
+    'data-loading': 'lazy',
+		'crossorigin': 'anonymous',
+		'async': '',
+	};
+  const comments = document.getElementById('comments');
+	Object.entries(attributes).forEach(([key, value]) =>
+		comments.setAttribute(key, value),
+	);
 </script>
 {{end}}
