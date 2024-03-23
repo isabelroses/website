@@ -140,7 +140,9 @@
 	  Object.entries(attributes).forEach(([key, value]) =>
 		  script.setAttribute(key, value),
 	  );
-    document.getElementById('comments').appendChild(script);
+    const comments = document.getElementById('comments');
+    comments.innerHTML = '';
+    comments.appendChild(script);
   };
 </script>
 {{end}}
