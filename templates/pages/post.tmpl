@@ -91,7 +91,7 @@
   </span>
 </footer>
 
-<script id="comments"></script>
+<div id="comments"></div>
 
 <script>
   const codeblocks = document.querySelectorAll('div.codeblock');
@@ -104,37 +104,43 @@
     };
   });
 
-  let theme = localStorage.getItem('theme');
-  if (theme.includes('ctp')) {
-    theme = `https://ctp-giscus.uncenter.dev/${theme.split('-').pop()}.css`
-  } else {
-    theme = theme.split('-').pop();
-  }
+  window.addEventListener('load', setGiscusTheme);
+  document.getElementById('themes').addEventListener('change', setGiscusTheme);
 
-  if (theme == undefined) {
-    theme = 'light';
-  }
+  function setGiscusTheme() {
+    let theme = window.localStorage.getItem('theme');
+    if (theme.includes('ctp')) {
+      theme = `https://giscus.catppuccin.com/themes/${theme.split('-').pop()}.css`
+    } else {
+      theme = theme.split('-').pop();
+    }
 
-	let attributes = {
-		'src': 'https://giscus.app/client.js',
-		'data-repo': 'isabelroses/website',
-		'data-repo-id': 'R_kgDOK09lKQ',
-    'data-category': 'General',
-		'data-category-id': 'DIC_kwDOK09lKc4CeIfv',
-		'data-mapping': 'title',
-    'data-strict': '1',
-		'data-reactions-enabled': '1',
-		'data-emit-metadata': '0',
-		'data-input-position': 'top',
-		'data-theme': theme,
-		'data-lang': 'en',
-    'data-loading': 'lazy',
-		'crossorigin': 'anonymous',
-		'async': '',
-	};
-  const comments = document.getElementById('comments');
-	Object.entries(attributes).forEach(([key, value]) =>
-		comments.setAttribute(key, value),
-	);
+    if (theme == undefined) {
+      theme = 'light';
+    }
+
+  	let attributes = {
+		  'src': 'https://giscus.app/client.js',
+		  'data-repo': 'isabelroses/website',
+		  'data-repo-id': 'R_kgDOK09lKQ',
+      'data-category': 'General',
+		  'data-category-id': 'DIC_kwDOK09lKc4CeIfv',
+		  'data-mapping': 'title',
+      'data-strict': '1',
+		  'data-reactions-enabled': '1',
+		  'data-emit-metadata': '0',
+		  'data-input-position': 'top',
+		  'data-theme': theme,
+		  'data-lang': 'en',
+      'data-loading': 'lazy',
+		  'crossorigin': 'anonymous',
+		  'async':  '',
+	  };
+    let script = document.createElement('script');
+	  Object.entries(attributes).forEach(([key, value]) =>
+		  script.setAttribute(key, value),
+	  );
+    document.getElementById('comments').appendChild(script);
+  };
 </script>
 {{end}}

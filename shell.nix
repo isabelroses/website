@@ -1,9 +1,9 @@
 {
-  callPackage,
   go,
-  gopls,
   bun,
   air,
+  gopls,
+  callPackage,
 }: let
   mainPkg = callPackage ./default.nix {};
 in
@@ -11,9 +11,9 @@ in
     nativeBuildInputs =
       [
         go
-        gopls
         bun
         air
+        gopls
       ]
       ++ (oa.nativeBuildInputs or []);
   })
