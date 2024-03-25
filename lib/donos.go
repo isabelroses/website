@@ -8,7 +8,7 @@ import (
 	"os"
 )
 
-var donosList = GetServePath("/donos.txt")
+var donosList = GetServePath("/donos.json")
 
 func readDonoFile() []string {
 	file, err := os.Open(donosList)
@@ -30,7 +30,7 @@ func readDonoFile() []string {
 }
 
 func GetDonors() Donors {
-	file, err := os.Open(GetServePath("/donos.json"))
+	file, err := os.Open(donosList)
 	if err != nil {
 		log.Println("Error opening file:", err)
 		return nil
@@ -54,7 +54,7 @@ func GetDonors() Donors {
 }
 
 func AppendTooDonos(newData map[string]interface{}) {
-	file, err := os.OpenFile(GetServePath("/donos.json"), os.O_RDWR|os.O_CREATE, 0644)
+	file, err := os.OpenFile(donosList, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
