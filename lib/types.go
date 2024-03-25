@@ -76,12 +76,14 @@ type GitHubDono struct {
 type GitHubSponsor struct {
 	AvatarURL string `json:"avatar_url"`
 	Login     string `json:"login"`
+	HtmlURL   string `json:"html_url"`
 	Name      string `json:"name"`
 }
 
 type Donor struct {
 	Tier   string
 	Name   string
+	Url    string
 	Avatar string
 }
 

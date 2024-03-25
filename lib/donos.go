@@ -53,7 +53,7 @@ func GetDonors() Donors {
 	return donors
 }
 
-func AppendTooDonos(newData map[string]interface{}) {
+func AppendToDonos(newData map[string]interface{}) {
 	file, err := os.OpenFile(donosList, os.O_RDWR|os.O_CREATE, 0644)
 	if err != nil {
 		log.Fatal(err)

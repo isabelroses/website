@@ -1,6 +1,6 @@
 {{define "usercard"}}
-<div class="flex flex-col gap-2 bg-card p-1 py-2 justify-center items-center text-center rounded-xl min-w-28 max-w-40">
+<a href="{{if .Url}}{{.Url}}{{else}}#{{end}}" class="flex flex-col gap-2 glow-button transition-all bg-card p-1 py-2 justify-center items-center text-center rounded-xl min-w-28 max-w-40">
   <img src="{{.Avatar}}" class="rounded-full" alt="{{.Name}}'s icon">
   <span>{{.Name}}</span>
-</div>
+</a>
 {{end}}

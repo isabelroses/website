@@ -28,6 +28,7 @@ func Kofi(c echo.Context) error {
 		newData = map[string]interface{}{
 			"tier":   "OneTime",
 			"name":   k.FromName,
+			"url":    k.Url,
 			"avatar": hashString(k.Email),
 		}
 	case "Subscription":
@@ -35,12 +36,13 @@ func Kofi(c echo.Context) error {
 			newData = map[string]interface{}{
 				"tier":   k.TierName,
 				"name":   k.FromName,
+				"url":    k.Url,
 				"avatar": hashString(k.Email),
 			}
 		}
 	}
 
-	lib.AppendTooDonos(newData)
+	lib.AppendToDonos(newData)
 
 	return c.JSON(http.StatusOK, k)
 }
