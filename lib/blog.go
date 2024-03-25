@@ -14,6 +14,7 @@ import (
 	meta "github.com/yuin/goldmark-meta"
 	"github.com/yuin/goldmark/extension"
 	"github.com/yuin/goldmark/parser"
+	"github.com/yuin/goldmark/renderer/html"
 )
 
 func GetBlogPosts() Posts {
@@ -47,6 +48,12 @@ func createPost(content []byte, fileName string) Post {
 			extension.GFM,
 			meta.Meta,
 			NewCodewrap(),
+		),
+		goldmark.WithParserOptions(
+			parser.WithAutoHeadingID(),
+		),
+		goldmark.WithRendererOptions(
+			html.WithXHTML(),
 		),
 	)
 
