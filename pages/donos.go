@@ -34,7 +34,7 @@ func Donos(c echo.Context) error {
 func handleAvatar(dono lib.Donor) lib.Donor {
 	if dono.Avatar == "" {
 		dono.Avatar = "/public/you.webp"
-	} else if !strings.Contains(dono.Avatar, "github.com") {
+	} else if !strings.Contains(dono.Avatar, "avatars.githubusercontent.com") {
 		dono.Avatar = "https://gravatar.com/avatar/" + dono.Avatar
 	}
 	return dono
