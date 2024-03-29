@@ -1,3 +1,15 @@
-styles/node_modules/
-tmp/
-vendor/
+# Dependency directories
+.direnv
+node_modules
+vendor
+
+# test donos file
+donos.json
+
+# Build residue
+tmp
+result
+result-*
+
+# Ignore Mac system files
+.DS_Store
