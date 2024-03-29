@@ -3,6 +3,7 @@
   bun,
   air,
   gopls,
+  typos,
   callPackage,
 }: let
   mainPkg = callPackage ./default.nix {};
@@ -14,6 +15,7 @@ in
         bun
         air
         gopls
+        typos
       ]
       ++ (oa.nativeBuildInputs or []);
   })
