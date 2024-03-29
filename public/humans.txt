@@ -1,0 +1,10 @@
+/* Me */
+Name: Isabel Roses
+GitHub: https://github.com/isabelroses
+Website: https://isabelroses.com
+Location: United Kingdom
+
+/* SITE */
+Last update: 2024/03/29
+Standards: HTML5, CSS3
+Software: Go, Neovim, NixOS
