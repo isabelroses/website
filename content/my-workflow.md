@@ -4,7 +4,7 @@ description: Keeping on track with workflow
 date: 28/12/2023
 tags:
   - learning
-  - vim
+  - neovim
   - nixos
 ---
 
