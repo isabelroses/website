@@ -65,7 +65,7 @@ func main() {
 		return c.XML(http.StatusOK, rss)
 	})
 
-	e.Static("/public", lib.GetPath("/public"))
+	e.Static("/*", lib.GetPath("/public"))
 
 	e.Logger.Fatal(e.Start(":3000"))
 }

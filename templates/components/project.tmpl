@@ -6,12 +6,12 @@
     class="banner"
     {{if
     .Banner}}
-    style='background-image: url("/public/repos/{{.Banner}}");'
+    style='background-image: url("/repos/{{.Banner}}");'
     {{end}}
   ></div>
 
   <img
-    src="{{if .Icon}}/public/repos/{{.Icon}}{{else}}/public/me.webp{{end}}"
+    src="{{if .Icon}}/repos/{{.Icon}}{{else}}/me.webp{{end}}"
     class="z-20 object-contain w-20 h-20 rounded-full"
     style="margin-top: calc(8px + max(min(100vw, 600px), 360px) * 0.1)"
     alt="{{.Name}}'s Project icon"
