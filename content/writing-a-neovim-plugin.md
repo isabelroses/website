@@ -39,4 +39,6 @@ end
 
 The plugin was a success, and I was able to generate images from code snippets. I was also able to learn a lot about how to write a Neovim plugin and how to use the Neovim API. I was also able to learn a lot about how to use Vimscript and how to use the command line from within Neovim. This was a great experience, and I am thankful for it. See an example of the plugin below.
 
+The plugin is available on GitHub under [isabelroses/charm-freeze.nvim](https://github.com/isabelroses/charm-freeze.nvim).
+
 ![Example of the plugin in action](/posts/2024-03-29_freeze.webp)
