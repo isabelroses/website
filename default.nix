@@ -4,13 +4,13 @@
 }:
 buildGoModule {
   pname = "isabelroses-website";
-  version = "0.0.5";
+  version = "0.0.6";
 
   src = ./.;
 
   # lib.fakeSha256 should be used to when deps update, but its not working for me so im leaving this here
   #  sha256-0000000000000000000000000000000000000000000=
-  vendorHash = "sha256-HQOloxPcKLTEHshlIFfPX+EN2mPJgEzYSoxJ1AhDbbs=";
+  vendorHash = "sha256-yCUv9u18wyBvEjk+E5mZ6uiJ7nwIzO5NjY0b56qk2pk=";
 
   ldflags = ["-s" "-w"];
 
@@ -35,6 +35,7 @@ buildGoModule {
       gpl3
       # cc-by-nc-sa-40
     ];
+    mainProgram = "isabelroses.com";
     maintainers = with lib.maintainers; [isabelroses];
     platforms = lib.platforms.all;
   };
