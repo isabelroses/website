@@ -4,7 +4,7 @@ self: {
   lib,
   ...
 }: let
-  inherit (lib) mkIf mkEnableOption;
+  inherit (lib) mkIf mkEnableOption getExe;
 in {
   options.services.isabelroses-website.enable = mkEnableOption "isabelroses-website";
 
@@ -19,9 +19,9 @@ in {
 
       serviceConfig = {
         Type = "simple";
-        ReadWritePaths = [ "/srv/storage/isabelroses.com" ];
+        ReadWritePaths = ["/srv/storage/isabelroses.com"];
         DynamicUser = true;
-        ExecStart = "${self.packages.${pkgs.stdenv.hostPlatform.system}.default}/bin/isabelroses.com";
+        ExecStart = "${getExe self.packages.${pkgs.stdenv.hostPlatform.system}.default}";
         Restart = "always";
       };
     };
