@@ -4,7 +4,7 @@ go 1.21.5
 
 require (
 	github.com/gorilla/feeds v1.1.2
-	github.com/labstack/echo/v4 v4.11.4
+	github.com/labstack/echo/v4 v4.12.0
 	github.com/yuin/goldmark-meta v1.1.0
 )
 
