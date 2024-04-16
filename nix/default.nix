@@ -37,6 +37,5 @@ buildGoModule {
     ];
     mainProgram = "isabelroses.com";
     maintainers = with lib.maintainers; [isabelroses];
-    platforms = lib.platforms.all;
   };
 }
