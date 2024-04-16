@@ -61,8 +61,18 @@ func main() {
 	apiGroup.POST("/github", api.Github)
 
 	e.GET("/rss.xml", func(c echo.Context) error {
-		rss := lib.RssFeed()
-		return c.XML(http.StatusOK, rss)
+		c.Redirect(http.StatusMovedPermanently, "/feed.xml")
+		return nil
+	})
+
+	e.GET("/feed.xml", func(c echo.Context) error {
+		atom := lib.AtomFeed()
+		return c.XML(http.StatusOK, atom)
+	})
+
+	e.GET("/feed.json", func(c echo.Context) error {
+		json := lib.JSONFeed()
+		return c.JSON(http.StatusOK, json)
 	})
 
 	e.Static("/*", lib.GetPath("/public"))

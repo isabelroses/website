@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/feeds"
 )
 
-func RssFeed() *feeds.RssFeedXml {
+func genFeed() *feeds.Feed {
 	feed := &feeds.Feed{
 		Title:       "Isabel Roses",
 		Link:        &feeds.Link{Href: "https://isabelroses.com", Rel: "self"},
@@ -23,17 +23,25 @@ func RssFeed() *feeds.RssFeedXml {
 		created.Format(time.RFC3339)
 		href := "https://isabelroses.com/blog/" + post.Slug
 		feedItems = append(feedItems, &feeds.Item{
-			Id:          href,
-			Title:       post.Title,
-			Link:        &feeds.Link{Href: href, Rel: "self"},
-			Description: string(post.Content),
-			Created:     created,
+			Id:      href,
+			Title:   post.Title,
+			Link:    &feeds.Link{Href: href, Rel: "self"},
+			Content: string(post.Content),
+			Created: created,
 		})
 	}
 	feed.Items = feedItems
 
-	rssFeed := (&feeds.Rss{Feed: feed}).RssFeed()
-	xmlRssFeeds := rssFeed.FeedXml()
+	return feed
+}
 
-	return xmlRssFeeds.(*feeds.RssFeedXml)
+func AtomFeed() *feeds.AtomFeed {
+	feed := (&feeds.Atom{Feed: genFeed()}).AtomFeed()
+	atomFeed := feed.FeedXml()
+	return atomFeed.(*feeds.AtomFeed)
+}
+
+func JSONFeed() *feeds.JSONFeed {
+	feed := (&feeds.JSON{Feed: genFeed()}).JSONFeed()
+	return feed
 }
