@@ -6,7 +6,7 @@ buildGoModule {
   pname = "isabelroses-website";
   version = "0.0.6";
 
-  src = ./.;
+  src = ../.;
 
   # lib.fakeSha256 should be used to when deps update, but its not working for me so im leaving this here
   #  sha256-0000000000000000000000000000000000000000000=

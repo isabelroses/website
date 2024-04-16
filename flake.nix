@@ -12,13 +12,13 @@
     pkgsForEach = nixpkgs.legacyPackages;
   in {
     packages = forAllSystems (system: {
-      default = pkgsForEach.${system}.callPackage ./default.nix {};
+      default = pkgsForEach.${system}.callPackage ./nix/default.nix {};
     });
 
     devShells = forAllSystems (system: {
-      default = pkgsForEach.${system}.callPackage ./shell.nix {};
+      default = pkgsForEach.${system}.callPackage ./nix/shell.nix {};
     });
 
-    nixosModules.default = import ./module.nix self;
+    nixosModules.default = import ./nix/module.nix self;
   };
 }
