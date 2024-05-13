@@ -30,6 +30,11 @@ func Projects(c echo.Context) error {
 			Repo:   "https://github.com/isabelroses/charm-freeze.nvim",
 		},
 		{
+			Name:   "izrss",
+			Banner: "izrss-banner.webp",
+			Repo:   "https://github.com/isabelroses/izrss",
+		},
+		{
 			Name:   "Dotfiles",
 			Icon:   "dotfiles-icon.svg",
 			Banner: "dotfiles-banner.svg",
