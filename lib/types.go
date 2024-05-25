@@ -18,13 +18,13 @@ type Project struct {
 }
 
 type Post struct {
-	ID          int
 	Title       string
 	Description string
 	Content     template.HTML
 	Date        string
-	Tags        []string
 	Slug        string
+	Tags        []string
+	ID          int
 }
 
 type Posts []Post
@@ -38,23 +38,23 @@ type Subscriber struct {
 type Subscribers []Subscriber
 
 type KofiDono struct {
-	VerificationToken   string `json:"verification_token"`
-	MessageId           string `json:"message_id"`
+	Message             string `json:"message"`
+	ShopItems           string `json:"shop_items"`
 	Timestamp           string `json:"timestamp"`
 	Type                string `json:"type"`
-	IsPublic            bool   `json:"is_public"`
+	VerificationToken   string `json:"verification_token"`
 	FromName            string `json:"from_name"`
-	Message             string `json:"message"`
+	MessageID           string `json:"message_id"`
 	Amount              string `json:"amount"`
-	Url                 string `json:"url"`
-	Email               string `json:"email"`
 	Currency            string `json:"currency"`
-	IsSubscription      bool   `json:"is_subscription_payment"`
-	IsFirstSubscription bool   `json:"is_first_subscription_payment"`
-	TransactionID       string `json:"kofi_transaction_id"`
-	ShopItems           string `json:"shop_items"`
-	TierName            string `json:"tier_name"`
+	Email               string `json:"email"`
+	URL                 string `json:"url"`
 	Shipping            string `json:"shipping"`
+	TierName            string `json:"tier_name"`
+	TransactionID       string `json:"kofi_transaction_id"`
+	IsPublic            bool   `json:"is_public"`
+	IsFirstSubscription bool   `json:"is_first_subscription_payment"`
+	IsSubscription      bool   `json:"is_subscription_payment"`
 }
 
 type GitHubDono struct {
@@ -76,14 +76,14 @@ type GitHubDono struct {
 type GitHubSponsor struct {
 	AvatarURL string `json:"avatar_url"`
 	Login     string `json:"login"`
-	HtmlURL   string `json:"html_url"`
+	HTMLURL   string `json:"html_url"`
 	Name      string `json:"name"`
 }
 
 type Donor struct {
 	Tier   string
 	Name   string
-	Url    string
+	URL    string
 	Avatar string
 }
 

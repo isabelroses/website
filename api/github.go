@@ -28,14 +28,14 @@ func Github(c echo.Context) error {
 		newData = map[string]interface{}{
 			"tier":   "OneTime",
 			"name":   getName(g.Sponsorship.Sponsor),
-			"url":    g.Sponsorship.Sponsor.HtmlURL,
+			"url":    g.Sponsorship.Sponsor.HTMLURL,
 			"avatar": g.Sponsorship.Sponsor.AvatarURL,
 		}
 	case !g.Sponsorship.Tier.IsOneTime:
 		newData = map[string]interface{}{
 			"tier":   g.Sponsorship.Tier.Name,
 			"name":   getName(g.Sponsorship.Sponsor),
-			"url":    g.Sponsorship.Sponsor.HtmlURL,
+			"url":    g.Sponsorship.Sponsor.HTMLURL,
 			"avatar": g.Sponsorship.Sponsor.AvatarURL,
 		}
 	}

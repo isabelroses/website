@@ -20,7 +20,7 @@ func genFeed() *feeds.Feed {
 	var feedItems []*feeds.Item
 	for _, post := range posts {
 		created, _ := time.Parse("02/01/2006", post.Date)
-		created.Format(time.RFC3339)
+		_ = created.Format(time.RFC3339)
 		href := "https://isabelroses.com/blog/" + post.Slug
 		feedItems = append(feedItems, &feeds.Item{
 			Id:      href,

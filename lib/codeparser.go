@@ -11,8 +11,8 @@ import (
 )
 
 type codeBlockContext struct {
-	language   []byte
 	attributes ImmutableAttributes
+	language   []byte
 }
 
 func newCodeBlockContext(language []byte, attrs ImmutableAttributes) CodeBlockContext {
@@ -120,7 +120,7 @@ type HTMLRenderer struct {
 }
 
 // NewHTMLRenderer builds a new HTMLRenderer with given options and returns it.
-func NewHTMLRenderer(opts ...Option) renderer.NodeRenderer {
+func NewHTMLRenderer() renderer.NodeRenderer {
 	r := &HTMLRenderer{
 		Config: NewConfig(),
 	}
@@ -203,6 +203,6 @@ func NewCodewrap(opts ...Option) goldmark.Extender {
 // Extend implements goldmark.Extender.
 func (e *codewrap) Extend(m goldmark.Markdown) {
 	m.Renderer().AddOptions(renderer.WithNodeRenderers(
-		util.Prioritized(NewHTMLRenderer(e.options...), 200),
+		util.Prioritized(NewHTMLRenderer(), 200),
 	))
 }

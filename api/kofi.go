@@ -28,7 +28,7 @@ func Kofi(c echo.Context) error {
 		newData = map[string]interface{}{
 			"tier":   "OneTime",
 			"name":   k.FromName,
-			"url":    k.Url,
+			"url":    k.URL,
 			"avatar": hashString(k.Email),
 		}
 	case "Subscription":
@@ -36,7 +36,7 @@ func Kofi(c echo.Context) error {
 			newData = map[string]interface{}{
 				"tier":   k.TierName,
 				"name":   k.FromName,
-				"url":    k.Url,
+				"url":    k.URL,
 				"avatar": hashString(k.Email),
 			}
 		}

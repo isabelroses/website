@@ -7,9 +7,9 @@ import (
 )
 
 type BlogProps struct {
+	Tag   string
 	Posts lib.Posts
 	Tags  []string
-	Tag   string
 }
 
 func Blog(c echo.Context) error {

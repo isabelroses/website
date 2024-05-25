@@ -61,7 +61,7 @@ func AppendToDonos(newData map[string]interface{}) {
 	defer file.Close()
 
 	var existingData []map[string]interface{}
-	if err := json.NewDecoder(file).Decode(&existingData); err != nil && err.Error() != "EOF" {
+	if err = json.NewDecoder(file).Decode(&existingData); err != nil && err.Error() != "EOF" {
 		log.Println("Error decoding JSON:", err)
 	}
 	existingData = append(existingData, newData)
