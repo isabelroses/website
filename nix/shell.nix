@@ -5,17 +5,16 @@
   gopls,
   typos,
   callPackage,
-}: let
-  mainPkg = callPackage ./default.nix {};
+}:
+let
+  mainPkg = callPackage ./default.nix { };
 in
-  mainPkg.overrideAttrs (oa: {
-    nativeBuildInputs =
-      [
-        go
-        bun
-        air
-        gopls
-        typos
-      ]
-      ++ (oa.nativeBuildInputs or []);
-  })
+mainPkg.overrideAttrs (oa: {
+  nativeBuildInputs = [
+    go
+    bun
+    air
+    gopls
+    typos
+  ] ++ (oa.nativeBuildInputs or [ ]);
+})
