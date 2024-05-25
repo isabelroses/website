@@ -1,16 +1,16 @@
-{
-  lib,
-  buildGoModule,
-}:
+{ lib, buildGoModule }:
 buildGoModule {
   pname = "isabelroses-website";
-  version = "0.0.7";
+  version = "0.0.8";
 
   src = ../.;
 
   vendorHash = "sha256-rdAPPF8pqkK/JZSKC2XBmJDzgCh5PA5LJgrg9Z0ZAnU=";
 
-  ldflags = ["-s" "-w"];
+  ldflags = [
+    "-s"
+    "-w"
+  ];
 
   preBuild = ''
     substituteInPlace lib/settings.go \
@@ -34,6 +34,6 @@ buildGoModule {
       # cc-by-nc-sa-40
     ];
     mainProgram = "isabelroses.com";
-    maintainers = with lib.maintainers; [isabelroses];
+    maintainers = with lib.maintainers; [ isabelroses ];
   };
 }
