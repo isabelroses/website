@@ -5,7 +5,7 @@ date: 28/12/2023
 tags:
   - learning
   - neovim
-  - nixos
+  - nix
 ---
 
 In order to keep myself on track I wanted to document my workflow. So in order

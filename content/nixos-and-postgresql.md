@@ -3,7 +3,7 @@ title: NixOS and PostgreSQL
 description: Migrating from PostgreSQL 14 to 15
 date: 27/11/2023
 tags:
-  - nixos
+  - nix
   - postgresql
 ---
 
