@@ -180,8 +180,6 @@ We can make this even better with options. You could do this with a tree that lo
     └── isabel.nix
 ```
 
-Then in the file `hosts/common.nix` file I would have something like this:
-
 Our `modules/common.nix` may look something like this, where we are defining a new option for the hostname:
 ```nix
 {lib, config, ...}: {
