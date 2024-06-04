@@ -1,9 +1,24 @@
 { lib, buildGoModule }:
 buildGoModule {
   pname = "isabelroses-website";
-  version = "0.0.8";
+  version = "0.0.9";
 
-  src = ../.;
+  src = lib.fileset.toSource {
+    root = ../.;
+    fileset = lib.fileset.intersection (lib.fileset.fromSource (lib.sources.cleanSource ../.)) (
+      lib.fileset.unions [
+        ../go.mod
+        ../go.sum
+        ../main.go
+        ../lib
+        ../content
+        ../api
+        ../public
+        ../templates
+        ../pages
+      ]
+    );
+  };
 
   vendorHash = "sha256-rdAPPF8pqkK/JZSKC2XBmJDzgCh5PA5LJgrg9Z0ZAnU=";
 
@@ -14,8 +29,8 @@ buildGoModule {
 
   preBuild = ''
     substituteInPlace lib/settings.go \
-      --replace 'RootDir  string = "."' 'RootDir  string = "'$out/share'"' \
-      --replace 'ServeDir string = "."' 'ServeDir string = "/srv/storage/isabelroses.com"'
+      --replace-fail 'RootDir  string = "."' 'RootDir  string = "'$out/share'"' \
+      --replace-fail 'ServeDir string = "."' 'ServeDir string = "/srv/storage/isabelroses.com"'
   '';
 
   postInstall = ''
@@ -28,7 +43,7 @@ buildGoModule {
 
   meta = {
     description = "isabelroses.com";
-    homepage = "https://isabelroses.com/";
+    homepage = "https://isabelroses.com";
     license = with lib.licenses; [
       gpl3
       # cc-by-nc-sa-40
