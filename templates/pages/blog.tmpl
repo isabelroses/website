@@ -27,7 +27,7 @@
     >
       <option value="/blog">all</option>
       {{range .Tags}}
-        <option value="/blog/tag/{{.}}" {{if eq $.Tag . }}selected="selected"{{end}}>
+        <option value="/blog/tag/{{.}}" {{if eq $.Tag . }}selected="false"{{end}}>
           {{.}}
         </option>
       {{end}}

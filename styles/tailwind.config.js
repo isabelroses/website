@@ -4,7 +4,6 @@ const defaultTheme = require("tailwindcss/defaultTheme");
 module.exports = {
   content: ["../templates/**/*.tmpl", "../lib/codeparser.go"],
   safelist: [
-    { pattern: /.*hljs+/ },
     { pattern: /theme+/ },
   ],
   darkMode: "class",
