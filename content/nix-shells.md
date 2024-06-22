@@ -215,7 +215,7 @@ After reading all three of these example, I hope you understand why I personally
 
 ### But you didn't mention `pkgs.mkShellNoCC`?
 
-The diffrence between difference these two is that `mkShell` includes a C compiler in the shell environment, whilst `mkShellNoCC` does not. So in a situation where you know you won't need any C compiler or related technogies its better to use `pkgs.mkShell`.
+The diffrence between difference these two is that `mkShell` includes a C compiler in the shell environment, whilst `mkShellNoCC` does not. So in a situation where you know you won't need any C compiler or related technogies its better to use `pkgs.mkShellNoCC`.
 
 ### How about using my overlay?
 
