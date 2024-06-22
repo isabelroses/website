@@ -30,6 +30,6 @@ air # you can get this using `go install github.com/cosmtrek/air@latest`
 ### License
 
 - All code is licensed under:
-  [GPLv3](https://www.gnu.org/licenses/gpl-3.0#license-text)
+  [MIT](https://opensource.org/licenses/MIT)
 - All blog posts are licensed under:
   [CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/)

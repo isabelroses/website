@@ -45,7 +45,7 @@ buildGoModule {
     description = "isabelroses.com";
     homepage = "https://isabelroses.com";
     license = with lib.licenses; [
-      gpl3
+      mit
       # cc-by-nc-sa-40
     ];
     mainProgram = "isabelroses.com";
