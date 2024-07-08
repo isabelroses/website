@@ -1,7 +1,7 @@
 { lib, buildGoModule }:
 buildGoModule {
   pname = "isabelroses-website";
-  version = "0.0.9";
+  version = "0.1.0";
 
   src = lib.fileset.toSource {
     root = ../.;
@@ -20,17 +20,18 @@ buildGoModule {
     );
   };
 
-  vendorHash = "sha256-hz1lzBv5Qhg0UmefwhvFbLxnA/o/wysW+kvY8v+FPRU=";
+  vendorHash = "sha256-9ZjF2Y5xx0+NARkh1zbTb4igYbCDEGDIMBxJWXOeGvc=";
 
   ldflags = [
     "-s"
     "-w"
   ];
 
+  # we change the rootdir so that the templates and other files are loaded from the right place
+  # TODO: we should change this so that it uses an emebeded filesystem at some point
   preBuild = ''
     substituteInPlace lib/settings.go \
-      --replace-fail 'RootDir  string = "."' 'RootDir  string = "'$out/share'"' \
-      --replace-fail 'ServeDir string = "."' 'ServeDir string = "/srv/storage/isabelroses.com"'
+      --replace-fail 'RootDir string = "."' 'RootDir  string = "'$out/share'"'
   '';
 
   postInstall = ''

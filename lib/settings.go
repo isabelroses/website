@@ -1,9 +1,14 @@
 package lib
 
+import (
+	"os"
+
+	_ "github.com/joho/godotenv/autoload"
+)
+
 // Default settings
 var (
-	RootDir  string = "."
-	ServeDir string = "."
+	RootDir string = "."
 )
 
 func GetPath(path string) string {
@@ -11,5 +16,5 @@ func GetPath(path string) string {
 }
 
 func GetServePath(path string) string {
-	return ServeDir + path
+	return os.Getenv("SERVE_DIR") + path
 }
