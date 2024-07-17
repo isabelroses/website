@@ -1,7 +1,9 @@
 package main
 
 import (
+	"embed"
 	"fmt"
+	"io/fs"
 	"net/http"
 	"strings"
 
@@ -29,6 +31,9 @@ func customHTTPErrorHandler(err error, c echo.Context) {
 		c.Logger().Error(err)
 	}
 }
+
+//go:embed public/*
+var PubFS embed.FS
 
 func main() {
 	e := echo.New()
@@ -75,7 +80,12 @@ func main() {
 		return c.JSON(http.StatusOK, json)
 	})
 
-	e.Static("/*", lib.GetPath("/public"))
+	strippedFS, err := fs.Sub(PubFS, "public")
+	if err != nil {
+		panic(err)
+	}
+	fs := http.FS(strippedFS)
+	e.GET("/*", echo.WrapHandler(http.FileServer(fs)))
 
 	e.Logger.Fatal(e.Start(":3000"))
 }

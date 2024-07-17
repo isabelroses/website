@@ -8,6 +8,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"isabelroses.com/lib"
+	"isabelroses.com/templates"
 )
 
 func Post(c echo.Context) error {
@@ -45,5 +46,5 @@ func Post(c echo.Context) error {
 	}
 
 	components := []string{"header"}
-	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
+	return templates.RenderTemplate(c.Response().Writer, "base", components, props)
 }

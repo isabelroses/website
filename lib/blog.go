@@ -2,10 +2,11 @@ package lib
 
 import (
 	"bytes"
+	"embed"
 	"fmt"
 	"html/template"
+	"io/fs"
 	"log"
-	"os"
 	"sort"
 	"strings"
 	"time"
@@ -17,17 +18,20 @@ import (
 	"github.com/yuin/goldmark/renderer/html"
 )
 
+//go:embed content/*
+var content embed.FS
+
 func GetBlogPosts() Posts {
 	var posts Posts
 
-	files, err := os.ReadDir(GetPath("/content/"))
+	files, err := fs.ReadDir(content, "content")
 	if err != nil {
 		log.Fatalf("failed to open file: %v", err)
 	}
 
 	for _, file := range files {
 		if strings.HasSuffix(file.Name(), ".md") {
-			content, err := os.ReadFile(GetPath("/content/") + file.Name())
+			content, err := fs.ReadFile(content, "content/"+file.Name())
 			if err != nil {
 				log.Fatal(err)
 			}

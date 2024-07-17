@@ -5,7 +5,7 @@ import (
 
 	"github.com/labstack/echo/v4"
 
-	"isabelroses.com/lib"
+	"isabelroses.com/templates"
 )
 
 type ErrorProps struct {
@@ -19,6 +19,5 @@ func ErrorPage(c echo.Context, code int) error {
 
 	c.Response().WriteHeader(code)
 	components := []string{"header"}
-	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
-
+	return templates.RenderTemplate(c.Response().Writer, "base", components, props)
 }

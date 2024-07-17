@@ -3,6 +3,7 @@ package pages
 import (
 	"github.com/labstack/echo/v4"
 	"isabelroses.com/lib"
+	"isabelroses.com/templates"
 )
 
 type ProjectProps struct {
@@ -54,5 +55,5 @@ func Projects(c echo.Context) error {
 	}
 
 	components := []string{"header", "project"}
-	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
+	return templates.RenderTemplate(c.Response().Writer, "base", components, props)
 }

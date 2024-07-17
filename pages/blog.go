@@ -4,6 +4,7 @@ import (
 	"github.com/labstack/echo/v4"
 
 	"isabelroses.com/lib"
+	"isabelroses.com/templates"
 )
 
 type BlogProps struct {
@@ -29,5 +30,5 @@ func Blog(c echo.Context) error {
 	}
 
 	components := []string{"header", "blogpreview"}
-	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
+	return templates.RenderTemplate(c.Response().Writer, "base", components, props)
 }

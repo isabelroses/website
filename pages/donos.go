@@ -4,7 +4,9 @@ import (
 	"strings"
 
 	"github.com/labstack/echo/v4"
+
 	"isabelroses.com/lib"
+	"isabelroses.com/templates"
 )
 
 type DonoProps struct {
@@ -28,7 +30,7 @@ func Donos(c echo.Context) error {
 	}
 
 	components := []string{"header", "usercard"}
-	return lib.RenderTemplate(c.Response().Writer, "base", components, props)
+	return templates.RenderTemplate(c.Response().Writer, "base", components, props)
 }
 
 func handleAvatar(dono lib.Donor) lib.Donor {
