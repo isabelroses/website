@@ -25,10 +25,10 @@ func Projects(c echo.Context) error {
 			Repo:   "https://github.com/catppuccin/userstyles",
 		},
 		{
-			Name:   "charm-freeze.nvim",
-			Icon:   "charm-freeze-icon.webp",
-			Banner: "charm-freeze-banner.webp",
-			Repo:   "https://github.com/isabelroses/charm-freeze.nvim",
+			Name:   "freeze.nvim",
+			Icon:   "freeze-icon.webp",
+			Banner: "freeze-banner.webp",
+			Repo:   "https://github.com/charm-community/freeze.nvim",
 		},
 		{
 			Name:   "izrss",
