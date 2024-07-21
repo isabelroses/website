@@ -1,0 +1,40 @@
+{{define "stripped"}}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light-dark" />
+    <meta name="darkreader-lock" />
+
+    <title>{{template "title" .}}</title>
+    <meta name="author" content="Isabel Roses" />
+    <meta name="description" content="{{template "description" . }}" />
+    <meta name="keywords" content="Isabel Roses, blog, go, rust, personal, tech, programming, web development, software engineering" />
+    <link rel="canonical" href="https://isabelrose.com">
+
+    <meta property="twitter:domain" content="isabelroses.com" />
+    <meta name="twitter:image" content="https://isabelroses.com/me.webp" />
+    <meta name="twitter:card" content="{{template "description" .}}">
+
+    <meta property="og:title" content="{{template "title" .}}">
+    <meta property="og:description" content="{{template "description" .}}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://isabelroses.com/me.webp" />
+
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml">
+    <link rel="alternate" type="application/json" href="/feed.json">
+    <link type="text/plain" rel="author" href="/humans.txt" />
+
+    <link rel="icon" href="/icons/favicon.ico" />
+
+    {{template "additionalhead" .}}
+  </head>
+
+  <body>
+    <main class="main">
+      {{template "main" .}}
+    </main>
+  </body>
+</html>
+{{end}}

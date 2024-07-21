@@ -56,6 +56,8 @@ func main() {
 
 	e.GET("/donations", pages.Donos)
 
+	e.GET("/2004", pages.A2004)
+
 	blogGroup := e.Group("/blog")
 	blogGroup.GET("", pages.Blog)
 	blogGroup.GET("/:slug", pages.Post)
