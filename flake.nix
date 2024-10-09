@@ -8,13 +8,23 @@
     let
       forAllSystems =
         function:
-        nixpkgs.lib.genAttrs [
-          "x86_64-linux"
-          "x86_64-darwin"
-          "i686-linux"
-          "aarch64-linux"
-          "aarch64-darwin"
-        ] (system: function nixpkgs.legacyPackages.${system});
+        nixpkgs.lib.genAttrs
+          [
+            "x86_64-linux"
+            "x86_64-darwin"
+            "i686-linux"
+            "aarch64-linux"
+            "aarch64-darwin"
+          ]
+          (
+            system:
+            function (
+              import nixpkgs {
+                inherit system;
+                config.allowUnfree = true;
+              }
+            )
+          );
     in
     {
       packages = forAllSystems (pkgs: rec {
