@@ -79,7 +79,7 @@ func Home(c echo.Context) error {
 					chunkSize = len(remainder) - idx
 				}
 
-				right += fmt.Sprintf("\x1b[48;2;%d;%d;%dm\x1b[30m%s", rgba.R, rgba.G, rgba.B, remainder[idx:idx+chunkSize])
+				right += fmt.Sprintf("\x1b[48;2;%d;%d;%dm\x1b[38;2;0;0;0m%s", rgba.R, rgba.G, rgba.B, remainder[idx:idx+chunkSize])
 				idx += chunkSize
 			}
 
