@@ -1,0 +1,24 @@
+<article>
+  <a
+    class="box-border flex flex-row w-full gap-4 px-4 py-5 overflow-auto overflow-x-hidden text-left shadow-xl bg-card sm:w-full min-w-80 rounded-2xl"
+    href="/blog/{{ post.slug }}"
+  >
+    <div class="flex flex-col gap-2">
+      <p class="text-lg">{{ post.title }}</p>
+      <p class="text-fg-lighter">{{ post.description }}</p>
+    </div>
+
+    <div class="flex flex-col self-end gap-2 ml-auto text-sm">
+      <div class="text-xs text-right text-fg-lighter">{{ post.date }}</div>
+
+      <div class="flex-row hidden gap-2 md:flex">
+        {% for tag in post.tags %}
+        <div class="tag">
+          {{ tag }}
+          <div class="tag-after"></div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </a>
+</article>

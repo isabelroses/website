@@ -1,0 +1,44 @@
+{% extends "layouts/base.tera" %}
+
+{% block title %}{% set title = "Blog" %}{% endblock %}
+{% block description %}{% set description = "The parts of my life that I put out into the world" %}{% endblock %}
+
+{% block main %}
+<section class="flex flex-col gap-4">
+  <div class="pb-4">
+    <h1 class="text-4xl font-bold">
+      {{ title }}
+      {% if tag %} > 🏷️
+      <span class="text-special">{{ tag }}</span>
+      {% endif %}
+    </h1>
+    <h2 class="text-xl text-fg-lighter">{{ description }}</h2>
+  </div>
+
+  <form
+    name="tags"
+    id="form-tags"
+    class="flex flex-row md:min-w-[620px] md:max-w-[620px]"
+  >
+    <label for="tags" class="w-1/2">Filter by 🏷️ tag: </label>
+    <select
+      name="tags"
+      id="tags"
+      class="w-full rounded-sm bg-card text-fg-darker"
+      aria-label="Filter by tag"
+      onchange="window.location.href = this.value"
+    >
+      <option value="/blog">all</option>
+      {% for tag in tags %}
+        <option value="/blog/tag/{{ tag }}" {% if tag == current_tag %}selected="false"{% endif %}>
+          {{ tag }}
+        </option>
+      {% endfor %}
+    </select>
+  </form>
+
+  {% for post in posts %}
+    {% include "partials/blogpreview.tera" %}
+  {% endfor %}
+</section>
+{% endblock %}

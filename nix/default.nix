@@ -1,30 +1,26 @@
-{ lib, buildGoModule }:
-buildGoModule {
+{ lib, rustPlatform }:
+let
+  toml = (lib.importTOML ../Cargo.toml).package;
+in
+rustPlatform.buildRustPackage {
   pname = "isabelroses-website";
-  version = "0.1.1";
+  inherit (toml) version;
 
   src = lib.fileset.toSource {
     root = ../.;
     fileset = lib.fileset.intersection (lib.fileset.fromSource (lib.sources.cleanSource ../.)) (
       lib.fileset.unions [
-        ../go.mod
-        ../go.sum
-        ../main.go
-        ../api
-        ../lib
-        ../pages
-        ../public
+        ../Cargo.toml
+        ../Cargo.lock
+        ../src
         ../templates
+        ../content
+        ../static
       ]
     );
   };
 
-  vendorHash = "sha256-s+lePVX0JNVkLmDYK1WGMsZd8vY7gKt4GP0CPkkgyfo=";
-
-  ldflags = [
-    "-s"
-    "-w"
-  ];
+  cargoLock.lockFile = ../Cargo.lock;
 
   meta = {
     description = "isabelroses.com";
