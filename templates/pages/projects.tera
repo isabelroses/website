@@ -1,0 +1,17 @@
+{% extends "layouts/base.tera" %}
+
+{% block title %}{% set title = "Projects" %}{% endblock %}
+{% block description %}{% set description = "A collection of projects that I maintain" %}{% endblock %}
+
+{% block main %}
+<section class="flex flex-col gap-4">
+  <div class="pb-2">
+    <h1 class="text-4xl font-bold">{{ title }}</h1>
+    <h2 class="text-xl text-fg-lighter">{{ description }}</h2>
+  </div>
+
+  {% for project in projects %}
+    {% include "partials/project.tera" %}
+  {% endfor %}
+</section>
+{% endblock %}

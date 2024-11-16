@@ -2,23 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  @font-face {
-    font-family: 'Maple Mono';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url(/fonts/MapleMono-Regular.woff2) format('woff2');
-  }
-  @font-face {
-    font-family: 'Maple Mono';
-    font-style: bold;
-    font-weight: 400;
-    font-display: swap;
-    src: url(/fonts/MapleMono-Bold.woff2) format('woff2');
-  }
-}
-
 @layer components {
   /* Scrollbar */
   ::-webkit-scrollbar {

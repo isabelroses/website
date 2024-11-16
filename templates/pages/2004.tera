@@ -1,0 +1,87 @@
+{% extends "layouts/stripped.tera" %}
+
+{% block title %}{% set title = "2004" %}{% endblock %}
+{% block description %}{% set description = "The time when the internet was good" %}{% endblock %}
+
+{% block additionalhead %}
+<style>
+:root {
+  --accent: #7dc4e4;
+  --bg: #24273a;
+}
+html {
+  font-family: system-ui, sans-serif;
+  background: var(--bg);
+  margin: 1rem;
+}
+main {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  gap: 20rem;
+}
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: .5rem;
+  width: 88px;
+}
+h1 {
+  font-size: 6em;
+  text-align: center;
+  animation-name: spin, depth;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  transform-style: preserve-3d;
+  position: relative;
+  animation-duration: 7.5s;
+  color: var(--accent);
+}
+@keyframes spin {
+  from { transform: rotateY(0deg); }
+  to { transform: rotateY(-360deg); }
+}
+@keyframes depth {
+  0% { text-shadow: 0 0 var(--accent); }
+  25% { text-shadow: 1px 0 var(--accent), 2px 0 var(--accent), 3px 0 var(--accent), 4px 0 var(--accent), 5px 0 var(--accent); }
+  50% { text-shadow: 0 0 var(--accent); }
+  75% { text-shadow: -1px 0 var(--accent), -2px 0 var(--accent), -3px 0 var(--accent), -4px 0 var(--accent), -5px 0 var(--accent); }
+  100% { text-shadow: 0 0 var(--accent); }
+}
+</style>
+<script src="/2004/oneko.js" defer></script>
+{% endblock %}
+
+{% block main %}
+  <div class="sidebar">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/arc.webp">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/blink.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/bitwarden.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/cc-by-nc-sa.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/catppuccin.webp">
+    <a href="https://discord.gg/8RVhHeJH3x" target="_blank" rel="noopener noreferrer"><img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/discordserver.gif"></a>
+    <a href="https://akko.isabelroses.com/isabel" target="_blank" rel="noopener noreferrer"><img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/fedi.gif"></a>
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/gaywebring.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/gimp.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/nix.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/queercoded.webp">
+  </div>
+
+  <h1>isabel</h1>
+
+  <div class="sidebar">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/nec.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/programmingsocks.webp">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/love_blahaj.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/she-her.webp">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/tgirl.webp">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/me.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/transnow.png">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/www.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/iesucks.gif">
+    <img loading="lazy" width="88" height="31" decoding="async" data-nimg="1" style="color:transparent;image-rendering:pixelated" src="/2004/scripts.gif">
+  </div>
+
+</div>
+{% endblock %}

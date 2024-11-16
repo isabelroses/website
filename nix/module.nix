@@ -22,7 +22,7 @@ in
         Type = "simple";
         ReadWritePaths = [ "/srv/storage/isabelroses.com" ];
         DynamicUser = true;
-        ExecStart = "${getExe self.packages.${pkgs.stdenv.hostPlatform.system}.default}";
+        ExecStart = getExe self.packages.${pkgs.stdenv.hostPlatform.system}.default;
         Restart = "always";
       };
     };

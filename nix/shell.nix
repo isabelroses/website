@@ -1,20 +1,18 @@
 {
-  go,
   bun,
-  air,
-  gopls,
-  typos,
+  clippy,
+  rustfmt,
   callPackage,
+  rust-analyzer,
 }:
 let
   mainPkg = callPackage ./default.nix { };
 in
 mainPkg.overrideAttrs (oa: {
   nativeBuildInputs = [
-    go
     bun
-    air
-    gopls
-    typos
+    clippy
+    rustfmt
+    rust-analyzer
   ] ++ (oa.nativeBuildInputs or [ ]);
 })
