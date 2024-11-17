@@ -33,6 +33,7 @@
       <option value="theme-ctp-macchiato">Catppuccin Macchiato</option>
       <option value="theme-ctp-frappe">Catppuccin Frappé</option>
       <option value="theme-ctp-latte">Catppuccin Latte</option>
+      <option value="theme-evg">Evergarden</option>
     </select>
   </form>
 
