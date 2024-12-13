@@ -21,7 +21,7 @@ pub const PROJECTS: &[Project] = &[
     },
     Project {
         name: "Userstyles",
-        description: None,
+        description: Some("Soothing pastel userstyles"),
         icon: Some("userstyles-icon.webp"),
         banner: Some("userstyles-banner.webp"),
         href: None,
@@ -29,7 +29,7 @@ pub const PROJECTS: &[Project] = &[
     },
     Project {
         name: "freeze.nvim",
-        description: None,
+        description: Some("A wrapper for charm's freeze cli tool for usage in neovim"),
         icon: Some("freeze-icon.webp"),
         banner: Some("freeze-banner.webp"),
         href: None,
@@ -37,7 +37,7 @@ pub const PROJECTS: &[Project] = &[
     },
     Project {
         name: "izrss",
-        description: None,
+        description: Some("An RSS feed reader for the terminal"),
         icon: None,
         banner: Some("izrss-banner.webp"),
         href: None,
@@ -45,7 +45,7 @@ pub const PROJECTS: &[Project] = &[
     },
     Project {
         name: "Dotfiles",
-        description: None,
+        description: Some("My over complex system configurations"),
         icon: Some("dotfiles-icon.svg"),
         banner: Some("dotfiles-banner.svg"),
         href: None,

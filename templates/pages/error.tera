@@ -4,11 +4,10 @@
 {% block description %}{% set description = title %}{% endblock %}
 
 {% block main %}
-<section class="flex flex-col gap-4">
+<section>
   <img
     src="https://http.cat/images/{{ code }}.jpg"
     alt="Error {{ code }}"
-    class="w-1/2 mx-auto"
   />
 </section>
 {% endblock %}

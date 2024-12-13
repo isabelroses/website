@@ -56,7 +56,7 @@ async fn main() {
     let app = Router::new()
         .route("/", get(render("home", &tera::Context::new())))
         .route("/projects", get(projects))
-        .route("/2004", get(render("2004", &tera::Context::new())))
+        .route("/badges", get(render("badges", &tera::Context::new())))
         .route(
             "/donations",
             get(match data::donos::get() {
@@ -124,6 +124,13 @@ async fn main() {
         )
         .nest("/api", api_routes)
         .route("/static/*file", get(static_files::handler))
+        .route(
+            "/robots.txt",
+            get((
+                [(header::CONTENT_TYPE, "text/plain")],
+                include_str!("../static/robots.txt"),
+            )),
+        )
         .fallback(get(Redirect::temporary("/error")));
 
     axum::serve(listener, app).await.unwrap();

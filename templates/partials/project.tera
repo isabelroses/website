@@ -1,25 +1,27 @@
-<div
-  class="bg-card flex gap-3 relative sm:w-full min-w-80 shadow-xl rounded-2xl overflow-auto overflow-x-hidden box-border text-left px-[15px] py-5"
->
-  <div
-    class="banner"
-    {% if project.banner %} style='background-image: url("/static/repos/{{ project.banner }}");' {% endif %}
-  ></div>
+<div class="project">
+  {% if project.banner %}
+    <img
+      src="/static/repos/{{ project.banner }}"
+      class="project-banner"
+      alt="{{ project.name }}'s project banner"
+    />
+  {% endif %}
 
-  <img
-    src="{% if project.icon %}/static/repos/{{ project.icon }}{% else %}/static/me.webp{% endif %}"
-    class="z-20 object-contain w-20 h-20 rounded-full"
-    style="margin-top: calc(8px + max(min(100vw, 600px), 360px) * 0.1)"
-    alt="{{ project.name }}'s Project icon"
-  />
+  <div class="project-fg">
+    <img
+      src="{% if project.icon %}/static/repos/{{ project.icon }}{% else %}/static/me.webp{% endif %}"
+      class="project-icon"
+      alt="{{ project.name }}'s project icon"
+    />
 
-  <div class="z-10 flex items-end w-full">
-    <div class="flex-grow overflow-hidden whitespace-nowrap">
-      <span class="pr-5 text-lg">{{ project.name }}</span>
-      <!-- <span class="hidden text-sm md:inline-flex">{{ description }}</span> -->
+    <div class="project-right">
+      <div class="project-main-info">
+        <span class="project-title">{{ project.name }}</span>
+        <span class="project-description">{{ project.description }}</span>
+      </div>
     </div>
 
-    <div class="flex flex-row gap-3">
+    <div class="project-icons">
       {% if project.href %}
       <a role="button" href="{{ project.href }}" aria-label="{{ project.name }}'s website">
         <svg
@@ -27,7 +29,7 @@
           height="24"
           width="24"
           viewBox="0 0 512 512"
-          class="fill-fg hover:fill-special size-5"
+          class="icon"
         >
           <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
           <path
@@ -44,7 +46,7 @@
           height="25"
           width="25"
           viewBox="0 0 496 512"
-          class="fill-fg hover:fill-special size-5"
+          class="icon"
         >
           <!--!Font Awesome Free 6.5.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
           <path
