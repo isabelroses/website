@@ -1,0 +1,9 @@
+#form-tags {
+  padding-bottom: 2rem;
+
+  select {
+    border: var(--border, var(--default-border));
+    background: transparent;
+    color: var(--fg);
+  }
+}

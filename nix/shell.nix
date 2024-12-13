@@ -1,5 +1,6 @@
 {
-  bun,
+  just,
+  dart-sass,
   clippy,
   rustfmt,
   callPackage,
@@ -10,7 +11,8 @@ let
 in
 mainPkg.overrideAttrs (oa: {
   nativeBuildInputs = [
-    bun
+    just
+    dart-sass
     clippy
     rustfmt
     rust-analyzer

@@ -1,0 +1,35 @@
+footer, .article-footer {
+  text-align: center;
+  padding-bottom: 2rem;
+
+  ul {
+    list-style: none;
+  }
+}
+
+.article-footer {
+  padding-top: 2rem;
+}
+
+.icon {
+  fill: var(--fg);
+  width: 1.5rem;
+  height: 1.5rem;
+  &:hover {
+    fill: var(--special);
+  }
+}
+
+.license-text {
+  font-size: 0.75rem;
+  line-height: 1rem;
+  color: var(--fg-lighter);
+}
+
+.align-footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.5rem;
+  padding-block: .2rem;
+}

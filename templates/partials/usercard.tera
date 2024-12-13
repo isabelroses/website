@@ -1,4 +1,0 @@
-<a href="{% if donor.url != "" %}{{ donor.url }}{% else %}#{% endif %}" class="flex flex-col gap-2 glow-button transition-all bg-card p-1 py-2 justify-center items-center text-center rounded-xl min-w-28 max-w-40">
-  <img src="{% if donor.avatar != ""%}{{ donor.avatar }}{% else %}/static/you.webp{% endif %}" class="rounded-full" alt="{{ donor.name }}'s icon">
-  <span>{{ donor.name }}</span>
-</a>

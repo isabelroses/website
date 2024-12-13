@@ -1,4 +1,9 @@
-{ lib, rustPlatform }:
+{
+  lib,
+  rustPlatform,
+  just,
+  dart-sass,
+}:
 let
   toml = (lib.importTOML ../Cargo.toml).package;
 in
@@ -10,17 +15,37 @@ rustPlatform.buildRustPackage {
     root = ../.;
     fileset = lib.fileset.intersection (lib.fileset.fromSource (lib.sources.cleanSource ../.)) (
       lib.fileset.unions [
+        # for styles
+        ../justfile
+        ../styles
+
+        # for the website content
+        ../content
+        ../static
+
+        # for the website code
         ../Cargo.toml
         ../Cargo.lock
         ../src
         ../templates
-        ../content
-        ../static
       ]
     );
   };
 
   cargoLock.lockFile = ../Cargo.lock;
+
+  nativeBuildInputs = [
+    just
+    dart-sass
+  ];
+
+  dontUseJustInstall = true;
+  dontUseJustBuild = true;
+  dontUseJustCheck = true;
+
+  preBuild = ''
+    just build-styles
+  '';
 
   meta = {
     description = "isabelroses.com";

@@ -1,0 +1,16 @@
+.reusable-header {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+
+  .title {
+    font-size: 3rem;
+    line-height: 4rem;
+  }
+
+  .description {
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+
+    color: var(--fg-lighter);
+  }
+}

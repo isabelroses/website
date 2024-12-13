@@ -4,32 +4,26 @@
 {% block description %}{% set description = "A special thanks to all those who support me!" %}{% endblock %}
 
 {% block main %}
-<section class="flex flex-col gap-4">
-  <div class="pb-2">
-    <h1 class="text-4xl font-bold">{{ title }}</h1>
-    <h2 class="text-xl text-fg-lighter">{{ description }}</h2>
-  </div>
+<div class="reusable-header">
+  <h1 class="title">{{ title }}</h1>
+  <h2 class="description">{{ description }}</h2>
+</div>
 
-  <div class="flex flex-col gap-2">
-    <h3 class="text-2xl font-bold">Subscribers</h2>
-    <div class="flex flex-row gap-2">
-      {% for donor in donors %}
-        {% if donor.tier != "OneTime" %}
-          {% include "partials/usercard.tera" %}
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
+<h3 class="donations-header">Subscribers</h2>
+<div class="donations">
+  {% for donor in donors %}
+    {% if donor.tier != "OneTime" %}
+      {% include "partials/donation.tera" %}
+    {% endif %}
+  {% endfor %}
+</div>
 
-  <div class="flex flex-col gap-2">
-    <h3 class="text-2xl font-bold">One Time Donors</h2>
-    <div class="flex flex-row gap-2">
-      {% for donor in donors %}
-        {% if donor.tier == "OneTime" %}
-          {% include "partials/usercard.tera" %}
-        {% endif %}
-      {% endfor %}
-    </div>
-  </div>
-</section>
+<h3 class="donations-header">One Time Donors</h2>
+<div class="donations">
+  {% for donor in donors %}
+    {% if donor.tier == "OneTime" %}
+      {% include "partials/donation.tera" %}
+    {% endif %}
+  {% endfor %}
+</div>
 {% endblock %}

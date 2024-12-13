@@ -1,6 +1,6 @@
 [package]
 name = "isabelroses-website"
-version = "0.2.0"
+version = "0.3.0"
 license = "MIT"
 description = "my lovely website"
 homepage = "https://github.com/isabelroses/website"

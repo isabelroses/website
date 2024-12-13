@@ -1,0 +1,46 @@
+.donations {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+@media (max-width: 768px) {
+  .donations {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.donations-header {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  font-weight: bold;
+  padding-bottom: 1rem;
+}
+
+.donation {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 1rem;
+  text-align: center;
+  border: var(--border, var(--default-border));
+  text-decoration: none;
+  color: var(--fg);
+
+  &:hover {
+    text-decoration: none;
+    color: var(--fg);
+  }
+
+  .donation-icon {
+    aspect-ratio: 1;
+  }
+
+  .donation-user {
+    padding-top: 1rem;
+    font-size: 1.25rem;
+    line-height: 1.25rem;
+    font-weight: bold;
+  }
+}

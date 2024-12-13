@@ -193,8 +193,10 @@
   <body>
     {% include "partials/header.tera" %}
 
-    <main class="flex flex-col pb-8 w-full">
+    <main class="main-page">
       {% block main %} {% endblock %}
     </main>
+
+    {% include "partials/footer.tera" %}
   </body>
 </html>
