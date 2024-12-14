@@ -199,4 +199,7 @@
 
     {% include "partials/footer.tera" %}
   </body>
+
+
+  {% block additionalfoot %} {% endblock %}
 </html>

@@ -3,10 +3,10 @@
 {% block title %}{% set title = "Blog > " ~ post.title %}{% endblock %}
 {% block description %}{% set description = post.description %}{% endblock %}
 
-{% block additionalhead %}
+{% block additionalfoot %}
 <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
 <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/nix.min.js"></script>
-<script defer>
+<script>
   hljs.highlightAll();
 </script>
 {% endblock %}
