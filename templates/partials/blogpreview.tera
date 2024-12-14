@@ -1,4 +1,4 @@
-<article class="blog-preview">
+<article class="blog-preview" style="view-transition-name: blog-{{ post.id }}">
   <a href="/blog/{{ post.slug }}">
     <div class="top-split">
       <p class="title">{{ post.title }}</p>
@@ -9,9 +9,7 @@
 
     <div class="tags">
       {% for tag in post.tags %}
-        <span>
-          #{{ tag }}
-        </span>
+        <span>#{{ tag }}</span>
       {% endfor %}
     </div>
   </a>
