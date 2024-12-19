@@ -31,9 +31,24 @@
   </select>
 </form>
 
-<div class="blog-previews">
+<div class="blog-previews" id="blog-previews">
   {% for post in posts %}
     {% include "partials/blogpreview.tera" %}
   {% endfor %}
 <div>
+{% endblock %}
+
+{% block additionalfoot %}
+<script>
+  document.getElementById("blog-previews").onmousemove = e => {
+    for(const preview of document.getElementsByClassName("blog-preview")) {
+      const rect = preview.getBoundingClientRect(),
+        x = e.clientX - rect.left,
+        y = e.clientY - rect.top;
+
+    preview.style.setProperty("--x", `${x}px`);
+    preview.style.setProperty("--y", `${y}px`);
+  };
+}
+</script>
 {% endblock %}

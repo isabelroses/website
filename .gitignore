@@ -9,6 +9,7 @@ donos.json
 tmp
 result
 result-*
+static/styles.css
 
 # Ignore Mac system files
 .DS_Store

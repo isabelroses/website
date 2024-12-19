@@ -14,10 +14,7 @@
 .blog-preview {
   border: var(--border, var(--default-border));
   display: flex;
-
-  &:hover {
-    background-color: var(--bg-lighter);
-  }
+  position: relative;
 
   a {
     width: 100%;
@@ -60,4 +57,35 @@
     flex-direction: row;
     gap: 0.5rem;
   }
+
+  &::before, &::after {
+    content: "";
+    height: 100%;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    border-radius: inherit;
+    opacity: 0;
+    transition: opacity 500ms;
+    pointer-events: none;
+  }
+
+  &::before {
+    background: radial-gradient(800px circle at var(--x) var(--y), rgb(from var(--fg) r g b / 0.1), transparent 40%);
+    z-index: 3;
+  }
+
+  &::after {
+    background: radial-gradient(500px circle at var(--x) var(--y), rgb(from var(--fg) r g b / 0.1), transparent 40%);
+    z-index: 2;
+  }
+
+  &:hover::before {
+    opacity: 1;
+  }
+}
+
+.blog-previews:hover > .blog-preview::after {
+  opacity: 1;
 }
