@@ -13,18 +13,15 @@ cd website
 # Install dependencies (rejoice, nix users)
 nix develop # if you have nix installed, not a requirement
 
-go mod tidy
+# Do you want to use just?
+just run
 
-# tailwindcss
-cd styles
-bun install
-# you may need to recompile tailwindcss
-bun build
-# but if you want tailwindcss to recompile on changes
-bun watch
-
-# then you can run the server using air
-air # you can get this using `go install github.com/cosmtrek/air@latest`
+# Otherwise you can run
+sass -q --no-source-map --style=compressed styles/main.scss static/styles.css
+# to build the css file
+# then you can run
+cargo run
+# to start the server
 ```
 
 ### License
