@@ -3,4 +3,10 @@
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
   }
+
+  :root::view-transition-group(*),
+  :root::view-transition-old(*),
+  :root::view-transition-new(*) {
+    animation: none !important;
+  }
 }

@@ -15,6 +15,7 @@
   border: var(--border, var(--default-border));
   display: flex;
   position: relative;
+  background-color: var(--bg);
 
   a {
     width: 100%;
