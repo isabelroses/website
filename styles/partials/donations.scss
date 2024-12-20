@@ -2,7 +2,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
   gap: 1rem;
-  margin-bottom: 2rem;
+  padding-bottom: 2rem;
 }
 
 @container main-page (width < 768px) {
