@@ -46,4 +46,8 @@ pub const FRIENDS: &[Friend] = &[
         link: "https://aubrey.rs",
         badge: "aubrey.png",
     },
+    Friend {
+        link: "https://rooot.gay",
+        badge: "rooot.gif",
+    },
 ];
