@@ -16,6 +16,7 @@ mod templates;
 
 use crate::templates::TEMPLATES;
 
+#[allow(clippy::too_many_lines)]
 #[tokio::main]
 async fn main() {
     dotenv().ok();
@@ -56,7 +57,15 @@ async fn main() {
     let app = Router::new()
         .route("/", get(render("home", &tera::Context::new())))
         .route("/projects", get(projects))
-        .route("/badges", get(render("badges", &tera::Context::new())))
+        .route(
+            "/badges",
+            get({
+                let mut ctx = tera::Context::new();
+                ctx.insert("badges", &data::badges::BADGES);
+                ctx.insert("friends", &data::badges::FRIENDS);
+                render("badges", &ctx)
+            }),
+        )
         .route(
             "/donations",
             get(match data::donos::get() {

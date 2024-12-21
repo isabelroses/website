@@ -9,39 +9,12 @@
   <h2 class="description">{{ description }}</h2>
 </div>
 
-{% set badges = [
-  "arc.webp",
-  "blink.gif",
-  "bitwarden.gif",
-  "cc-by-nc-sa.gif",
-  "catppuccin.webp",
-  "discordserver.gif",
-  "fedi.gif",
-  "gaywebring.gif",
-  "gimp.gif",
-  "nix.gif",
-  "queercoded.webp",
-  "nec.gif",
-  "love_blahaj.gif",
-  "she-her.webp",
-  "tgirl.webp",
-  "transnow.png",
-  "www.gif",
-  "iesucks.gif",
-  "scripts.gif",
-] %}
-
-{% set friends = [
-  "https://garfunkles.space/88x31.webp",
-  "https://genshibe.ca/assets/button.png",
-] %}
-
 <div class="badges-align">
   <div class="badge-selection">
     <h3>Friends</h3>
     <div class="badges">
       {% for friend in friends %}
-        <img class="badge" loading="lazy" decoding="async" data-nimg="1" src="{{ friend }}">
+        <a href="{{ friend.link }}" target="_blank"><img class="badge" loading="lazy" decoding="async" data-nimg="1" src="/static/badges/friends/{{ friend.badge }}"></a>
       {% endfor %}
     </div>
   </div>
@@ -50,7 +23,7 @@
     <h3>Badges</h3>
     <div class="badges">
       {% for badge in badges %}
-        <img class="badge" loading="lazy" decoding="async" data-nimg="1" src="/static/2004/{{ badge }}">
+        <img class="badge" loading="lazy" decoding="async" data-nimg="1" src="/static/badges/badges/{{ badge }}">
       {% endfor %}
     </div>
   </div>
@@ -58,9 +31,9 @@
   <div class="badge-selection">
     <h3>Want to add me to your website?</h3>
 
-    <img class="badge" loading="lazy" decoding="async" data-nimg="1" src="/static/2004/me.gif">
+    <img class="badge" loading="lazy" decoding="async" data-nimg="1" src="/static/badges/me.gif">
 
-    <textarea id="copy" readonly><img src="https://isabelroses.com/static/2004/me.gif" alt="isabel roses" width="88" height="31" /></textarea>
+    <textarea id="copy" readonly><img src="https://isabelroses.com/static/badges/me.gif" alt="isabel roses" width="88" height="31" /></textarea>
     <button id="copybtn">Copy</button>
   </div>
 </div>
