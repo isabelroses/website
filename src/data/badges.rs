@@ -29,7 +29,6 @@ pub const BADGES: &[&str] = &[
 ];
 
 pub const FRIENDS: &[Friend] = &[
-    // "https://garfunkles.space/88x31.webp"
     Friend {
         link: "https://genshibe.ca",
         badge: "gen.png",
@@ -50,4 +49,20 @@ pub const FRIENDS: &[Friend] = &[
         link: "https://rooot.gay",
         badge: "rooot.gif",
     },
+    Friend {
+        link: "https://autumn.town",
+        badge: "autum.webp",
+    },
+    Friend {
+        link: "https://les.bi",
+        badge: "maeve.png",
+    },
+    Friend {
+        link: "https://basil.cafe",
+        badge: "basil.gif",
+    },
+    //Friend {
+    //    link: "https://garfunkles.space",
+    //    badge: "garfunkles.webp",
+    //},
 ];
