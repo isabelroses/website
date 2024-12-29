@@ -4,6 +4,7 @@ description: A look back at 2023, but with a fancy name
 date: 02/01/2024
 tags:
   - meta
+  - wrapped
 ---
 
 During the course of 2023, I learned and did a lot of different things. And this post is here to summarize the most important things that I did and learned.
