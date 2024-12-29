@@ -5,6 +5,16 @@
   padding-bottom: 2rem;
 }
 
+@container main-page (width < 768px) {
+  .main-page .badge-selection {
+    padding: .5rem;
+  }
+
+  .main-page .badges {
+    gap: .1rem;
+  }
+}
+
 .badge-selection {
   display: flex;
   gap: 1rem;
@@ -17,12 +27,12 @@
     font-size: 1.5rem;
     line-height: 2rem;
   }
+}
 
-  .badges {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .25rem;
-  }
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .25rem;
 }
 
 #copy {

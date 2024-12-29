@@ -67,3 +67,17 @@
     aspect-ratio: 1/1;
   }
 }
+
+
+@container main-page (width < 768px) {
+  .project {
+    .project-right {
+      padding-left: 0.5rem;
+    }
+
+    .project-icons {
+      padding-right: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+  }
+}
