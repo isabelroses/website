@@ -61,6 +61,10 @@ pub const FRIENDS: &[Friend] = &[
         link: "https://basil.cafe",
         badge: "basil.gif",
     },
+    Friend {
+        link: "https://arimelody.me",
+        badge: "arimelody.gif",
+    },
     //Friend {
     //    link: "https://garfunkles.space",
     //    badge: "garfunkles.webp",
