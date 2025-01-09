@@ -14,3 +14,17 @@
     color: var(--fg-lighter);
   }
 }
+
+@container main-page (width < 768px) {
+  .reusable-header {
+    .title {
+      font-size: 2.5rem;
+      line-height: 3rem;
+    }
+
+    .description {
+      font-size: 1.25rem;
+      line-height: 1.75rem;
+    }
+  }
+}

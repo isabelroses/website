@@ -19,3 +19,14 @@
 #comments {
   padding-bottom: 2rem;
 }
+
+@container main-page (width < 768px) {
+  .post-header {
+    flex-direction: column;
+
+    .left .readtime,
+    .right {
+      display: none;
+    }
+  }
+}
