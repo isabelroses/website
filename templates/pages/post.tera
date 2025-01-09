@@ -16,6 +16,7 @@
   <div class="left">
     <h1 class="title">{{ post.title }}</h1>
     <h2 class="description">{{ post.description }}</h2>
+    <h3 class="readtime">Read time: {{ post.read_time }}mins</h3>
   </div>
 
   <div class="right">

@@ -2,6 +2,7 @@ use atom_syndication::{
     ContentBuilder, EntryBuilder, FeedBuilder, LinkBuilder, PersonBuilder, TextBuilder,
 };
 use chrono::TimeZone;
+use lazy_static::lazy_static;
 use nom::{branch::permutation, IResult};
 use rust_embed::{Embed, EmbeddedFile};
 use serde::{Deserialize, Serialize};
@@ -9,6 +10,10 @@ use std::collections::HashSet;
 use std::error::Error;
 
 const DATE_FORMAT: &str = "%d/%m/%Y";
+
+lazy_static! {
+    static ref ERT_OPTIONS: estimated_read_time::Options = estimated_read_time::Options::new();
+}
 
 #[derive(Embed)]
 #[folder = "content/"]
@@ -23,6 +28,7 @@ pub struct Post {
     slug: String,
     tags: Vec<String>,
     content: String,
+    read_time: u64,
     id: Option<usize>,
 }
 
@@ -67,6 +73,9 @@ impl Post {
 
         match content {
             Ok(content) => {
+                let read_time_seconds = estimated_read_time::text(&content, &ERT_OPTIONS).seconds();
+                let read_time = read_time_seconds / 60;
+
                 let ret = Self {
                     title: meta.title,
                     date: meta.date,
@@ -74,6 +83,7 @@ impl Post {
                     tags: meta.tags,
                     slug: String::new(),
                     content,
+                    read_time,
                     id: None,
                 };
 
@@ -313,6 +323,7 @@ mod tests {
                 slug: "hello-world".to_string(),
                 tags: vec!["test".to_string(), "post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(1),
             },
             Post {
@@ -322,6 +333,7 @@ mod tests {
                 slug: "hello-world".to_string(),
                 tags: vec!["post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(2),
             },
         ]);
@@ -341,6 +353,7 @@ mod tests {
                 slug: "hello-world-1".to_string(),
                 tags: vec!["test".to_string(), "post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(1),
             },
             Post {
@@ -350,6 +363,7 @@ mod tests {
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(2),
             },
         ]);
@@ -369,6 +383,7 @@ mod tests {
                 slug: "hello-world-1".to_string(),
                 tags: vec!["test".to_string(), "post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(1),
             },
             Post {
@@ -378,6 +393,7 @@ mod tests {
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(2),
             },
         ]);
@@ -397,6 +413,7 @@ mod tests {
                 slug: "hello-world-1".to_string(),
                 tags: vec!["test".to_string(), "post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(1),
             },
             Post {
@@ -406,6 +423,7 @@ mod tests {
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(2),
             },
             Post {
@@ -415,6 +433,7 @@ mod tests {
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(3),
             },
             Post {
@@ -424,6 +443,7 @@ mod tests {
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
                 content: "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n".to_string(),
+                read_time: 0,
                 id: Some(4),
             },
         ];
