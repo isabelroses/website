@@ -108,7 +108,7 @@ I sadly am not kidding. These are real. I have seen people do this.
 First off, overlays should not be consumed with a system like
 `overlays.x86_64-linux` or `overlays.x86_64-linux.default`. Please stop
 yourself if you ever get here. Instead, overlays should be consumed like
-`source.overlays.name`, to archive that consider this template:
+`source.overlays.name`, to improve upon this consider the following template:
 
 ```nix
 {
