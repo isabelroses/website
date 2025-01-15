@@ -161,7 +161,7 @@
 
     let anchor_elem = document.createElement('a')
     anchor_elem.href = `#${anchor_id}`
-    anchor_elem.classList.add('anchor')
+    anchor_elem.classList.add('anchor-link')
 
     const range = document.createRange();
     range.selectNode(elem)
