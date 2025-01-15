@@ -52,8 +52,8 @@ For further reading about this topic please consult
 [nixpkgs@332e603/flake.nix#L54](https://github.com/NixOS/nixpkgs/blob/332e6030634ce7701496564d4c70ae8209919931/flake.nix#L54).
 
 To such I am usually asked "But I want to be able to track other nixpkgs
-revisions or inputs, then don't I have to? Or set a specialArg or something?".
-NO! Almost never do you want to use specialArgs. SpecialArgs are great but
+revisions or inputs, then don't I have to? Or set a `specialArg` or something?".
+NO! Almost never do you want to use `specialArgs`. `specialArgs` are great but
 often overused for things that the module system was designed to do better. Now
 to answer the main question, you can still do that. Allow me to introduce you
 to `pkgs.stdenv.hostPlatform.system` and its alias `pkgs.system`. So now we can
