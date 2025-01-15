@@ -33,6 +33,39 @@
 
     <link rel="stylesheet" href="/static/styles.css" />
 
+    <script>
+      const runColorMode = (fn) => {
+        let theme = localStorage.getItem("theme");
+        if (theme) {
+          document.documentElement.className = theme;
+          document.getElementById("themes").value = theme;
+          return;
+        }
+
+        <!-- if media queries are not ussported use this as the default theme -->
+        if (!window.matchMedia) {
+          document.documentElement.className = "theme-dark";
+        }
+
+        const query = window.matchMedia("(prefers-color-scheme: dark)");
+
+        fn(query.matches);
+
+        query.addEventListener("change", (event) => fn(event.matches));
+        localStorage.setItem("theme", document.documentElement.className);
+      };
+
+      const isDarkMode = () =>
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+      runColorMode((isDarkMode) => {
+        document.documentElement.className = isDarkMode
+          ? "theme-dark"
+          : "theme-light";
+      });
+    </script>
+
     {% block additionalhead %} {% endblock %}
   </head>
 
