@@ -97,7 +97,9 @@
 </section>
 
 <div id="comments"></div>
+{% endblock %}
 
+{% block additionalfoot %}
 <script>
   const codeblocks = document.querySelectorAll('div.codeblock');
 
@@ -149,5 +151,33 @@
     comments.innerHTML = '';
     comments.appendChild(script);
   };
+</script>
+
+<script>
+  function create_anchor(elem) {
+    let anchor_id = elem.textContent.toLowerCase().replaceAll(/[^a-z0-9]/g, '-')
+    elem.id = anchor_id
+
+    let header_elem = document.createElement('div')
+    header_elem.classList.add('anchor')
+
+    let anchor_elem = document.createElement('a')
+    anchor_elem.href = `#${anchor_id}`
+    anchor_elem.classList.add('anchor')
+
+    const range = document.createRange();
+    range.selectNode(elem)
+    range.surroundContents(header_elem);
+
+    header_elem.appendChild(anchor_elem)
+    return header_elem
+  }
+
+  window.addEventListener('load', () => {
+    let prose = document.querySelector("article.prose")
+    for (let i = 2; i <= 6; i++) {
+      prose.querySelectorAll(`h${i}`).forEach(create_anchor)
+    }
+  });
 </script>
 {% endblock %}
