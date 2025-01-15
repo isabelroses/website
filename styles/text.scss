@@ -1,3 +1,8 @@
+:root {
+  --font-text: 'Space Mono';
+  --font-code: 'Space Mono';
+}
+
 .prose {
   display: flex;
   flex-direction: column;
@@ -44,7 +49,7 @@
 
   }
   code {
-    font-family: 'Space Mono', ui-monospace, monospace,
+    font-family: var(--font-code), ui-monospace, monospace,
   }
   // inline code
   p > code {

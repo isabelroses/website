@@ -5,7 +5,7 @@ body {
   color: var(--fg);
   background-color: var(--bg);
 
-  font-family: 'Space Mono', system-ui, sans-serif;
+  font-family: var(--font-text), system-ui, sans-serif;
 
   display: flex;
   flex-direction: column;
