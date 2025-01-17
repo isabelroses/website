@@ -115,7 +115,7 @@
   function setGiscusTheme() {
     let theme = window.localStorage.getItem('theme');
     if (theme.includes('ctp')) {
-      theme = `https://giscus.catppuccin.com/themes/${theme.split('-').pop()}.css`
+      theme = `https://giscus.catppuccin.com/themes/${theme.split('-').pop()}-sapphire.css`
     } else {
       theme = theme.split('-').pop();
     }
