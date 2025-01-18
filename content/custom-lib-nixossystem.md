@@ -86,19 +86,24 @@ be calling this function later.
 
 Now that we have our key inputs of `class`, `modules` and `specialArgs` we can start implementing our own `lib.nixosSystem`.
 
+### Getting the basics
+
 To use the code below you would need something like this `mkSystem = import ./file.nix { inherit inputs; }`.
 
 ```nix
 {
   inputs,
   # we are somewhat assuming we have nixpkgs as a input
+  # but its a pretty safe assumption, and lets get lib from it
   lib ? inputs.nixpkgs.lib,
   ...
 }:
 {
-  modules ? [ ], # our modules
-  specialArgs ? { }, # our specialArgs
-  class ? null, # our class
+  # lets make sure to add some defaults such that everything doesn't go wrong
+  # if we don't get any arguments from the user
+  modules ? [ ],
+  specialArgs ? { },
+  class ? null,
 }: lib.evalModules {
   inherit modules specialArgs class;
 }
@@ -110,6 +115,8 @@ we can actually use it as a replacement for `lib.nixosSystem`. Let's start with
 `modulesPath`, most people probably recognize this from when they installed nix
 and read their `hardware-configuration.nix` file and saw something along the
 lines of `modulesPath + /installer/scan/not-detected.nix`.
+
+### Adding `modulesPath`
 
 ```nix
 {
@@ -127,6 +134,7 @@ in
 lib.evalModules {
   inherit modules class;
 
+  # here we are merging the user provided specialArgs with the modulesPath
   specialArgs = { inherit modulesPath; } // specialArgs;
 }
 ```
@@ -140,6 +148,8 @@ But just adding `modulePath` is a bit useless, we can't exactly replace our
 `lib.nixosSystem`'s yet. So let's work on that. To do that we are going to start
 importing `baseModules`, this will provide us with a base set of modules from
 nixpkgs.
+
+### So close and yet so far
 
 ```nix
 {
@@ -172,6 +182,8 @@ back to the `modulesModule` from earlier, we need this such that some nixpkgs
 modules will work, one of these is the [documentation
 module](https://github.com/NixOS/nixpkgs/blob/48f79c1d5168ce8e9b21a790be523c9a8f60046c/nixos/modules/misc/documentation.nix#L1)
 which will be a bit of a hard module to ignore, when so many people use it.
+
+### It actually works?
 
 ```nix
 {
@@ -210,6 +222,8 @@ this are `networking.hostName` and `nixpkgs.hostPlatform`. And while were at it
 lets also re-add the `nixpkgs.flake.source` from the original `lib.nixoSystem`,
 as well as adding `inputs` as a special arg since most people do that anyway,
 I think it's a safe assumption we would want it.
+
+### Adding some of our own modules
 
 ```nix
 {
@@ -252,8 +266,10 @@ lib.evalModules {
 ```
 
 Notice how the new argument `name` was added to account for our hostname. Also
-notice how I lied about settings `nixpkgs.hostPlatform` for why maybe you
+notice how I lied about settings `nixpkgs.hostPlatform`, if your curious why maybe you
 should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad-im-disapointed-10).
+
+### The original issue, Darwin!
 
 But now lets address what I originally came for. Adding `lib.darwinSystem` support for this too.
 
@@ -269,6 +285,8 @@ name:
   specialArgs ? { },
   class ? null,
 }: let
+  # this is new? what is it?
+  # I'm glad you asked, this is a nice way of checking if we have our darwin and nixpkgs inputs
   nixpkgs = inputs.nixpkgs or (throw "No nixpkgs input found");
   darwin = inputs.darwin or inputs.nix-darwin or (throw "No nix-darwin input found");
 
@@ -321,9 +339,11 @@ had to add `system = eval.config.system.build.toplevel` back into the final
 eval produced by our Darwin eval. This is needed so we can actually swap to the
 configuration, otherwise it won't work at all.
 
+### The final touch
+
 The final and maybe the best bit is adding `inputs'`. For those who are unaware
-of flake-parts, you probaly are not aware of the greatness that is `inputs'`.
-The diff below showes the advantage of using `inputs'` over `inputs` for
+of flake-parts, you probably are not aware of the greatness that is `inputs'`.
+The diff below shows the advantage of using `inputs'` over `inputs` for
 accessing packages.
 
 ```diff
@@ -392,8 +412,8 @@ in
 ```
 
 Is that not awesome? What the added code does is map over all inputs, and then
-thier outputs and will make a select the output dependant on the host platform.
-If there is a system dependant output for that output, otherwise it will leave
+their outputs and will make a select the output dependent on the host platform.
+If there is a system dependent output for that output, otherwise it will leave
 it as is.
 
 ```nix
@@ -406,7 +426,8 @@ If you are using flake-parts, you may prefer using the following code instead:
 withSystem config.nixpkgs.hostPlatform ({ inputs', ... }: { inherit inputs'; });
 ```
 
-And that's it! We have a fully functional `mkSystem` function that can replace both `lib.nixosSystem` and `lib.darwinSystem`.
+And that's it! We have a fully functional `mkSystem` function that can replace
+both `lib.nixosSystem` and `lib.darwinSystem`.
 
 ## Conclusion
 
