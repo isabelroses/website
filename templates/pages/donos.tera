@@ -7,6 +7,9 @@
 <div class="reusable-header">
   <h1 class="title">{{ title }}</h1>
   <h2 class="description">{{ description }}</h2>
+  <p>
+    Become part of my supporters by <a href="/donate">donating!</a>
+  </p>
 </div>
 
 <h3 class="donations-header">Subscribers</h2>
