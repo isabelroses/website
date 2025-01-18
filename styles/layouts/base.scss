@@ -22,6 +22,10 @@ body {
 .main-page {
   flex: 1;
   container: main-page / inline-size;
+
+  width: woof;
+  max-width: 1280px;
+  margin: auto;
 }
 
 .post-header:has(+ article.prose),
@@ -31,7 +35,6 @@ article.prose {
 }
 
 @container main-page (width < 768px) {
-
   .post-header:has(+ article.prose),
   article.prose {
     width: auto;
