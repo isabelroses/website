@@ -86,7 +86,7 @@ async fn main() {
             }),
         )
         .route(
-            "/blog/tag/:current_tag",
+            "/blog/tag/{current_tag}",
             get({
                 let posts = Arc::clone(&posts);
 
@@ -98,7 +98,7 @@ async fn main() {
             }),
         )
         .route(
-            "/blog/:slug",
+            "/blog/{slug}",
             get({
                 let posts = Arc::clone(&posts);
 
@@ -132,7 +132,7 @@ async fn main() {
             }),
         )
         .nest("/api", api_routes)
-        .route("/static/*file", get(static_files::handler))
+        .route("/static/{*file}", get(static_files::handler))
         .route(
             "/robots.txt",
             get((
