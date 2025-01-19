@@ -31,10 +31,11 @@ and how my custom “builder” later evolved into
 
 ## The research
 
-Before getting started I read into 3 main files in the nixpkgs repository:
+Before getting started we need to read into 4 main files in the nixpkgs repository:
 
 - [flake.nix](https://github.com/NixOS/nixpkgs/blob/5223d4097bb2c9e89d133f61f898df611d5ea3ca/flake.nix)
 - [nixos/lib/eval-config.nix](https://github.com/NixOS/nixpkgs/blob/5223d4097bb2c9e89d133f61f898df611d5ea3ca/nixos/lib/eval-config.nix)
+- [nixos/lib/eval-config-minimal.nix](https://github.com/NixOS/nixpkgs/blob/5223d4097bb2c9e89d133f61f898df611d5ea3ca/nixos/lib/eval-config-minimal.nix)
 - [lib/modules.nix](https://github.com/NixOS/nixpkgs/blob/5223d4097bb2c9e89d133f61f898df611d5ea3ca/lib/modules.nix)
 
 These files may seem somewhat arbitrary, but they are listed in the order they
@@ -46,77 +47,109 @@ exactly they do.
 ### `flake.nix`
 
 This file contains our `lib.nixosSystem` function, which takes `args` as an
-argument. The documentation lists a set of known arguments being `modules`,
-`specialArgs` and `modulesLocation`, it also specifies some additional legacy
-arguments `system` and `pkgs` both of which are now redundant.
+argument. The
+[documentation](https://github.com/NixOS/nixpkgs/blob/b78b5ce3b29c147e193633659a0ea9bf97f6c0c0/flake.nix#L44)
+lists a set of known arguments being `modules`, `specialArgs` and
+`modulesLocation`, it also specifies some additional legacy arguments `system`
+and `pkgs` both of which are now redundant.
 
 The `lib.nixosSystem` then imports the `nixos/lib/eval-config.nix` file whilst
-pass `lib`, and the remaining `args` to it. However, it also sets `system` to
+passing `lib`, and the remaining `args` to it. However, it also sets `system` to
 `null` as well as adding `nixpkgs.flake.source` to nixpkgs output derivation,
 to our set of modules.
 
 ### nixos/lib/eval-config.nix
 
 This file immediately points us to the fact that it is a “light wrapper” around
-`lib.evalModules`. This file has a large collection of arguments most of which
-will be their defaults, a good example of this is `baseModules` which defaults
-to a list of modules. The most important arguments from this file are
-`specialArgs`, `lib` and `modules`. For the most part these come from the prior
-`flake.nix` file. So we were well aware of these arguments, but now we know of a
-lot more argument that could be passed to `lib.evalModules`.
+`lib.evalModules`. This file also has a large collection of arguments most of
+which will be the defaults. A good example of this is `baseModules` which
+defaults to a list of modules from the nixpkgs repo. The most important
+arguments from this file are `specialArgs`, `lib` and `modules`. For the
+most part these come from the prior `flake.nix` file.
 
 As we read down the file we notice that there are two additional modules that
-are going to be added these are the `pkgsModule` and the `modulesModle`. Pretty
-strange names at first, but the `pkgsModule` will set `nixpkgs.system` if
-`system` was not null, and will set `nixpkgs.pkgs` and `pkgs` is not null. The
-`modulesModule` will add `config._module.args` to an attrset of
-`noUserModules`, `baseModules`, `extraModules` and `modules`. So now we know
-some of the arguments that are given to `lib.evalModules` lets see what that
-does.
+are going to be added. These are the `pkgsModule` and the `modulesModule`.
+These appear to be pretty strange names at first, but the `pkgsModule` will
+set `nixpkgs.system` if `system` was not null, and will set
+`nixpkgs.pkgs` if `pkgs` is not null. The `modulesModule` will add
+`config._module.args` as an attrset of `noUserModules`, `baseModules`,
+`extraModules` and `modules`. So now we know some of the arguments that are
+given to `lib.evalModules` lets see what that does.
+
+### nixos/lib/eval-config-minimal.nix
+
+This file is a small wrapper upon `lib.evalModules`, but it gives us a little
+bit of guidance on how to use the `class` argument. As well as showing us the
+default for `modulePath` which is going to be passed as a special arg.
 
 ### lib/modules.nix
 
 This is where `lib.evalModules` is defined which takes the `modules` and
-`specialArgs` from before but also can take `class` which is a nominal type
-which can make sure only compatible modules are imported! This will may become
-really useful later. We don't need to analyze too much into this since we will
-be calling this function later.
+`specialArgs` from before. It also takes the `class` arugment, which is a
+nominal type, which ensures that only compatible modules are imported. This
+may become really useful later. We do not need to analyze too much into
+this, since we will be calling this function later.
 
 ## The implementation
 
-Now that we have our key inputs of `class`, `modules` and `specialArgs` we can start implementing our own `lib.nixosSystem`.
+Now that we have our key inputs of `class`, `modules` and `specialArgs` we can
+start implementing our own `lib.nixosSystem`.
 
 ### Getting the basics
 
-To use the code below you would need something like this `mkSystem = import ./file.nix { inherit inputs; }`.
+Let us start in our very own `flake.nix` by writing the following code. This
+will give us a basic template to work with and you, the reader, knows how to
+start.
 
 ```nix
 {
-  inputs,
-  # we are somewhat assuming we have nixpkgs as a input
-  # but its a pretty safe assumption, and lets get lib from it
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+  outputs = inputs: let
+    mkSystem = import ./mksystem.nix { inherit inputs; };
+  in {
+    nixosConfigurations = {
+      mySystem = mkSystem { };
+    };
+  };
+}
+```
+
+Now that we have a very bare bone `flake.nix` we can get started on the
+`mkSystem` function. Let's also create the `mksystem.nix` file. We are going to
+add some basic args that we know we are going to need later such as `modules`,
+`specialArgs` and `class`. And we are going to add some defaults to these args
+such that we don't get any errors if they are not provided.
+
+```nix
+{
+  inputs ? throw "No inputs provided",
   lib ? inputs.nixpkgs.lib,
   ...
 }:
 {
-  # lets make sure to add some defaults such that everything doesn't go wrong
-  # if we don't get any arguments from the user
   modules ? [ ],
   specialArgs ? { },
-  class ? null,
+  class ? "nixos",
 }: lib.evalModules {
   inherit modules specialArgs class;
 }
 ```
 
-And awesome! We have a very bare bone `mkSystem` function. However, this is
-far from a finished product. So let's start adding some more features so that
-we can actually use it as a replacement for `lib.nixosSystem`. Let's start with
-`modulesPath`, most people probably recognize this from when they installed nix
-and read their `hardware-configuration.nix` file and saw something along the
-lines of `modulesPath + /installer/scan/not-detected.nix`.
-
 ### Adding `modulesPath`
+
+Now that we have our basic template down. Let's start by adding the
+`modulesPath`, most people probably recognize this from when they first
+installed nix and read their `hardware-configuration.nix` file and saw
+something along the lines of `modulesPath + /installer/scan/not-detected.nix`.
+That is why we are starting with this, so that our `hardware-configuration.nix`
+will work.
+
+The key to this is going to be including `modulesPath` in our `specialArgs`.
+This is because `specialArgs` should only be used with arguments that need to
+be evaluated when resolving module structure.
+
+########## continute herheeh thatnks pookie ############
 
 ```nix
 {
@@ -127,7 +160,7 @@ lines of `modulesPath + /installer/scan/not-detected.nix`.
 {
   modules ? [ ],
   specialArgs ? { },
-  class ? null,
+  class ? "nixos",
 }: let
   modulesPath = "${inputs.nixpkgs}/nixos/modules";
 in
@@ -139,17 +172,13 @@ lib.evalModules {
 }
 ```
 
-The key fact here is that we included `modulesPath` in our `specialArgs`. We
-only use `specialArgs` because we need to resolve module paths and `specialArgs`
-should only be used with arguments that need to be evaluated when resolving
-module structure.
+### So close and yet so far
 
 But just adding `modulePath` is a bit useless, we can't exactly replace our
 `lib.nixosSystem`'s yet. So let's work on that. To do that we are going to start
 importing `baseModules`, this will provide us with a base set of modules from
-nixpkgs.
-
-### So close and yet so far
+nixpkgs. To do this we can use the `modulePath` and get the module list from
+there since this will prepare us for later when we want to add Darwin support.
 
 ```nix
 {
@@ -160,7 +189,7 @@ nixpkgs.
 {
   modules ? [ ],
   specialArgs ? { },
-  class ? null,
+  class ? "nixos",
 }: let
   modulesPath = "${inputs.nixpkgs}/nixos/modules";
 
@@ -175,15 +204,20 @@ lib.evalModules {
 }
 ```
 
-We now have a *mostly* functional `mySystem` function. That depending on your
-configuration may actually work! But that's not enough. Let's make it work as
-well as we can to be a proper replacement. To do so we are going to have to go
-back to the `modulesModule` from earlier, we need this such that some nixpkgs
-modules will work, one of these is the [documentation
-module](https://github.com/NixOS/nixpkgs/blob/48f79c1d5168ce8e9b21a790be523c9a8f60046c/nixos/modules/misc/documentation.nix#L1)
-which will be a bit of a hard module to ignore, when so many people use it.
-
 ### It actually works?
+
+We now have a *mostly* functional replacement. Depending on your configuration
+may actually work as it is now! To keep progressing we are going to have to go
+back to the `modulesModule` from [earlier](#nixos/lib/eval-config.nix). we need this such that some nixpkgs
+modules will work, one of these is the [documentation module](https://github.com/NixOS/nixpkgs/blob/48f79c1d5168ce8e9b21a790be523c9a8f60046c/nixos/modules/misc/documentation.nix#L1)
+which will be a hard module to ignore, when so many people use it.
+
+So what we are going to introduce a new module which contains
+`config._module.args` which takes a set of attrs that will be passed to each
+module. I'm sure most of you reckoginse these when writing a module and adding
+`{ pkgs, config, ... }` to the top of a file. These should be used by arguments
+that don't need to resolve module stucute since thats the exact reason we have
+`specialArgs`.
 
 ```nix
 {
@@ -194,7 +228,7 @@ which will be a bit of a hard module to ignore, when so many people use it.
 {
   modules ? [ ],
   specialArgs ? { },
-  class ? null,
+  class ? "nixos",
 }: let
   modulesPath = "${inputs.nixpkgs}/nixos/modules";
 
@@ -215,15 +249,18 @@ lib.evalModules {
 }
 ```
 
+### Adding some of our own modules
+
 Even better, now we have completely replaced `lib.nixosSystem` with our own
 `mkSystem` function. But let's be real. That's not enough for us. We should
 start abstracting some common themes between our systems. Some big examples of
 this are `networking.hostName` and `nixpkgs.hostPlatform`. And while were at it
 lets also re-add the `nixpkgs.flake.source` from the original `lib.nixoSystem`,
-as well as adding `inputs` as a special arg since most people do that anyway,
-I think it's a safe assumption we would want it.
+as well as adding `inputs` as a special arg. As most people do this anyway,
+I think it's a safe assumption we should add it. For futher reading about
+passing inputs to modules check [nobbz's blog on getting inputs to flake modules](https://blog.nobbz.dev/2022-12-12-getting-inputs-to-modules-in-a-flake/).
 
-### Adding some of our own modules
+########## TODO: add flake.nix updated with mapAttrs ########
 
 ```nix
 {
@@ -238,7 +275,7 @@ name:
 {
   modules ? [ ],
   specialArgs ? { },
-  class ? null,
+  class ? "nixos",
 }: let
   modulesPath = "${inputs.nixpkgs}/nixos/modules";
 
@@ -267,11 +304,22 @@ lib.evalModules {
 
 Notice how the new argument `name` was added to account for our hostname. Also
 notice how I lied about settings `nixpkgs.hostPlatform`, if your curious why maybe you
-should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad-im-disapointed-10).
+should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad-im-disapointed-10). (Shameless plug)
 
 ### The original issue, Darwin!
 
-But now lets address what I originally came for. Adding `lib.darwinSystem` support for this too.
+But now lets address what I originally came for. Adding `lib.darwinSystem`
+support for this too.
+
+To introduce Darwin support we are going to allow users to set the `class`
+argument to `darwin` from there we can determine what modules to import.
+As a result of this you may notice that Darwin has a different set of
+modules which introduced some new options to set for this system type. This
+includes `nixpkgs.source` and `darwinVersionSuffix` and `darwinRevision`. Some
+of these are for commands like `darwin-version`. You may also notice that we
+had to add `system = eval.config.system.build.toplevel` back into the final
+eval produced by our Darwin eval. This is needed so we can actually swap to the
+configuration, otherwise it won't work at all.
 
 ```nix
 {
@@ -283,7 +331,7 @@ name:
 {
   modules ? [ ],
   specialArgs ? { },
-  class ? null,
+  class ? "nixos",
 }: let
   # this is new? what is it?
   # I'm glad you asked, this is a nice way of checking if we have our darwin and nixpkgs inputs
@@ -330,15 +378,6 @@ in
   if class == "darwin" then (eval // { system = eval.config.system.build.toplevel; }) else eval;
 ```
 
-The biggest change was that we are now using `class` to determine if we have a
-Darwin system or not. You may also notice that Darwin has a different set of
-modules which introduced some new options to set for this system type. This
-includes `nixpkgs.source` and `darwinVersionSuffix` and `darwinRevision`. Some
-of these are for commands like `darwin-version`. You may also notice that we
-had to add `system = eval.config.system.build.toplevel` back into the final
-eval produced by our Darwin eval. This is needed so we can actually swap to the
-configuration, otherwise it won't work at all.
-
 ### The final touch
 
 The final and maybe the best bit is adding `inputs'`. For those who are unaware
@@ -351,9 +390,24 @@ accessing packages.
 + inputs'.input-name.packages.package-name
 ```
 
-So to add that we can do the following:
+Is that not awesome? So how can we replicate that for ourselves?
+
+What we will need to do is map over all inputs, and their outputs and select
+the output dependent on the host platform, if a system dependent output exists,
+otherwise it will leave it as is. We can acchive that with the following code:
 
 ```nix
+inputs' = lib.mapAttrs (_: lib.mapAttrs (_: v: v.${config.nixpkgs.hostPlatform} or v)) inputs;
+```
+
+Or if you are using flake-parts, you may prefer using the following code instead:
+
+```nix
+withSystem config.nixpkgs.hostPlatform ({ inputs', ... }: { inherit inputs'; });
+```
+
+So let's add that to our `mkSystem` function.
+
 ```nix
 {
   inputs,
@@ -364,7 +418,7 @@ name:
 {
   modules ? [ ],
   specialArgs ? { },
-  class ? null,
+  class ? "nixos",
 }: let
   nixpkgs = inputs.nixpkgs or (throw "No nixpkgs input found");
   darwin = inputs.darwin or inputs.nix-darwin or (throw "No nix-darwin input found");
@@ -411,30 +465,17 @@ in
   if class == "darwin" then (eval // { system = eval.config.system.build.toplevel; }) else eval;
 ```
 
-Is that not awesome? What the added code does is map over all inputs, and then
-their outputs and will make a select the output dependent on the host platform.
-If there is a system dependent output for that output, otherwise it will leave
-it as is.
-
-```nix
-inputs' = lib.mapAttrs (_: lib.mapAttrs (_: v: v.${config.nixpkgs.hostPlatform} or v)) inputs;
-```
-
-If you are using flake-parts, you may prefer using the following code instead:
-
-```nix
-withSystem config.nixpkgs.hostPlatform ({ inputs', ... }: { inherit inputs'; });
-```
-
-And that's it! We have a fully functional `mkSystem` function that can replace
-both `lib.nixosSystem` and `lib.darwinSystem`.
+Now techincally if we wanted we could remove `inputs` and move `inputs'`,
+renaming it to `inputs` and making it a specialArg. Since they will function
+virtually the same way but with reduced code.
 
 ## Conclusion
 
-This was quite the task, and although this blog post seems to reduce the quite
-simple. I've spent a lot of time on this, both when researching how to create
-the custom builder and writing and maintaining the latest rendition in the form
-of a flake module called
-[easy-hosts](https://github.com/isabelroses/easy-hosts). If you enjoyed this
-post, please consider donating on [ko-fi](https://ko-fi.com/isabelroses) or
-[github sponsors](https://github.com/sponsors/isabelroses).
+And that's it! We have a fully functional `mkSystem` function that can replace
+both `lib.nixosSystem` and `lib.darwinSystem`. This was quite the task, and
+although this blog post seems to reduce the quite simple. I've spent a lot of
+time on this, both when researching how to create the custom builder and
+writing and maintaining the latest rendition in the form of a flake module
+called [easy-hosts](https://github.com/isabelroses/easy-hosts). If you enjoyed
+this post, please consider donating on [ko-fi](https://ko-fi.com/isabelroses)
+or [github sponsors](https://github.com/sponsors/isabelroses).
