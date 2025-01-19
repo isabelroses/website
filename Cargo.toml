@@ -9,9 +9,9 @@ edition = "2021"
 
 [dependencies]
 axum = "0.7.7"
+comrak = { git = "https://github.com/kivikakk/comrak", default-features = false }
 dotenv = "0.15.0"
 lazy_static = "1.5.0"
-markdown = "1.0.0-alpha.21"
 mime_guess = "2.0.5"
 nom = "7.1.3"
 atom_syndication = "0.12.5"

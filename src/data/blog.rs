@@ -2,6 +2,7 @@ use atom_syndication::{
     ContentBuilder, EntryBuilder, FeedBuilder, LinkBuilder, PersonBuilder, TextBuilder,
 };
 use chrono::TimeZone;
+use comrak::{markdown_to_html, Options as ComrakOptions};
 use lazy_static::lazy_static;
 use nom::{branch::permutation, IResult};
 use rust_embed::{Embed, EmbeddedFile};
@@ -71,32 +72,21 @@ impl Post {
 
         let content = Self::parse_content(raw_content);
 
-        match content {
-            Ok(content) => {
-                let read_time_seconds = estimated_read_time::text(&content, &ERT_OPTIONS).seconds();
-                let read_time = read_time_seconds / 60;
+        let read_time_seconds = estimated_read_time::text(&content, &ERT_OPTIONS).seconds();
+        let read_time = read_time_seconds / 60;
 
-                let ret = Self {
-                    title: meta.title,
-                    date: meta.date,
-                    description: meta.description,
-                    tags: meta.tags,
-                    slug: String::new(),
-                    content,
-                    read_time,
-                    id: None,
-                };
+        let ret = Self {
+            title: meta.title,
+            date: meta.date,
+            description: meta.description,
+            tags: meta.tags,
+            slug: String::new(),
+            content,
+            read_time,
+            id: None,
+        };
 
-                Ok(ret)
-            }
-            Err(e) => {
-                eprintln!("{e:?}");
-                Err(Box::new(std::io::Error::new(
-                    std::io::ErrorKind::Other,
-                    e.to_string(),
-                )))
-            }
-        }
+        Ok(ret)
     }
 
     fn parse_field<'a>(input: &'a str, field: &'a str) -> IResult<&'a str, String> {
@@ -137,8 +127,15 @@ impl Post {
         Ok((input, tags.iter().map(|s| (*s).to_string()).collect()))
     }
 
-    fn parse_content(input: &str) -> Result<String, markdown::message::Message> {
-        markdown::to_html_with_options(input, &markdown::Options::gfm())
+    fn parse_content(input: &str) -> String {
+        let mut opts = ComrakOptions::default();
+        opts.extension.strikethrough = true;
+        opts.extension.table = true;
+        opts.extension.header_ids = Some("#".to_string());
+        opts.extension.underline = true;
+        opts.extension.alerts = true;
+
+        markdown_to_html(input, &opts)
     }
 }
 
@@ -309,7 +306,7 @@ mod tests {
         assert_eq!(post.tags, vec!["test", "post"]);
         assert_eq!(
             post.content,
-            "<h1>Hello, World!</h1>\n<p>This is a test post.</p>\n"
+            "<h1><a href=\"#hello-world\" aria-hidden=\"true\" class=\"anchor\" id=\"#hello-world\"></a>Hello, World!</h1>\n<p>This is a test post.</p>\n"
         );
     }
 

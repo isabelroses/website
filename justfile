@@ -15,3 +15,6 @@ run:
 
 nix:
   nix build -L
+
+test:
+  cargo test

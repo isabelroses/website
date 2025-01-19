@@ -1,6 +1,6 @@
 {% extends "layouts/base.tera" %}
 
-{% block title %}{% set title = "Blog > " ~ post.title %}{% endblock %}
+{% block title %}{% set title = post.title %}{% endblock %}
 {% block description %}{% set description = post.description %}{% endblock %}
 
 {% block additionalfoot %}
