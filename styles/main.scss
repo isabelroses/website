@@ -10,6 +10,7 @@
 @use 'layouts/base.scss';
 
 // reusable styles
+@use 'partials/alerts.scss';
 @use 'partials/donations.scss';
 @use 'partials/blog-preview.scss';
 @use 'partials/project.scss';

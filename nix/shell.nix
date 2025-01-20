@@ -1,20 +1,22 @@
 {
-  just,
-  dart-sass,
+  mkShell,
+  callPackage,
+
+  bacon,
   clippy,
   rustfmt,
-  callPackage,
   rust-analyzer,
 }:
 let
   mainPkg = callPackage ./default.nix { };
 in
-mainPkg.overrideAttrs (oa: {
-  nativeBuildInputs = [
-    just
-    dart-sass
+mkShell {
+  inputsFrom = [ mainPkg ];
+
+  packages = [
+    bacon
     clippy
     rustfmt
     rust-analyzer
-  ] ++ (oa.nativeBuildInputs or [ ]);
-})
+  ];
+}
