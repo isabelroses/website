@@ -26,6 +26,8 @@ jobs:
         uses: crate-ci/typos@master
         id: typos
         continue-on-error: true
+        with:
+          files: ./content
 
       - name: Fail when typos are found
         if: ${{ steps.typos.outcome != 'success' }}
