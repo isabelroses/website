@@ -131,7 +131,7 @@ impl Post {
         let mut opts = ComrakOptions::default();
         opts.extension.strikethrough = true;
         opts.extension.table = true;
-        opts.extension.header_ids = Some("#".to_string());
+        opts.extension.header_ids = Some(String::new());
         opts.extension.underline = true;
         opts.extension.alerts = true;
 
@@ -306,7 +306,7 @@ mod tests {
         assert_eq!(post.tags, vec!["test", "post"]);
         assert_eq!(
             post.content,
-            "<h1><a href=\"#hello-world\" aria-hidden=\"true\" class=\"anchor\" id=\"#hello-world\"></a>Hello, World!</h1>\n<p>This is a test post.</p>\n"
+            "<h1><a href=\"#hello-world\" aria-hidden=\"true\" class=\"anchor\" id=\"hello-world\"></a>Hello, World!</h1>\n<p>This is a test post.</p>\n"
         );
     }
 

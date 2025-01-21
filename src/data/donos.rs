@@ -12,7 +12,7 @@ pub struct Donor {
 }
 
 pub fn get() -> io::Result<Vec<Donor>> {
-    let file_str = std::env::var("DONOS_FILE").unwrap_or_else(|_| "donors.json".to_string());
+    let file_str = std::env::var("DONOS_FILE").unwrap_or_else(|_| "donos.json".to_string());
     let file = File::open(file_str)?;
     let reader = BufReader::new(file);
 
