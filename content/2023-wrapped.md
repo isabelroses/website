@@ -31,7 +31,7 @@ I started getting into self-hosting services (all managed by my NixOS dotfiles) 
 
 ### New languages
 
-This year I learned a wide range of languages since I was in search for the prefect language for me. And I think I found it, but I'm still learning it. But the languages that I learnt this year were:
+This year I learned a wide range of languages since I was in search for the prefect language for me. And I think I found it, but I'm still learning it. But the languages that I learned this year were:
 
 - [Go](https://golang.org/), this is my main language now, and I'm really happy with it.
 - [Rust](https://www.rust-lang.org/), this is a really cool language, but I don't use it as much as I would like to, but I have made a few projects in it.

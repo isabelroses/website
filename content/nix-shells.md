@@ -215,11 +215,11 @@ After reading all three of these example, I hope you understand why I personally
 
 ### But you didn't mention `pkgs.mkShellNoCC`?
 
-The diffrence between difference these two is that `mkShell` includes a C compiler in the shell environment, whilst `mkShellNoCC` does not. So in a situation where you know you won't need any C compiler or related technogies its better to use `pkgs.mkShellNoCC`.
+The difference between difference these two is that `mkShell` includes a C compiler in the shell environment, whilst `mkShellNoCC` does not. So in a situation where you know you won't need any C compiler or related technogies its better to use `pkgs.mkShellNoCC`.
 
 ### How about using my overlay?
 
-My personal favorite has to be [oxalica/rust-overlay](https://github.com/oxalica/rust-overlay), so that is what we are going to use in this example. I heavily advice mainly using the flake to get reproducable outputs.
+My personal favorite has to be [oxalica/rust-overlay](https://github.com/oxalica/rust-overlay), so that is what we are going to use in this example. I heavily advice mainly using the flake to get reproducible outputs.
 
 ```nix
 {
@@ -253,7 +253,7 @@ My personal favorite has to be [oxalica/rust-overlay](https://github.com/oxalica
 }
 ```
 
-But you didn't include a shell.nix that time? I know thats beacuse I want to keep this as reproducable as possible and that beacomes difficult with overlays and staying backwards compatable. The below example shows how you could do this though its not exactly pretty.
+But you didn't include a shell.nix that time? I know thats because I want to keep this as reproducible as possible and that beacomes difficult with overlays and staying backwards compatible. The below example shows how you could do this though its not exactly pretty.
 
 ```nix
 (import <nixpkgs> {
@@ -283,7 +283,7 @@ fi
 
 ### Templates
 
-Nix allows you to create reproducable templates for your project, so you only have to set these up one time and then you can reuse them for all your projects.
+Nix allows you to create reproducible templates for your project, so you only have to set these up one time and then you can reuse them for all your projects.
 
 For example you can use my templates like so `nix flake init -t github:isabelroses/dotfiles#go` which will create a new go project in your current directory, or you can use `nix flake new -t github:isabelroses/dotfiles#rust cheese` which will create a new directory called `cheese` with the rust template defined [here](https://github.com/isabelroses/dotfiles/tree/main/parts/templates/rust).
 
@@ -315,8 +315,8 @@ Now lets define our `flake.nix`:
 }
 ```
 
-You may have notice that we are not taking any inputs and are only producing outputs and thats beacuse we don't need a package set here. Then our `comfy/*` files will look like the ones we defined at the beginning of this post.
+You may have notice that we are not taking any inputs and are only producing outputs and thats because we don't need a package set here. Then our `comfy/*` files will look like the ones we defined at the beginning of this post.
 
 ## Wrapping up
 
-Nix is a great tool for managing dependencies, and I hope this post has helped you understand how to use it in your projects. If you have any futher questions feel free to [email me](mailto:isabel@isabelroses.com) or join [my discord server](https://discord.gg/8RVhHeJH3x). Thanks for reading!!! And If you really enjoyed the post please consider donating so I can keep doing this kind of thing on [kofi](https://ko-fi.com/isabelroses) or [GitHub Sponsers](https://github.com/sponsors/isabelroses).
+Nix is a great tool for managing dependencies, and I hope this post has helped you understand how to use it in your projects. If you have any further questions feel free to [email me](mailto:isabel@isabelroses.com) or join [my discord server](https://discord.gg/8RVhHeJH3x). Thanks for reading!!! And If you really enjoyed the post please consider donating so I can keep doing this kind of thing on [kofi](https://ko-fi.com/isabelroses) or [GitHub Sponsors](https://github.com/sponsors/isabelroses).

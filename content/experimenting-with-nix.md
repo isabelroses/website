@@ -13,7 +13,7 @@ My latest addiction is [Nix](https://nixos.org).
 
 Those who have read my previous posts have probably noticed that I have made a few references to it here and there but nothing too deep, that is until now.
 
-This article is going to detail some of the oddities and tips I have learned along the way. Just a fair warning, I am still learning and nix is ever-growing so some of these details may not be the same tomorrow or the next day. Also its a complete mess of hunderds of ideas that I have so prepare yourself.
+This article is going to detail some of the oddities and tips I have learned along the way. Just a fair warning, I am still learning and nix is ever-growing so some of these details may not be the same tomorrow or the next day. Also its a complete mess of hundreds of ideas that I have so prepare yourself.
 
 ## shell.nix the file I have everywhere
 
@@ -205,7 +205,7 @@ Then each host would look almost identical to the other but with slightly differ
   config.my.hostname = "host1";
 }
 ```
-Changing the hostname per system like this is pretty trival and not much of a real use case, but if you put your mind to it you can start to see how you might make a set of packages apply across 2 systems but not a 3rd or 4th.
+Changing the hostname per system like this is pretty trivial and not much of a real use case, but if you put your mind to it you can start to see how you might make a set of packages apply across 2 systems but not a 3rd or 4th.
 
 ## Conclusion
 

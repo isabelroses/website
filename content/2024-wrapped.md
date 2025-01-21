@@ -15,14 +15,14 @@ Welcome to my 2024 Wrapped! This is a recall of all that happened this year, and
 
 - [wezterm](https://wezfurlong.org/wezterm/) - I started using this terminal emulator due to its multiplatform support and its depth of configurablity.
 - [ghostty](https://ghostty.org/) - I started using this one while it was still in beta, and its been my go-to terminal emulator on macOS since.
-- [lix](https://lix.systems/) - This is a fork of nix and I've been using it for its cli stablity and improved performance.
+- [lix](https://lix.systems/) - This is a fork of nix and I've been using it for its cli stability and improved performance.
 - [freeze](https://github.com/charmbracelet/freeze) - A lovely little tool for taking screenshots of code and sharing them with friends.
 
 Switching from WezTerm to Ghostty might seem odd, but the decision was clear: Ghostty’s native implementation offered unmatched speed and macOS integration, making it the superior choice for my needs.
 
 ### Languages
 
-This year I didn't learn any new languages, but rather I decided to focus on improving my existing skills in Go, Java and Rust. I found during that time that I really do prefer Rust, this is largly due to the developer support through rust-anaylser and cargo clippy.
+This year I didn't learn any new languages, but rather I decided to focus on improving my existing skills in Go, Java and Rust. I found during that time that I really do prefer Rust, this is largly due to the developer support through rust-analyzer and cargo clippy.
 
 ### New Projects
 
@@ -36,4 +36,4 @@ This year, I abstracted by neovim configuration incredibly through the use of [c
 
 ## My goals for 2025
 
-I would like to get some more work done on my Wayland compositor. I would also love to grow my social media presense, and maybe even write 3 blog posts, which would be my appology for not writing one in 6 months. And you all know me; rewrite my nix config once or twice again... per week.
+I would like to get some more work done on my Wayland compositor. I would also love to grow my social media presence, and maybe even write 3 blog posts, which would be my apology for not writing one in 6 months. And you all know me; rewrite my nix config once or twice again... per week.

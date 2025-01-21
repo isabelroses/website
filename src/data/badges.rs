@@ -51,7 +51,7 @@ pub const FRIENDS: &[Friend] = &[
     },
     Friend {
         link: "https://autumn.town",
-        badge: "autum.webp",
+        badge: "autumn.webp",
     },
     Friend {
         link: "https://les.bi",

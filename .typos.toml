@@ -1,5 +1,6 @@
 # https://github.com/crate-ci/typos/blob/master/docs/reference.md
 [default]
-locale = "en-gb"
+locale = "en-us"
 
 [default.extend-words]
+nax = "nax" # person

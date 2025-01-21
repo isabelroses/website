@@ -133,7 +133,7 @@ yourself if you ever get here. Instead, overlays should be consumed like
         hello = pkgs.callPackage ./default.nix { };
       };
 
-      # notice in this example we removed any refrence to `pkgs` and insted we use `prev`
+      # notice in this example we removed any reference to `pkgs` and instead we use `prev`
       # this means that the overlay is not system dependent
       default = final: prev: {
         hello = prev.callPackage ./default.nix { };
@@ -238,7 +238,7 @@ This brings me onto my final point,
 ### Stop using flake-utils
 
 flake-utils is often an extra dependency added for no good reason. The main
-purpose for using it more modernly is its overrideable systems, they do this
+purpose for using it more modernly is its overridable systems, they do this
 through an input from the [nix-systems](https://github.com/nix-systems) GitHub
 org. But more typically no one uses it for that, in fact most people use
 flake-utils for its ability to create system dependent outputs. This is what
@@ -246,7 +246,7 @@ leads to the issues with `system` dependent `overlays`. But recall, I've
 already covered all of what you need to make your own flake-utils, through the
 usage of the `forAllSystems` function.
 
-However, some of you may still want those overrideable systems. In which case
+However, some of you may still want those overridable systems. In which case
 please consider writing this flake like this instead:
 
 ```nix

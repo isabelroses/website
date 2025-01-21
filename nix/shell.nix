@@ -2,6 +2,7 @@
   mkShell,
   callPackage,
 
+  typos,
   bacon,
   clippy,
   rustfmt,
@@ -14,6 +15,7 @@ mkShell {
   inputsFrom = [ mainPkg ];
 
   packages = [
+    typos
     bacon
     clippy
     rustfmt
