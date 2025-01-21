@@ -1,0 +1,19 @@
+html {
+  scroll-behavior: smooth;
+}
+
+.anchor {
+  position: relative;
+
+  &::before {
+    content: "#";
+    position: absolute;
+    color: var(--fg);
+    display: inline-block;
+    vertical-align: middle;
+    width: 2rem;
+    height: 2rem;
+    left: -2rem;
+    top: 3px;
+  }
+}

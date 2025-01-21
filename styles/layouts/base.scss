@@ -23,21 +23,15 @@ body {
   flex: 1;
   container: main-page / inline-size;
 
-  width: woof;
-  max-width: 1280px;
+  width: 80vw;
   margin: auto;
-}
 
-.post-header:has(+ article.prose),
-article.prose {
-  width: 768px;
-  margin: auto;
+  margin-top: 2rem;
 }
 
 @container main-page (width < 768px) {
-  .post-header:has(+ article.prose),
-  article.prose {
-    width: auto;
+  .main-page {
+    width: 100vw;
   }
 }
 
