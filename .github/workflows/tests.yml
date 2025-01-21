@@ -1,12 +1,20 @@
-name: Typo Checker
+name: Test Suite
 
 on:
   workflow_dispatch:
   push:
-    paths:
-      - "*.md"
 
 jobs:
+  cargo-check:
+    name: Cargo Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Cargo Check
+        run: cargo check --all
+
   spellcheck:
     name: Spellcheck
     runs-on: ubuntu-latest
