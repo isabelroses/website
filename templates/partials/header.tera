@@ -16,7 +16,6 @@
           name="themes"
           id="themes"
           aria-label="Change theme"
-          onchange="document.documentElement.className = this.value; localStorage.setItem('theme', this.value);"
         >
           <option value="theme-dark">Dark</option>
           <option value="theme-light">Light</option>

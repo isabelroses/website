@@ -96,9 +96,7 @@
 <script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/nix.min.js"></script>
 <script>
   hljs.highlightAll();
-</script>
 
-<script>
   const codeblocks = document.querySelectorAll('div.codeblock');
 
   codeblocks.forEach((block) => {

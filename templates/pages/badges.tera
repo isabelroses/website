@@ -37,11 +37,13 @@
     <button id="copybtn">Copy</button>
   </div>
 </div>
+{% endblock %}
 
+{% block additionalfoot %}
 <script>
-document.getElementById("copybtn").addEventListener("click", () => {
-  const codeToCopy = document.getElementById("copy").value;
-  navigator.clipboard.writeText(codeToCopy);
-});
+  document.getElementById("copybtn").addEventListener("click", () => {
+    const codeToCopy = document.getElementById("copy").value;
+    navigator.clipboard.writeText(codeToCopy);
+  });
 </script>
 {% endblock %}
