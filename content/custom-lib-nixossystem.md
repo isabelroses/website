@@ -260,17 +260,12 @@ as well as adding `inputs` as a special arg. As most people do this anyway,
 I think it's a safe assumption we should add it. For futher reading about
 passing inputs to modules check [nobbz's blog on getting inputs to flake modules](https://blog.nobbz.dev/2022-12-12-getting-inputs-to-modules-in-a-flake/).
 
-########## TODO: add flake.nix updated with mapAttrs ########
-
 ```nix
 {
   inputs,
   lib ? inputs.nixpkgs.lib,
   ...
 }:
-# why are we adding `name` here? instead of in the args below?
-# well you could do either, but I thought it would be nice for `mapAttrs` or
-# similar, but its totally up to you reader
 name:
 {
   modules ? [ ],
@@ -302,8 +297,26 @@ lib.evalModules {
 }
 ```
 
-Notice how the new argument `name` was added to account for our hostname. Also
-notice how I lied about settings `nixpkgs.hostPlatform`, if your curious why maybe you
+I just added `name` as an additional argument to our `mkSystem` function. This
+allows us to set the hostname of our system. The way I opted to write it allows
+for us to use `mapAttrs` on our `nixosConfigurations`. This will mean that we
+need to change how the original `flake.nix` works though.
+
+```nix
+{
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+  outputs = inputs: let
+    mkSystem = import ./mksystem.nix { inherit inputs; };
+  in {
+    nixosConfigurations = builtins.mapAttrs mkSystem {
+      mySystem = { };
+    };
+  };
+}
+```
+
+Furthermore notice how I lied about settings `nixpkgs.hostPlatform`, if your curious why maybe you
 should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad-im-disapointed-10). (Shameless plug)
 
 ### The original issue, Darwin!
