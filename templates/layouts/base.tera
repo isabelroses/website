@@ -13,20 +13,20 @@
     <meta name="author" content="Isabel Roses" />
     <meta name="description" content="{{ description }}" />
     <meta name="keywords" content="Isabel Roses, blog, go, rust, personal, tech, programming, web development, software engineering" />
-    <link rel="canonical" href="https://isabelroses.com">
-    <link rel=expect href="#below-the-fold" blocking=render>
+    <link rel="canonical" href="https://isabelroses.com" />
+    <link rel="expect" href="#below-the-fold" blocking="render" />
 
     <meta property="twitter:domain" content="isabelroses.com" />
     <meta name="twitter:image" content="https://isabelroses.com/me.webp" />
     <meta name="twitter:card" content="{{ description }}">
 
-    <meta property="og:title" content="{{title}}">
+    <meta property="og:title" content="{{title}}" />
     <meta property="og:description" content="{{ description }}" />
     <meta property="og:type" content="website" />
     <meta property="og:image" content="https://isabelroses.com/me.webp" />
 
-    <link rel="alternate" type="application/rss+xml" href="/feed.xml">
-    <link rel="alternate" type="application/json" href="/feed.json">
+    <link rel="alternate" type="application/rss+xml" href="/feed.xml" />
+    <link rel="alternate" type="application/json" href="/feed.json" />
     <link type="text/plain" rel="author" href="/static/humans.txt" />
 
     <link rel="icon" href="/static/favicon.ico" />
