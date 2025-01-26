@@ -9,7 +9,7 @@ edition = "2021"
 
 [dependencies]
 axum = "0.8.1"
-comrak = { git = "https://github.com/kivikakk/comrak", default-features = false }
+comrak = { version = "0.35.0", default-features = false }
 dotenv = "0.15.0"
 lazy_static = "1.5.0"
 mime_guess = "2.0.5"
