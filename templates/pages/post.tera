@@ -92,8 +92,8 @@
 {% endblock %}
 
 {% block additionalfoot %}
-<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/highlight.min.js"></script>
-<script src="https://unpkg.com/@highlightjs/cdn-assets@11.9.0/languages/nix.min.js"></script>
+<script src="/static/js/highlight.js"></script>
+<script src="/static/js/nix.js"></script>
 <script>
   hljs.highlightAll();
 
