@@ -32,11 +32,7 @@ rustPlatform.buildRustPackage {
     );
   };
 
-  cargoLock = {
-    lockFile = ../Cargo.lock;
-
-    outputHashes."comrak-0.33.0" = "sha256-C7srY7ehXrEZuc7nm2knPCIpD1MQ/qq9MORW5H0j4ms=";
-  };
+  cargoLock.lockFile = ../Cargo.lock;
 
   nativeBuildInputs = [
     just
