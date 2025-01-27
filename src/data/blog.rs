@@ -2,7 +2,10 @@ use atom_syndication::{
     ContentBuilder, EntryBuilder, FeedBuilder, LinkBuilder, PersonBuilder, TextBuilder,
 };
 use chrono::TimeZone;
-use comrak::{markdown_to_html, Options as ComrakOptions};
+use comrak::{
+    markdown_to_html_with_plugins, plugins::syntect::SyntectAdapterBuilder,
+    Options as ComrakOptions, Plugins as ComrakPlugins,
+};
 use lazy_static::lazy_static;
 use nom::{branch::permutation, IResult};
 use rust_embed::{Embed, EmbeddedFile};
@@ -135,7 +138,14 @@ impl Post {
         opts.extension.underline = true;
         opts.extension.alerts = true;
 
-        markdown_to_html(input, &opts)
+        let mut plugins = ComrakPlugins::default();
+        let syntect = SyntectAdapterBuilder::default()
+            .syntax_set(two_face::syntax::extra_newlines())
+            .css()
+            .build();
+        plugins.render.codefence_syntax_highlighter = Some(&syntect);
+
+        markdown_to_html_with_plugins(input, &opts, &plugins)
     }
 }
 
