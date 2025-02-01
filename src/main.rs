@@ -52,6 +52,10 @@ async fn main() {
     let api_routes = Router::new()
         .route("/github", post(api::github::handler))
         .route("/kofi", post(api::kofi::handler))
+        .route(
+            "/discord",
+            get(|| async { Redirect::permanent("https://discord.gg/8RVhHeJH3x") }),
+        )
         .fallback(get(api::fallback));
 
     let app = Router::new()
