@@ -319,4 +319,4 @@ You may have notice that we are not taking any inputs and are only producing out
 
 ## Wrapping up
 
-Nix is a great tool for managing dependencies, and I hope this post has helped you understand how to use it in your projects. If you have any further questions feel free to [email me](mailto:isabel@isabelroses.com) or join [my discord server](https://discord.gg/8RVhHeJH3x). Thanks for reading!!! And If you really enjoyed the post please consider donating so I can keep doing this kind of thing on [kofi](https://ko-fi.com/isabelroses) or [GitHub Sponsors](https://github.com/sponsors/isabelroses).
+Nix is a great tool for managing dependencies, and I hope this post has helped you understand how to use it in your projects. If you have any further questions feel free to [email me](mailto:isabel@isabelroses.com) or join [my discord server](/api/discord). Thanks for reading!!! And If you really enjoyed the post please consider donating so I can keep doing this kind of thing on [kofi](https://ko-fi.com/isabelroses) or [GitHub Sponsors](https://github.com/sponsors/isabelroses).
