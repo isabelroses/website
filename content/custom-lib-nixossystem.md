@@ -27,7 +27,7 @@ write my own `lib.nixosSystem` or my own `lib.darwinSystem`? What if I call it
 [`mkSystem`](https://github.com/isabelroses/dotfiles/blob/24588b2101c0fb2a8587df377a670e9e4cc47b42/parts/lib/builders.nix#L17).
 Well that's exactly what I did. And this article covers how I got to that point
 and how my custom “builder” later evolved into
-[easy-hosts](https://github.com/isabelroses/easy-hosts).
+[easy-hosts](https://github.com/tgirlcloud/easy-hosts).
 
 ## The research
 
@@ -51,7 +51,7 @@ argument. The
 [documentation](https://github.com/NixOS/nixpkgs/blob/b78b5ce3b29c147e193633659a0ea9bf97f6c0c0/flake.nix#L44)
 lists a set of known arguments being `modules`, `specialArgs` and
 `modulesLocation`, it also specifies some additional legacy arguments `system`
-and `pkgs` both of which are now redundant.
+and `pkgs`. Both of which are now redundant.
 
 The `lib.nixosSystem` then imports the `nixos/lib/eval-config.nix` file whilst
 passing `lib`, and the remaining `args` to it. However, it also sets `system` to
@@ -149,8 +149,6 @@ The key to this is going to be including `modulesPath` in our `specialArgs`.
 This is because `specialArgs` should only be used with arguments that need to
 be evaluated when resolving module structure.
 
-########## continute herheeh thatnks pookie ############
-
 ```nix
 {
   inputs,
@@ -174,11 +172,11 @@ lib.evalModules {
 
 ### So close and yet so far
 
-But just adding `modulePath` is a bit useless, we can't exactly replace our
-`lib.nixosSystem`'s yet. So let's work on that. To do that we are going to start
-importing `baseModules`, this will provide us with a base set of modules from
-nixpkgs. To do this we can use the `modulePath` and get the module list from
-there since this will prepare us for later when we want to add Darwin support.
+Only adding `modulePath` is a bit useless however, so we can't exactly replace
+our `lib.nixosSystem`'s yet. So let's work on that. We are going to start by
+importing `baseModules`, this will provide us with a base set of modules that
+provide abstractions over configuring your system. We can use the `modulePath`
+and get the module list.
 
 ```nix
 {
@@ -212,12 +210,12 @@ back to the `modulesModule` from [earlier](#nixos/lib/eval-config.nix). we need 
 modules will work, one of these is the [documentation module](https://github.com/NixOS/nixpkgs/blob/48f79c1d5168ce8e9b21a790be523c9a8f60046c/nixos/modules/misc/documentation.nix#L1)
 which will be a hard module to ignore, when so many people use it.
 
-So what we are going to introduce a new module which contains
-`config._module.args` which takes a set of attrs that will be passed to each
-module. I'm sure most of you reckoginse these when writing a module and adding
-`{ pkgs, config, ... }` to the top of a file. These should be used by arguments
-that don't need to resolve module stucute since thats the exact reason we have
-`specialArgs`.
+To fix this we are going to introduce a new module which contains
+`config._module.args` and takes a set of attrs that will be passed to each
+module. I'm sure most of you recognize these when writing a module and adding
+something like `{ pkgs, config, ... }` to the top of a file. The
+`config._module.args` option should be used when trying to pass arguments to
+all modules, but should not be evaluated with file structure in mind.
 
 ```nix
 {
@@ -316,7 +314,7 @@ need to change how the original `flake.nix` works though.
 }
 ```
 
-Furthermore notice how I lied about settings `nixpkgs.hostPlatform`, if your curious why maybe you
+Furthermore, notice how I lied about settings `nixpkgs.hostPlatform`. If your curious why, maybe you
 should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad-im-disapointed-10). (Shameless plug)
 
 ### The original issue, Darwin!
@@ -324,14 +322,14 @@ should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad
 But now lets address what I originally came for. Adding `lib.darwinSystem`
 support for this too.
 
-To introduce Darwin support we are going to allow users to set the `class`
+To introduce Darwin support we are allowing users to set the `class`
 argument to `darwin` from there we can determine what modules to import.
 As a result of this you may notice that Darwin has a different set of
 modules which introduced some new options to set for this system type. This
 includes `nixpkgs.source` and `darwinVersionSuffix` and `darwinRevision`. Some
 of these are for commands like `darwin-version`. You may also notice that we
 had to add `system = eval.config.system.build.toplevel` back into the final
-eval produced by our Darwin eval. This is needed so we can actually swap to the
+eval produced by our Darwin eval. This is required to swap to the
 configuration, otherwise it won't work at all.
 
 ```nix
@@ -407,7 +405,7 @@ Is that not awesome? So how can we replicate that for ourselves?
 
 What we will need to do is map over all inputs, and their outputs and select
 the output dependent on the host platform, if a system dependent output exists,
-otherwise it will leave it as is. We can acchive that with the following code:
+otherwise it will leave it as is. We can achive that with the following code:
 
 ```nix
 inputs' = lib.mapAttrs (_: lib.mapAttrs (_: v: v.${config.nixpkgs.hostPlatform} or v)) inputs;
@@ -478,10 +476,6 @@ in
   if class == "darwin" then (eval // { system = eval.config.system.build.toplevel; }) else eval;
 ```
 
-Now techincally if we wanted we could remove `inputs` and move `inputs'`,
-renaming it to `inputs` and making it a specialArg. Since they will function
-virtually the same way but with reduced code.
-
 ## Conclusion
 
 And that's it! We have a fully functional `mkSystem` function that can replace
@@ -489,6 +483,6 @@ both `lib.nixosSystem` and `lib.darwinSystem`. This was quite the task, and
 although this blog post seems to reduce the quite simple. I've spent a lot of
 time on this, both when researching how to create the custom builder and
 writing and maintaining the latest rendition in the form of a flake module
-called [easy-hosts](https://github.com/isabelroses/easy-hosts). If you enjoyed
+called [easy-hosts](https://github.com/tgirlcloud/easy-hosts). If you enjoyed
 this post, please consider donating on [ko-fi](https://ko-fi.com/isabelroses)
 or [github sponsors](https://github.com/sponsors/isabelroses).
