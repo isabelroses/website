@@ -12,7 +12,7 @@ tags:
 I've been using NixOS for a while now, and my biggest issue was that I have a
 lot of machines. Which leads to having a lot of different
 [systems](https://github.com/isabelroses/dotfiles/tree/main/systems) on my
-[flake](https://github.com/isabelroses/dotfiles) beacuse of that hardware. The
+[flake](https://github.com/isabelroses/dotfiles) because of that hardware. The
 normal solution would be to use the module system, but a new issue arises when
 we add [nix-darwin](https://github.com/LnL7/nix-darwin). We suddenly start to
 fail
