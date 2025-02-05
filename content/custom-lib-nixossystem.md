@@ -85,7 +85,7 @@ default for `modulePath` which is going to be passed as a special arg.
 ### lib/modules.nix
 
 This is where `lib.evalModules` is defined which takes the `modules` and
-`specialArgs` from before. It also takes the `class` arugment, which is a
+`specialArgs` from before. It also takes the `class` argument, which is a
 nominal type, which ensures that only compatible modules are imported. This
 may become really useful later. We do not need to analyze too much into
 this, since we will be calling this function later.
@@ -255,7 +255,7 @@ start abstracting some common themes between our systems. Some big examples of
 this are `networking.hostName` and `nixpkgs.hostPlatform`. And while were at it
 lets also re-add the `nixpkgs.flake.source` from the original `lib.nixoSystem`,
 as well as adding `inputs` as a special arg. As most people do this anyway,
-I think it's a safe assumption we should add it. For futher reading about
+I think it's a safe assumption we should add it. For further reading about
 passing inputs to modules check [nobbz's blog on getting inputs to flake modules](https://blog.nobbz.dev/2022-12-12-getting-inputs-to-modules-in-a-flake/).
 
 ```nix
@@ -405,7 +405,7 @@ Is that not awesome? So how can we replicate that for ourselves?
 
 What we will need to do is map over all inputs, and their outputs and select
 the output dependent on the host platform, if a system dependent output exists,
-otherwise it will leave it as is. We can achive that with the following code:
+otherwise it will leave it as is. We can achieve that with the following code:
 
 ```nix
 inputs' = lib.mapAttrs (_: lib.mapAttrs (_: v: v.${config.nixpkgs.hostPlatform} or v)) inputs;
