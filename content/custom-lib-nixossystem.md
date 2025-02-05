@@ -10,14 +10,15 @@ tags:
 ## Introduction
 
 I've been using NixOS for a while now, and my biggest issue was that I have a
-lot of [systems](https://github.com/isabelroses/dotfiles/tree/main/systems) on
-my [flake](https://github.com/isabelroses/dotfiles). Which leads to having a
-lot of different hardware and therefore modules that are needed for said
-hardware. The normal solution would be to use the module system, but a new
-issue arises when we add [nix-darwin](https://github.com/LnL7/nix-darwin). We
-suddenly start to fail eval over issues because some modules don't exist that
-are in the normal NixOS module system. So my new issue is that I can no longer
-use my small abstraction over
+lot of machines. Which leads to having a lot of different
+[systems](https://github.com/isabelroses/dotfiles/tree/main/systems) on my
+[flake](https://github.com/isabelroses/dotfiles) beacuse of that hardware. The
+normal solution would be to use the module system, but a new issue arises when
+we add [nix-darwin](https://github.com/LnL7/nix-darwin). We suddenly start to
+fail
+eval over issues because some modules don't exist that are in the normal NixOS
+module system. So my new issue is that I can no longer use my small abstraction
+over
 [`lib.nixosSystem`](https://github.com/NixOS/nixpkgs/blob/5223d4097bb2c9e89d133f61f898df611d5ea3ca/flake.nix#L57-L79).
 I would have to expand the abstraction to include
 [`lib.darwinSystem`](https://github.com/LnL7/nix-darwin/blob/87131f51f8256952d1a306b5521cedc2dc61aa08/flake.nix#L21-L51)
@@ -51,12 +52,11 @@ argument. The
 [documentation](https://github.com/NixOS/nixpkgs/blob/b78b5ce3b29c147e193633659a0ea9bf97f6c0c0/flake.nix#L44)
 lists a set of known arguments being `modules`, `specialArgs` and
 `modulesLocation`, it also specifies some additional legacy arguments `system`
-and `pkgs`. Both of which are now redundant.
+and `pkgs` (both of which are now redundant).
 
 The `lib.nixosSystem` then imports the `nixos/lib/eval-config.nix` file whilst
-passing `lib`, and the remaining `args` to it. However, it also sets `system` to
-`null` as well as adding `nixpkgs.flake.source` to nixpkgs output derivation,
-to our set of modules.
+passing `lib`, and the remaining `args` to it. It also sets `system` to
+`null` as well as adding `nixpkgs.flake.source` to nixpkgs output derivation.
 
 ### nixos/lib/eval-config.nix
 
