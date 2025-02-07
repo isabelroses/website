@@ -1,7 +1,7 @@
 ---
 title: My custom lib.nixosSystem
 description: How I came to write my own lib.nixosSystem
-date: 09/01/2025
+date: 07/02/2025
 tags:
   - learning
   - nix
@@ -32,7 +32,20 @@ and how my custom “builder” later evolved into
 
 ## The research
 
-Before getting started we need to read into 4 main files in the nixpkgs repository:
+To start we should read the [documentation for `lib.evalModules`](https://nixos.org/manual/nixpkgs/stable/index.html#module-system-lib-evalModules).
+From which we find that there are 4 arguments, but 3 that we really care about.
+Those being `modules`, `specialArgs` and `class`. The `modules` argument is a
+list of modules, which are files, functions or attrsets that will be merged and
+then evaluated. The `specialArgs` argument is a attrset of arguments that are
+passed to the modules, but are not evaluated with the file structure in mind.
+The `class` argument is a nominal type that ensures that only compatible
+modules are imported. This is a very important argument, as it allows us to
+have different modules for different systems.
+
+However, I'm not much a fan of reading documentation. So instead lets dig into
+the source code and pick it apart. To find out what we need to get our custom
+`lib.nixosSystem` working. To do this I identified 4 main files in the nixpkgs
+repository:
 
 - [flake.nix](https://github.com/NixOS/nixpkgs/blob/5223d4097bb2c9e89d133f61f898df611d5ea3ca/flake.nix)
 - [nixos/lib/eval-config.nix](https://github.com/NixOS/nixpkgs/blob/5223d4097bb2c9e89d133f61f898df611d5ea3ca/nixos/lib/eval-config.nix)
@@ -84,11 +97,9 @@ default for `modulePath` which is going to be passed as a special arg.
 
 ### lib/modules.nix
 
-This is where `lib.evalModules` is defined which takes the `modules` and
-`specialArgs` from before. It also takes the `class` argument, which is a
-nominal type, which ensures that only compatible modules are imported. This
-may become really useful later. We do not need to analyze too much into
-this, since we will be calling this function later.
+This file won't add much to our understanding of `lib.evalModules`, but it
+still is the definition of the function, so it's good to keep in mind if we have
+any issues later down the line.
 
 ## The implementation
 
@@ -317,20 +328,23 @@ need to change how the original `flake.nix` works though.
 Furthermore, notice how I lied about settings `nixpkgs.hostPlatform`. If your curious why, maybe you
 should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad-im-disapointed-10). (Shameless plug)
 
-### The original issue, Darwin!
+### Darwin compatibility
 
-But now lets address what I originally came for. Adding `lib.darwinSystem`
-support for this too.
+One of the main reasons I wanted to make this was to support
+`lib.darwinSystem`. So let's address that now.
 
 To introduce Darwin support we are allowing users to set the `class`
 argument to `darwin` from there we can determine what modules to import.
 As a result of this you may notice that Darwin has a different set of
 modules which introduced some new options to set for this system type. This
 includes `nixpkgs.source` and `darwinVersionSuffix` and `darwinRevision`. Some
-of these are for commands like `darwin-version`. You may also notice that we
-had to add `system = eval.config.system.build.toplevel` back into the final
-eval produced by our Darwin eval. This is required to swap to the
-configuration, otherwise it won't work at all.
+of these are for commands like `darwin-version`.
+
+You may also notice that we had to add `system = eval.config.system.build.toplevel`
+back into the final eval produced by our Darwin eval. This is required to swap
+to the configuration, otherwise it won't work at all. This is because the
+`system` output is used by `darwin-rebuild`, to identify the final build
+output.
 
 ```nix
 {
@@ -473,7 +487,10 @@ name:
     ];
   };
 in
-  if class == "darwin" then (eval // { system = eval.config.system.build.toplevel; }) else eval;
+  if class == "darwin" then
+    (eval // { system = eval.config.system.build.toplevel; })
+  else
+    eval;
 ```
 
 ## Conclusion
