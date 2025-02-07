@@ -2,6 +2,7 @@
 
 {% block title %}{% set title = post.title %}{% endblock %}
 {% block description %}{% set description = post.description %}{% endblock %}
+{% block url %}blog/{{ post.slug }}{% endblock %}
 
 {% block main %}
 <div class="reusable-header post-header">

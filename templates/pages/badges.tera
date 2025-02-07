@@ -2,6 +2,7 @@
 
 {% block title %}{% set title = "Badges" %}{% endblock %}
 {% block description %}{% set description = "My collectings from the world wide web" %}{% endblock %}
+{% block url %}badges{% endblock %}
 
 {% block main %}
 <div class="reusable-header">

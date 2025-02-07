@@ -2,6 +2,7 @@
 
 {% block title %}{% set title = "Error " ~ code %}{% endblock %}
 {% block description %}{% set description = title %}{% endblock %}
+{% block url %}error{% endblock %}
 
 {% block main %}
 <section>

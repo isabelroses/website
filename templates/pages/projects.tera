@@ -2,6 +2,7 @@
 
 {% block title %}{% set title = "Projects" %}{% endblock %}
 {% block description %}{% set description = "A collection of projects that I maintain" %}{% endblock %}
+{% block url %}projects{% endblock %}
 
 {% block main %}
 <div class="reusable-header">

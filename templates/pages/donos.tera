@@ -2,6 +2,7 @@
 
 {% block title %}{% set title = "Donations" %}{% endblock %}
 {% block description %}{% set description = "A special thanks to all those who support me!" %}{% endblock %}
+{% block url %}donations{% endblock %}
 
 {% block main %}
 <div class="reusable-header">
