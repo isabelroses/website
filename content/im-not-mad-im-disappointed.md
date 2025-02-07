@@ -150,9 +150,44 @@ not need to know what the system is here. And if you do wish to refer to the
 system recall how earlier I spoke of `pkgs.system` well `prev` like `pkgs` will
 also expose `system`, so you can use `prev.system`.
 
+### Stop importing weirdly
+
+You do not need this needless import. This is a waste of nix eval time. Since
+users will place `inputs.<source>.nixosModules.default` in their flake
+`imports` it will load those files for them, so you don't need to import unless
+you need to pass args.
+
+```nix
+{
+  inputs = { };
+
+  outputs = inputs: {
+    nixosModules.default = import ./module.nix;
+  };
+}
+```
+
+Here is a more acceptable flake, where we only import because we are passing
+our inputs to our other module.
+
+```nix
+{
+  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
+  outputs = inputs: {
+    nixosModules = {
+      noImport = ./module.nix;
+      importWithArgs = import ./module.nix { inherit inputs; };
+    };
+  };
+}
+```
+
 ### Stop importing nixpkgs
 
-All the time I see people writing some form of the following:
+This one is somewhat of a subset of the previous problem, where people import
+needlessly. nixpkgs already provides `legacyPackages` which is a
+pre-constructed set of packages for you. So you don't need to import `nixpkgs`.
 
 ```nix
 {
@@ -168,11 +203,9 @@ All the time I see people writing some form of the following:
 }
 ```
 
-Both of these `pkgs` are bad. Importing `nixpkgs` without a system will use
-`builtins.currentSystem` which is impure, this means that it needs to use
-information that may not be reproducible like your system type. And the second
-`pkgs` is explicit importing `nixpkgs` with `system`, which is not as
-preferable but not strictly speaking “bad”. Instead, consider writing:
+Importing `nixpkgs` without a system will use `builtins.currentSystem` which is
+impure, this means that it needs to use information that may not be
+reproducible like your system type. Instead, consider writing:
 
 ```nix
 {
