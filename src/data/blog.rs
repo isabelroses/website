@@ -4,7 +4,6 @@ use atom_syndication::{
 use chrono::TimeZone;
 use comrak::{markdown_to_html, Options as ComrakOptions};
 use lazy_static::lazy_static;
-use nom::{branch::permutation, IResult};
 use rust_embed::{Embed, EmbeddedFile};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
@@ -25,6 +24,7 @@ struct Content;
 pub struct Post {
     title: String,
     date: String,
+    updated: Option<String>,
     description: String,
     slug: String,
     tags: Vec<String>,
@@ -33,102 +33,23 @@ pub struct Post {
     id: Option<usize>,
 }
 
-struct PostMeta {
+#[derive(Clone, Debug, Serialize, Deserialize)]
+pub struct PostMeta {
     title: String,
     date: String,
+    updated: Option<String>,
     description: String,
     tags: Vec<String>,
 }
 
 impl Post {
-    pub fn parse(input: &str) -> Result<Self, Box<dyn Error>> {
-        let raw = input.split("---\n").collect::<Vec<&str>>();
-        let raw_metadata = raw[1];
-        let raw_content = raw[2];
-
-        let meta = permutation((
-            Self::parse_title,
-            Self::parse_date,
-            Self::parse_description,
-            Self::parse_tags,
-        ))(raw_metadata)
-        .map(|(_, (title, date, description, tags))| PostMeta {
-            title,
-            date,
-            description,
-            tags,
-        });
-
-        let meta = match meta {
-            Ok(meta) => meta,
-            Err(e) => {
-                eprintln!("{e:?}");
-                return Err(Box::new(std::io::Error::new(
-                    std::io::ErrorKind::Other,
-                    e.to_string(),
-                )));
-            }
-        };
-
-        let content = Self::parse_content(raw_content);
-
-        let read_time_seconds = estimated_read_time::text(&content, &ERT_OPTIONS).seconds();
-        let read_time = read_time_seconds / 60;
-
-        let ret = Self {
-            title: meta.title,
-            date: meta.date,
-            description: meta.description,
-            tags: meta.tags,
-            slug: String::new(),
-            content,
-            read_time,
-            id: None,
-        };
-
-        Ok(ret)
+    pub fn parse_meta(input: &str) -> Result<PostMeta, Box<dyn Error>> {
+        serde_norway::from_str(input).map_err(std::convert::Into::into)
     }
 
-    fn parse_field<'a>(input: &'a str, field: &'a str) -> IResult<&'a str, String> {
-        let (input, _) = nom::bytes::complete::tag(field)(input)?;
-        let (input, _) = nom::character::complete::multispace0(input)?;
-        let (input, _) = nom::bytes::complete::tag(":")(input)?;
-        let (input, _) = nom::character::complete::multispace0(input)?;
-        let (input, value) = nom::character::complete::not_line_ending(input)?;
-        let (input, _) = nom::character::complete::newline(input)?;
-        Ok((input, value.to_string()))
-    }
-
-    fn parse_title(input: &str) -> IResult<&str, String> {
-        Self::parse_field(input, "title")
-    }
-
-    fn parse_date(input: &str) -> IResult<&str, String> {
-        Self::parse_field(input, "date")
-    }
-
-    fn parse_description(input: &str) -> IResult<&str, String> {
-        Self::parse_field(input, "description")
-    }
-
-    fn parse_tags(input: &str) -> IResult<&str, Vec<String>> {
-        let (input, _) = nom::bytes::complete::tag("tags")(input)?;
-        let (input, _) = nom::character::complete::multispace0(input)?;
-        let (input, _) = nom::bytes::complete::tag(":")(input)?;
-        let (input, _) = nom::character::complete::multispace0(input)?;
-        let (input, tags) = nom::multi::many0(nom::sequence::preceded(
-            nom::sequence::pair(
-                nom::character::complete::multispace0,
-                nom::bytes::complete::tag("- "),
-            ),
-            nom::character::complete::not_line_ending,
-        ))(input)?;
-        let (input, _) = nom::character::complete::newline(input)?;
-        Ok((input, tags.iter().map(|s| (*s).to_string()).collect()))
-    }
-
-    fn parse_content(input: &str) -> String {
+    pub fn parse_content(input: &str) -> String {
         let mut opts = ComrakOptions::default();
+
         opts.extension.strikethrough = true;
         opts.extension.table = true;
         opts.extension.header_ids = Some(String::new());
@@ -136,6 +57,30 @@ impl Post {
         opts.extension.alerts = true;
 
         markdown_to_html(input, &opts)
+    }
+
+    pub fn parse(input: &str) -> Result<Self, Box<dyn Error>> {
+        let raw = input.split("---\n").collect::<Vec<&str>>();
+        let raw_metadata = raw[1];
+        let raw_content = raw[2];
+
+        let meta = Self::parse_meta(raw_metadata)?;
+        let content = Self::parse_content(raw_content);
+
+        let read_time_seconds = estimated_read_time::text(&content, &ERT_OPTIONS).seconds();
+        let read_time = read_time_seconds / 60;
+
+        Ok(Self {
+            title: meta.title,
+            date: meta.date,
+            updated: meta.updated,
+            description: meta.description,
+            slug: String::new(),
+            tags: meta.tags,
+            content,
+            read_time,
+            id: None,
+        })
     }
 }
 
@@ -200,7 +145,7 @@ impl Posts {
             )
             .updated({
                 let latest_post = self.0.last().unwrap();
-                parse_post_date(&latest_post.date)
+                parse_post_date(latest_post.updated.as_ref().unwrap_or(&latest_post.date))
             })
             .entries(
                 self.0
@@ -219,7 +164,7 @@ impl Posts {
                                     .build(),
                             )
                             .id(&url)
-                            .updated(parse_post_date(&post.date))
+                            .updated(parse_post_date(post.updated.as_ref().unwrap_or(&post.date)))
                             .build()
                     })
                     .collect::<Vec<_>>(),
@@ -316,6 +261,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "02/01/2024".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world".to_string(),
                 tags: vec!["test".to_string(), "post".to_string()],
@@ -326,6 +272,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "02/01/2024".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world".to_string(),
                 tags: vec!["post".to_string()],
@@ -346,6 +293,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "02/01/2024".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world-1".to_string(),
                 tags: vec!["test".to_string(), "post".to_string()],
@@ -356,6 +304,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "02/01/2024".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
@@ -376,6 +325,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "2021-08-01".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world-1".to_string(),
                 tags: vec!["test".to_string(), "post".to_string()],
@@ -386,6 +336,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "02/01/2024".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
@@ -406,6 +357,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "02/01/2023".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world-1".to_string(),
                 tags: vec!["test".to_string(), "post".to_string()],
@@ -416,6 +368,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "02/01/2024".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
@@ -426,6 +379,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "02/03/2024".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],
@@ -436,6 +390,7 @@ mod tests {
             Post {
                 title: "Hello, World!".to_string(),
                 date: "01/03/2024".to_string(),
+                updated: None,
                 description: "This is a test post".to_string(),
                 slug: "hello-world-2".to_string(),
                 tags: vec!["post".to_string()],

@@ -2,6 +2,7 @@
 title: I'm not mad, I'm disappointed
 description: A short rant about the state of your nix code
 date: 09/01/2025
+updated: 07/02/2025
 tags:
   - nix
 ---
