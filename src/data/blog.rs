@@ -3,7 +3,7 @@ use atom_syndication::{
 };
 use chrono::TimeZone;
 use comrak::{markdown_to_html, Options as ComrakOptions};
-use lazy_static::lazy_static;
+use once_cell::sync::Lazy;
 use rust_embed::{Embed, EmbeddedFile};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
@@ -11,9 +11,7 @@ use std::error::Error;
 
 const DATE_FORMAT: &str = "%d/%m/%Y";
 
-lazy_static! {
-    static ref ERT_OPTIONS: estimated_read_time::Options = estimated_read_time::Options::new();
-}
+static ERT_OPTIONS: Lazy<estimated_read_time::Options> = Lazy::new(|| estimated_read_time::Options::new());
 
 #[derive(Embed)]
 #[folder = "content/"]
