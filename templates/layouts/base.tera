@@ -34,7 +34,7 @@
     <link rel="stylesheet" href="/static/styles.css" />
 
     <script>{%include "partials/script.js" %}</script>
-    {# <script defer src="https://analytics.isabelroses.com/script.js" data-website-id="be210218-aad1-4b3a-a6a3-366952e22d8e"></script> #}
+    <script defer src="https://analytics.isabelroses.com/script.js" data-website-id="be210218-aad1-4b3a-a6a3-366952e22d8e"></script>
 
     {% block additionalhead %} {% endblock %}
   </head>
