@@ -1,3 +1,8 @@
+:root {
+  --font-text: 'Space Mono';
+  --font-code: 'Space Mono';
+}
+
 .prose {
   display: flex;
   flex-direction: column;
@@ -40,6 +45,16 @@
     border: var(--border, var(--default-border));
     line-height: 1.25rem;
     text-wrap: wrap;
+
+  }
+  code {
+    font-family: var(--font-code), ui-monospace, monospace,
+  }
+  // inline code
+  p > code {
+    background: var(--bg-lighter);
+    color: var(--fg-lighter);
+    padding-inline: .3rem;
   }
 
   // inline code
