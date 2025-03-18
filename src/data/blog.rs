@@ -11,7 +11,8 @@ use std::error::Error;
 
 const DATE_FORMAT: &str = "%d/%m/%Y";
 
-static ERT_OPTIONS: Lazy<estimated_read_time::Options> = Lazy::new(|| estimated_read_time::Options::new());
+static ERT_OPTIONS: Lazy<estimated_read_time::Options> =
+    Lazy::new(estimated_read_time::Options::new);
 
 #[derive(Embed)]
 #[folder = "content/"]
