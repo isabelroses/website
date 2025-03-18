@@ -16,7 +16,6 @@ in
       description = "isabelroses.com";
       after = [ "network.target" ];
       wantedBy = [ "multi-user.target" ];
-      path = [ self.packages.${pkgs.stdenv.hostPlatform.system}.default ];
 
       serviceConfig = {
         Type = "simple";
