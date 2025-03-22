@@ -27,8 +27,8 @@
           );
     in
     {
-      packages = forAllSystems (pkgs: rec {
-        default = isabelroses-website;
+      packages = forAllSystems (pkgs: {
+        default = self.packages.${pkgs.stdenv.hostPlatform.system}.isabelroses-website;
         isabelroses-website = pkgs.callPackage ./nix/default.nix { };
       });
 
