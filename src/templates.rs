@@ -1,10 +1,9 @@
-use std::str::from_utf8;
-
-use once_cell::sync::Lazy;
 use rust_embed::Embed;
+use std::str::from_utf8;
+use std::sync::LazyLock;
 use tera::Tera;
 
-pub static TEMPLATES: Lazy<Tera> = Lazy::new(|| {
+pub static TEMPLATES: LazyLock<Tera> = LazyLock::new(|| {
     let mut tera = Tera::default();
     let _res = tera.add_raw_templates(Template::iter().map(|file| {
         let raw_data = Template::get(&file).unwrap();

@@ -27,7 +27,7 @@ where
     fn into_response(self) -> Response {
         let path = self.0.into();
 
-        match Asset::get(path.as_str()) {
+        match Asset::get(&path) {
             Some(content) => {
                 let mime = mime_guess::from_path(path).first_or_octet_stream();
                 ([(header::CONTENT_TYPE, mime.as_ref())], content.data).into_response()
