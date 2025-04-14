@@ -1,3 +1,8 @@
+@use 'highlighting/catppuccin_mocha.scss';
+@use 'highlighting/catppuccin_macchiato.scss';
+@use 'highlighting/catppuccin_frappe.scss';
+@use 'highlighting/catppuccin_latte.scss';
+
 .theme-dark {
   --fg: #d1d5db;
   --fg-lighter: #9ca3af;
@@ -13,8 +18,6 @@
   --yellow: #f9e2af;
   --purple: #cba6f7;
   --red: #f38ba8;
-
-  code.hljs{color:#cdd6f4};code .hljs-keyword{color:#cba6f7;};code .hljs-built_in{color:#f38ba8};code .hljs-type{color:#f9e2af};code .hljs-literal{color:#fab387};code .hljs-number{color:#fab387};code .hljs-operator{color:#94e2d5};code .hljs-punctuation{color:#bac2de};code .hljs-property{color:#94e2d5};code .hljs-regexp{color:#f5c2e7};code .hljs-string{color:#a6e3a1};code .hljs-char.escape_{color:#a6e3a1};code .hljs-subst{color:#a6adc8};code .hljs-symbol{color:#f2cdcd};code .hljs-variable{color:#cba6f7};code .hljs-variable.language_{color:#cba6f7};code .hljs-variable.constant_{color:#fab387};code .hljs-title{color:#89b4fa};code .hljs-title.class_{color:#f9e2af};code .hljs-title.function_{color:#89b4fa};code .hljs-params{color:#cdd6f4};code .hljs-comment{color:#585b70};code .hljs-doctag{color:#f38ba8};code .hljs-meta{color:#fab387};code .hljs-section{color:#89b4fa};code .hljs-tag{color:#a6adc8};code .hljs-name{color:#cba6f7};code .hljs-attr{color:#89b4fa};code .hljs-attribute{color:#a6e3a1};code .hljs-bullet{color:#94e2d5};code .hljs-code{color:#a6e3a1};code .hljs-emphasis{color:#f38ba8;font-style:italic};code .hljs-strong{color:#f38ba8;font-weight:bold};code .hljs-formula{color:#94e2d5};code .hljs-link{color:#74c7ec;font-style:italic};code .hljs-quote{color:#a6e3a1;font-style:italic};code .hljs-selector-tag{color:#f9e2af};code .hljs-selector-id{color:#89b4fa};code .hljs-selector-class{color:#94e2d5};code .hljs-selector-attr{color:#cba6f7};code .hljs-selector-pseudo{color:#94e2d5};code .hljs-template-tag{color:#f2cdcd};code .hljs-template-variable{color:#f2cdcd};code .hljs-addition{color:#a6e3a1};code .hljs-deletion{color:#f38ba8};
 }
 
 .theme-light {
@@ -33,8 +36,6 @@
   --yellow: #df8e1d;
   --purple: #8839ef;
   --red: #d20f39;
-
-  code.hljs{color:#4c4f69};code .hljs-keyword{color:#8839ef};code .hljs-built_in{color:#d20f39};code .hljs-type{color:#df8e1d};code .hljs-literal{color:#fe640b};code .hljs-number{color:#fe640b};code .hljs-operator{color:#179299};code .hljs-punctuation{color:#5c5f77};code .hljs-property{color:#179299};code .hljs-regexp{color:#ea76cb};code .hljs-string{color:#40a02b};code .hljs-char.escape_{color:#40a02b};code .hljs-subst{color:#6c6f85};code .hljs-symbol{color:#dd7878};code .hljs-variable{color:#8839ef};code .hljs-variable.language_{color:#8839ef};code .hljs-variable.constant_{color:#fe640b};code .hljs-title{color:#1e66f5};code .hljs-title.class_{color:#df8e1d};code .hljs-title.function_{color:#1e66f5};code .hljs-params{color:#4c4f69};code .hljs-comment{color:#acb0be};code .hljs-doctag{color:#d20f39};code .hljs-meta{color:#fe640b};code .hljs-section{color:#1e66f5};code .hljs-tag{color:#6c6f85};code .hljs-name{color:#8839ef};code .hljs-attr{color:#1e66f5};code .hljs-attribute{color:#40a02b};code .hljs-bullet{color:#179299};code .hljs-code{color:#40a02b};code .hljs-emphasis{color:#d20f39;font-style:italic};code .hljs-strong{color:#d20f39;font-weight:bold};code .hljs-formula{color:#179299};code .hljs-link{color:#209fb5;font-style:italic};code .hljs-quote{color:#40a02b;font-style:italic};code .hljs-selector-tag{color:#df8e1d};code .hljs-selector-id{color:#1e66f5};code .hljs-selector-class{color:#179299};code .hljs-selector-attr{color:#8839ef};code .hljs-selector-pseudo{color:#179299};code .hljs-template-tag{color:#dd7878};code .hljs-template-variable{color:#dd7878};code .hljs-addition{color:#40a02b};code .hljs-deletion{color:#d20f39};
 }
 
 .theme-ctp-mocha {
@@ -52,8 +53,6 @@
   --yellow: #f9e2af;
   --purple: #cba6f7;
   --red: #f38ba8;
-
-  code.hljs{color:#cdd6f4};code .hljs-keyword{color:#cba6f7;};code .hljs-built_in{color:#f38ba8};code .hljs-type{color:#f9e2af};code .hljs-literal{color:#fab387};code .hljs-number{color:#fab387};code .hljs-operator{color:#94e2d5};code .hljs-punctuation{color:#bac2de};code .hljs-property{color:#94e2d5};code .hljs-regexp{color:#f5c2e7};code .hljs-string{color:#a6e3a1};code .hljs-char.escape_{color:#a6e3a1};code .hljs-subst{color:#a6adc8};code .hljs-symbol{color:#f2cdcd};code .hljs-variable{color:#cba6f7};code .hljs-variable.language_{color:#cba6f7};code .hljs-variable.constant_{color:#fab387};code .hljs-title{color:#89b4fa};code .hljs-title.class_{color:#f9e2af};code .hljs-title.function_{color:#89b4fa};code .hljs-params{color:#cdd6f4};code .hljs-comment{color:#585b70};code .hljs-doctag{color:#f38ba8};code .hljs-meta{color:#fab387};code .hljs-section{color:#89b4fa};code .hljs-tag{color:#a6adc8};code .hljs-name{color:#cba6f7};code .hljs-attr{color:#89b4fa};code .hljs-attribute{color:#a6e3a1};code .hljs-bullet{color:#94e2d5};code .hljs-code{color:#a6e3a1};code .hljs-emphasis{color:#f38ba8;font-style:italic};code .hljs-strong{color:#f38ba8;font-weight:bold};code .hljs-formula{color:#94e2d5};code .hljs-link{color:#74c7ec;font-style:italic};code .hljs-quote{color:#a6e3a1;font-style:italic};code .hljs-selector-tag{color:#f9e2af};code .hljs-selector-id{color:#89b4fa};code .hljs-selector-class{color:#94e2d5};code .hljs-selector-attr{color:#cba6f7};code .hljs-selector-pseudo{color:#94e2d5};code .hljs-template-tag{color:#f2cdcd};code .hljs-template-variable{color:#f2cdcd};code .hljs-addition{color:#a6e3a1};code .hljs-deletion{color:#f38ba8};
 }
 
 .theme-ctp-macchiato {
@@ -71,8 +70,6 @@
   --yellow: #eed49f;
   --purple: #c6a0f6;
   --red: #ed8796;
-
-  code.hljs{color:#cad3f5};code .hljs-keyword{color:#c6a0f6};code .hljs-built_in{color:#ed8796};code .hljs-type{color:#eed49f};code .hljs-literal{color:#f5a97f};code .hljs-number{color:#f5a97f};code .hljs-operator{color:#8bd5ca};code .hljs-punctuation{color:#b8c0e0};code .hljs-property{color:#8bd5ca};code .hljs-regexp{color:#f5bde6};code .hljs-string{color:#a6da95};code .hljs-char.escape_{color:#a6da95};code .hljs-subst{color:#a5adcb};code .hljs-symbol{color:#f0c6c6};code .hljs-variable{color:#c6a0f6};code .hljs-variable.language_{color:#c6a0f6};code .hljs-variable.constant_{color:#f5a97f};code .hljs-title{color:#8aadf4};code .hljs-title.class_{color:#eed49f};code .hljs-title.function_{color:#8aadf4};code .hljs-params{color:#cad3f5};code .hljs-comment{color:#5b6078};code .hljs-doctag{color:#ed8796};code .hljs-meta{color:#f5a97f};code .hljs-section{color:#8aadf4};code .hljs-tag{color:#a5adcb};code .hljs-name{color:#c6a0f6};code .hljs-attr{color:#8aadf4};code .hljs-attribute{color:#a6da95};code .hljs-bullet{color:#8bd5ca};code .hljs-code{color:#a6da95};code .hljs-emphasis{color:#ed8796;font-style:italic};code .hljs-strong{color:#ed8796;font-weight:bold};code .hljs-formula{color:#8bd5ca};code .hljs-link{color:#7dc4e4;font-style:italic};code .hljs-quote{color:#a6da95;font-style:italic};code .hljs-selector-tag{color:#eed49f};code .hljs-selector-id{color:#8aadf4};code .hljs-selector-class{color:#8bd5ca};code .hljs-selector-attr{color:#c6a0f6};code .hljs-selector-pseudo{color:#8bd5ca};code .hljs-template-tag{color:#f0c6c6};code .hljs-template-variable{color:#f0c6c6};code .hljs-addition{color:#a6da95};code .hljs-deletion{color:#ed8796};
 }
 
 .theme-ctp-frappe {
@@ -90,8 +87,6 @@
   --yellow: #e5c890;
   --purple: #ca9ee6;
   --red: #e78284;
-
-  code.hljs{color:#c6d0f5};code .hljs-keyword{color:#ca9ee6};code .hljs-built_in{color:#e78284};code .hljs-type{color:#e5c890};code .hljs-literal{color:#ef9f76};code .hljs-number{color:#ef9f76};code .hljs-operator{color:#81c8be};code .hljs-punctuation{color:#b5bfe2};code .hljs-property{color:#81c8be};code .hljs-regexp{color:#f4b8e4};code .hljs-string{color:#a6d189};code .hljs-char.escape_{color:#a6d189};code .hljs-subst{color:#a5adce};code .hljs-symbol{color:#eebebe};code .hljs-variable{color:#ca9ee6};code .hljs-variable.language_{color:#ca9ee6};code .hljs-variable.constant_{color:#ef9f76};code .hljs-title{color:#8caaee};code .hljs-title.class_{color:#e5c890};code .hljs-title.function_{color:#8caaee};code .hljs-params{color:#c6d0f5};code .hljs-comment{color:#626880};code .hljs-doctag{color:#e78284};code .hljs-meta{color:#ef9f76};code .hljs-section{color:#8caaee};code .hljs-tag{color:#a5adce};code .hljs-name{color:#ca9ee6};code .hljs-attr{color:#8caaee};code .hljs-attribute{color:#a6d189};code .hljs-bullet{color:#81c8be};code .hljs-code{color:#a6d189};code .hljs-emphasis{color:#e78284;font-style:italic};code .hljs-strong{color:#e78284;font-weight:bold};code .hljs-formula{color:#81c8be};code .hljs-link{color:#85c1dc;font-style:italic};code .hljs-quote{color:#a6d189;font-style:italic};code .hljs-selector-tag{color:#e5c890};code .hljs-selector-id{color:#8caaee};code .hljs-selector-class{color:#81c8be};code .hljs-selector-attr{color:#ca9ee6};code .hljs-selector-pseudo{color:#81c8be};code .hljs-template-tag{color:#eebebe};code .hljs-template-variable{color:#eebebe};code .hljs-addition{color:#a6d189};code .hljs-deletion{color:#e78284};
 }
 
 .theme-ctp-latte {
@@ -109,8 +104,6 @@
   --yellow: #df8e1d;
   --purple: #8839ef;
   --red: #d20f39;
-
-  code.hljs{color:#4c4f69};code .hljs-keyword{color:#8839ef};code .hljs-built_in{color:#d20f39};code .hljs-type{color:#df8e1d};code .hljs-literal{color:#fe640b};code .hljs-number{color:#fe640b};code .hljs-operator{color:#179299};code .hljs-punctuation{color:#5c5f77};code .hljs-property{color:#179299};code .hljs-regexp{color:#ea76cb};code .hljs-string{color:#40a02b};code .hljs-char.escape_{color:#40a02b};code .hljs-subst{color:#6c6f85};code .hljs-symbol{color:#dd7878};code .hljs-variable{color:#8839ef};code .hljs-variable.language_{color:#8839ef};code .hljs-variable.constant_{color:#fe640b};code .hljs-title{color:#1e66f5};code .hljs-title.class_{color:#df8e1d};code .hljs-title.function_{color:#1e66f5};code .hljs-params{color:#4c4f69};code .hljs-comment{color:#acb0be};code .hljs-doctag{color:#d20f39};code .hljs-meta{color:#fe640b};code .hljs-section{color:#1e66f5};code .hljs-tag{color:#6c6f85};code .hljs-name{color:#8839ef};code .hljs-attr{color:#1e66f5};code .hljs-attribute{color:#40a02b};code .hljs-bullet{color:#179299};code .hljs-code{color:#40a02b};code .hljs-emphasis{color:#d20f39;font-style:italic};code .hljs-strong{color:#d20f39;font-weight:bold};code .hljs-formula{color:#179299};code .hljs-link{color:#209fb5;font-style:italic};code .hljs-quote{color:#40a02b;font-style:italic};code .hljs-selector-tag{color:#df8e1d};code .hljs-selector-id{color:#1e66f5};code .hljs-selector-class{color:#179299};code .hljs-selector-attr{color:#8839ef};code .hljs-selector-pseudo{color:#179299};code .hljs-template-tag{color:#dd7878};code .hljs-template-variable{color:#dd7878};code .hljs-addition{color:#40a02b};code .hljs-deletion{color:#d20f39};
 }
 
 .theme-evg {
@@ -128,8 +121,6 @@
   --red: #e67e80;
   --yellow: #dbbc7f;
   --green: #b2c98f;
-
-  code.hljs{color:#dddecf};code .hljs-keyword{color:#E67E80;};code .hljs-built_in{color:#E3A8D1};code .hljs-type{color:#DBBC7F};code .hljs-literal{color:#E3A8D1};code .hljs-number{color:#E3A8D1};code .hljs-operator{color:#839e9a};code .hljs-punctuation{color:#839e9a};code .hljs-property{color:#dddecf};code .hljs-regexp{color:#DBBC7F;};code .hljs-string{color:#B2C98F};code .hljs-char.escape_{color:#E69875};code .hljs-subst{color:#94aaa0};code .hljs-symbol{color:#dddecf};code .hljs-variable{color:#dddecf};code .hljs-variable.language_{color:#E3A8D1};code .hljs-variable.constant_{color:#E3A8D1};code .hljs-title{color:#DBBC7F};code .hljs-title.class_{color:#DBBC7F};code .hljs-title.function_{color:#B2C98F};code .hljs-params{color:#dddecf};code .hljs-comment{color:#839e9a};code .hljs-doctag{color:#E67E80};code .hljs-meta{color:#E3A8D1};code .hljs-section{color:#9BB5CF};code .hljs-tag{color:#E3A8D1};code .hljs-name{color:#E3A8D1};code .hljs-attr{color:#E3A8D1};code .hljs-attribute{color:#E3A8D1};code .hljs-bullet{color:#839e9a};code .hljs-code{color:#E67E80};code .hljs-emphasis{color:#B2C98F;font-style:italic};code .hljs-strong{color:#E69875;font-weight:bold};code .hljs-formula{color:#9BB5CF};code .hljs-link{color:#E3A8D1;font-style:italic};code .hljs-quote{color:#94AAA0;font-style:italic};code .hljs-selector-tag{color:#E3A8D1};code .hljs-selector-id{color:#E3A8D1};code .hljs-selector-class{color:#DBBC7F};code .hljs-selector-attr{color:#E3A8D1};code .hljs-selector-pseudo{color:#E3A8D1};code .hljs-template-tag{color:#E3A8D1};code .hljs-template-variable{color:#E3A8D1};code .hljs-addition{color:#B2C98F};code .hljs-deletion{color:#E67E80};
 }
 
 .theme-carburetor {
@@ -147,8 +138,6 @@
   --yellow: #fddc69;
   --purple: #d4bbff;
   --red: #fa4d56;
-
-  code.hljs{color:#f4f4f4};code .hljs-keyword{color:#d4bbff;};code .hljs-built_in{color:#fa4d56};code .hljs-type{color:#fddc69};code .hljs-literal{color:#fe832b};code .hljs-number{color:#fe832b};code .hljs-operator{color:#3ddbd9};code .hljs-punctuation{color:#e0e0e0};code .hljs-property{color:#3ddbd9};code .hljs-regexp{color:#ff7eb6};code .hljs-string{color:#42be65};code .hljs-char.escape_{color:#42be65};code .hljs-subst{color:#c6c6c6};code .hljs-symbol{color:#ffb3b8};code .hljs-variable{color:#d4bbff};code .hljs-variable.language_{color:#d4bbff};code .hljs-variable.constant_{color:#fe832b};code .hljs-title{color:#4589ff};code .hljs-title.class_{color:#fddc69};code .hljs-title.function_{color:#4589ff};code .hljs-params{color:#f4f4f4};code .hljs-comment{color:#525252};code .hljs-doctag{color:#fa4d56};code .hljs-meta{color:#fe832b};code .hljs-section{color:#4589ff};code .hljs-tag{color:#c6c6c6};code .hljs-name{color:#d4bbff};code .hljs-attr{color:#4589ff};code .hljs-attribute{color:#42be65};code .hljs-bullet{color:#3ddbd9};code .hljs-code{color:#42be65};code .hljs-emphasis{color:#fa4d56;font-style:italic};code .hljs-strong{color:#fa4d56;font-weight:bold};code .hljs-formula{color:#3ddbd9};code .hljs-link{color:#78a9ff;font-style:italic};code .hljs-quote{color:#42be65;font-style:italic};code .hljs-selector-tag{color:#fddc69};code .hljs-selector-id{color:#4589ff};code .hljs-selector-class{color:#3ddbd9};code .hljs-selector-attr{color:#d4bbff};code .hljs-selector-pseudo{color:#3ddbd9};code .hljs-template-tag{color:#ffb3b8};code .hljs-template-variable{color:#ffb3b8};code .hljs-addition{color:#42be65};code .hljs-deletion{color:#fa4d56};
 }
 
 :root {

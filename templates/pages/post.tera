@@ -93,11 +93,7 @@
 {% endblock %}
 
 {% block additionalfoot %}
-<script src="/static/js/highlight.js"></script>
-<script src="/static/js/nix.js"></script>
 <script>
-  hljs.highlightAll();
-
   const codeblocks = document.querySelectorAll('div.codeblock');
 
   codeblocks.forEach((block) => {

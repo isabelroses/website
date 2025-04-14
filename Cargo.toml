@@ -21,6 +21,7 @@ tera = { version = "1.20.0", default-features = false }
 tokio = { version = "1.44.2", features = ["rt-multi-thread"] }
 chrono = { version = "0.4.40", default-features = false }
 estimated_read_time = "1.0.0"
+autumnus = { git = "https://github.com/leandrocp/autumnus.git" }
 
 [lints.clippy]
 all = "warn"

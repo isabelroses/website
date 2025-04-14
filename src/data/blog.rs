@@ -2,12 +2,14 @@ use atom_syndication::{
     ContentBuilder, EntryBuilder, FeedBuilder, LinkBuilder, PersonBuilder, TextBuilder,
 };
 use chrono::TimeZone;
-use comrak::{markdown_to_html, Options as ComrakOptions};
+use comrak::{markdown_to_html_with_plugins, Options as ComrakOptions, Plugins};
 use rust_embed::{Embed, EmbeddedFile};
 use serde::{Deserialize, Serialize};
 use std::collections::HashSet;
 use std::error::Error;
 use std::sync::LazyLock;
+
+use super::syntax_highlighting::AutumnusAdapter;
 
 const DATE_FORMAT: &str = "%d/%m/%Y";
 
@@ -55,7 +57,11 @@ impl Post {
         opts.extension.underline = true;
         opts.extension.alerts = true;
 
-        markdown_to_html(input, &opts)
+        let mut plugins = Plugins::default();
+        let highlighter = AutumnusAdapter::new(input);
+        plugins.render.codefence_syntax_highlighter = Some(&highlighter);
+
+        markdown_to_html_with_plugins(input, &opts, &plugins)
     }
 
     pub fn parse(input: &str) -> Result<Self, Box<dyn Error>> {
