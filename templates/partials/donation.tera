@@ -1,4 +1,0 @@
-<a href="{{ donor.url }}" class="donation">
-  <img src="{% if donor.avatar != ""%}{{ donor.avatar }}{% else %}/static/you.webp{% endif %}" class="donation-icon" alt="{{ donor.name }}'s icon">
-  <span class="donation-user">{{ donor.name }}</span>
-</a>

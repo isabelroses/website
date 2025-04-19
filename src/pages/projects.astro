@@ -1,0 +1,31 @@
+---
+import Default from '../layouts/Default.astro';
+import Project from '../components/Project.astro';
+import { PROJECTS } from '../consts';
+
+const title = "Projects";
+const description = "A collection of projects that I maintain";
+---
+
+<Default title={title} description={description}>
+  <section>
+    <div class="reusable-header">
+      <h1 class="title">{ title }</h1>
+      <h2 class="description">{ description }</h2>
+    </div>
+
+    <div class="projects">
+      { PROJECTS.map((project) => (
+        <Project
+          name={project.name}
+          description={project.description}
+          url={project.url}
+          tags={project.tags}
+          banner={project.banner}
+          repo={project.repo}
+          icon={project.icon}
+        />
+      )) }
+    </div>
+  </section>
+</Default>

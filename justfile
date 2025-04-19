@@ -1,20 +1,18 @@
+default: build
+
 build-styles:
-  sass -q --no-source-map --style=compressed styles/main.scss static/styles.css
+  sass -q --no-source-map --style=compressed styles/main.scss src/styles/global.css
+
+build-astro:
+  pnpm run build
 
 build:
   @just build-styles
-  cargo build
-
-release:
-  @just build-styles
-  cargo build --release
+  @just build-astro
 
 run:
   @just build-styles
-  cargo run
+  pnpm run dev
 
 nix:
   nix build -L
-
-test:
-  cargo test

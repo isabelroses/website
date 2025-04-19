@@ -1,0 +1,40 @@
+---
+import Default from '../../layouts/Default.astro';
+import { getCollection } from 'astro:content';
+import FormattedDate from '../../components/FormattedDate.astro';
+
+const title = "Blog"
+const description = "The parts of my life that I put out into the world";
+
+const posts = await getCollection('blog');
+---
+
+<Default title={title} description={description}>
+  <div class="reusable-header">
+    <h1 class="title">{ title }</h1>
+    <h2 class="description">{ description }</h2>
+  </div>
+
+  <div class="blog-previews" id="blog-previews">
+    { posts.map((post, index) => (
+      <article class="blog-preview" style=`view-transition-name: blog-${ index }`>
+        <a href={`/blog/${post.id}/`}>
+          <div class="top-split">
+            <p class="title">{post.data.title}</p>
+            <div class="date">
+              <FormattedDate date={post.data.date} />
+            </div>
+          </div>
+
+          <p class="description">{post.data.description}</p>
+
+          <div class="tags">
+            { post.data.tags.map((tag) => (
+              <span>#{ tag }</span>
+            )) }
+          </div>
+        </a>
+      </article>
+    )) }
+  </div>
+</Default>
