@@ -1,50 +1,43 @@
 {
   lib,
-  rustPlatform,
   just,
   dart-sass,
+  stdenvNoCC,
+  nodejs_22,
+  pnpm_10,
 }:
 let
-  toml = (lib.importTOML ../Cargo.toml).package;
+  nodejs = nodejs_22;
+  pnpm = pnpm_10.override { inherit nodejs; };
 in
-rustPlatform.buildRustPackage {
+stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "isabelroses-website";
-  inherit (toml) version;
+  version = "0.9.0";
 
-  src = lib.fileset.toSource {
-    root = ../.;
-    fileset = lib.fileset.intersection (lib.fileset.fromSource (lib.sources.cleanSource ../.)) (
-      lib.fileset.unions [
-        # for styles
-        ../justfile
-        ../styles
-
-        # for the website content
-        ../content
-        ../static
-
-        # for the website code
-        ../Cargo.toml
-        ../Cargo.lock
-        ../src
-        ../templates
-      ]
-    );
-  };
-
-  cargoLock.lockFile = ../Cargo.lock;
+  src = ../.;
 
   nativeBuildInputs = [
     just
     dart-sass
+    nodejs
+    pnpm.configHook
   ];
 
+  pnpmDeps = pnpm.fetchDeps {
+    inherit (finalAttrs) pname version src;
+    hash = "sha256-J5R2Rd7LbC1l/tEDs8b/ztdsPYPoU8pv8jNrRD3/VEU=";
+  };
+
   dontUseJustInstall = true;
-  dontUseJustBuild = true;
   dontUseJustCheck = true;
 
-  preBuild = ''
-    just build-styles
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p "$out"
+    cp -r dist "$out"
+
+    runHook postInstall
   '';
 
   meta = {
@@ -57,4 +50,4 @@ rustPlatform.buildRustPackage {
     mainProgram = "isabelroses.com";
     maintainers = with lib.maintainers; [ isabelroses ];
   };
-}
+})

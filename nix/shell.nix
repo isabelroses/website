@@ -1,12 +1,7 @@
 {
   mkShell,
   callPackage,
-
-  typos,
-  bacon,
-  clippy,
-  rustfmt,
-  rust-analyzer,
+  astro-language-server,
 }:
 let
   mainPkg = callPackage ./default.nix { };
@@ -14,11 +9,5 @@ in
 mkShell {
   inputsFrom = [ mainPkg ];
 
-  packages = [
-    typos
-    bacon
-    clippy
-    rustfmt
-    rust-analyzer
-  ];
+  packages = [ astro-language-server ];
 }

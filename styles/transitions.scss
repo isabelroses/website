@@ -3,7 +3,10 @@
 }
 
 * {
-  transition: background-color 0.5s ease, color 0.25s ease, border-color 0.5s ease;
+  transition:
+    background-color 0.5s ease,
+    color 0.25s ease,
+    border-color 0.5s ease;
 }
 
 /* blog preview animations */
@@ -39,7 +42,8 @@
   animation: blink;
 }
 
-:root { /* :root is important here to have enough specificity to override :only-child */
+:root {
+  /* :root is important here to have enough specificity to override :only-child */
   &::view-transition-group(.blog-preview),
   &::view-transition-image-pair(.blog-preview),
   &::view-transition-old(.blog-preview),

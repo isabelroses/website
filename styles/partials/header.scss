@@ -13,7 +13,7 @@
     background: transparent;
     width: 100%;
     height: 100%;
-  };
+  }
 }
 
 .align-header {
@@ -49,11 +49,13 @@
     }
   }
 
-  .header, .align-header {
+  .header,
+  .align-header {
     flex-direction: column;
   }
 
-  .header-link, #themes {
+  .header-link,
+  #themes {
     text-align: center;
   }
 
