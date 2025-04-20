@@ -1,29 +1,19 @@
 self:
 {
+  lib,
   pkgs,
   config,
-  lib,
   ...
 }:
 let
-  inherit (lib) mkIf mkEnableOption getExe;
+  inherit (lib) mkIf mkEnableOption;
 in
 {
   options.services.isabelroses-website.enable = mkEnableOption "isabelroses-website";
 
   config = mkIf config.services.isabelroses-website.enable {
-    systemd.services."isabelroses-website" = {
-      description = "isabelroses.com";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-
-      serviceConfig = {
-        Type = "simple";
-        ReadWritePaths = [ "/srv/storage/isabelroses.com" ];
-        DynamicUser = true;
-        ExecStart = getExe self.packages.${pkgs.stdenv.hostPlatform.system}.default;
-        Restart = "always";
-      };
+    services.nginx.virtualHosts.isabelroses-website = {
+      root = self.packages.${pkgs.stdenv.hostPlatform.system}.isabelroses-website;
     };
   };
 }
