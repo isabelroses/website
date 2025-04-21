@@ -4,21 +4,38 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-const { title, description, date, updatedDate, heroImage } = Astro.props;
+const { title, description } = Astro.props;
 ---
 
+<!DOCTYPE html>
 <html lang="en">
 	<head>
-		<BaseHead title={title} description={description} />
+    <BaseHead title={title} description={description} />
 	</head>
 
-	<body>
-    <Header />
-
-    <main class="main-page">
+  <body class="bg-grid text-fg flex flex-col items-center lg:mx-80 md:my-20 sm:m-20 m-10">
+    <main class="flex flex-col">
         <slot />
     </main>
 
 		<Footer />
 	</body>
 </html>
+
+<style>
+  .bg-grid {
+    --fg-fade: color-mix(in srgb, var(--color-fg) 6%, transparent);
+    background-color: var(--color-bg);
+    background-size: 1.5rem 1.5rem;
+    background-image:
+      linear-gradient(
+        var(--fg-fade) .1rem,
+        transparent .1rem
+      ),
+      linear-gradient(
+        90deg,
+        var(--fg-fade) .1rem,
+        transparent .1rem
+      );
+  }
+</style>

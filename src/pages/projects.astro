@@ -1,5 +1,6 @@
 ---
 import Default from '../layouts/Default.astro';
+import Title from '../components/Title.astro';
 import Project from '../components/Project.astro';
 import { PROJECTS } from '../consts';
 
@@ -8,23 +9,12 @@ const description = "A collection of projects that I maintain";
 ---
 
 <Default title={title} description={description}>
-  <section>
-    <div class="reusable-header">
-      <h1 class="title">{ title }</h1>
-      <h2 class="description">{ description }</h2>
-    </div>
+  <section class="flex flex-col gap-4 mb-16">
+    <Title title={title} description={description} size="lg" />
 
-    <div class="projects">
+    <div class="flex flex-col gap-4">
       { PROJECTS.map((project) => (
-        <Project
-          name={project.name}
-          description={project.description}
-          url={project.url}
-          tags={project.tags}
-          banner={project.banner}
-          repo={project.repo}
-          icon={project.icon}
-        />
+        <Project {...project} />
       )) }
     </div>
   </section>

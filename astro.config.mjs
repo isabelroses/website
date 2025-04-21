@@ -3,26 +3,30 @@ import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
 
+import tailwindcss from "@tailwindcss/vite";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://isabelroses.com",
   integrations: [sitemap()],
+
   markdown: {
     remarkPlugins: [remarkReadingTime],
     shikiConfig: {
       themes: {
-        light: 'github-light',
-        dark: 'github-dark-high-contrast',
-        catppuccin_latte: 'catppuccin-latte',
-        catppuccin_mocha: 'catppuccin-mocha',
-        catppuccin_macchiato: 'catppuccin-macchiato',
-        catppuccin_frappe: 'catppuccin-frappe',
+        light: "github-light",
+        dark: "github-dark-high-contrast",
+        catppuccin_latte: "catppuccin-latte",
+        catppuccin_mocha: "catppuccin-mocha",
+        catppuccin_macchiato: "catppuccin-macchiato",
+        catppuccin_frappe: "catppuccin-frappe",
       },
-      defaultColor: 'catppuccin_mocha',
+      defaultColor: "dark",
     },
   },
-  // legacy self healing urls
+
   redirects: {
+    // legacy self healing urls
     "/blog/custom-lib-nixossystem-11": "/blog/custom-lib-nixossystem",
     "/blog/im-not-mad-im-disappointed-10": "/blog/im-not-mad-im-disappointed",
     "/blog/2024-wrapped-9": "/blog/2024-wrapped",
@@ -34,5 +38,11 @@ export default defineConfig({
     "/blog/my-workflow-3": "/blog/my-workflow",
     "/blog/self-healing-urls-2": "/blog/self-healing-urls",
     "/blog/nixos-and-postgresql-1": "/blog/nixos-and-postgresql",
+    // discord api
+    "/api/discord": "https://discord.gg/8RVhHeJH3x",
+  },
+
+  vite: {
+    plugins: [tailwindcss()],
   },
 });

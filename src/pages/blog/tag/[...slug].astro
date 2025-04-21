@@ -1,30 +1,41 @@
 ---
-import Default from '../../layouts/Default.astro';
+import Default from '../../../layouts/Default.astro';
 import { render, getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Title from '../../components/Title.astro';
+import FormattedDate from '../../../components/FormattedDate.astro';
+import Title from '../../../components/Title.astro';
 
-const title = "Blog"
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+
+	const tags = new Set();
+
+	for (const post of posts) {
+		if (Array.isArray(post.data.tags)) {
+			for (const tag of post.data.tags) {
+				tags.add(tag);
+			}
+		}
+  }
+
+  return Array.from(tags).map((tag) => {
+    const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
+
+    return ({
+      params: { slug: tag },
+      props: { posts: filteredPosts },
+    });
+  });
+}
+type Props = CollectionEntry<'blog'>;
+
+const tag = Astro.params.slug;
+const { posts } = Astro.props;
+
+const title = `Blog > ${tag}`
 const description = "The parts of my life that I put out into the world";
-
-const posts = await getCollection('blog');
-
-const tags = new Set();
-posts.forEach((post) => Array.isArray(post.data.tags) && post.data.tags.forEach((tag) => tags.add(tag)));
 ---
-
 <Default title={title} description={description}>
   <Title title={title} description={description} size="lg" />
-
-  { tags.size > 0 && (
-    <div class="flex flex-row justify-between gap-1 mb-4">
-      { Array.from(tags).map((tag) => (
-        <a class="pill transition duration-200 ease-in-out hover:scale-115" href={`/blog/tag/${tag}/`}>
-          #{ tag }
-        </a>
-      )) }
-    </div>
-  ) }
 
   <div class="grid grid-cols-1 gap-4 mb-16">
     { await Promise.all(posts.map(async (post, index) => {

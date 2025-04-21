@@ -1,6 +1,7 @@
 ---
 import { type CollectionEntry, getCollection } from 'astro:content';
 import Default from '../../layouts/Default.astro';
+import Title from '../../components/Title.astro';
 import FormattedDate from '../../components/FormattedDate.astro';
 import { render } from 'astro:content';
 
@@ -17,31 +18,20 @@ const post = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(post);
 ---
 
-<Default {...post.data}>
-  <div class="reusable-header post-header">
-    <div class="left">
-      <h1 class="title">{ post.data.title }</h1>
-      <h2 class="description">{ post.data.description }</h2>
-      <h3 class="readtime">{ remarkPluginFrontmatter.minutesRead }</h3>
-    </div>
-
-    <div class="right">
-      <FormattedDate class="date" date={ post.data.date } />
-      <div class="tags">
-        { post.data.tags && post.data.tags.map((tag) => (
-          <span>#{ tag }</span>
-        )) }
-      </div>
-    </div>
-  </div>
+<Default title={post.data.title} description={post.data.description}>
+  <Title
+    title={post.data.title}
+    description={post.data.description}
+    size="lg"
+  />
 
   <article class="prose"><Content /></article>
 
-  <section class="article-footer">
+  <section class="article-footer my-8">
     <ul class="align-footer">
       <li>
         <button
-          onclick="navigator.share({url: 'https://isabelroses.com/blog/{ post.data.slug }'})"
+          onclick=`navigator.share({url: 'https://isabelroses.com/blog/${ post.id }'}`
           data-share-btn
         >
           <svg
@@ -59,7 +49,7 @@ const { Content, remarkPluginFrontmatter } = await render(post);
       <li>
         <a
           target="_blank"
-          href="https://mastoroute.deno.dev/share?text=https://isabelroses.com/blog/{ post.slug }"
+          href=`https://mastoroute.deno.dev/share?text=https://isabelroses.com/blog/${ post.id }`
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -76,7 +66,7 @@ const { Content, remarkPluginFrontmatter } = await render(post);
       <li>
         <a
           target="_blank"
-          href="https://bsky.app/intent/compose?text=https://isabelroses.com/blog/{{ post.slug }}"
+          href=`https://bsky.app/intent/compose?text=https://isabelroses.com/blog/${ post.id }`
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -92,8 +82,8 @@ const { Content, remarkPluginFrontmatter } = await render(post);
       </li>
     </ul>
 
-    <span class="license-text">
-      © Licensed under
+    <span class="align-footer">
+      © Blog post licensed under
       <a
         target="_blank"
         href="https://creativecommons.org/licenses/by/4.0"
