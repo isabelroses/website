@@ -17,7 +17,7 @@ posts.forEach((post) => Array.isArray(post.data.tags) && post.data.tags.forEach(
   <Title title={title} description={description} size="lg" />
 
   { tags.size > 0 && (
-    <div class="flex flex-row justify-between gap-1 mb-4">
+    <div class="flex flex-row flex-wrap justify-between gap-1 mb-4">
       { Array.from(tags).map((tag) => (
         <a class="pill transition duration-200 ease-in-out hover:scale-115" href={`/blog/tag/${tag}/`}>
           #{ tag }
@@ -31,7 +31,7 @@ posts.forEach((post) => Array.isArray(post.data.tags) && post.data.tags.forEach(
       const { remarkPluginFrontmatter } = await render(post);
 
       return (
-        <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 lg:w-2xl md:w-xl">
+        <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 lg:max-w-2xl md:max-w-xl">
           <a href={`/blog/${post.id}/`}>
             <Title title={post.data.title} description={post.data.description} size="xs" />
 

@@ -42,6 +42,8 @@
     :where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::after {
       content: none;
     }
+
+    @apply md:max-w-[65ch] max-w-[80vw];
   }
 
   .pill {

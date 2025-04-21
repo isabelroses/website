@@ -16,6 +16,7 @@ type Props = CollectionEntry<'blog'>;
 
 const post = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(post);
+const shareurl = `https://isabelroses.com/blog/${ post.id }`;
 ---
 
 <Default title={post.data.title} description={post.data.description}>
@@ -31,7 +32,7 @@ const { Content, remarkPluginFrontmatter } = await render(post);
     <ul class="align-footer">
       <li>
         <button
-          onclick=`navigator.share({url: 'https://isabelroses.com/blog/${ post.id }'}`
+          onclick=`navigator.share({url: ${shareurl}})`
           data-share-btn
         >
           <svg
@@ -49,7 +50,7 @@ const { Content, remarkPluginFrontmatter } = await render(post);
       <li>
         <a
           target="_blank"
-          href=`https://mastoroute.deno.dev/share?text=https://isabelroses.com/blog/${ post.id }`
+          href=`https://mastoroute.deno.dev/share?text=${ shareurl }`
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +67,7 @@ const { Content, remarkPluginFrontmatter } = await render(post);
       <li>
         <a
           target="_blank"
-          href=`https://bsky.app/intent/compose?text=https://isabelroses.com/blog/${ post.id }`
+          href=`https://bsky.app/intent/compose?text=${ shareurl }`
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
