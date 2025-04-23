@@ -1,7 +1,6 @@
 {
   lib,
   just,
-  dart-sass,
   stdenvNoCC,
   nodejs_22,
   pnpm_10,
@@ -18,7 +17,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     just
-    dart-sass
     nodejs
     pnpm.configHook
   ];
