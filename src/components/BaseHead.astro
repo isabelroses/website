@@ -62,45 +62,36 @@ const { title, description, image } = Astro.props;
 <meta property="twitter:description" content={description} />
 { image && ( <meta property="twitter:image" content={new URL(image, Astro.url)} /> ) }
 
-<script defer src="https://analytics.isabelroses.com/script.js" data-website-id="be210218-aad1-4b3a-a6a3-366952e22d8e"></script>
+<!-- <script defer src="https://analytics.isabelroses.com/script.js" data-website-id="be210218-aad1-4b3a-a6a3-366952e22d8e"></script> -->
 
 <ClientRouter />
 
 <script is:inline>
-// set theme on intial load
-setTheme(getTheme());
-
-document.addEventListener("DOMContentLoaded", () => {
-  const themes = document.getElementById("themes");
-
+  // set theme on intial load
   setTheme(getTheme());
 
-  themes.addEventListener("change", (event) => {
-    setTheme(event.target.value);
+  document.addEventListener("astro:page-load", () => {
+    const themes = document.getElementById("themes");
+
+    setTheme(getTheme());
+
+    themes.addEventListener("change", (event) => {
+      setTheme(event.target.value);
+    });
   });
-});
 
-function setTheme(theme) {
-  localStorage.setItem("theme", theme);
-  document.documentElement.setAttribute("data-theme", theme);
-
-  const themes = document.getElementById("themes");
-  if (themes) {
-    themes.value = theme;
+  function setTheme(theme) {
+    localStorage.setItem("theme", theme);
+    document.documentElement.setAttribute("data-theme", theme);
+    const themes = document.getElementById("themes");
+    if (themes) themes.value = theme;
   }
-}
 
-function getTheme() {
-  const theme = localStorage.getItem("theme");
-
-  if (theme) return theme;
-
-  if (!window.matchMedia) return "dark";
-
-  if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-    return "dark";
-  } else {
+  function getTheme() {
+    const theme = localStorage.getItem("theme");
+    if (theme) return theme;
+    if (!window.matchMedia) return "dark";
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) return "dark";
     return "light";
-  }
 }
 </script>

@@ -1,28 +1,42 @@
-// @ts-check
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
-
 import tailwindcss from "@tailwindcss/vite";
+import expressiveCode from "astro-expressive-code";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://isabelroses.com",
-  integrations: [sitemap()],
+  integrations: [
+    sitemap(),
+    expressiveCode({
+      themes: [
+        "github-light",
+        "github-dark-high-contrast",
+        "catppuccin-latte",
+        "catppuccin-mocha",
+        "catppuccin-macchiato",
+        "catppuccin-frappe",
+      ],
+      customizeTheme: (theme) => {
+        const newName = {
+          "github-light": "light",
+          "github-dark-high-contrast": "dark",
+          "catppuccin-latte": "catppuccin_latte",
+          "catppuccin-mocha": "catppuccin_mocha",
+          "catppuccin-macchiato": "catppuccin_macchiato",
+          "catppuccin-frappe": "catppuccin_frappe",
+        }[theme.name] || theme.name;
+
+        theme.name = newName;
+        return theme;
+      },
+      // useDarkModeMediaQuery: true,
+    }),
+  ],
 
   markdown: {
     remarkPlugins: [remarkReadingTime],
-    shikiConfig: {
-      themes: {
-        light: "github-light",
-        dark: "github-dark-high-contrast",
-        catppuccin_latte: "catppuccin-latte",
-        catppuccin_mocha: "catppuccin-mocha",
-        catppuccin_macchiato: "catppuccin-macchiato",
-        catppuccin_frappe: "catppuccin-frappe",
-      },
-      defaultColor: "dark",
-    },
   },
 
   redirects: {

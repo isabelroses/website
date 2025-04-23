@@ -113,16 +113,6 @@
     --color-yellow: #df8e1d;
     --color-purple: #8839ef;
     --color-red: #d20f39;
-
-    .astro-code,
-    .astro-code span {
-      color: var(--shiki-light) !important;
-      background-color: var(--shiki-light-bg) !important;
-      /* Optional, if you also want font styles */
-      font-style: var(--shiki-light-font-style) !important;
-      font-weight: var(--shiki-light-font-weight) !important;
-      text-decoration: var(--shiki-light-text-decoration) !important;
-    }
   }
 
   [data-theme="catppuccin_mocha"] {
@@ -140,16 +130,6 @@
     --color-yellow: #f9e2af;
     --color-purple: #cba6f7;
     --color-red: #f38ba8;
-
-    .astro-code,
-    .astro-code span {
-      color: var(--shiki-catppuccin_mocha_dark) !important;
-      background-color: var(--shiki-catppuccin_mocha-bg) !important;
-      /* Optional, if you also want font styles */
-      font-style: var(--shiki-catppuccin_mocha-font-style) !important;
-      font-weight: var(--shiki-catppuccin_mocha-font-weight) !important;
-      text-decoration: var(--shiki-catppuccin_mocha-text-decoration) !important;
-    }
   }
 
   [data-theme="catppuccin_macchiato"] {
@@ -167,18 +147,6 @@
     --color-yellow: #eed49f;
     --color-purple: #c6a0f6;
     --color-red: #ed8796;
-
-    .astro-code,
-    .astro-code span {
-      color: var(--shiki-catppuccin_macchiato) !important;
-      background-color: var(--shiki-catppuccin_macchiato-bg) !important;
-      /* Optional, if you also want font styles */
-      font-style: var(--shiki-catppuccin_macchiato-font-style) !important;
-      font-weight: var(--shiki-catppuccin_macchiato-font-weight) !important;
-      text-decoration: var(
-        --shiki-catppuccin_macchiato-text-decoration
-      ) !important;
-    }
   }
 
   [data-theme="catppuccin_frappe"] {
@@ -196,18 +164,6 @@
     --color-yellow: #e5c890;
     --color-purple: #ca9ee6;
     --color-red: #e78284;
-
-    .astro-code,
-    .astro-code span {
-      color: var(--shiki-catppuccin_frappe) !important;
-      background-color: var(--shiki-catppuccin_frappe-bg) !important;
-      /* Optional, if you also want font styles */
-      font-style: var(--shiki-catppuccin_frappe-font-style) !important;
-      font-weight: var(--shiki-catppuccin_frappe-font-weight) !important;
-      text-decoration: var(
-        --shiki-catppuccin_frappe-text-decoration
-      ) !important;
-    }
   }
 
   [data-theme="catppuccin_latte"] {
@@ -225,16 +181,6 @@
     --color-yellow: #df8e1d;
     --color-purple: #8839ef;
     --color-red: #d20f39;
-
-    .astro-code,
-    .astro-code span {
-      color: var(--shiki-catppuccin_latte) !important;
-      background-color: var(--shiki-catppuccin_latte-bg) !important;
-      /* Optional, if you also want font styles */
-      font-style: var(--shiki-catppuccin_latte-font-style) !important;
-      font-weight: var(--shiki-catppuccin_latte-font-weight) !important;
-      text-decoration: var(--shiki-catppuccin_latte-text-decoration) !important;
-    }
   }
 
   [data-theme="evergarden"] {
