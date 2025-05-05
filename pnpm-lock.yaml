@@ -17,6 +17,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.1.4
         version: 4.1.4(vite@6.3.2(jiti@2.4.2)(lightningcss@1.29.2)(sass@1.86.3))
+      '@yeskunall/astro-umami':
+        specifier: 0.0.5
+        version: 0.0.5(astro@5.7.5(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.40.0)(sass@1.86.3)(typescript@5.8.3))
       astro:
         specifier: ^5.7.5
         version: 5.7.5(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.40.0)(sass@1.86.3)(typescript@5.8.3)
@@ -703,6 +706,11 @@ packages:
 
   '@ungap/structured-clone@1.3.0':
     resolution: {integrity: sha512-WmoN8qaIAo7WTYWbAZuG8PYEhn5fkz7dZrqTBZ7dtt//lL2Gwms1IcnQ5yHqjDfX8Ft5j4YzDM23f87zBfDe9g==}
+
+  '@yeskunall/astro-umami@0.0.5':
+    resolution: {integrity: sha512-PRxSo6Gox5+GC/Mjb1Q4/l7zioI0J7uxw0N8WjejEyMBD6+pJiDBcetmA+JLY39fWPtupq0181jsAUYEPraSfw==}
+    peerDependencies:
+      astro: ^3.0.0 || ^4.0.0 || ^5.0.0
 
   acorn@8.14.1:
     resolution: {integrity: sha512-OvQ/2pUDKmgfCg++xsTX1wGxfTaszcHVcTctW4UJB4hibJx2HXxxO5UmVgyjMa+ZDsiaf5wWLXYpRWMmBI0QHg==}
@@ -2465,6 +2473,10 @@ snapshots:
   '@types/unist@3.0.3': {}
 
   '@ungap/structured-clone@1.3.0': {}
+
+  '@yeskunall/astro-umami@0.0.5(astro@5.7.5(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.40.0)(sass@1.86.3)(typescript@5.8.3))':
+    dependencies:
+      astro: 5.7.5(jiti@2.4.2)(lightningcss@1.29.2)(rollup@4.40.0)(sass@1.86.3)(typescript@5.8.3)
 
   acorn@8.14.1: {}
 

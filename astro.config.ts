@@ -3,12 +3,17 @@ import sitemap from "@astrojs/sitemap";
 import { remarkReadingTime } from "./remark-reading-time.mjs";
 import tailwindcss from "@tailwindcss/vite";
 import expressiveCode from "astro-expressive-code";
+import umami from "@yeskunall/astro-umami";
 
 // https://astro.build/config
 export default defineConfig({
   site: "https://isabelroses.com",
   integrations: [
     sitemap(),
+    umami({
+      endpointUrl: "https://analytics.isabelroses.com/script.js",
+      id: "be210218-aad1-4b3a-a6a3-366952e22d8e",
+    }),
     expressiveCode({
       themes: [
         "github-light",

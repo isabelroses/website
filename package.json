@@ -12,6 +12,7 @@
     "@astrojs/sitemap": "^3.3.1",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.4",
+    "@yeskunall/astro-umami": "0.0.5",
     "astro": "^5.7.5",
     "astro-expressive-code": "^0.41.2",
     "feed": "^4.2.2",
