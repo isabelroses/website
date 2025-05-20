@@ -5,40 +5,38 @@ import tailwindcss from "@tailwindcss/vite";
 import expressiveCode from "astro-expressive-code";
 import umami from "@yeskunall/astro-umami";
 
+import icon from "astro-icon";
+
 // https://astro.build/config
 export default defineConfig({
   site: "https://isabelroses.com",
-  integrations: [
-    sitemap(),
-    umami({
-      endpointUrl: "https://analytics.isabelroses.com/script.js",
-      id: "be210218-aad1-4b3a-a6a3-366952e22d8e",
-    }),
-    expressiveCode({
-      themes: [
-        "github-light",
-        "github-dark-high-contrast",
-        "catppuccin-latte",
-        "catppuccin-mocha",
-        "catppuccin-macchiato",
-        "catppuccin-frappe",
-      ],
-      customizeTheme: (theme) => {
-        const newName = {
-          "github-light": "light",
-          "github-dark-high-contrast": "dark",
-          "catppuccin-latte": "catppuccin_latte",
-          "catppuccin-mocha": "catppuccin_mocha",
-          "catppuccin-macchiato": "catppuccin_macchiato",
-          "catppuccin-frappe": "catppuccin_frappe",
-        }[theme.name] || theme.name;
+  integrations: [sitemap(), umami({
+    endpointUrl: "https://analytics.isabelroses.com/script.js",
+    id: "be210218-aad1-4b3a-a6a3-366952e22d8e",
+  }), expressiveCode({
+    themes: [
+      "github-light",
+      "github-dark-high-contrast",
+      "catppuccin-latte",
+      "catppuccin-mocha",
+      "catppuccin-macchiato",
+      "catppuccin-frappe",
+    ],
+    customizeTheme: (theme) => {
+      const newName = {
+        "github-light": "light",
+        "github-dark-high-contrast": "dark",
+        "catppuccin-latte": "catppuccin_latte",
+        "catppuccin-mocha": "catppuccin_mocha",
+        "catppuccin-macchiato": "catppuccin_macchiato",
+        "catppuccin-frappe": "catppuccin_frappe",
+      }[theme.name] || theme.name;
 
-        theme.name = newName;
-        return theme;
-      },
-      // useDarkModeMediaQuery: true,
-    }),
-  ],
+      theme.name = newName;
+      return theme;
+    },
+    // useDarkModeMediaQuery: true,
+  }), icon()],
 
   markdown: {
     remarkPlugins: [remarkReadingTime],
