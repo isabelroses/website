@@ -15,7 +15,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.7",
     "@yeskunall/astro-umami": "0.0.5",
-    "astro": "^5.7.13",
+    "astro": "^5.8.0",
     "astro-expressive-code": "^0.41.2",
     "astro-icon": "^1.1.5",
     "feed": "^4.2.2",

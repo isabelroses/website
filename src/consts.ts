@@ -54,3 +54,54 @@ export const PROJECTS = [
     repo: "https://github.com/isabelroses/bellado",
   },
 ];
+
+export const FRIENDS = [
+  {
+     link: "https://genshibe.ca",
+     badge: "gen.png",
+  },
+  {
+    link: "https://alyxia.dev",
+    badge: "alyxia.png",
+  },
+  {
+    link: "https://sapphic.moe",
+    badge: "chloe.png",
+  },
+  {
+    link: "https://nax.dev",
+    badge: "nax.gif",
+  },
+  {
+    link: "https://aubrey.rs",
+    badge: "aubrey.png",
+  },
+  {
+    link: "https://rooot.gay",
+    badge: "rooot.gif",
+  },
+  {
+    link: "https://autumn.town",
+    badge: "autumn.webp",
+  },
+  {
+    link: "https://les.bi",
+    badge: "maeve.png",
+  },
+  {
+    link: "https://basil.cafe",
+    badge: "basil.gif",
+  },
+  {
+    link: "https://arimelody.me",
+    badge: "arimelody.gif",
+  },
+  {
+    link: "https://ezri.pet/",
+    badge: "ezri.png",
+  },
+  //{
+  //  link: "https://garfunkles.space",
+  //  badge: "garfunkles.webp",
+  //},
+];

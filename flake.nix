@@ -1,7 +1,7 @@
 {
   description = "isabelroses.com";
 
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+  inputs.nixpkgs.url = "https://channels.nixos.org/nixpkgs-unstable/nixexprs.tar.xz";
 
   outputs =
     { nixpkgs, self, ... }:

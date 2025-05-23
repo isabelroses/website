@@ -2,11 +2,11 @@
   lib,
   just,
   stdenvNoCC,
-  nodejs_22,
+  nodejs_24,
   pnpm_10,
 }:
 let
-  nodejs = nodejs_22;
+  nodejs = nodejs_24;
   pnpm = pnpm_10.override { inherit nodejs; };
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
@@ -23,7 +23,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-TFR3jdLZaRX6CMY/r6j/Q3ThOo1OrnwA4TviXexjaA8=";
+    hash = "sha256-ZnuzEBtPRSZNvvuFCo9EzLYP2rJ1qgxDxuqkDqQkUHU=";
   };
 
   dontUseJustInstall = true;
