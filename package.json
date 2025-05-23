@@ -18,6 +18,7 @@
     "astro": "^5.8.0",
     "astro-expressive-code": "^0.41.2",
     "astro-icon": "^1.1.5",
+    "astro-mail-obfuscation": "^2.3.4",
     "feed": "^4.2.2",
     "markdown-it": "^14.1.0",
     "mdast-util-to-string": "^4.0.0",

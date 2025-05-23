@@ -4,6 +4,7 @@ import tailwindcss from "@tailwindcss/vite";
 import expressiveCode from "astro-expressive-code";
 import umami from "@yeskunall/astro-umami";
 import icon from "astro-icon";
+import mailObfuscation from "astro-mail-obfuscation";
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,6 +18,7 @@ export default defineConfig({
       endpointUrl: "https://analytics.isabelroses.com/script.js",
       id: "be210218-aad1-4b3a-a6a3-366952e22d8e",
     }),
+    mailObfuscation(),
   ],
 
   redirects: {
