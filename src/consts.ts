@@ -73,6 +73,10 @@ export const FRIENDS = [
     badge: "nax.gif",
   },
   {
+    link: "https://tired.moe",
+    badge: "kaya.gif",
+  },
+  {
     link: "https://aubrey.rs",
     badge: "aubrey.png",
   },
@@ -97,7 +101,7 @@ export const FRIENDS = [
     badge: "arimelody.gif",
   },
   {
-    link: "https://ezri.pet/",
+    link: "https://ezri.pet",
     badge: "ezri.png",
   },
   //{
