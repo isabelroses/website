@@ -22,6 +22,7 @@
     "markdown-it": "^14.1.0",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",
+    "reading-time-estimator": "^1.14.0",
     "sanitize-html": "^2.17.0",
     "tailwindcss": "^4.1.7"
   }

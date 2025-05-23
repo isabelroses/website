@@ -1,6 +1,6 @@
 ---
 import Default from '../../layouts/Default.astro';
-import { render, getCollection } from 'astro:content';
+import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Title from '../../components/Title.astro';
 
@@ -27,9 +27,7 @@ posts.forEach((post) => Array.isArray(post.data.tags) && post.data.tags.forEach(
   ) }
 
   <div class="grid grid-cols-1 gap-4 mb-16">
-    { await Promise.all(posts.map(async (post, index) => {
-      const { remarkPluginFrontmatter } = await render(post);
-
+    { posts.map((post, index) => {
       return (
         <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 lg:max-w-2xl md:max-w-xl">
           <a href={`/blog/${post.id}/`}>
@@ -42,13 +40,13 @@ posts.forEach((post) => Array.isArray(post.data.tags) && post.data.tags.forEach(
             </div>
 
             <div class="text-xs text-fg-lighter flex flex-row gap-2 justify-end">
-              <p>{ remarkPluginFrontmatter.minutesRead }</p>
+              <p>{ post.data.readTime }</p>
               -
               <FormattedDate date={post.data.date} />
             </div>
           </a>
         </article>
       );
-    })) }
+    }) }
   </div>
 </Default>

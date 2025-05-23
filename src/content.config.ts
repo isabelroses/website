@@ -1,5 +1,6 @@
 import { glob, type Loader } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
+import { readingTime } from 'reading-time-estimator';
 
 const customLoader: Loader = {
   ...glob,
@@ -18,6 +19,11 @@ const customLoader: Loader = {
 
     const sorted = items.sort((a, b) => b.data.date - a.data.date);
 
+    items.forEach((item) => {
+      const readTime = readingTime(item.body, 200);
+      item.data.readTime = `${readTime.minutes} mins`;
+    });
+
     sorted.forEach((item) => {
       store.set({ ...item });
     });
@@ -34,6 +40,7 @@ const blog = defineCollection({
     updated: z.coerce.date().optional(),
     image: z.string().optional(),
     tags: z.array(z.string()),
+    readTime: z.string().optional(),
   }),
 });
 

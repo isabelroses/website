@@ -47,6 +47,9 @@ importers:
       reading-time:
         specifier: ^1.5.0
         version: 1.5.0
+      reading-time-estimator:
+        specifier: ^1.14.0
+        version: 1.14.0
       sanitize-html:
         specifier: ^2.17.0
         version: 2.17.0
@@ -1862,6 +1865,9 @@ packages:
   readdirp@4.1.2:
     resolution: {integrity: sha512-GDhwkLfywWL2s6vEjyhri+eXmfH6j1L7JE27WhqLeYzoh/A3DBaYGEj2H/HFZCn/kMfim73FXxEJTw06WtxQwg==}
     engines: {node: '>= 14.18.0'}
+
+  reading-time-estimator@1.14.0:
+    resolution: {integrity: sha512-EWLj21Ou07uUvZWE0suAGPvEebhp91ZABl8jhTzZXY/ziBOPXfQ4tZ1eHiUV7moQ1NJ1KJj9krWuFlnoMx0upA==}
 
   reading-time@1.5.0:
     resolution: {integrity: sha512-onYyVhBNr4CmAxFsKS7bz+uTLRakypIe4R+5A824vBSkQy/hB3fZepoVEf8OVAxzLvK+H/jm9TzpI3ETSm64Kg==}
@@ -4351,6 +4357,10 @@ snapshots:
   radix3@1.1.2: {}
 
   readdirp@4.1.2: {}
+
+  reading-time-estimator@1.14.0:
+    dependencies:
+      sanitize-html: 2.17.0
 
   reading-time@1.5.0: {}
 

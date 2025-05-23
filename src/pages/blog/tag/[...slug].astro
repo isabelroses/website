@@ -38,9 +38,7 @@ const description = "The parts of my life that I put out into the world";
   <Title title={title} description={description} size="lg" />
 
   <div class="grid grid-cols-1 gap-4 mb-16">
-    { await Promise.all(posts.map(async (post, index) => {
-      const { remarkPluginFrontmatter } = await render(post);
-
+    { posts.map((post, index) => {
       return (
         <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 lg:w-2xl md:w-xl">
           <a href={`/blog/${post.id}/`}>
@@ -53,7 +51,7 @@ const description = "The parts of my life that I put out into the world";
             </div>
 
             <div class="text-xs text-fg-lighter flex flex-row gap-2 justify-end">
-              <p>{ remarkPluginFrontmatter.minutesRead }</p>
+              <p>{ post.data.readTime }</p>
               -
               <FormattedDate date={post.data.date} />
             </div>
