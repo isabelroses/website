@@ -5,6 +5,8 @@ import expressiveCode from "astro-expressive-code";
 import umami from "@yeskunall/astro-umami";
 import icon from "astro-icon";
 import mailObfuscation from "astro-mail-obfuscation";
+import autoprefixer from "autoprefixer";
+import cssnano from "cssnano";
 
 // https://astro.build/config
 export default defineConfig({
@@ -40,5 +42,14 @@ export default defineConfig({
 
   vite: {
     plugins: [tailwindcss()],
+
+    css: {
+      postcss: {
+        plugins: [
+          autoprefixer(),
+          cssnano()
+        ],
+      },
+    },
   },
 });
