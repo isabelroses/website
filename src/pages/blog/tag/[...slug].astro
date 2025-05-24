@@ -38,26 +38,24 @@ const description = "The parts of my life that I put out into the world";
   <Title title={title} description={description} size="lg" />
 
   <div class="grid grid-cols-1 gap-4 mb-16">
-    { posts.map((post, index) => {
-      return (
-        <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 lg:w-2xl md:w-xl">
-          <a href={`/blog/${post.id}/`}>
-            <Title title={post.data.title} description={post.data.description} size="xs" />
+    { posts.map((post, index) => (
+      <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 lg:w-2xl md:w-xl">
+        <a href={`/blog/${post.id}/`}>
+          <Title title={post.data.title} description={post.data.description} size="xs" />
 
-            <div class="flex flex-row gap-2">
-              { post.data.tags.map((tag) => (
-                <span class="pill">#{ tag }</span>
-              )) }
-            </div>
+          <div class="flex flex-row gap-2">
+            { post.data.tags.map((tag) => (
+              <span class="pill">#{ tag }</span>
+            )) }
+          </div>
 
-            <div class="text-xs text-fg-lighter flex flex-row gap-2 justify-end">
-              <p>{ post.data.readTime }</p>
-              -
-              <FormattedDate date={post.data.date} />
-            </div>
-          </a>
-        </article>
-      );
-    })) }
+          <div class="text-xs text-fg-lighter flex flex-row gap-2 justify-end">
+            <p>{ post.data.readTime }</p>
+            -
+            <FormattedDate date={post.data.date} />
+          </div>
+        </a>
+      </article>
+    )) }
   </div>
 </Default>
