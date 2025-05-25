@@ -104,6 +104,10 @@ export const FRIENDS = [
     link: "https://ezri.pet",
     badge: "ezri.png",
   },
+  {
+    link: "https://notnite.com/",
+    badge: "notnite.png",
+  },
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",
