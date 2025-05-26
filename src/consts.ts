@@ -105,8 +105,16 @@ export const FRIENDS = [
     badge: "ezri.png",
   },
   {
-    link: "https://notnite.com/",
+    link: "https://notnite.com",
     badge: "notnite.png",
+  },
+  {
+    link: "https://robinroses.xyz",
+    badge: "robin.gif",
+  },
+  {
+    link: "https://sketchni.uk",
+    badge: "sketch.png",
   },
   //{
   //  link: "https://garfunkles.space",
