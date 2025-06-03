@@ -65,5 +65,51 @@ const shareurl = `https://isabelroses.com/blog/${ post.id }`;
         >CC BY-NC-SA 4.0</a
       >
     </span>
+
+    <div id="comments"></div>
   </section>
 </Default>
+
+<script>
+  document.addEventListener("astro:page-load", setup);
+  document.addEventListener("astro:after-swap", setup);
+
+  function setup() {
+    let theme = window.localStorage.getItem('theme');
+
+    if (theme.includes('catppuccin')) {
+      theme = `https://giscus.catppuccin.com/themes/${theme.split('_').pop()}-sapphire.css`
+    }
+
+    if (theme == undefined) {
+      theme = 'dark';
+    }
+
+    let attributes = {
+      'src': 'https://giscus.app/client.js',
+      'data-repo': 'isabelroses/website',
+      'data-repo-id': 'R_kgDOK09lKQ',
+      'data-category': 'General',
+      'data-category-id': 'DIC_kwDOK09lKc4CeIfv',
+      'data-mapping': 'title',
+      'data-strict': '0',
+      'data-reactions-enabled': '1',
+      'data-emit-metadata': '0',
+      'data-input-position': 'top',
+      'data-theme': theme,
+      'data-lang': 'en',
+      'data-loading': 'lazy',
+      'crossorigin': 'anonymous',
+      'async':  '',
+    };
+
+    let script = document.createElement('script');
+    Object.entries(attributes).forEach(([key, value]) =>
+      script.setAttribute(key, value),
+    );
+
+    const comments = document.getElementById('comments');
+    comments.innerHTML = '';
+    comments.appendChild(script);
+  };
+</script>

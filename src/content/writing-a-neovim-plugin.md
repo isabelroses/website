@@ -41,4 +41,4 @@ The plugin was a success, and I was able to generate images from code snippets. 
 
 The plugin is available on GitHub under [isabelroses/charm-freeze.nvim](https://github.com/isabelroses/charm-freeze.nvim).
 
-![Example of the plugin in action](/static/posts/2024-03-29_freeze.webp)
+![Example of the plugin in action](/posts/2024-03-29_freeze.webp)
