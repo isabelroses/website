@@ -14,7 +14,7 @@ interface Props {
 const { banner, icon, name, href, repo, description } = Astro.props;
 ---
 
-<div class="bg-bg ring-inset ring-1 ring-card p-4 rounded-xl lg:w-2xl md:w-xl lg:h-xl md:h-md relative">
+<div class="bg-bg w-full ring-inset ring-1 ring-card p-4 rounded-xl lg:w-2xl md:w-xl lg:h-xl md:h-md relative">
   { banner && (
     <img
       src=`/repos/${banner}`

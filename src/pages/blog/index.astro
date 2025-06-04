@@ -3,6 +3,7 @@ import Default from '../../layouts/Default.astro';
 import { getCollection } from 'astro:content';
 import FormattedDate from '../../components/FormattedDate.astro';
 import Title from '../../components/Title.astro';
+import Article from '../../components/Article.astro';
 
 const title = "Blog"
 const description = "The parts of my life that I put out into the world";
@@ -17,35 +18,19 @@ posts.forEach((post) => Array.isArray(post.data.tags) && post.data.tags.forEach(
   <Title title={title} description={description} size="lg" />
 
   { tags.size > 0 && (
-    <div class="flex flex-row flex-wrap justify-between gap-1 mb-4">
+    <div class="flex flex-row flex-wrap justify-between gap-1 mb-4 w-full">
       { Array.from(tags).map((tag) => (
         <a class="pill transition duration-200 ease-in-out hover:scale-115" href={`/blog/tag/${tag}/`}>
-          #{ tag }
+          # { tag }
         </a>
       )) }
     </div>
   ) }
 
-  <div class="grid grid-cols-1 gap-4 mb-16">
+  <div class="grid grid-cols-1 gap-4 mb-16 w-full">
     { posts.map((post, index) => {
       return (
-        <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 lg:max-w-2xl md:max-w-xl">
-          <a href={`/blog/${post.id}/`}>
-            <Title title={post.data.title} description={post.data.description} size="xs" />
-
-            <div class="flex flex-row gap-2">
-              { post.data.tags.map((tag) => (
-                <span class="pill">#{ tag }</span>
-              )) }
-            </div>
-
-            <div class="text-xs text-fg-lighter flex flex-row gap-2 justify-end">
-              <p>{ post.data.readTime }</p>
-              -
-              <FormattedDate date={post.data.date} />
-            </div>
-          </a>
-        </article>
+        <Article id={post.id} {...post.data} />
       );
     }) }
   </div>

@@ -5,6 +5,7 @@ import { getCollection } from "astro:content";
 import FormattedDate from '../components/FormattedDate.astro';
 import Title from '../components/Title.astro';
 import ProjectMinimal from '../components/ProjectMinimal.astro';
+import Article from '../components/Article.astro';
 
 const posts = await getCollection('blog');
 import { PROJECTS } from '../consts';
@@ -12,18 +13,22 @@ import { PROJECTS } from '../consts';
 
 <DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
 
-<section class="mb-8">
+<section class="mb-8 w-full">
   <div class="flex flex-col gap-4">
     <h1 class="text-4xl mb-4">Hello, I&apos;m <span class="text-special">Isabel</span></h1>
 
     <p>
-      I am currently studying computer science, as a second year student at Aberystwyth University. My main interests are in the terminal shown by my obsession with nix. Furthermore I am currently learning the programming language golang.
-      What do I do with some of my spare time? Well I contribute to a awesome project  <a target="_blank" class="text-special underline" href="https://github.com/catppuccin/catppuccin">Catppuccin</a>.
+      I am currently studying computer science, as a third year student at
+      Aberystwyth University. A significant amount of my time goes into being a
+      <a target="_blank" class="text-special underline" href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md#nixpkgs-committers">Nixpkgs committer</a>,
+      where I help maintain the Nixpkgs repository. The rest of my time is spent on
+      <a target="_blank" class="text-special underline" href="https://github.com/catppuccin/catppuccin">Catppuccin</a>
+      where I make some themes.
     </p>
   </div>
 </section>
 
-<section class="mb-8">
+<section class="mb-8 w-full">
   <Title title="Blog" description="The parts of my life that I put out into the world" />
 
   <div class="grid lg:grid-cols-2 gap-4">
@@ -31,25 +36,8 @@ import { PROJECTS } from '../consts';
       if (index >= 3) return null;
 
       return (
-        <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105">
-          <a class="flex flex-col gap-2" href={`/blog/${post.id}/`}>
-            <p class="title">{post.data.title}</p>
-
-            <div class="flex flex-row gap-2">
-              { post.data.tags.map((tag) => (
-                <span class="pill"># { tag }</span>
-              )) }
-            </div>
-
-            <div class="text-xs text-fg-lighter flex flex-row gap-2 justify-end">
-              <p>{ post.data.readTime }</p>
-              -
-              <FormattedDate date={post.data.date} />
-            </div>
-          </a>
-        </article>
+        <Article id={post.id} {...post.data} compact={true} />
       );
-
     }) }
 
     <a class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl text-center content-center group text-fg hover:text-special transition ease-in-out duration-200" href="/blog/">
@@ -61,7 +49,7 @@ import { PROJECTS } from '../consts';
   </div>
 </section>
 
-<section class="mb-8">
+<section class="mb-8 w-full">
   <Title title="Projects" description="A collection of projects that I maintain" />
 
   <div class="grid lg:grid-cols-2 gap-4">
@@ -82,7 +70,7 @@ import { PROJECTS } from '../consts';
   </div>
 </section>
 
-<section class="mb-8">
+<section class="mb-8 w-full">
   <Title title="Friends" description="Want to see some cool badges" />
 
   <div class="grid xl:grid-cols-6 gap-4">

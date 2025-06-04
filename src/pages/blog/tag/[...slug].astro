@@ -3,6 +3,7 @@ import Default from '../../../layouts/Default.astro';
 import { render, getCollection } from 'astro:content';
 import FormattedDate from '../../../components/FormattedDate.astro';
 import Title from '../../../components/Title.astro';
+import Article from '../../../components/Article.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
@@ -39,23 +40,7 @@ const description = "The parts of my life that I put out into the world";
 
   <div class="grid grid-cols-1 gap-4 mb-16">
     { posts.map((post, index) => (
-      <article class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition-all duration-200 ease-in-out hover:scale-105 lg:w-2xl md:w-xl">
-        <a href={`/blog/${post.id}/`}>
-          <Title title={post.data.title} description={post.data.description} size="xs" />
-
-          <div class="flex flex-row gap-2">
-            { post.data.tags.map((tag) => (
-              <span class="pill">#{ tag }</span>
-            )) }
-          </div>
-
-          <div class="text-xs text-fg-lighter flex flex-row gap-2 justify-end">
-            <p>{ post.data.readTime }</p>
-            -
-            <FormattedDate date={post.data.date} />
-          </div>
-        </a>
-      </article>
+      <Article id={post.id} {...post.data} />
     )) }
   </div>
 </Default>

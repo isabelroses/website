@@ -1,0 +1,38 @@
+---
+import FormattedDate from './FormattedDate.astro';
+import Title from './Title.astro';
+
+interface Props {
+  id: string;
+  title: string;
+  description: string;
+  readTime: string;
+  date: string;
+  tags: string[];
+  compact?: boolean;
+}
+
+const { id, title, description, readTime, date, tags, compact } = Astro.props;
+---
+
+<article class={`ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl transition duration-200 ease-in-out hover:scale-105 ${compact ? '' : 'lg:max-w-2xl md:max-w-xl'} ${!compact ? 'transition-all' : ''} ${!compact ? 'lg:hover:scale-103' : ''}`}>
+  <a class="flex flex-col gap-2" href={`/blog/${id}/`}>
+    {
+      compact
+        ? <p class="title">{title}</p>
+        : <Title title={title} description={description} size="xs" />
+    }
+
+    <div class="flex flex-row gap-2">
+      { tags.map(tag => (
+        <span class="pill"># {tag}</span>
+      )) }
+    </div>
+
+    <div class="text-xs text-fg-lighter flex flex-row gap-2 justify-end">
+      <p>{readTime}</p>
+      -
+      <FormattedDate date={date} />
+    </div>
+  </a>
+</article>
