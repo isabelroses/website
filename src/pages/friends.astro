@@ -1,6 +1,7 @@
 ---
 import Default from "../layouts/Default.astro";
 import Title from '../components/Title.astro';
+import { Icon } from 'astro-icon/components'
 import { Code } from 'astro-expressive-code/components'
 import { FRIENDS } from '../consts';
 
@@ -28,6 +29,37 @@ const description = "Awesome people I know from the interwebs";
       <img loading="lazy" decoding="async" data-nimg="1" style="image-rendering: pixelated" src="/badges/me.gif" height="31" width="88" />
 
       <Code code=`<img src="https://isabelroses.com/badges/me.gif" alt="isabel roses" width="88" height="31" />` lang="html" />
+    </div>
+  </section>
+
+
+  <section class="flex flex-col gap-4 mb-16 h-full w-full">
+    <Title title="Webrings" description="I am part of these web rings" size="lg" />
+
+    <div class="flex flex-col gap-4">
+      <div class="grid lg:grid-cols-6 grid-cols-3 h-20 border border-card rounded shadow-md bg-bg-lighter items-center text-center justify-center">
+        <a class="h-full flex items-center justify-center border-r border-r-card group" href="https://ctp-webr.ing/isabelroses/previous" aria-label="previous catppuccin webring">
+          <Icon name="fa6-solid:arrow-left" class="icon inline-block translate-x-0 group-hover:-translate-x-1 transition-transform ease-in-out duration-200" />
+        </a>
+
+        <a class="h-full flex items-center justify-center lg:col-span-4" href="https://ctp-webr.ing/" aria-label="catppuccin webring">Catppuccin webring</a>
+
+        <a class="h-full flex items-center justify-center border-l border-l-card group" href="https://ctp-webr.ing/isabelroses/next" aria-label="license-text catppuccin webring">
+          <Icon name="fa6-solid:arrow-right" class="icon inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200" />
+        </a>
+      </div>
+
+      <div class="grid lg:grid-cols-6 grid-cols-3 h-20 border border-card rounded shadow-md bg-bg-lighter items-center text-center justify-center">
+        <a class="h-full flex items-center justify-center border-r border-r-card group" href="https://aberwebr.ing/isabelroses/left" aria-label="previous aberystwyth webring">
+          <Icon name="fa6-solid:arrow-left" class="icon inline-block translate-x-0 group-hover:-translate-x-1 transition-transform ease-in-out duration-200"/>
+        </a>
+
+        <a class="h-full flex items-center justify-center lg:col-span-4" href="https://aberwebr.ing/" aria-label="aberystwyth webring">Aberystwyth webring</a>
+
+        <a class="h-full flex items-center justify-center border-l border-l-card group" href="https://aberwebr.ing/isabelroses/right" aria-label="next aberystwyth webring">
+          <Icon name="fa6-solid:arrow-right" class="icon inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200" />
+        </a>
+      </div>
     </div>
   </section>
 </Default>

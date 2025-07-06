@@ -3,6 +3,18 @@ import { Icon } from 'astro-icon/components'
 ---
 
 <footer class="sm:grid grid-cols-3 flex flex-col gap-2 items-center justify-center py-20 bg-bg border-card border-t-1 w-full">
+  <div class="text-center">
+    <span>
+      © Licensed under
+      <a
+        target="_blank"
+        href="https://github.com/isabelroses/website/blob/main/LICENSE"
+      >
+        MIT
+      </a>
+    </span>
+  </div>
+
   <ul class="align-footer">
     <li>
       <a rel="me noreferrer" href="/feed.xml" title="feed">
@@ -64,20 +76,6 @@ import { Icon } from 'astro-icon/components'
     </li>
   </ul>
 
-  <div>
-    <span class="align-footer">
-      <a href="https://ctp-webr.ing/isabelroses/previous" aria-label="previous catppuccin webring"><Icon name="fa6-solid:arrow-left" class="icon" /></a>
-        <a href="https://ctp-webr.ing/" aria-label="catppuccin webring"><Icon name="fa6-solid:circle-nodes" class="icon" /></a>
-      <a href="https://ctp-webr.ing/isabelroses/next" aria-label="license-text catppuccin webring"><Icon name="fa6-solid:arrow-right" class="icon" /></a>
-    </span>
-
-    <span class="align-footer">
-      <a href="https://aberwebr.ing/isabelroses/left" aria-label="previous aberystwyth webring"><Icon name="fa6-solid:arrow-left" class="icon" /></a>
-        <a href="https://aberwebr.ing/" aria-label="aberystwyth webring"><Icon name="fa6-solid:a" class="icon" /></a>
-      <a href="https://aberwebr.ing/isabelroses/right" aria-label="license-text aberystwyth webring"><Icon name="fa6-solid:arrow-right" class="icon" /></a>
-    </span>
-  </div>
-
   <div class="text-center">
     <form name="themes" id="form-themes">
       <select
@@ -95,15 +93,5 @@ import { Icon } from 'astro-icon/components'
         <option value="cuddlefish">Cuddlefish</option>
       </select>
     </form>
-
-    <span>
-      © Licensed under
-      <a
-        target="_blank"
-        href="https://github.com/isabelroses/website/blob/main/LICENSE"
-      >
-        MIT
-      </a>
-    </span>
   </div>
 </footer>
