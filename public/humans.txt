@@ -1,5 +1,5 @@
 /* Me */
-Name: Isabel Roses
+Name: isabel roses
 GitHub: https://github.com/isabelroses
 Website: https://isabelroses.com
 Location: United Kingdom

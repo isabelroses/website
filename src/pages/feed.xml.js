@@ -26,7 +26,7 @@ export async function GET(context) {
       rss: `${siteUrl}/feed.xml`,
     },
     author: {
-      name: "Isabel Roses",
+      name: "isabel roses",
     },
     updated: new Date(),
   });
