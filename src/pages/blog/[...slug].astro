@@ -21,11 +21,11 @@ const shareurl = `https://isabelroses.com/blog/${ post.id }`;
 ---
 
 <Default title={post.data.title} description={post.data.description}>
-  <Title
-    title={post.data.title}
-    description={post.data.description}
-    size="lg"
-  />
+  <section class="flex flex-col gap-2 w-full mb-4">
+    <h1 class="text-4xl">{post.data.title}</h1>
+    <h2 class="text-lg">{post.data.description}</h2>
+    <FormattedDate date={post.data.date} class="text-sm text-fg-lighter" />
+  </section>
 
   <article class="prose"><Content /></article>
 
