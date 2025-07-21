@@ -116,6 +116,10 @@ export const FRIENDS = [
     link: "https://sketchni.uk",
     badge: "sketch.png",
   },
+  {
+    link: "https://slonk.ing",
+    badge: "slonking.webp",
+  },
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",
