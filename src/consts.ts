@@ -120,6 +120,10 @@ export const FRIENDS = [
     link: "https://slonk.ing",
     badge: "slonking.webp",
   },
+  {
+    link: "https://girlthi.ng/~thermia/",
+    badge: "thermia.gif",
+  },
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",
