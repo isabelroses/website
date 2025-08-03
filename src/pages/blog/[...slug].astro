@@ -20,7 +20,7 @@ const { Content } = await render(post);
 const shareurl = `https://isabelroses.com/blog/${ post.id }`;
 ---
 
-<Default title={post.data.title} description={post.data.description} image=`/blog/${post.id}.svg`>
+<Default title={post.data.title} description={post.data.description} image=`/blog/${post.id}.png`>
   <section class="flex flex-col gap-2 w-full mb-4">
     <h1 class="text-4xl">{post.data.title}</h1>
     <h2 class="text-lg">{post.data.description}</h2>

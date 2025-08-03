@@ -3,9 +3,9 @@ import type { APIRoute } from "astro";
 import { generateOpenGraph } from "../lib/opengraph";
 
 export const GET: APIRoute = async ({ params }) => {
-  const svg = await generateOpenGraph(SITE_TITLE, SITE_DESCRIPTION);
-  return new Response(svg, {
+  const png = await generateOpenGraph(SITE_TITLE, SITE_DESCRIPTION);
+  return new Response(png, {
     status: 200,
-    headers: { "Content-Type": "image/svg+xml" },
+    headers: { "Content-Type": "image/png" },
   });
 };

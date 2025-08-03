@@ -13,10 +13,11 @@ export async function getStaticPaths() {
 export const GET: APIRoute = async ({ params }) => {
   const postData = posts.find((post) => post.id === params.slug);
 
-  const svg = await generateOpenGraph(postData.data.title, postData.data.description);
-  return new Response(svg, {
+  const png = await generateOpenGraph(postData.data.title, postData.data.description);
+
+  return new Response(png, {
     status: 200,
-    headers: { "Content-Type": "image/svg+xml" },
+    headers: { "Content-Type": "image/png" },
   });
 };
 

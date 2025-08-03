@@ -5,9 +5,9 @@ const title = "My Friends";
 const description = "Awesome people I know from the interwebs";
 
 export const GET: APIRoute = async ({ params }) => {
-  const svg = await generateOpenGraph(title, description);
-  return new Response(svg, {
+  const png = await generateOpenGraph(title, description);
+  return new Response(png, {
     status: 200,
-    headers: { "Content-Type": "image/svg+xml" },
+    headers: { "Content-Type": "image/png" },
   });
 };

@@ -1,9 +1,10 @@
 import satori from "satori";
 import React from 'react';
 import { readFile } from "node:fs/promises";
+import { Resvg } from "@resvg/resvg-js";
 
-export const generateOpenGraph = async (title: string, description: string) =>
-  await satori(
+export const generateOpenGraph = async (title: string, description: string) => {
+  const svg = await satori(
     <div
       style={{
         height: '100%',
@@ -34,4 +35,11 @@ export const generateOpenGraph = async (title: string, description: string) =>
       ],
     }
   );
+
+  const resvg = new Resvg(svg, null)
+  const pngData = resvg.render()
+  const pngBuffer = pngData.asPng()
+
+  return pngBuffer;
+}
 
