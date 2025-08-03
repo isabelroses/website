@@ -8,10 +8,11 @@
     "preview": "astro preview",
     "astro": "astro"
   },
-  "devDependencies": {
+  "dependencies": {
     "@astrojs/sitemap": "^3.4.2",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/fa6-solid": "^1.2.4",
+    "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.1.11",
     "@yeskunall/astro-umami": "0.0.5",
@@ -24,12 +25,11 @@
     "feed": "^4.2.2",
     "markdown-it": "^14.1.0",
     "mdast-util-to-string": "^4.0.0",
+    "react": "^19.1.1",
     "reading-time": "^1.5.0",
     "reading-time-estimator": "^1.14.0",
     "sanitize-html": "^2.17.0",
+    "satori": "^0.16.2",
     "tailwindcss": "^4.1.11"
-  },
-  "dependencies": {
-    "satori": "^0.16.2"
   }
 }

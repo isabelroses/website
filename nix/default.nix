@@ -11,7 +11,7 @@ let
 in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "isabelroses-website";
-  version = "0.9.1";
+  version = "0.9.2";
 
   src = ../.;
 
@@ -24,7 +24,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
     fetcherVersion = 2;
-    hash = "sha256-l43n4Y1Ou/sNzWikMHer6vIl9nS+lrz5mWBacfHSTH8=";
+    hash = "sha256-2x669x3tmAGQrej09Ku8xhK1IvOASwnD/xqxSgKMRrg=";
   };
 
   dontUseJustInstall = true;

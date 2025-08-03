@@ -6,9 +6,11 @@
   outputs =
     { nixpkgs, self, ... }:
     let
+      inherit (nixpkgs) lib;
+
       forAllSystems =
-        function:
-        nixpkgs.lib.genAttrs
+        f:
+        lib.genAttrs
           [
             "x86_64-linux"
             "x86_64-darwin"
@@ -18,7 +20,7 @@
           ]
           (
             system:
-            function (
+            f (
               import nixpkgs {
                 inherit system;
                 config.allowUnfree = true;

@@ -4,13 +4,13 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import FormattedDate from '../components/FormattedDate.astro';
 
-const { title, description } = Astro.props;
+const props = Astro.props;
 ---
 
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-    <BaseHead title={title} description={description} />
+    <BaseHead {...props} />
 	</head>
 
   <body class="text-fg mx-auto flex flex-col items-center">

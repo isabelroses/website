@@ -2,6 +2,7 @@
   mkShell,
   callPackage,
   astro-language-server,
+  typescript-language-server,
   tailwindcss-language-server,
   typescript,
 }:
@@ -14,6 +15,7 @@ mkShell {
   packages = [
     astro-language-server
     tailwindcss-language-server
+    typescript-language-server
     typescript
   ];
 }

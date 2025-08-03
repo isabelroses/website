@@ -51,5 +51,10 @@ export default defineConfig({
         ],
       },
     },
+
+    // https://github.com/thx/resvg-js/issues/175#issuecomment-1577291297
+    ssr: { external: ["@resvg/resvg-js"] },
+    optimizeDeps: { exclude: ["@resvg/resvg-js"] },
+    build: { rollupOptions: { external: ["@resvg/resvg-js"] } },
   },
 });
