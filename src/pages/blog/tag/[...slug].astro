@@ -6,7 +6,9 @@ import Title from '../../../components/Title.astro';
 import Article from '../../../components/Article.astro';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
+  const posts = await getCollection('blog', ({ data }) => {
+    return !data.draft && !data.archived;
+  });
 
 	const tags = new Set();
 

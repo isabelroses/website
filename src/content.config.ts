@@ -41,6 +41,7 @@ const blog = defineCollection({
     image: z.string().optional(),
     tags: z.array(z.string()),
     readTime: z.string().optional(),
+    archived: z.boolean().default(false),
   }),
 });
 

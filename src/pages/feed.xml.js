@@ -5,7 +5,10 @@ import sanitizeHtml from "sanitize-html";
 import MarkdownIt from "markdown-it";
 
 export async function GET(context) {
-  const posts = await getCollection("blog");
+  const posts = await getCollection('blog', ({ data }) => {
+    return !data.draft && !data.archived;
+  });
+
   const siteUrl = "https://isabelroses.com";
 
   const md = new MarkdownIt({

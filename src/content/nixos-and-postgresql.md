@@ -5,6 +5,7 @@ date: 2023-11-28
 tags:
   - nix
   - postgresql
+archived: true
 ---
 
 When upgrading to version 15 from 14, there was an issue. None of my data was

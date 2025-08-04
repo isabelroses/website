@@ -8,7 +8,9 @@ import Article from '../../components/Article.astro';
 const title = "Blog"
 const description = "The parts of my life that I put out into the world";
 
-const posts = await getCollection('blog');
+const posts = await getCollection('blog', ({ data }) => {
+  return !data.draft && !data.archived;
+});
 
 const tags = new Set();
 posts.forEach((post) => Array.isArray(post.data.tags) && post.data.tags.forEach((tag) => tags.add(tag)));
