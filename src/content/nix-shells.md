@@ -2,6 +2,7 @@
 title: Dev dependencies
 description: Nix is truly an enlightening experience
 date: 2024-06-07
+updated: 2025-08-05
 tags:
   - nix
 ---
@@ -285,7 +286,7 @@ fi
 
 Nix allows you to create reproducible templates for your project, so you only have to set these up one time and then you can reuse them for all your projects.
 
-For example you can use my templates like so `nix flake init -t github:isabelroses/dotfiles#go` which will create a new go project in your current directory, or you can use `nix flake new -t github:isabelroses/dotfiles#rust cheese` which will create a new directory called `cheese` with the rust template defined [here](https://github.com/isabelroses/dotfiles/tree/main/parts/templates/rust).
+For example you can use my templates like so `nix flake init -t github:tgirlcloud/nix-templates#go` which will create a new go project in your current directory, or you can use `nix flake new -t github:tgirlcloud/nix-templates#rust cheese` which will create a new directory called `cheese` with the rust template defined [here](https://github.com/tgirlcloud/nix-templates/tree/main/rust).
 
 Here we will create a quick example for a basic flake, but you can do this with littrally anything you want.
 
