@@ -124,6 +124,10 @@ export const FRIENDS = [
     link: "https://girlthi.ng/~thermia/",
     badge: "thermia.gif",
   },
+  {
+    link: "https://awwpotato.xyz/",
+    badge: "awwpotato.png",
+  },
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",
