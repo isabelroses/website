@@ -118,13 +118,17 @@ export const FRIENDS = [
     badge: "slonking.webp",
   },
   {
-    link: "https://girlthi.ng/~thermia/",
+    link: "https://girlthi.ng/~thermia",
     badge: "thermia.gif",
   },
   {
-    link: "https://awwpotato.xyz/",
+    link: "https://awwpotato.xyz",
     badge: "awwpotato.png",
   },
+  {
+    link: "https://dbw.neocities.org",
+    badge: "dbw.png",
+  }
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",
