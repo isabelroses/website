@@ -1,6 +1,6 @@
 import { glob, type Loader } from "astro/loaders";
 import { defineCollection, z } from "astro:content";
-import { readingTime } from 'reading-time-estimator';
+import { readingTime } from "reading-time-estimator";
 
 const customLoader: Loader = {
   ...glob,

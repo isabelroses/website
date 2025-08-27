@@ -5,18 +5,18 @@ import { generateOpenGraph } from "../../lib/opengraph";
 const posts = await getCollection("blog");
 
 export async function getStaticPaths() {
-    return posts.map(({ id }) => ({
-        params: { slug: id },
-    }));
+  return posts.map(({ id }) => ({
+    params: { slug: id },
+  }));
 }
 
 export const GET: APIRoute = async ({ params }) => {
   const postData = posts.find((post) => post.id === params.slug);
 
   const png = await generateOpenGraph(
-    postData.data.title, 
+    postData.data.title,
     postData.data.description,
-    postData.data.date
+    postData.data.date,
   );
 
   return new Response(png, {

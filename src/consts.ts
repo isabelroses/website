@@ -54,8 +54,8 @@ export const PROJECTS = [
 
 export const FRIENDS = [
   {
-     link: "https://genshibe.ca",
-     badge: "gen.png",
+    link: "https://genshibe.ca",
+    badge: "gen.png",
   },
   {
     link: "https://alyxia.dev",
@@ -128,7 +128,7 @@ export const FRIENDS = [
   {
     link: "https://dbw.neocities.org",
     badge: "dbw.png",
-  }
+  },
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",

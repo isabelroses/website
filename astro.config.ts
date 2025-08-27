@@ -45,10 +45,7 @@ export default defineConfig({
 
     css: {
       postcss: {
-        plugins: [
-          autoprefixer(),
-          cssnano()
-        ],
+        plugins: [autoprefixer(), cssnano()],
       },
     },
 

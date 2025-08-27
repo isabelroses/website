@@ -5,6 +5,7 @@ date: 2025-07-07
 tags:
   - webdev
 ---
+
 In the past, I wrote about how I used [self-healing URLs](https://isabelroses.com/blog/self-healing-urls/). But while rewriting my website for the roughly the sixth time, a realization hit me: _who am I really building this for?_
 
 That question completely shifted how I approached my site. I had been optimizing for SEO, but the real purpose of my site is self-documentation and sharing what I learn with others who want to learn alongside me.

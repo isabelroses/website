@@ -34,12 +34,18 @@
     --tw-prose-td-borders: var(--color-fg);
     --tw-prose-links: var(--color-special);
 
-    :where(code):not(:where([class~="not-prose"],[class~="not-prose"] *, pre code)) {
+    :where(code):not(
+      :where([class~="not-prose"], [class~="not-prose"] *, pre code)
+    ) {
       @apply bg-bg-lighter rounded-sm ring-1 ring-inset ring-card px-1 py-[0.2rem] font-normal;
     }
 
-    :where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::before,
-    :where(code):not(:where([class~="not-prose"],[class~="not-prose"] *))::after {
+    :where(code):not(
+        :where([class~="not-prose"], [class~="not-prose"] *)
+      )::before,
+    :where(code):not(
+        :where([class~="not-prose"], [class~="not-prose"] *)
+      )::after {
       content: none;
     }
 
@@ -58,8 +64,8 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: .5rem;
-    padding-block: .2rem;
+    gap: 0.5rem;
+    padding-block: 0.2rem;
   }
 }
 
@@ -82,20 +88,20 @@
   }
 
   [data-theme="cuddlefish"] {
-    --color-fg: #CED1F0;
-    --color-fg-lighter: #B6B8DE;
+    --color-fg: #ced1f0;
+    --color-fg-lighter: #b6b8de;
 
-    --color-bg: #0E0F15;
-    --color-bg-lighter: #14161D;
+    --color-bg: #0e0f15;
+    --color-bg-lighter: #14161d;
 
-    --color-card: #1E1F2A;
+    --color-card: #1e1f2a;
     --color-special: var(--color-blue);
 
-    --color-blue: #83C4E6; /* snow */
-    --color-green: #91E478;
-    --color-yellow: #EDE874;
-    --color-purple: #8B79E8;
-    --color-red: #F6598E;
+    --color-blue: #83c4e6; /* snow */
+    --color-green: #91e478;
+    --color-yellow: #ede874;
+    --color-purple: #8b79e8;
+    --color-red: #f6598e;
   }
 
   [data-theme="light"] {

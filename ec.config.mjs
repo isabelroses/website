@@ -1,4 +1,4 @@
-import { defineEcConfig } from 'astro-expressive-code'
+import { defineEcConfig } from "astro-expressive-code";
 
 export default defineEcConfig({
   themes: [
@@ -10,17 +10,18 @@ export default defineEcConfig({
     "catppuccin-frappe",
   ],
   customizeTheme: (theme) => {
-    const newName = {
-      "github-light": "light",
-      "github-dark-high-contrast": "dark",
-      "catppuccin-latte": "catppuccin_latte",
-      "catppuccin-mocha": "catppuccin_mocha",
-      "catppuccin-macchiato": "catppuccin_macchiato",
-      "catppuccin-frappe": "catppuccin_frappe",
-    }[theme.name] || theme.name;
+    const newName =
+      {
+        "github-light": "light",
+        "github-dark-high-contrast": "dark",
+        "catppuccin-latte": "catppuccin_latte",
+        "catppuccin-mocha": "catppuccin_mocha",
+        "catppuccin-macchiato": "catppuccin_macchiato",
+        "catppuccin-frappe": "catppuccin_frappe",
+      }[theme.name] || theme.name;
 
     theme.name = newName;
     return theme;
   },
   // useDarkModeMediaQuery: true,
-})
+});

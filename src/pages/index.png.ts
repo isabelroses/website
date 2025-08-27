@@ -1,4 +1,4 @@
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
 import type { APIRoute } from "astro";
 import { generateOpenGraph } from "../lib/opengraph";
 
