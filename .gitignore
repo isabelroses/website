@@ -25,6 +25,8 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
+pnpm-lock.yaml
+
 
 # environment variables
 .env

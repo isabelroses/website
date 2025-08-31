@@ -1,39 +1,88 @@
 ---
-import Default from '../../layouts/Default.astro';
-import { getCollection } from 'astro:content';
-import FormattedDate from '../../components/FormattedDate.astro';
-import Title from '../../components/Title.astro';
-import Article from '../../components/Article.astro';
+import { getCollection } from "astro:content";
+import { Icon } from "astro-icon/components";
 
-const title = "Blog"
-const description = "The parts of my life that I put out into the world";
+import Base from "../../layouts/Base.astro";
+import MusicPlayer from "../../components/MusicPlayer.astro";
+import Song from "../../components/Song.astro";
 
-const posts = await getCollection('blog', ({ data }) => {
+const postsLarge = await getCollection("blog", ({ data }) => {
   return !data.draft && !data.archived;
 });
 
-const tags = new Set();
-posts.forEach((post) => Array.isArray(post.data.tags) && post.data.tags.forEach((tag) => tags.add(tag)));
+const posts = postsLarge.map((p) => ({
+  readTime: p.data.readTime,
+  title: p.data.title,
+  slug: p.id,
+}));
+
+import { SITE_TITLES, SITE_DESCRIPTIONS } from "../../lib/consts";
 ---
 
-<Default title={title} description={description}>
-  <Title title={title} description={description} size="lg" />
+<Base
+  title={SITE_TITLES.blog}
+  descripition={SITE_DESCRIPTIONS.blog}
+  image="/blog.png"
+>
+  <div
+    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-52 mb-18 md:my-0"
+  >
+    <MusicPlayer
+      nowPlaying={posts[0].title}
+      playPercent={0}
+      playPositon="0:00"
+      playLength=`${posts[0].readTime}:00`
+    />
 
-  { tags.size > 0 && (
-    <div class="flex flex-row flex-wrap justify-between gap-1 mb-4 w-full">
-      { Array.from(tags).map((tag) => (
-        <a class="pill transition duration-200 ease-in-out hover:scale-115" href={`/blog/tag/${tag}/`}>
-          # { tag }
-        </a>
-      )) }
-    </div>
-  ) }
-
-  <div class="grid grid-cols-1 gap-4 mb-16 w-full">
-    { posts.map((post, index) => {
-      return (
-        <Article id={post.id} {...post.data} />
-      );
-    }) }
+    <section class="flex flex-col w-full md:w-md">
+      <h2 class="text-xl">Up next</h2>
+      <ul class="flex flex-col mt-4">
+        {
+          posts
+            .entries()
+            .map(([i, post]) => (
+              <Song
+                index={i + 1}
+                title={post.title}
+                time={`${post.readTime} mins`}
+                slug={`/blog/${post.slug}`}
+              />
+            ))
+        }
+      </ul>
+    </section>
   </div>
-</Default>
+
+  <script define:vars={{ posts }}>
+    const playButton = document.getElementById("play");
+    const backButton = document.getElementById("back");
+    const skipButton = document.getElementById("skip");
+    const title = document.getElementById("now-playing-title");
+    const listenTime = document.getElementById("listenTime");
+
+    let currentIndex = 0;
+
+    function updateNowPlaying() {
+      title.textContent = posts[currentIndex].title;
+      listenTime.textContent = `${posts[currentIndex].readTime}:00`;
+    }
+
+    playButton.addEventListener("click", () => {
+      location.href = `/blog/${posts[currentIndex].slug}`;
+    });
+
+    backButton.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateNowPlaying();
+      }
+    });
+
+    skipButton.addEventListener("click", () => {
+      if (currentIndex < posts.length - 1) {
+        currentIndex++;
+        updateNowPlaying();
+      }
+    });
+  </script>
+</Base>

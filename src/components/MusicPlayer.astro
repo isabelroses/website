@@ -1,0 +1,87 @@
+---
+import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import me from "../assets/me.webp";
+
+interface Props {
+  isPlaying: boolean;
+  nowPlaying: string;
+  playPercent: number;
+  playPositon: string;
+  playLength: string;
+  sectionClass?: string;
+}
+
+const {
+  isPlaying,
+  nowPlaying,
+  playPercent,
+  playPositon,
+  playLength,
+  sectionClass,
+} = Astro.props as Props;
+---
+
+<section class={sectionClass}>
+  <Image
+    id="player-image"
+    src={me}
+    alt="isabel roses"
+    class="mb-4 rounded-sm w-[416px] h-[416px]"
+    width={416}
+    height={416}
+    loading="eager"
+  />
+
+  <div class="flex flex-col gap-4">
+    <div>
+      <h1 id="now-playing-title" class="text-2xl font-bold mb-1">
+        {nowPlaying}
+      </h1>
+      <p class="mb-2">isabel roses</p>
+    </div>
+
+    <div class="w-full">
+      <div class="bg-card h-2 rounded-2xl">
+        <div
+          id="scrobbler"
+          class=`relative bottom-1 left-[${playPercent}%] h-4 w-4 bg-fg-lighter rounded-2xl`
+        >
+        </div>
+      </div>
+      <div class="flex justify-between text-sm mt-1">
+        <span id="playPositon" class="text-fg-lighter">{playPositon}</span>
+        <span id="listenTime" class="text-fg-lighter">{playLength}</span>
+      </div>
+    </div>
+
+    <div class="flex gap-4 mt-4 items-center justify-center">
+      <Icon
+        id="back"
+        name="fa6-solid:backward-step"
+        class="h-8 w-8 cursor-pointer"
+      />
+      {
+        isPlaying ? (
+          <Icon
+            id="play"
+            name="fa6-solid:circle-pause"
+            class="h-12 w-12 cursor-pointer"
+          />
+        ) : (
+          <Icon
+            id="play"
+            name="fa6-solid:circle-play"
+            class="h-12 w-12 cursor-pointer"
+          />
+        )
+      }
+
+      <Icon
+        id="skip"
+        name="fa6-solid:forward-step"
+        class="h-8 w-8 cursor-pointer"
+      />
+    </div>
+  </div>
+</section>

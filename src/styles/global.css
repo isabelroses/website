@@ -1,21 +1,12 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-@theme {
-  --color-fg: #d1d5db;
-  --color-fg-lighter: #9ca3af;
+.share-icon {
+  @apply w-6 h-6 text-fg hover:text-special transition-colors duration-200 fill-current;
+}
 
-  --color-bg: #000;
-  --color-bg-lighter: #020202;
-
-  --color-card: #1f1f1f;
-  --color-special: var(--color-blue);
-
-  --color-blue: #74c7ec;
-  --color-green: #a6e3a1;
-  --color-yellow: #f9e2af;
-  --color-purple: #cba6f7;
-  --color-red: #f38ba8;
+.left-\[20\%\] {
+  left: 20%;
 }
 
 @layer utilities {
@@ -37,7 +28,7 @@
     :where(code):not(
       :where([class~="not-prose"], [class~="not-prose"] *, pre code)
     ) {
-      @apply bg-bg-lighter rounded-sm ring-1 ring-inset ring-card px-1 py-[0.2rem] font-normal;
+      @apply rounded-sm ring-1 ring-inset ring-card px-1 py-[0.2rem] font-normal;
     }
 
     :where(code):not(
@@ -51,22 +42,22 @@
 
     @apply md:max-w-[65ch] max-w-[80vw];
   }
+}
 
-  .pill {
-    @apply ring-inset text-sm ring-1 ring-card px-2 rounded-full text-special;
-  }
+@theme {
+  --color-fg: #ced1f0;
+  --color-fg-lighter: #b6b8de;
 
-  .icon {
-    @apply h-6 w-6 fill-fg;
-  }
+  --color-bg: #0e0f15;
 
-  .align-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 0.5rem;
-    padding-block: 0.2rem;
-  }
+  --color-card: #1e1f2a;
+  --color-special: var(--color-blue);
+
+  --color-blue: #83c4e6; /* snow */
+  --color-green: #91e478;
+  --color-yellow: #ede874;
+  --color-purple: #8b79e8;
+  --color-red: #f6598e;
 }
 
 @layer base {
@@ -75,7 +66,6 @@
     --color-fg-lighter: #9ca3af;
 
     --color-bg: #000;
-    --color-bg-lighter: #050505;
 
     --color-card: #1f1f1f;
     --color-special: var(--color-blue);
@@ -92,7 +82,6 @@
     --color-fg-lighter: #b6b8de;
 
     --color-bg: #0e0f15;
-    --color-bg-lighter: #14161d;
 
     --color-card: #1e1f2a;
     --color-special: var(--color-blue);
@@ -109,7 +98,6 @@
     --color-fg-lighter: #555a6b;
 
     --color-bg: #f8f9fc;
-    --color-bg-lighter: #eaeef3;
 
     --color-card: #d0d5df;
     --color-special: var(--blue);
@@ -126,7 +114,6 @@
     --color-fg-lighter: #a6adc8;
 
     --color-bg: #181825;
-    --color-bg-lighter: #1e1e2e;
 
     --color-card: #313244;
     --color-special: var(--color-blue);
@@ -143,7 +130,6 @@
     --color-fg-lighter: #a5adcb;
 
     --color-bg: #1e2030;
-    --color-bg-lighter: #24273a;
 
     --color-card: #363a4f;
     --color-special: var(--color-blue);
@@ -160,7 +146,6 @@
     --color-fg-lighter: #a5adce;
 
     --color-bg: #292c3c;
-    --color-bg-lighter: #303446;
 
     --color-card: #414559;
     --color-special: var(--color-blue);
@@ -177,7 +162,6 @@
     --color-fg-lighter: #6c6f85;
 
     --color-bg: #eff1f5;
-    --color-bg-lighter: #e6e9ef;
 
     --color-card: #ccd0da;
     --color-special: var(--color-blue);
@@ -194,7 +178,6 @@
     --color-fg-lighter: #94aaa0;
 
     --color-bg: #1c2225;
-    --color-bg-lighter: #232a2e;
 
     --color-card: #313b40;
     --color-special: var(--color-blue);

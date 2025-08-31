@@ -1,6 +1,6 @@
 import { Feed } from "feed";
 import { getCollection } from "astro:content";
-import { SITE_TITLE, SITE_DESCRIPTION } from "../consts";
+import { SITE_TITLES, SITE_DESCRIPTIONS } from "../lib/consts";
 import sanitizeHtml from "sanitize-html";
 import MarkdownIt from "markdown-it";
 
@@ -18,8 +18,8 @@ export async function GET(context) {
   });
 
   const feed = new Feed({
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    title: SITE_TITLES.index,
+    description: SITE_DESCRIPTIONS.index,
     id: siteUrl,
     link: siteUrl,
     language: "en",

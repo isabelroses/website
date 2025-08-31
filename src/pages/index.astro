@@ -1,89 +1,160 @@
 ---
-import DefaultLayout from '../layouts/Default.astro';
-import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import { getCollection } from "astro:content";
-import FormattedDate from '../components/FormattedDate.astro';
-import Title from '../components/Title.astro';
-import ProjectMinimal from '../components/ProjectMinimal.astro';
-import Article from '../components/Article.astro';
+import { Icon } from "astro-icon/components";
 
-const posts = await getCollection('blog', ({ data }) => {
+import Base from "../layouts/Base.astro";
+import MusicPlayer from "../components/MusicPlayer.astro";
+import Song from "../components/Song.astro";
+
+const posts = await getCollection("blog", ({ data }) => {
   return !data.draft && !data.archived;
 });
 
-import { PROJECTS } from '../consts';
+import { SITE_TITLES, SITE_DESCRIPTIONS } from "../lib/consts";
 ---
 
-<DefaultLayout title={SITE_TITLE} description={SITE_DESCRIPTION} image="/index.png">
+<Base
+  title={SITE_TITLES.index}
+  descripition={SITE_DESCRIPTIONS.index}
+  image="/index.png"
+>
+  <div
+    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-52 mb-18 md:my-0"
+  >
+    <MusicPlayer
+      nowPlaying="nix"
+      playPercent={20}
+      playPositon="0:20"
+      playLength="1:00"
+    />
 
-<section class="mb-8 w-full">
-  <div class="flex flex-col gap-4">
-    <h1 class="text-4xl mb-4">Hello, I&apos;m <span class="text-special">isabel</span></h1>
+    <section class="flex flex-col gap-8 w-full md:w-md">
+      <div>
+        <h2 class="text-xl">Up next</h2>
+        <ul class="flex flex-col mt-4">
+          {
+            posts
+              .slice(0, 3)
+              .entries()
+              .map(([i, post]) => (
+                <Song
+                  index={i + 1}
+                  title={post.data.title}
+                  slug={`/blog/${post.id}`}
+                  time={`${post.data.readTime} mins`}
+                />
+              ))
+          }
+        </ul>
+      </div>
 
-    <p>
-      I am currently studying computer science, as a third year student at
-      Aberystwyth University. A significant amount of my time goes into being a
-      <a target="_blank" class="text-special underline" href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md#nixpkgs-committers">Nixpkgs committer</a>,
-      where I help maintain the Nixpkgs repository. The rest of my time is spent on
-      <a target="_blank" class="text-special underline" href="https://github.com/catppuccin/catppuccin">Catppuccin</a>
-      where I make some themes.
-    </p>
+      <div>
+        <h2 class="text-xl">Playlists</h2>
+        <ul class="flex flex-col mt-4">
+          <li class="p-2 border-card border-b-2 last:border-0">
+            <a
+              class="hover:decoration-solid underline underline-offset-4 decoration-dashed hover:text-special transition-all ease-in-out duration-200"
+              href="/blog">Blog</a
+            >
+          </li>
+          <li class="p-2 border-card border-b-2 last:border-0">
+            <a
+              class="hover:decoration-solid underline underline-offset-4 decoration-dashed hover:text-special transition-all ease-in-out duration-200"
+              href="/projects">Projects</a
+            >
+          </li>
+          <li class="p-2 border-card border-b-2 last:border-0">
+            <a
+              class="hover:decoration-solid underline underline-offset-4 decoration-dashed hover:text-special transition-all ease-in-out duration-200"
+              href="/friends">Friends</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl">Share</h2>
+        <ul class="flex flex-row mt-4 gap-4">
+          <li>
+            <a rel="me noreferrer" href="/feed.xml" title="feed">
+              <Icon name="fa6-solid:rss" class="share-icon" />
+            </a>
+          </li>
+          <li>
+            <a
+              rel="me noreferrer"
+              target="_blank"
+              href="https://github.com/isabelroses"
+              title="GitHub"
+            >
+              <Icon name="fa6-brands:github" class="share-icon" />
+            </a>
+          </li>
+          <li>
+            <a
+              rel="me noreferrer"
+              target="_blank"
+              href="https://akko.isabelroses.com/@isabel"
+              title="mastodon"
+            >
+              <Icon name="fa6-brands:mastodon" class="share-icon" />
+            </a>
+          </li>
+          <li>
+            <a
+              rel="me noreferrer"
+              target="_blank"
+              href="https://bsky.app/profile/did:plc:qxichs7jsycphrsmbujwqbfb"
+              title="bluesky"
+            >
+              <Icon name="fa6-brands:bluesky" class="share-icon" />
+            </a>
+          </li>
+          <li>
+            <a
+              rel="me noreferrer"
+              target="_blank"
+              href="/api/discord"
+              title="Discord"
+            >
+              <Icon name="fa6-brands:discord" class="share-icon" />
+            </a>
+          </li>
+          <li>
+            <a
+              rel="me noreferrer"
+              href="https://ko-fi.com/isabelroses"
+              title="Ko-fi"
+            >
+              <svg
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                class="share-icon"
+              >
+                <path
+                  d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"
+                ></path>
+              </svg>
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h2 class="text-xl">Settings</h2>
+        <form name="themes" id="form-themes" class="mt-4">
+          <select name="themes" id="themes" aria-label="Change theme">
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+            <option value="catppuccin_mocha">Catppuccin Mocha</option>
+            <option value="catppuccin_macchiato">Catppuccin Macchiato</option>
+            <option value="catppuccin_frappe">Catppuccin Frappé</option>
+            <option value="catppuccin_latte">Catppuccin Latte</option>
+            <option value="evergarden">Evergarden</option>
+            <option value="cuddlefish">Cuddlefish</option>
+          </select>
+        </form>
+      </div>
+    </section>
   </div>
-</section>
-
-<section class="mb-8 w-full">
-  <Title title="Blog" description="The parts of my life that I put out into the world" />
-
-  <div class="grid lg:grid-cols-2 gap-4">
-    { posts.map((post, index) => {
-      if (index >= 3) return null;
-
-      return (
-        <Article id={post.id} {...post.data} compact={true} />
-      );
-    }) }
-
-    <a class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl text-center content-center group text-fg hover:text-special transition ease-in-out duration-200" href="/blog/">
-      See more
-      <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">
-        →
-      </span>
-    </a>
-  </div>
-</section>
-
-<section class="mb-8 w-full">
-  <Title title="Projects" description="A collection of projects that I maintain" />
-
-  <div class="grid lg:grid-cols-2 gap-4">
-    { PROJECTS.map((project, index) => {
-      if (index >= 3) return null;
-
-      return (
-        <ProjectMinimal {...project} />
-      )
-    }) }
-
-    <a class="ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl text-center content-center group text-fg hover:text-special transition-all ease-in-out duration-200" href="/projects/">
-      See more
-      <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">
-        →
-      </span>
-    </a>
-  </div>
-</section>
-
-<section class="mb-8 w-full">
-  <Title title="Friends" description="Want to see some cool badges" />
-
-  <div class="grid xl:grid-cols-6 gap-4">
-    <a class="xl:col-start-2 xl:col-span-4 ring-inset ring-1 ring-card bg-bg-lighter p-4 rounded-xl text-center content-center group text-fg hover:text-special transition-all ease-in-out duration-200" href="/friends/">
-      Check out my friends
-      <span aria-hidden="true" class="inline-block translate-x-0 group-hover:translate-x-1 transition-transform ease-in-out duration-200">
-        →
-      </span>
-    </a>
-  </div>
-</section>
-
-</DefaultLayout>
+</Base>

@@ -6,7 +6,7 @@ const customLoader: Loader = {
   ...glob,
   name: "customLoader",
   load: async (loaderParams) => {
-    const { store, logger } = loaderParams;
+    const { store } = loaderParams;
 
     const baseLoader = glob({
       base: "./src/content",
@@ -21,7 +21,7 @@ const customLoader: Loader = {
 
     items.forEach((item) => {
       const readTime = readingTime(item.body, 200);
-      item.data.readTime = `${readTime.minutes} mins`;
+      item.data.readTime = readTime.minutes;
     });
 
     sorted.forEach((item) => {

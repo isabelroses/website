@@ -1,0 +1,25 @@
+---
+import BaseHead from "../components/BaseHead.astro";
+import Header from "../components/Header.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const props = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <BaseHead {...props} />
+  </head>
+
+  <body
+    class="bg-bg text-fg min-h-screen flex flex-col items-center justify-center"
+  >
+    <slot />
+  </body>
+</html>

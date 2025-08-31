@@ -1,21 +1,81 @@
 ---
-import Default from '../layouts/Default.astro';
-import Title from '../components/Title.astro';
-import Project from '../components/Project.astro';
-import { PROJECTS } from '../consts';
+import { Icon } from "astro-icon/components";
 
-const title = "Projects";
-const description = "A collection of projects that I maintain";
+import Base from "../layouts/Base.astro";
+import MusicPlayer from "../components/MusicPlayer.astro";
+import Song from "../components/Song.astro";
+
+import defaultAvatar from "../assets/me.webp";
+
+import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "../lib/consts";
 ---
 
-<Default title={title} description={description} image="/projects.png">
-  <section class="flex flex-col gap-4 mb-16">
-    <Title title={title} description={description} size="lg" />
+<Base
+  title={SITE_TITLES.projects}
+  descripition={SITE_DESCRIPTIONS.projects}
+  image="/blog.png"
+>
+  <div
+    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-52 mb-18 md:my-0"
+  >
+    <MusicPlayer
+      nowPlaying={PROJECTS[0].name}
+      playPercent={0}
+      playPositon="0:00"
+      playLength="1:00"
+    />
 
-    <div class="flex flex-col gap-4">
-      { PROJECTS.map((project) => (
-        <Project {...project} />
-      )) }
-    </div>
-  </section>
-</Default>
+    <section class="flex flex-col w-full md:w-md">
+      <h2 class="text-xl">Up next</h2>
+      <ul class="flex flex-col mt-4">
+        {
+          PROJECTS.entries().map(([i, project]) => (
+            <Song
+              index={i + 1}
+              title={project.name}
+              time={project.stars}
+              slug={project.href || project.repo || "#"}
+            />
+          ))
+        }
+      </ul>
+    </section>
+  </div>
+
+  <script define:vars={{ projects: PROJECTS, defaultAvatar }}>
+    const playButton = document.getElementById("play");
+    const backButton = document.getElementById("back");
+    const skipButton = document.getElementById("skip");
+
+    const title = document.getElementById("now-playing-title");
+    const playerImage = document.getElementById("player-image");
+    const listenTime = document.getElementById("listenTime");
+
+    let currentIndex = 0;
+
+    function updateNowPlaying() {
+      title.textContent = projects[currentIndex].name;
+      playerImage.src = projects[currentIndex].icon ?? defaultAvatar.src;
+      listenTime.textContent = formatSongLength(projects[currentIndex].stars);
+    }
+
+    playButton.addEventListener("click", () => {
+      location.href =
+        projects[currentIndex].href || projects[currentIndex].repo || "#";
+    });
+
+    backButton.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateNowPlaying();
+      }
+    });
+
+    skipButton.addEventListener("click", () => {
+      if (currentIndex < projects.length - 1) {
+        currentIndex++;
+        updateNowPlaying();
+      }
+    });
+  </script>
+</Base>

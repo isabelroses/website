@@ -12,6 +12,8 @@ import cssnano from "cssnano";
 export default defineConfig({
   site: "https://isabelroses.com",
 
+  compressHTML: true,
+
   integrations: [
     sitemap(),
     expressiveCode(),

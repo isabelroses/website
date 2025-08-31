@@ -1,110 +1,76 @@
 ---
-import { type CollectionEntry, getCollection } from 'astro:content';
-import Default from '../../layouts/Default.astro';
-import Title from '../../components/Title.astro';
-import FormattedDate from '../../components/FormattedDate.astro';
-import { render } from 'astro:content';
-import { Icon } from 'astro-icon/components';
+import { type CollectionEntry, getCollection, render } from "astro:content";
+import { Icon } from "astro-icon/components";
+
+import Base from "../../layouts/Base.astro";
+import MusicPlayer from "../../components/MusicPlayer.astro";
+
+import { SITE_TITLE, SITE_DESCRIPTION } from "../lib/consts";
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog', ({ data }) => {
+  const posts = await getCollection("blog", ({ data }) => {
     return !data.draft && !data.archived;
   });
 
-	return posts.map((post) => ({
+  return posts.map((post) => ({
     params: { slug: post.id },
-		props: post,
-	}));
+    props: {
+      post,
+      nextSlug: posts[posts.indexOf(post) + 1]?.id || null,
+    },
+  }));
 }
-type Props = CollectionEntry<'blog'>;
+type Props = CollectionEntry<"blog">;
 
-const post = Astro.props;
+const { post, nextSlug } = Astro.props;
 const { Content } = await render(post);
-const shareurl = `https://isabelroses.com/blog/${ post.id }`;
+const shareurl = `https://isabelroses.com/blog/${post.id}`;
 ---
 
-<Default title={post.data.title} description={post.data.description} image=`/blog/${post.id}.png`>
-  <section class="flex flex-col gap-2 w-full mb-4">
-    <h1 class="text-4xl">{post.data.title}</h1>
-    <h2 class="text-lg">{post.data.description}</h2>
-    <FormattedDate date={post.data.date} class="text-sm text-fg-lighter" />
-  </section>
+<Base
+  title={post.data.title}
+  description={post.data.description}
+  image=`/blog/${post.id}.png`
+>
+  <div class="flex flex-row items-start p-6 gap-24">
+    <MusicPlayer
+      nowPlaying={post.data.title}
+      playPercent={0}
+      playPositon="0:00"
+      playLength=`${post.data.readTime}:00`
+      sectionClass="sticky top-24 lg:block hidden"
+      isPlaying={true}
+    />
 
-  <article class="prose"><Content /></article>
+    <section class="my-12">
+      <article class="prose"><Content /></article>
+    </section>
+  </div>
+</Base>
 
-  <section class="article-footer my-8">
-    <ul class="align-footer">
-      <li>
-        <button
-          onclick=`navigator.share({url: ${shareurl}})`
-          data-share-btn
-        >
-          <Icon name="fa6-solid:share-from-square" class="icon" />
-        </button>
-      </li>
-      <li>
-        <a
-          target="_blank"
-          href=`https://bsky.app/intent/compose?text=${ shareurl }`
-        >
-          <Icon name="fa6-brands:bluesky" class="icon" />
-        </a>
-      </li>
-    </ul>
+<script define:vars={{ readTime: post.data.readTime, nextSlug }}>
+  const backBtn = document.getElementById("back");
+  const skipBtn = document.getElementById("skip");
 
-    <span class="align-footer">
-      © Blog post licensed under
-      <a
-        target="_blank"
-        href="https://creativecommons.org/licenses/by/4.0"
-        >CC BY-NC-SA 4.0</a
-      >
-    </span>
-  </section>
+  backBtn.addEventListener("click", () => {
+    window.history.back();
+  });
+  skipBtn.addEventListener("click", () => {
+    window.location.href = `/blog/${nextSlug}`;
+  });
 
-  <div id="comments" class="w-full"></div>
-</Default>
+  const scrobbler = document.getElementById("scrobbler");
+  const playPositon = document.getElementById("playPositon");
 
-<script>
-  document.addEventListener("astro:page-load", setup);
-  document.addEventListener("astro:after-swap", setup);
+  document.addEventListener("scroll", (event) => {
+    const scrollTop = document.documentElement.scrollTop;
+    const scrollHeight =
+      document.documentElement.scrollHeight - window.innerHeight;
+    const scrollPercent = (scrollTop / scrollHeight) * 100;
 
-  function setup() {
-    let theme = window.localStorage.getItem('theme');
+    const currentTime = Math.floor((scrollPercent / 100) * readTime);
 
-    if (theme.includes('catppuccin')) {
-      theme = `https://giscus.catppuccin.com/themes/${theme.split('_').pop()}-sapphire.css`
-    }
-
-    if (theme == undefined) {
-      theme = 'dark';
-    }
-
-    let attributes = {
-      'src': 'https://giscus.app/client.js',
-      'data-repo': 'isabelroses/website',
-      'data-repo-id': 'R_kgDOK09lKQ',
-      'data-category': 'General',
-      'data-category-id': 'DIC_kwDOK09lKc4CeIfv',
-      'data-mapping': 'title',
-      'data-strict': '0',
-      'data-reactions-enabled': '1',
-      'data-emit-metadata': '0',
-      'data-input-position': 'top',
-      'data-theme': theme,
-      'data-lang': 'en',
-      'data-loading': 'lazy',
-      'crossorigin': 'anonymous',
-      'async':  '',
-    };
-
-    let script = document.createElement('script');
-    Object.entries(attributes).forEach(([key, value]) =>
-      script.setAttribute(key, value),
-    );
-
-    const comments = document.getElementById('comments');
-    comments.innerHTML = '';
-    comments.appendChild(script);
-  };
+    scrobbler.style.left = `${scrollPercent}%`;
+    playPositon.textContent = `${currentTime}:00`;
+  });
 </script>
