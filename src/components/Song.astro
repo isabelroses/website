@@ -1,7 +1,7 @@
 ---
 interface Props {
   title: string;
-  slug: string;
+  slug?: string;
   index: number;
   time?: string;
   id?: string;
@@ -11,17 +11,31 @@ const { title, slug, index, time, id } = Astro.props as Props;
 ---
 
 <li class="p-2 border-card border-b-2 last:border-0" id={id}>
-  <a href={slug} class="flex flex-row items-center justify-between group">
-    <span class="w-8 font-mono text-fg-lighter mr-4">
-      {index}
-    </span>
+  {
+    slug ? (
+      <a href={slug} class="flex flex-row items-center justify-between group">
+        <span class="w-8 font-mono text-fg-lighter mr-4">{index}</span>
 
-    <span
-      class="grow underline underline-offset-4 decoration-dashed hover:decoration-solid hover:text-special transition-all ease-in-out duration-200"
-    >
-      {title}
-    </span>
+        <span class="grow underline underline-offset-4 decoration-dashed hover:decoration-solid hover:text-special transition-all ease-in-out duration-200">
+          {title}
+        </span>
 
-    {time && <span class="text-fg-lighter text-sm ml-4 shrink-0">{time}</span>}
-  </a>
+        {time && (
+          <span class="text-fg-lighter text-sm ml-4 shrink-0">{time}</span>
+        )}
+      </a>
+    ) : (
+      <div class="flex flex-row items-center justify-between group">
+        <span class="w-8 font-mono text-fg-lighter mr-4">{index}</span>
+
+        <span class="grow underline underline-offset-4 decoration-dashed hover:decoration-solid hover:text-special transition-all ease-in-out duration-200">
+          {title}
+        </span>
+
+        {time && (
+          <span class="text-fg-lighter text-sm ml-4 shrink-0">{time}</span>
+        )}
+      </div>
+    )
+  }
 </li>

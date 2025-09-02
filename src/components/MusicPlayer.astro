@@ -1,10 +1,10 @@
 ---
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
-import me from "../assets/me.webp";
+import me from "@assets/me.webp";
 
 interface Props {
-  isPlaying: boolean;
+  isPlaying?: boolean;
   nowPlaying: string;
   playPercent: number;
   playPositon: string;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 const {
-  isPlaying,
+  isPlaying = false,
   nowPlaying,
   playPercent,
   playPositon,

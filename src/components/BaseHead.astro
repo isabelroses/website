@@ -1,6 +1,6 @@
 ---
 import "../styles/global.css";
-import { SITE_TITLES } from "../lib/consts";
+import { SITE_TITLES } from "@lib/consts";
 
 import { ClientRouter } from "astro:transitions";
 
@@ -63,21 +63,7 @@ const { title, description, image } = Astro.props;
 <meta property="twitter:description" content={description} />
 {image && <meta property="twitter:image" content={new URL(image, Astro.url)} />}
 
-<!-- shared useful functions -->
 <script is:inline>
-  function formatSongLength(n) {
-    const s = n.toString();
-    if (s.length > 3) {
-      const mid = Math.floor(s.length / 2);
-      const left = s.slice(0, mid);
-      const right = s.slice(mid);
-      return `${left}:${right}`;
-    } else {
-      const padded = s.padStart(3, "0");
-      return `${padded[0]}:${padded.slice(1)}`;
-    }
-  }
-
   // set theme on intial load
   setTheme(getTheme());
 

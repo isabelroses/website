@@ -1,11 +1,8 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
-import { Icon } from "astro-icon/components";
 
-import Base from "../../layouts/Base.astro";
-import MusicPlayer from "../../components/MusicPlayer.astro";
-
-import { SITE_TITLE, SITE_DESCRIPTION } from "../lib/consts";
+import Base from "@layouts/Base.astro";
+import MusicPlayer from "@components/MusicPlayer.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => {
@@ -20,11 +17,14 @@ export async function getStaticPaths() {
     },
   }));
 }
-type Props = CollectionEntry<"blog">;
+
+interface Props {
+  post: CollectionEntry<"blog">;
+  nextSlug: string | null;
+}
 
 const { post, nextSlug } = Astro.props;
 const { Content } = await render(post);
-const shareurl = `https://isabelroses.com/blog/${post.id}`;
 ---
 
 <Base
@@ -48,7 +48,7 @@ const shareurl = `https://isabelroses.com/blog/${post.id}`;
   </div>
 </Base>
 
-<script define:vars={{ readTime: post.data.readTime, nextSlug }}>
+<script is:inline define:vars={{ readTime: post.data.readTime, nextSlug }}>
   const backBtn = document.getElementById("back");
   const skipBtn = document.getElementById("skip");
 
@@ -62,7 +62,7 @@ const shareurl = `https://isabelroses.com/blog/${post.id}`;
   const scrobbler = document.getElementById("scrobbler");
   const playPositon = document.getElementById("playPositon");
 
-  document.addEventListener("scroll", (event) => {
+  document.addEventListener("scroll", () => {
     const scrollTop = document.documentElement.scrollTop;
     const scrollHeight =
       document.documentElement.scrollHeight - window.innerHeight;

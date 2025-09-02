@@ -1,18 +1,12 @@
 ---
-import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
 
-import Base from "../layouts/Base.astro";
-import MusicPlayer from "../components/MusicPlayer.astro";
-import Song from "../components/Song.astro";
-import myBadge from "../assets/friends/me.gif";
+import Base from "@layouts/Base.astro";
+import MusicPlayer from "@components/MusicPlayer.astro";
+import Song from "@components/Song.astro";
+import myBadge from "@assets/friends/me.gif";
 
-import {
-  SITE_TITLES,
-  SITE_DESCRIPTIONS,
-  WEBRINGS,
-  FRIENDS,
-} from "../lib/consts";
+import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
 ---
 
 <Base
@@ -67,12 +61,11 @@ import {
     </section>
   </div>
 
-  <script define:vars={{ webrings: WEBRINGS }}>
+  <script is:inline define:vars={{ webrings: WEBRINGS }}>
     const playButton = document.getElementById("play");
     const backButton = document.getElementById("back");
     const skipButton = document.getElementById("skip");
     const title = document.getElementById("now-playing-title");
-    const listenTime = document.getElementById("listenTime");
 
     webrings.forEach((_, i) => {
       const el = document.getElementById(`webring-${i}`);

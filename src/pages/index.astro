@@ -2,20 +2,20 @@
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 
-import Base from "../layouts/Base.astro";
-import MusicPlayer from "../components/MusicPlayer.astro";
-import Song from "../components/Song.astro";
+import Base from "@layouts/Base.astro";
+import MusicPlayer from "@components/MusicPlayer.astro";
+import Song from "@components/Song.astro";
 
 const posts = await getCollection("blog", ({ data }) => {
   return !data.draft && !data.archived;
 });
 
-import { SITE_TITLES, SITE_DESCRIPTIONS } from "../lib/consts";
+import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
 ---
 
 <Base
   title={SITE_TITLES.index}
-  descripition={SITE_DESCRIPTIONS.index}
+  description={SITE_DESCRIPTIONS.index}
   image="/index.png"
 >
   <div

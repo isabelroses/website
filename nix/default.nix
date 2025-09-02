@@ -24,11 +24,13 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   pnpmDeps = pnpm.fetchDeps {
     inherit (finalAttrs) pname version src;
     fetcherVersion = 2;
-    hash = "sha256-/7uhKfbzErQSt6D4aGRKpqK0hnVMcYTfhKd7gJ7pfUU=";
+    hash = "sha256-sNgvX/mLfJ/Wdj0aFIUrPCXkpmxqgskFnh/n7ZmtBGc=";
   };
 
   dontUseJustInstall = true;
   dontUseJustCheck = true;
+
+  env.ASTRO_TELEMETRY_DISABLED = 1;
 
   installPhase = ''
     runHook preInstall

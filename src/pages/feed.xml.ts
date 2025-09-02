@@ -1,10 +1,10 @@
 import { Feed } from "feed";
 import { getCollection } from "astro:content";
-import { SITE_TITLES, SITE_DESCRIPTIONS } from "../lib/consts";
+import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
 import sanitizeHtml from "sanitize-html";
 import MarkdownIt from "markdown-it";
 
-export async function GET(context) {
+export async function GET() {
   const posts = await getCollection("blog", ({ data }) => {
     return !data.draft && !data.archived;
   });
@@ -35,7 +35,7 @@ export async function GET(context) {
   });
 
   posts.forEach((post) => {
-    const htmlContent = md.render(post.body);
+    const htmlContent = md.render(post.body ?? "");
 
     const sanitizedContent = sanitizeHtml(htmlContent, {
       allowedTags: sanitizeHtml.defaults.allowedTags.concat([
@@ -84,7 +84,6 @@ export async function GET(context) {
       title: post.data.title,
       description: post.data.description,
       date: post.data.date,
-      updatedDate: post.data.updated,
       content: sanitizedContent,
       link: `${siteUrl}/blog/${post.id}/`,
     });

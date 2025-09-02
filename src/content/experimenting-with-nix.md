@@ -155,7 +155,7 @@ Then each host1, `hosts/host1.nix`, can contain something specific to that host,
 
 ```nix
 {
-  imports = [../users/isabel.nix];
+  imports = [@users/isabel.nix];
   networking.hostName = "host1";
 }
 ```
@@ -164,7 +164,7 @@ Whereas my other host `hosts/host2.nix`, might want to have a different hostname
 
 ```nix
 {
-  imports = [../users/isabel.nix];
+  imports = [@users/isabel.nix];
   networking.hostName = "host2";
 }
 ```
@@ -188,7 +188,7 @@ Our `modules/common.nix` may look something like this, where we are defining a n
 
 ```nix
 {lib, config, ...}: {
-  imports = [../users/isabel.nix]; # this file remains the same
+  imports = [@users/isabel.nix]; # this file remains the same
 
   # in this case we are creating a new option under the `my` namespace
   options.my.hostname = lib.mkOption {
@@ -206,7 +206,7 @@ Then each host would look almost identical to the other but with slightly differ
 
 ```nix
 {
-  imports = [../modules/common.nix];
+  imports = [@modules/common.nix];
   config.my.hostname = "host1";
 }
 ```

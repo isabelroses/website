@@ -133,5 +133,5 @@ export const generateOpenGraph = async (
   const pngData = resvg.render();
   const pngBuffer = pngData.asPng();
 
-  return pngBuffer;
+  return new Uint8Array(pngBuffer);
 };

@@ -1,18 +1,16 @@
 ---
-import { Icon } from "astro-icon/components";
+import Base from "@layouts/Base.astro";
+import MusicPlayer from "@components/MusicPlayer.astro";
+import Song from "@components/Song.astro";
 
-import Base from "../layouts/Base.astro";
-import MusicPlayer from "../components/MusicPlayer.astro";
-import Song from "../components/Song.astro";
+import defaultAvatar from "@assets/me.webp";
 
-import defaultAvatar from "../assets/me.webp";
-
-import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "../lib/consts";
+import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
 ---
 
 <Base
   title={SITE_TITLES.projects}
-  descripition={SITE_DESCRIPTIONS.projects}
+  description={SITE_DESCRIPTIONS.projects}
   image="/blog.png"
 >
   <div
@@ -33,7 +31,7 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "../lib/consts";
             <Song
               index={i + 1}
               title={project.name}
-              time={project.stars}
+              time={project.stars.toString()}
               slug={project.href || project.repo || "#"}
             />
           ))
@@ -42,7 +40,20 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "../lib/consts";
     </section>
   </div>
 
-  <script define:vars={{ projects: PROJECTS, defaultAvatar }}>
+  <script is:inline define:vars={{ projects: PROJECTS, defaultAvatar }}>
+    function formatSongLength(n) {
+      const s = n.toString();
+      if (s.length > 3) {
+        const mid = Math.floor(s.length / 2);
+        const left = s.slice(0, mid);
+        const right = s.slice(mid);
+        return `${left}:${right}`;
+      } else {
+        const padded = s.padStart(3, "0");
+        return `${padded[0]}:${padded.slice(1)}`;
+      }
+    }
+
     const playButton = document.getElementById("play");
     const backButton = document.getElementById("back");
     const skipButton = document.getElementById("skip");

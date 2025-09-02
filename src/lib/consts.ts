@@ -1,7 +1,7 @@
-import catppuccinNix from "../assets/repos/catppuccin-nix.webp";
-import freezeNvim from "../assets/repos/freeze.webp";
-import dotfiles from "../assets/repos/dotfiles.svg";
-import bellado from "../assets/repos/bellado.webp";
+import catppuccinNix from "@assets/repos/catppuccin-nix.webp";
+import freezeNvim from "@assets/repos/freeze.webp";
+import dotfiles from "@assets/repos/dotfiles.svg";
+import bellado from "@assets/repos/bellado.webp";
 
 export const SITE_TITLES = {
   index: "isabel",
@@ -70,25 +70,25 @@ export const PROJECTS = [
   },
 ];
 
-import gen from "../assets/friends/gen.png";
-import alyxia from "../assets/friends/alyxia.png";
-import chloe from "../assets/friends/chloe.png";
-import nax from "../assets/friends/nax.gif";
-import kaya from "../assets/friends/kaya.gif";
-import aubrey from "../assets/friends/aubrey.png";
-import rooot from "../assets/friends/rooot.gif";
-import autumn from "../assets/friends/autumn.webp";
-import maeve from "../assets/friends/maeve.png";
-import basil from "../assets/friends/basil.gif";
-import arimelody from "../assets/friends/arimelody.gif";
-import ezri from "../assets/friends/ezri.png";
-import notnite from "../assets/friends/notnite.png";
-import robin from "../assets/friends/robin.gif";
-import sketch from "../assets/friends/sketch.png";
-import slonking from "../assets/friends/slonking.webp";
-import thermia from "../assets/friends/thermia.gif";
-import awwpotato from "../assets/friends/awwpotato.png";
-import dbw from "../assets/friends/dbw.png";
+import gen from "@assets/friends/gen.png";
+import alyxia from "@assets/friends/alyxia.png";
+import chloe from "@assets/friends/chloe.png";
+import nax from "@assets/friends/nax.gif";
+import kaya from "@assets/friends/kaya.gif";
+import aubrey from "@assets/friends/aubrey.png";
+import rooot from "@assets/friends/rooot.gif";
+import autumn from "@assets/friends/autumn.webp";
+import maeve from "@assets/friends/maeve.png";
+import basil from "@assets/friends/basil.gif";
+import arimelody from "@assets/friends/arimelody.gif";
+import ezri from "@assets/friends/ezri.png";
+import notnite from "@assets/friends/notnite.png";
+import robin from "@assets/friends/robin.gif";
+import sketch from "@assets/friends/sketch.png";
+import slonking from "@assets/friends/slonking.webp";
+import thermia from "@assets/friends/thermia.gif";
+import awwpotato from "@assets/friends/awwpotato.png";
+import dbw from "@assets/friends/dbw.png";
 
 export const FRIENDS = [
   {
