@@ -1,0 +1,114 @@
+---
+import { getCollection, type CollectionEntry } from "astro:content";
+
+import Base from "@layouts/Base.astro";
+import MusicPlayer from "@components/MusicPlayer.astro";
+import Song from "@components/Song.astro";
+
+import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
+
+interface Props {
+  posts: { title: string; readTime: number; slug: string }[];
+  nextSlug: string | null;
+}
+
+const { posts } = Astro.props;
+
+export async function getStaticPaths() {
+  const posts = await getCollection("blog", ({ data }) => {
+    return !data.draft && !data.archived;
+  });
+
+  const tags: Set<string> = new Set();
+
+  for (const post of posts) {
+    if (Array.isArray(post.data.tags)) {
+      for (const tag of post.data.tags) {
+        tags.add(tag);
+      }
+    }
+  }
+
+  return Array.from(tags).map((tag) => {
+    const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
+    const postsSmall = filteredPosts.map((p) => ({
+      readTime: p.data.readTime,
+      title: p.data.title,
+      slug: p.id,
+    }));
+
+    return {
+      params: { slug: tag },
+      props: { posts: postsSmall },
+    };
+  });
+}
+---
+
+<Base
+  title={SITE_TITLES.blog}
+  description={SITE_DESCRIPTIONS.blog}
+  image="/blog.png"
+>
+  <div
+    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-52 mb-18 md:my-0"
+  >
+    <MusicPlayer
+      nowPlaying={posts[0].title}
+      playPercent={0}
+      playPositon="0:00"
+      playLength=`${posts[0].readTime}:00`
+    />
+
+    <section class="flex flex-col w-full md:w-md">
+      <h2 class="text-xl">Up next</h2>
+      <ul class="flex flex-col mt-4">
+        {
+          posts
+            .entries()
+            .map(([i, post]) => (
+              <Song
+                index={i + 1}
+                title={post.title}
+                time={`${post.readTime} mins`}
+                slug={`/blog/${post.slug}`}
+              />
+            ))
+        }
+      </ul>
+    </section>
+  </div>
+
+  <script is:inline define:vars={{ posts }}>
+    const playButton = document.getElementById("play");
+    const backButton = document.getElementById("back");
+    const skipButton = document.getElementById("skip");
+    const title = document.getElementById("now-playing-title");
+    const listenTime = document.getElementById("listenTime");
+
+    let currentIndex = 0;
+
+    function updateNowPlaying() {
+      title.textContent = posts[currentIndex].title;
+      listenTime.textContent = `${posts[currentIndex].readTime}:00`;
+    }
+
+    playButton.addEventListener("click", () => {
+      location.href = `/blog/${posts[currentIndex].slug}`;
+    });
+
+    backButton.addEventListener("click", () => {
+      if (currentIndex > 0) {
+        currentIndex--;
+        updateNowPlaying();
+      }
+    });
+
+    skipButton.addEventListener("click", () => {
+      if (currentIndex < posts.length - 1) {
+        currentIndex++;
+        updateNowPlaying();
+      }
+    });
+  </script>
+</Base>
