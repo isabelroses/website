@@ -6,7 +6,7 @@ import umami from "@yeskunall/astro-umami";
 import icon from "astro-icon";
 import mailObfuscation from "astro-mail-obfuscation";
 import autoprefixer from "autoprefixer";
-import cssnano from "cssnano";
+import compress from "astro-compress";
 
 // https://astro.build/config
 export default defineConfig({
@@ -23,6 +23,7 @@ export default defineConfig({
       id: "be210218-aad1-4b3a-a6a3-366952e22d8e",
     }),
     mailObfuscation(),
+    compress(),
   ],
 
   redirects: {
@@ -47,7 +48,7 @@ export default defineConfig({
 
     css: {
       postcss: {
-        plugins: [autoprefixer(), cssnano()],
+        plugins: [autoprefixer()],
       },
     },
 
