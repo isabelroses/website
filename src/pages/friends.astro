@@ -4,7 +4,6 @@ import { Image } from "astro:assets";
 import Base from "@layouts/Base.astro";
 import MusicPlayer from "@components/MusicPlayer.astro";
 import Song from "@components/Song.astro";
-import myBadge from "@assets/friends/me.gif";
 
 import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
 ---
@@ -38,7 +37,7 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
 
       <div>
         <h2 class="text-xl">Embed my badge</h2>
-        <Image src={myBadge} alt="isabel roses" width={88} height={31} />
+        <img src="/badges/me.gif" alt="isabel roses" width={88} height={31} />
       </div>
 
       <div>
