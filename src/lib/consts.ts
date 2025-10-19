@@ -89,6 +89,8 @@ import slonking from "@assets/friends/slonking.webp";
 import thermia from "@assets/friends/thermia.gif";
 import awwpotato from "@assets/friends/awwpotato.png";
 import dbw from "@assets/friends/dbw.png";
+import elissa from "@assets/friends/elissa.png";
+import tasky from "@assets/friends/tasky.webp";
 
 export const FRIENDS = [
   {
@@ -185,6 +187,16 @@ export const FRIENDS = [
     name: "dbw",
     link: "https://dbw.neocities.org",
     badge: dbw,
+  },
+  {
+    name: "elissa",
+    link: "https://elissa.moe",
+    badge: elissa,
+  },
+  {
+    name: "tasky",
+    link: "https://tasky.nuxt.dev",
+    badge: tasky,
   },
   //{
   //  link: "https://garfunkles.space",
