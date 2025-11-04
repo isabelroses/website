@@ -11,16 +11,16 @@
     "fmt": "prettier --write ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.4",
+    "@astrojs/check": "^0.9.5",
     "@astrojs/sitemap": "^3.6.0",
-    "@astrojs/ts-plugin": "^1.10.4",
+    "@astrojs/ts-plugin": "^1.10.5",
     "@iconify-json/fa6-brands": "^1.2.6",
     "@iconify-json/fa6-solid": "^1.2.4",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.19",
-    "@tailwindcss/vite": "^4.1.14",
+    "@tailwindcss/vite": "^4.1.16",
     "@yeskunall/astro-umami": "0.0.5",
-    "astro": "^5.14.4",
+    "astro": "^5.15.3",
     "astro-compress": "^2.3.8",
     "astro-expressive-code": "^0.41.3",
     "astro-icon": "^1.1.5",
@@ -35,7 +35,7 @@
     "sanitize-html": "^2.17.0",
     "satori": "^0.16.2",
     "sharp": "^0.34.4",
-    "tailwindcss": "^4.1.14",
+    "tailwindcss": "^4.1.16",
     "typescript": "^5.9.3"
   },
   "devDependencies": {
