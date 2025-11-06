@@ -91,6 +91,8 @@ import awwpotato from "@assets/friends/awwpotato.png";
 import dbw from "@assets/friends/dbw.png";
 import elissa from "@assets/friends/elissa.png";
 import tasky from "@assets/friends/tasky.webp";
+import april from "@assets/friends/april.png";
+import sydney from "@assets/friends/sydney.png"
 
 export const FRIENDS = [
   {
@@ -197,6 +199,16 @@ export const FRIENDS = [
     name: "tasky",
     link: "https://tasky.nuxt.dev",
     badge: tasky,
+  },
+  {
+    name: "april",
+    link: "https://aprl.cat",
+    badge: april,
+  },
+  {
+    name: "sydney",
+    link: "https://sydney.blue",
+    badge: sydney,
   },
   //{
   //  link: "https://garfunkles.space",
