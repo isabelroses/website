@@ -87,7 +87,7 @@ import robin from "@assets/friends/robin.gif";
 import sketch from "@assets/friends/sketch.png";
 import slonking from "@assets/friends/slonking.webp";
 import thermia from "@assets/friends/thermia.gif";
-import awwpotato from "@assets/friends/awwpotato.png";
+import da157 from "@assets/friends/0xda157.png";
 import dbw from "@assets/friends/dbw.png";
 import elissa from "@assets/friends/elissa.png";
 import tasky from "@assets/friends/tasky.webp";
@@ -181,9 +181,9 @@ export const FRIENDS = [
     badge: thermia,
   },
   {
-    name: "awwpotato",
-    link: "https://awwpotato.xyz",
-    badge: awwpotato,
+    name: "da157",
+    link: "https://0xda157.id",
+    badge: da157,
   },
   {
     name: "dbw",
