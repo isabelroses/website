@@ -5,8 +5,8 @@
   @apply w-6 h-6 text-fg hover:text-special transition-colors duration-200 fill-current;
 }
 
-.left-\[20\%\] {
-  left: 20%;
+.left-\[21\%\] {
+  left: 21%;
 }
 
 @layer utilities {
