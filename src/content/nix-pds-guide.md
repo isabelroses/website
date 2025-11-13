@@ -29,7 +29,7 @@ I have made when writing this guide.
    alternative implementations such as [cocoon](https://github.com/haileyok/cocoon) even if [they are packaged in
    nixpkgs](https://github.com/NixOS/nixpkgs/pull/458034).
 
-3. I will be targeting my article towards unstable and the next upcoming stable
+4. I will be targeting my article towards unstable and the next upcoming stable
    release. If you are using the 25.05 release of NixOS, you will have to change
    any references of `bluesky-pds` to `pds` as the package was renamed on
    unstable and later releases.
