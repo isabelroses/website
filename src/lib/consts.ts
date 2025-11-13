@@ -92,7 +92,7 @@ import dbw from "@assets/friends/dbw.png";
 import elissa from "@assets/friends/elissa.png";
 import tasky from "@assets/friends/tasky.webp";
 import april from "@assets/friends/april.png";
-import sydney from "@assets/friends/sydney.png"
+import sydney from "@assets/friends/sydney.png";
 
 export const FRIENDS = [
   {
