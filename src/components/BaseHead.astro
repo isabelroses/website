@@ -68,10 +68,10 @@ const { title, description, image } = Astro.props;
   setTheme(getTheme());
 
   document.addEventListener("astro:page-load", () => {
-    const themes = document.getElementById("themes");
-
     setTheme(getTheme());
 
+    const themes = document.getElementById("themes");
+    if (themes == null) return;
     themes.addEventListener("change", (event) => {
       setTheme(event.target.value);
     });
