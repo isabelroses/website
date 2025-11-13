@@ -72,9 +72,13 @@ const { Content } = await render(post);
       document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercent = (scrollTop / scrollHeight) * 100;
 
-    const currentTime = Math.floor((scrollPercent / 100) * readTime);
+    const totalSeconds = ((scrollPercent / 100) * readTime) * 60;
 
-    scrobbler.style.left = `${scrollPercent}%`;
-    playPositon.textContent = `${currentTime}:00`;
+    const currentMin = Math.floor(totalSeconds / 60);
+    const currentSec = Math.floor(totalSeconds % 60);
+
+    const scobblerMax = Math.min(scrollPercent, 98);
+    scrobbler.style.left = `${scobblerMax}%`;
+    playPositon.textContent = `${currentMin}:${currentSec.toString().padStart(2, "0")}`;
   });
 </script>
