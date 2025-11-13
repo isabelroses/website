@@ -168,3 +168,38 @@ import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
     </section>
   </div>
 </Base>
+
+<script>
+  async function getCoverArtUrl(recordingMbId) {
+    const base = 'https://musicbrainz.org/ws/2';
+    const headers = {
+      'Accept': 'application/json',
+      'User-Agent': 'isabelroses.com'
+    };
+
+    const recUrl = `${base}/recording/${recordingMbId}?fmt=json&inc=releases`;
+    const recResp = await fetch(recUrl, { headers });
+    if (!recResp.ok) {
+      throw new Error(`Failed to fetch recording: ${recResp.status}`);
+    }
+    const recData = await recResp.json();
+
+    if (!Array.isArray(recData.releases) || recData.releases.length === 0) {
+      throw new Error('No releases found for this recording');
+    }
+
+    const releaseMbId = recData.releases[0].id;
+    const coverArtUrl = `https://coverartarchive.org/release/${releaseMbId}/front`;
+    return coverArtUrl;
+  }
+
+  const nowPlayingAuthor = document.getElementById("now-playing-author");
+  const nowPlayingTitle = document.getElementById("now-playing-title");
+  const nowPlayingImage = document.getElementById("player-image");
+
+  const nowPlaying = (await fetch("https://pds.tgirl.cloud/xrpc/com.atproto.repo.getRecord?repo=did:plc:qxichs7jsycphrsmbujwqbfb&collection=fm.teal.alpha.actor.status&rkey=self").then(data => data.json())).value.item;
+
+  nowPlayingAuthor.textContent = nowPlaying.artists.map(data => data.artistName).join(",");
+  nowPlayingTitle.textContent = nowPlaying.trackName;
+  nowPlayingImage.src = nowPlaying.recordingMbId ? `https://coverartarchive.org/release/${nowPlaying.releaseMbId}/front` : getCoverArtUrl(nowPlaying.recordingMbId);
+</script>

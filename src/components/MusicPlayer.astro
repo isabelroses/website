@@ -13,6 +13,7 @@ interface Props {
   playPositon: string;
   playLength: string;
   sectionClass?: string;
+  author?: string;
 }
 
 const {
@@ -23,6 +24,7 @@ const {
   playPositon,
   playLength,
   sectionClass,
+  author,
 } = Astro.props as Props;
 ---
 
@@ -64,7 +66,7 @@ const {
       <h1 id="now-playing-title" class="text-2xl font-bold mb-1">
         {nowPlaying}
       </h1>
-      <p class="mb-2">isabel roses</p>
+      <p id="now-playing-author" class="mb-2">{ author ?? "isabel roses" }</p>
     </div>
 
     <div class="w-full">
