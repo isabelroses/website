@@ -13,18 +13,20 @@ export async function getStaticPaths() {
     params: { slug: post.id },
     props: {
       post,
-      nextSlug: posts[posts.indexOf(post) + 1]?.id || null,
+      posts,
     },
   }));
 }
 
 interface Props {
   post: CollectionEntry<"blog">;
-  nextSlug: string | null;
+  posts: CollectionEntry<"blog">[];
 }
 
-const { post, nextSlug } = Astro.props;
+const { post, posts } = Astro.props;
+
 const { Content } = await render(post);
+const nextSlug = posts[posts.indexOf(post) + 1]?.id || null;
 ---
 
 <Base
@@ -40,6 +42,7 @@ const { Content } = await render(post);
       playLength=`${post.data.readTime}:00`
       sectionClass="sticky top-24 lg:block hidden"
       isPlaying={true}
+      posts={posts.slice(posts.indexOf(post) + 1)}
     />
 
     <section class="my-12">
@@ -49,6 +52,27 @@ const { Content } = await render(post);
 </Base>
 
 <script is:inline define:vars={{ readTime: post.data.readTime, nextSlug }}>
+  const queueBtn = document.getElementById("queue");
+  const playerImage = document.getElementById("player-image");
+  const queueView = document.getElementById("queue-view");
+  let showingQueue = false;
+
+  queueBtn.addEventListener("click", () => {
+    showingQueue = !showingQueue;
+
+    if (showingQueue) {
+      playerImage.classList.remove("opacity-100");
+      playerImage.classList.add("opacity-0", "pointer-events-none");
+      queueView.classList.remove("pointer-events-none");
+      queueView.classList.add("opacity-100");
+    } else {
+      queueView.classList.remove("opacity-100");
+      queueView.classList.add("opacity-0", "pointer-events-none");
+      playerImage.classList.remove("pointer-events-none");
+      playerImage.classList.add("opacity-100");
+    }
+  });
+
   const backBtn = document.getElementById("back");
   const skipBtn = document.getElementById("skip");
 

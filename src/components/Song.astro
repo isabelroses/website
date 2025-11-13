@@ -25,7 +25,7 @@ const { title, slug, index, time, id } = Astro.props as Props;
         )}
       </a>
     ) : (
-      <div class="flex flex-row items-center justify-between group">
+      <div class="flex flex-row items-center justify-between group cursor-pointer">
         <span class="w-8 font-mono text-fg-lighter mr-4">{index}</span>
 
         <span class="grow underline underline-offset-4 decoration-dashed hover:decoration-solid hover:text-special transition-all ease-in-out duration-200">

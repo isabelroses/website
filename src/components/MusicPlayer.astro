@@ -1,10 +1,13 @@
 ---
+import { type CollectionEntry } from "astro:content";
 import { Icon } from "astro-icon/components";
 import { Image } from "astro:assets";
+import Song from "@components/Song.astro";
 import me from "@assets/me.webp";
 
 interface Props {
   isPlaying?: boolean;
+  posts?: CollectionEntry<"blog">[];
   nowPlaying: string;
   playPercent: number;
   playPositon: string;
@@ -14,6 +17,7 @@ interface Props {
 
 const {
   isPlaying = false,
+  posts,
   nowPlaying,
   playPercent,
   playPositon,
@@ -23,15 +27,37 @@ const {
 ---
 
 <section class={sectionClass}>
-  <Image
-    id="player-image"
-    src={me}
-    alt="isabel roses"
-    class="mb-4 rounded-sm"
-    width={416}
-    height={416}
-    loading="eager"
-  />
+  <div class="relative w-[416px] h-[416px] mb-4">
+    <Image
+      id="player-image"
+      src={me}
+      alt="isabel roses"
+      class="absolute inset-0 w-full h-full rounded-sm transition-opacity duration-500 ease-in-out opacity-100"
+      width={416}
+      height={416}
+      loading="eager"
+    />
+
+    {
+      posts && (
+        <div
+          id="queue-view"
+          class="absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out overflow-y-auto"
+        >
+          <ul class="flex flex-col p-2">
+            {posts.entries().map(([i, post]) => (
+              <Song
+                index={i + 1}
+                title={post.data.title}
+                time={`${post.data.readTime} mins`}
+                slug={`/blog/${post.id}`}
+              />
+            ))}
+          </ul>
+        </div>
+      )
+    }
+  </div>
 
   <div class="flex flex-col gap-4">
     <div>
@@ -55,8 +81,10 @@ const {
       </div>
     </div>
 
-    <div class="flex gap-4 mt-4 items-center place-content-between">
-      <a href="/" alt="home"><Icon name="fa7-solid:house" class="h-6 w-6 mb-1 cursor-pointer" /></a>
+    <div class="flex gap-4 mt-4 mx-8 items-center place-content-between">
+      <a href="/" aria-label="home"
+        ><Icon name="fa7-solid:house" class="h-6 w-6 mb-1 cursor-pointer" /></a
+      >
 
       <div class="flex gap-4 items-center justify-center">
         <Icon
@@ -87,7 +115,11 @@ const {
         />
       </div>
 
-      <Icon name="fa7-solid:bars-staggered" class="h-6 w-6 mb-1 cursor-pointer" />
+      <Icon
+        id="queue"
+        name="fa7-solid:bars-staggered"
+        class="h-6 w-6 mb-1 cursor-pointer"
+      />
     </div>
   </div>
 </section>
