@@ -55,33 +55,39 @@ const {
       </div>
     </div>
 
-    <div class="flex gap-4 mt-4 items-center justify-center">
-      <Icon
-        id="back"
-        name="fa6-solid:backward-step"
-        class="h-8 w-8 cursor-pointer"
-      />
-      {
-        isPlaying ? (
-          <Icon
-            id="play"
-            name="fa6-solid:circle-pause"
-            class="h-12 w-12 cursor-pointer"
-          />
-        ) : (
-          <Icon
-            id="play"
-            name="fa6-solid:circle-play"
-            class="h-12 w-12 cursor-pointer"
-          />
-        )
-      }
+    <div class="flex gap-4 mt-4 items-center place-content-between">
+      <a href="/" alt="home"><Icon name="fa7-solid:house" class="h-6 w-6 mb-1 cursor-pointer" /></a>
 
-      <Icon
-        id="skip"
-        name="fa6-solid:forward-step"
-        class="h-8 w-8 cursor-pointer"
-      />
+      <div class="flex gap-4 items-center justify-center">
+        <Icon
+          id="back"
+          name="fa7-solid:backward-step"
+          class="h-8 w-8 cursor-pointer"
+        />
+        {
+          isPlaying ? (
+            <Icon
+              id="play"
+              name="fa7-solid:circle-pause"
+              class="h-12 w-12 cursor-pointer"
+            />
+          ) : (
+            <Icon
+              id="play"
+              name="fa7-solid:circle-play"
+              class="h-12 w-12 cursor-pointer"
+            />
+          )
+        }
+
+        <Icon
+          id="skip"
+          name="fa7-solid:forward-step"
+          class="h-8 w-8 cursor-pointer"
+        />
+      </div>
+
+      <Icon name="fa7-solid:bars-staggered" class="h-6 w-6 mb-1 cursor-pointer" />
     </div>
   </div>
 </section>
