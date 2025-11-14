@@ -61,15 +61,11 @@ const nextSlug = posts[posts.indexOf(post) + 1]?.id || null;
     showingQueue = !showingQueue;
 
     if (showingQueue) {
-      playerImage.classList.remove("opacity-100");
-      playerImage.classList.add("opacity-0", "pointer-events-none");
-      queueView.classList.remove("pointer-events-none");
-      queueView.classList.add("opacity-100");
+      queueView.classList.remove("hidden");
+      playerImage.classList.add("hidden");
     } else {
-      queueView.classList.remove("opacity-100");
-      queueView.classList.add("opacity-0", "pointer-events-none");
-      playerImage.classList.remove("pointer-events-none");
-      playerImage.classList.add("opacity-100");
+      playerImage.classList.remove("hidden");
+      queueView.classList.add("hidden");
     }
   });
 

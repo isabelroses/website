@@ -27,12 +27,12 @@ const {
 ---
 
 <section class={sectionClass}>
-  <div class="relative w-[416px] h-[416px] mb-4">
+  <div class="mb-4 items-center justify-center flex">
     <Image
       id="player-image"
       src={me}
       alt="isabel roses"
-      class="absolute inset-0 w-full h-full rounded-sm transition-opacity duration-500 ease-in-out opacity-100"
+      class="rounded-sm transition duration-500 ease-in-out"
       width={416}
       height={416}
       loading="eager"
@@ -42,7 +42,7 @@ const {
       posts && (
         <div
           id="queue-view"
-          class="absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-500 ease-in-out overflow-y-auto"
+          class="w-[416px] h-[416px] inset-0 hidden overflow-y-auto"
         >
           <ul class="flex flex-col p-2">
             {posts.entries().map(([i, post]) => (
