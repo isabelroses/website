@@ -2,6 +2,7 @@
 title: A NixOS PDS Hosting Guide
 description: How to host your own personal data server using NixOS
 date: 2025-11-04
+updated: 2025-11-22
 tags:
   - guide
   - nix
@@ -281,7 +282,7 @@ in
       enable = true;
 
       virtualHosts.${pdsSettings.PDS_HOSTNAME} = {
-        serverName = "${pdsSettings.PDS_HOSTNAME} .${pdsSettings.PDS_HOSTNAME}";
+        serverAliases = [ ".${pdsSettings.PDS_HOSTNAME}" ];
 
         locations."/" = {
           proxyPass = "http://127.0.0.1:${toString pdsSettings.PDS_PORT}";
@@ -352,7 +353,7 @@ In nginx this will look like such
     enable = true;
 
     virtualHosts.${pdsSettings.PDS_HOSTNAME} = {
-      serverName = "${pdsSettings.PDS_HOSTNAME} .${pdsSettings.PDS_HOSTNAME}";
+      serverAliases = [ ".${pdsSettings.PDS_HOSTNAME}" ];
 
       locations = {
         "/" = {
