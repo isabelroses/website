@@ -92,7 +92,7 @@ const nextSlug = posts[posts.indexOf(post) + 1]?.id || null;
       document.documentElement.scrollHeight - window.innerHeight;
     const scrollPercent = (scrollTop / scrollHeight) * 100;
 
-    const totalSeconds = ((scrollPercent / 100) * readTime) * 60;
+    const totalSeconds = (scrollPercent / 100) * readTime * 60;
 
     const currentMin = Math.floor(totalSeconds / 60);
     const currentSec = Math.floor(totalSeconds % 60);

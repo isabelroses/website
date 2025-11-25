@@ -1,10 +1,10 @@
 ---
 import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
+import me from "@assets/me.webp";
 
 import Base from "@layouts/Base.astro";
-import MusicPlayer from "@components/MusicPlayer.astro";
-import Song from "@components/Song.astro";
 
 const posts = await getCollection("blog", ({ data }) => {
   return !data.draft && !data.archived;
@@ -18,153 +18,62 @@ import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
   description={SITE_DESCRIPTIONS.index}
   image="/index.png"
 >
-  <div
-    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-18 mb-18 md:my-0"
-  >
-    <MusicPlayer
-      nowPlaying="nix"
-      playPercent={21}
-      playPositon="0:21"
-      playLength="1:00"
-    />
-
-    <section class="flex flex-col gap-8 w-full md:w-md">
-      <div>
-        <h2 class="text-xl">Up next</h2>
-        <ul class="flex flex-col mt-4">
-          {
-            posts
-              .slice(0, 3)
-              .entries()
-              .map(([i, post]) => (
-                <Song
-                  index={i + 1}
-                  title={post.data.title}
-                  slug={`/blog/${post.id}`}
-                  time={`${post.data.readTime} mins`}
-                />
-              ))
-          }
-        </ul>
+  <div class="flex flex-col items-start gap-6 w-full">
+    <div class="flex flex-row pt-20 w-full">
+      <Image
+        id="player-image"
+        src={me}
+        alt="isabel roses"
+        width={250}
+        height={250}
+        loading="eager"
+      />
+      <div class="bg-card flex-2 p-4">
+        I am currently studying computer science, as a third year student at
+        Aberystwyth University. A significant amount of my time goes into being
+        a <a
+          href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md#nixpkgs-committers">Nixpkgs
+          committer</a>,
+        where I help maintain the Nixpkgs repository.
       </div>
+      <div id="listening" class="flex items-center justify-center bg-card flex-1 p-4 text-shadow-sm">listening to nwo</div>
+    </div>
 
-      <div>
-        <h2 class="text-xl">Playlists</h2>
-        <ul class="flex flex-col mt-4">
-          <li class="p-2 border-card border-b-2 last:border-0">
-            <a
-              class="hover:decoration-solid underline underline-offset-4 decoration-dashed hover:text-special transition-all ease-in-out duration-200"
-              href="/blog">Blog</a
-            >
-          </li>
-          <li class="p-2 border-card border-b-2 last:border-0">
-            <a
-              class="hover:decoration-solid underline underline-offset-4 decoration-dashed hover:text-special transition-all ease-in-out duration-200"
-              href="/projects">Projects</a
-            >
-          </li>
-          <li class="p-2 border-card border-b-2 last:border-0">
-            <a
-              class="hover:decoration-solid underline underline-offset-4 decoration-dashed hover:text-special transition-all ease-in-out duration-200"
-              href="/friends">Friends</a
-            >
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <h2 class="text-xl">Share</h2>
-        <ul class="flex flex-row mt-4 gap-4">
-          <li>
-            <a rel="me noreferrer" href="/feed.xml" aria-label="rss feed">
-              <Icon name="fa7-solid:rss" class="share-icon" />
-            </a>
-          </li>
-          <li>
-            <a
-              rel="me noreferrer"
-              target="_blank"
-              href="https://github.com/isabelroses"
-              aria-label="GitHub"
-            >
-              <Icon name="fa7-brands:github" class="share-icon" />
-            </a>
-          </li>
-          <li>
-            <a
-              rel="me noreferrer"
-              target="_blank"
-              href="https://akko.isabelroses.com/@isabel"
-              aria-label="mastodon"
-            >
-              <Icon name="fa7-brands:mastodon" class="share-icon" />
-            </a>
-          </li>
-          <li>
-            <a
-              rel="me noreferrer"
-              target="_blank"
-              href="https://bsky.app/profile/did:plc:qxichs7jsycphrsmbujwqbfb"
-              aria-label="bluesky"
-            >
-              <Icon name="fa7-brands:bluesky" class="share-icon" />
-            </a>
-          </li>
-          <li>
-            <a
-              rel="me noreferrer"
-              target="_blank"
-              href="/api/discord"
-              aria-label="Discord"
-            >
-              <Icon name="fa7-brands:discord" class="share-icon" />
-            </a>
-          </li>
-          <li>
-            <a
-              rel="me noreferrer"
-              target="_blank"
-              href="mailto:isabel@isabelroses.com"
-              aria-label="email"
-            >
-              <Icon name="fa7-solid:envelope" class="share-icon" />
-            </a>
-          </li>
-          <li>
-            <a
-              rel="me noreferrer"
-              href="https://ko-fi.com/isabelroses"
-              aria-label="Ko-fi"
-            >
-              <svg
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-                class="share-icon"
-              >
-                <path
-                  d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z"
-                ></path>
-              </svg>
-            </a>
-          </li>
-        </ul>
-      </div>
-
-      <div>
-        <h2 class="text-xl">Settings</h2>
-        <form name="themes" id="form-themes" class="mt-4">
-          <select name="themes" id="themes" aria-label="Change theme">
-            <option value="dark">Dark</option>
-            <option value="light">Light</option>
-            <option value="catppuccin_mocha">Catppuccin Mocha</option>
-            <option value="catppuccin_macchiato">Catppuccin Macchiato</option>
-            <option value="catppuccin_frappe">Catppuccin Frappé</option>
-            <option value="catppuccin_latte">Catppuccin Latte</option>
-            <option value="evergarden">Evergarden</option>
-            <option value="cuddlefish">Cuddlefish</option>
-          </select>
-        </form>
-      </div>
-    </section>
+    <div class="flex flex-row pt-20 w-full">
+      <div class="bg-card flex-1">description type shit</div>
+      <div class="bg-card flex-1">description type shit</div>
+    </div>
   </div>
 </Base>
+
+<script>
+  async function getCoverArtUrl(recordingMbId) {
+    const base = 'https://musicbrainz.org/ws/2';
+    const headers = {
+      'Accept': 'application/json',
+      'User-Agent': 'isabelroses.com'
+    };
+
+    const recUrl = `${base}/recording/${recordingMbId}?fmt=json&inc=releases`;
+    const recResp = await fetch(recUrl, { headers });
+    if (!recResp.ok) {
+      throw new Error(`Failed to fetch recording: ${recResp.status}`);
+    }
+    const recData = await recResp.json();
+
+    if (!Array.isArray(recData.releases) || recData.releases.length === 0) {
+      throw new Error('No releases found for this recording');
+    }
+
+    const releaseMbId = recData.releases[0].id;
+    const coverArtUrl = `https://coverartarchive.org/release/${releaseMbId}/front`;
+    return coverArtUrl;
+  }
+
+
+  const nowPlaying = (await fetch("https://pds.tgirl.cloud/xrpc/com.atproto.repo.getRecord?repo=did:plc:qxichs7jsycphrsmbujwqbfb&collection=fm.teal.alpha.actor.status&rkey=self").then(data => data.json())).value.item;
+  const listeningNow = document.getElementById("listening");
+  listeningNow.textContent = `Now listening to ${nowPlaying.trackName}`;
+  const songImg = nowPlaying.releaseMbId ? `https://coverartarchive.org/release/${nowPlaying.releaseMbId}/front` : await getCoverArtUrl(nowPlaying.recordingMbId);
+  listeningNow.style.backgroundImage = `url("${songImg}")`;
+</script>
