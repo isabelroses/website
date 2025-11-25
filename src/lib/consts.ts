@@ -93,6 +93,7 @@ import elissa from "@assets/friends/elissa.png";
 import tasky from "@assets/friends/tasky.webp";
 import april from "@assets/friends/april.png";
 import sydney from "@assets/friends/sydney.png";
+import lyna from "@assets/friends/lyna.webp";
 
 export const FRIENDS = [
   {
@@ -209,6 +210,11 @@ export const FRIENDS = [
     name: "sydney",
     link: "https://sydney.blue",
     badge: sydney,
+  },
+  {
+    name: "lyna",
+    link: "https://blooym.dev",
+    badge: lyna,
   },
   //{
   //  link: "https://garfunkles.space",
