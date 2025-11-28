@@ -70,151 +70,126 @@ export const PROJECTS = [
   },
 ];
 
-import gen from "@assets/friends/gen.png";
-import alyxia from "@assets/friends/alyxia.png";
-import chloe from "@assets/friends/chloe.png";
-import nax from "@assets/friends/nax.gif";
-import kaya from "@assets/friends/kaya.gif";
-import aubrey from "@assets/friends/aubrey.png";
-import rooot from "@assets/friends/rooot.gif";
-import autumn from "@assets/friends/autumn.webp";
-import maeve from "@assets/friends/maeve.png";
-import basil from "@assets/friends/basil.gif";
-import arimelody from "@assets/friends/arimelody.gif";
-import ezri from "@assets/friends/ezri.png";
-import notnite from "@assets/friends/notnite.png";
-import robin from "@assets/friends/robin.gif";
-import sketch from "@assets/friends/sketch.png";
-import slonking from "@assets/friends/slonking.webp";
-import thermia from "@assets/friends/thermia.gif";
-import da157 from "@assets/friends/0xda157.png";
-import dbw from "@assets/friends/dbw.png";
-import elissa from "@assets/friends/elissa.png";
-import tasky from "@assets/friends/tasky.webp";
-import april from "@assets/friends/april.png";
-import sydney from "@assets/friends/sydney.png";
-import lyna from "@assets/friends/lyna.webp";
-
 export const FRIENDS = [
   {
     name: "gen",
     link: "https://genshibe.ca",
-    badge: gen,
+    image: "gen.png",
   },
   {
     name: "alyxia",
     link: "https://alyxia.dev",
-    badge: alyxia,
+    image: "alyxia.png",
   },
   {
     name: "chloe",
     link: "https://sapphic.moe",
-    badge: chloe,
+    image: "chloe.png",
   },
   {
     name: "nax",
     link: "https://nax.dev",
-    badge: nax,
+    image: "nax.gif",
   },
   {
     name: "kaya",
     link: "https://tired.moe",
-    badge: kaya,
+    image: "kaya.gif",
   },
   {
     name: "aubrey",
     link: "https://aubrey.rs",
-    badge: aubrey,
+    image: "aubrey.png",
   },
   {
     name: "rooot",
     link: "https://rooot.gay",
-    badge: rooot,
+    image: "rooot.gif"
   },
   {
     name: "autumn",
     link: "https://autumn.town",
-    badge: autumn,
+    image: "autumn.webp",
   },
   {
     name: "maeve",
     link: "https://les.bi",
-    badge: maeve,
+    image: "maeve.png",
   },
   {
     name: "basil",
     link: "https://basil.cafe",
-    badge: basil,
+    image: "basil.gif",
   },
   {
     name: "arimelody",
     link: "https://arimelody.me",
-    badge: arimelody,
+    image: "arimelody.gif",
   },
   {
     name: "ezri",
     link: "https://ezri.pet",
-    badge: ezri,
+    image: "ezri.png",
   },
   {
     name: "notnite",
     link: "https://notnite.com",
-    badge: notnite,
+    image: "notnite.png",
   },
   {
     name: "robin",
     link: "https://robinroses.xyz",
-    badge: robin,
+    image: "robin.gif",
   },
   {
     name: "sketch",
     link: "https://sketchni.uk",
-    badge: sketch,
+    image: "sketch.png",
   },
   {
     name: "slonking",
     link: "https://slonk.ing",
-    badge: slonking,
+    image: "slonking.webp",
   },
   {
     name: "thermia",
     link: "https://girlthi.ng/~thermia",
-    badge: thermia,
+    image: "thermia.gif",
   },
   {
     name: "da157",
     link: "https://0xda157.id",
-    badge: da157,
+    image: "0xda157.png",
   },
   {
     name: "dbw",
     link: "https://dbw.neocities.org",
-    badge: dbw,
+    image: "dbw.png",
   },
   {
     name: "elissa",
     link: "https://elissa.moe",
-    badge: elissa,
+    image: "elissa.png",
   },
   {
     name: "tasky",
     link: "https://tasky.nuxt.dev",
-    badge: tasky,
+    image: "tasky.webp",
   },
   {
     name: "april",
     link: "https://aprl.cat",
-    badge: april,
+    image: "april.png",
   },
   {
     name: "sydney",
     link: "https://sydney.blue",
-    badge: sydney,
+    image: "sydney.png",
   },
   {
     name: "lyna",
     link: "https://blooym.dev",
-    badge: lyna,
+    image: "lyna.webp",
   },
   //{
   //  link: "https://garfunkles.space",

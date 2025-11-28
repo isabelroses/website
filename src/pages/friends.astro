@@ -47,10 +47,11 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
             FRIENDS.map((friend) => (
               <a href={friend.link} target="_blank" rel="noopener noreferrer">
                 <Image
-                  src={friend.badge}
+                  src=`/badges/friends/${friend.image}`
                   alt={friend.name}
                   width={88}
                   height={31}
+                  style="image-rendering: pixelated"
                 />
               </a>
             ))
