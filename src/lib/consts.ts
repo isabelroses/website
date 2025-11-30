@@ -138,7 +138,7 @@ export const FRIENDS = [
   },
   {
     name: "robin",
-    link: "https://robinroses.xyz",
+    link: "https://robinwobin.dev",
     image: "robin.gif",
   },
   {
