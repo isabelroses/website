@@ -2,7 +2,7 @@
 title: A NixOS PDS Hosting Guide
 description: How to host your own personal data server using NixOS
 date: 2025-11-04
-updated: 2025-11-22
+updated: 2025-12-08
 tags:
   - guide
   - nix
@@ -355,21 +355,10 @@ In nginx this will look like such
     virtualHosts.${pdsSettings.PDS_HOSTNAME} = {
       serverAliases = [ ".${pdsSettings.PDS_HOSTNAME}" ];
 
-      locations = {
-        "/" = {
-          proxyPass = "http://127.0.0.1:${toString pdsSettings.PDS_PORT}";
-          proxyWebsockets = true;
-        };
-
-        "/xrpc/app.bsky.unspecced.getAgeAssuranceState" =
-          let
-            state = builtins.toJSON {
-              lastInitiatedAt = "2025-07-14T15:11:05.487Z";
-              status = "assured";
-            };
-          in
-          {
-            return = "200 '${state}'";
+      locations =
+        let
+          mkAgeAssured = state: {
+            return = "200 '${builtins.toJSON state}'";
             extraConfig = ''
               add_header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy" always;
               add_header access-control-allow-origin "*" always;
@@ -378,6 +367,34 @@ In nginx this will look like such
               default_type application/json;
             '';
           };
+        in
+        {
+          # i am of age but i don't want to prove it lol
+          # https://gist.github.com/mary-ext/6e27b24a83838202908808ad528b3318
+          "/xrpc/app.bsky.unspecced.getAgeAssuranceState" = mkAgeAssured {
+            lastInitiatedAt = "2025-07-14T15:11:05.487Z";
+            status = "assured";
+          };
+          "/xrpc/app.bsky.ageassurance.getConfig" = mkAgeAssured {
+            regions = [ ];
+          };
+          "/xrpc/app.bsky.ageassurance.getState" = mkAgeAssured {
+            state = {
+              lastInitiatedAt = "2025-07-14T15:11:05.487Z";
+              status = "assured";
+              access = "full";
+            };
+            stateMetadata = {
+              accountCreatedAt = "1970-01-01T00:00:00.000Z";
+            };
+          };
+
+          # pass everything else to the pds
+          "/" = {
+            proxyPass = "http://${cfg.host}:${toString cfg.port}";
+            proxyWebsockets = true;
+          };
+        };
       };
     };
   };
@@ -404,6 +421,19 @@ And with caddy
           header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy"
           header access-control-allow-origin "*"
           respond `{"lastInitiatedAt":"2025-07-14T14:22:43.912Z","status":"assured"}` 200
+        }
+
+        handle /xrpc/app.bsky.ageassurance.getConfig {
+          header content-type "application/json"
+          header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy"
+          header access-control-allow-origin "*"
+          respond `{"regions":[]}` 200
+        }
+        handle /xrpc/app.bsky.ageassurance.getState {
+          header content-type "application/json"
+          header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy"
+          header access-control-allow-origin "*"
+          respond `{"state":{"lastInitiatedAt":"2025-07-14T14:22:43.912Z","status":"assured","access":"full"},"stateMetadata":{"accountCreatedAt":"1970-01-01T00:00:00.000Z"}}` 200
         }
       '';
     };
