@@ -2,7 +2,7 @@
 title: A NixOS PDS Hosting Guide
 description: How to host your own personal data server using NixOS
 date: 2025-11-04
-updated: 2025-12-08
+updated: 2025-12-09
 tags:
   - guide
   - nix
@@ -384,8 +384,8 @@ In nginx this will look like such
               status = "assured";
               access = "full";
             };
-            stateMetadata = {
-              accountCreatedAt = "1970-01-01T00:00:00.000Z";
+            metadata = {
+              accountCreatedAt = "2022-11-17T00:35:16.391Z";
             };
           };
 
@@ -433,7 +433,7 @@ And with caddy
           header content-type "application/json"
           header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy"
           header access-control-allow-origin "*"
-          respond `{"state":{"lastInitiatedAt":"2025-07-14T14:22:43.912Z","status":"assured","access":"full"},"stateMetadata":{"accountCreatedAt":"1970-01-01T00:00:00.000Z"}}` 200
+          respond `{"state":{"lastInitiatedAt":"2025-07-14T14:22:43.912Z","status":"assured","access":"full"},"metadata":{"accountCreatedAt":"2022-11-17T00:35:16.391Z"}}` 200
         }
       '';
     };
