@@ -1,0 +1,21 @@
+---
+interface Props {
+  tag: string;
+  linked?: boolean;
+}
+
+const { tag, linked = true } = Astro.props;
+---
+
+{
+  linked ? (
+    <a
+      href={`/blog/tag/${tag}`}
+      class="px-3 py-1 bg-card rounded-full text-sm text-fg-lighter hover:text-special transition-colors"
+    >
+      #{tag}
+    </a>
+  ) : (
+    <span class="text-special">#{tag}</span>
+  )
+}

@@ -31,7 +31,7 @@
     {
       packages = forAllSystems (pkgs: {
         default = self.packages.${pkgs.stdenv.hostPlatform.system}.isabelroses-website;
-        isabelroses-website = pkgs.callPackage ./nix/default.nix { };
+        isabelroses-website = pkgs.callPackage ./nix/package.nix { };
       });
 
       devShells = forAllSystems (pkgs: {

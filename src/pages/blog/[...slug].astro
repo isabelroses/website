@@ -1,104 +1,145 @@
 ---
 import { type CollectionEntry, getCollection, render } from "astro:content";
+import { Icon } from "astro-icon/components";
 
 import Base from "@layouts/Base.astro";
-import MusicPlayer from "@components/MusicPlayer.astro";
+import BackLink from "@components/BackLink.astro";
+import Tag from "@components/Tag.astro";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => {
     return !data.draft && !data.archived;
   });
 
-  return posts.map((post) => ({
+  return posts.map((post, index) => ({
     params: { slug: post.id },
     props: {
       post,
-      posts,
+      prevPost: posts[index + 1] || null,
+      nextPost: posts[index - 1] || null,
     },
   }));
 }
 
 interface Props {
   post: CollectionEntry<"blog">;
-  posts: CollectionEntry<"blog">[];
+  prevPost: CollectionEntry<"blog"> | null;
+  nextPost: CollectionEntry<"blog"> | null;
 }
 
-const { post, posts } = Astro.props;
-
+const { post, prevPost, nextPost } = Astro.props;
 const { Content } = await render(post);
-const nextSlug = posts[posts.indexOf(post) + 1]?.id || null;
 ---
 
 <Base
   title={post.data.title}
   description={post.data.description}
-  image=`/blog/${post.id}.png`
+  image={`/blog/${post.id}.png`}
 >
-  <div class="flex flex-row items-start p-6 gap-24">
-    <MusicPlayer
-      nowPlaying={post.data.title}
-      playPercent={0}
-      playPositon="0:00"
-      playLength=`${post.data.readTime}:00`
-      sectionClass="sticky top-24 lg:block hidden"
-      isPlaying={true}
-      posts={posts.slice(posts.indexOf(post) + 1)}
-    />
+  <article class="w-full max-w-2xl flex flex-col gap-8">
+    <header class="flex flex-col gap-4">
+      <BackLink href="/blog" label="back to blog" />
+      <h1 class="text-3xl font-bold">{post.data.title}</h1>
+      <div class="flex flex-wrap items-center gap-3 text-fg-lighter text-sm">
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString("en-GB", {
+            day: "numeric",
+            month: "long",
+            year: "numeric",
+          })}
+        </time>
+        <span>·</span>
+        <span>{post.data.readTime} min read</span>
+        {post.data.updated && (
+          <>
+            <span>·</span>
+            <span>
+              updated {post.data.updated.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "short",
+                year: "numeric",
+              })}
+            </span>
+          </>
+        )}
+      </div>
+      <div class="flex flex-wrap gap-2">
+        {post.data.tags.map((tag: string) => (
+          <Tag tag={tag} />
+        ))}
+      </div>
+    </header>
 
-    <section class="my-12">
-      <article class="prose"><Content /></article>
+    <div class="prose">
+      <Content />
+    </div>
+
+    <section class="flex flex-col gap-4 pt-8 border-t border-card">
+      <h2 class="text-lg font-medium">share this post</h2>
+      <div class="flex flex-row gap-4">
+        <a
+          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(`https://isabelroses.com/blog/${post.id}`)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="share-icon"
+          aria-label="Share on Twitter"
+        >
+          <Icon name="fa7-brands:x-twitter" class="w-5 h-5" />
+        </a>
+        <a
+          href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://isabelroses.com/blog/${post.id}`)}&title=${encodeURIComponent(post.data.title)}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="share-icon"
+          aria-label="Share on LinkedIn"
+        >
+          <Icon name="fa7-brands:linkedin" class="w-5 h-5" />
+        </a>
+        <button
+          id="copy-link"
+          class="share-icon cursor-pointer"
+          aria-label="Copy link"
+        >
+          <Icon name="fa7-solid:link" class="w-5 h-5" />
+        </button>
+      </div>
     </section>
-  </div>
+
+    <nav class="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-card">
+      {prevPost ? (
+        <a
+          href={`/blog/${prevPost.id}`}
+          class="group flex flex-col gap-1 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all flex-1"
+        >
+          <span class="text-fg-lighter text-sm">← previous</span>
+          <span class="group-hover:text-special transition-colors">
+            {prevPost.data.title}
+          </span>
+        </a>
+      ) : (
+        <div class="flex-1" />
+      )}
+      {nextPost ? (
+        <a
+          href={`/blog/${nextPost.id}`}
+          class="group flex flex-col gap-1 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all flex-1 text-right"
+        >
+          <span class="text-fg-lighter text-sm">next →</span>
+          <span class="group-hover:text-special transition-colors">
+            {nextPost.data.title}
+          </span>
+        </a>
+      ) : (
+        <div class="flex-1" />
+      )}
+    </nav>
+  </article>
+
+  <script is:inline>
+    document.addEventListener("astro:page-load", () => {
+      document.getElementById("copy-link")?.addEventListener("click", async () => {
+        await navigator.clipboard.writeText(window.location.href);
+      });
+    });
+  </script>
 </Base>
-
-<script is:inline define:vars={{ readTime: post.data.readTime, nextSlug }}>
-  const queueBtn = document.getElementById("queue");
-  const playerImage = document.getElementById("player-image");
-  const queueView = document.getElementById("queue-view");
-  let showingQueue = false;
-
-  queueBtn.addEventListener("click", () => {
-    showingQueue = !showingQueue;
-
-    if (showingQueue) {
-      queueView.classList.remove("hidden");
-      playerImage.classList.add("hidden");
-    } else {
-      playerImage.classList.remove("hidden");
-      queueView.classList.add("hidden");
-    }
-  });
-
-  const backBtn = document.getElementById("back");
-  const skipBtn = document.getElementById("skip");
-
-  backBtn.addEventListener("click", () => {
-    if (window.history.length > 1) {
-      window.history.back();
-    } else {
-      window.location.href = "/blog";
-    }
-  });
-  skipBtn.addEventListener("click", () => {
-    window.location.href = `/blog/${nextSlug}`;
-  });
-
-  const scrobbler = document.getElementById("scrobbler");
-  const playPositon = document.getElementById("playPositon");
-
-  document.addEventListener("scroll", () => {
-    const scrollTop = document.documentElement.scrollTop;
-    const scrollHeight =
-      document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = (scrollTop / scrollHeight) * 100;
-
-    const totalSeconds = ((scrollPercent / 100) * readTime) * 60;
-
-    const currentMin = Math.floor(totalSeconds / 60);
-    const currentSec = Math.floor(totalSeconds % 60);
-
-    const scobblerMax = Math.min(scrollPercent, 98);
-    scrobbler.style.left = `${scobblerMax}%`;
-    playPositon.textContent = `${currentMin}:${currentSec.toString().padStart(2, "0")}`;
-  });
-</script>

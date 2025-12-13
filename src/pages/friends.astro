@@ -1,9 +1,10 @@
 ---
 import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
 import Base from "@layouts/Base.astro";
-import MusicPlayer from "@components/MusicPlayer.astro";
-import Song from "@components/Song.astro";
+import PageHeader from "@components/PageHeader.astro";
+import BackLink from "@components/BackLink.astro";
 
 import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
 ---
@@ -13,84 +14,82 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
   description={SITE_DESCRIPTIONS.friends}
   image="/friends.png"
 >
-  <div
-    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-52 mb-18 md:my-0"
-  >
-    <MusicPlayer
-      nowPlaying={WEBRINGS[0].name}
-      playPercent={21}
-      playPositon="0:21"
-      playLength="1:00"
-    />
+  <div class="w-full max-w-2xl flex flex-col gap-12">
+    <PageHeader title="friends" description={SITE_DESCRIPTIONS.friends} />
 
-    <section class="flex flex-col gap-8 w-full md:w-md">
-      <div>
-        <h2 class="text-xl">Up next</h2>
-        <ul class="flex flex-col mt-4">
-          {
-            WEBRINGS.entries().map(([i, webring]) => (
-              <Song id={`webring-${i}`} index={i + 1} title={webring.name} />
-            ))
-          }
-        </ul>
-      </div>
-
-      <div>
-        <h2 class="text-xl">Embed my badge</h2>
-        <img src="/badges/me.gif" alt="isabel roses" width={88} height={31} />
-      </div>
-
-      <div>
-        <h2 class="text-xl">Friends</h2>
-        <div class="grid grid-cols-3 gap-2 b-16 items-start mt-4">
-          {
-            FRIENDS.map((friend) => (
-              <a href={friend.link} target="_blank" rel="noopener noreferrer">
-                <Image
-                  src=`/badges/friends/${friend.image}`
-                  alt={friend.name}
-                  width={88}
-                  height={31}
-                  style="image-rendering: pixelated"
-                />
-              </a>
-            ))
-          }
-        </div>
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl">my badge</h2>
+      <div class="flex flex-col gap-2">
+        <img
+          src="/badges/me.gif"
+          alt="isabel roses"
+          width={88}
+          height={31}
+          style="image-rendering: pixelated"
+        />
+        <p class="text-fg-lighter text-sm">feel free to add it to your site!</p>
       </div>
     </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl">friends</h2>
+      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
+        {
+          FRIENDS.map((friend) => (
+            <a
+              href={friend.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              class="hover:scale-105 transition-transform"
+              title={friend.name}
+            >
+              <Image
+                src={`/badges/friends/${friend.image}`}
+                alt={friend.name}
+                width={88}
+                height={31}
+                style="image-rendering: pixelated"
+              />
+            </a>
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl">webrings</h2>
+      <ul class="flex flex-col gap-3">
+        {
+          WEBRINGS.map((webring) => (
+            <li class="flex flex-row items-center gap-2 bg-card rounded-lg overflow-hidden">
+              <a
+                href={webring.href + webring.prev}
+                class="flex items-center justify-center w-12 h-12 text-fg-lighter hover:text-special transition-colors"
+                aria-label="Previous"
+              >
+                <Icon name="fa7-solid:chevron-left" class="w-4 h-4" />
+              </a>
+              <a
+                href={webring.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="flex-1 py-3 text-center hover:text-special transition-colors"
+              >
+                {webring.name}
+              </a>
+              <a
+                href={webring.href + webring.next}
+                class="flex items-center justify-center w-12 h-12 text-fg-lighter hover:text-special transition-colors"
+                aria-label="Next"
+              >
+                <Icon name="fa7-solid:chevron-right" class="w-4 h-4" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <BackLink href="/" />
   </div>
-
-  <script is:inline define:vars={{ webrings: WEBRINGS }}>
-    const playButton = document.getElementById("play");
-    const backButton = document.getElementById("back");
-    const skipButton = document.getElementById("skip");
-    const title = document.getElementById("now-playing-title");
-
-    webrings.forEach((_, i) => {
-      const el = document.getElementById(`webring-${i}`);
-      el.addEventListener("click", () => {
-        currentIndex = i;
-        updateNowPlaying();
-      });
-    });
-
-    let currentIndex = 0;
-
-    function updateNowPlaying() {
-      title.textContent = webrings[currentIndex].name;
-    }
-
-    playButton.addEventListener("click", () => {
-      location.href = webrings[currentIndex].href;
-    });
-
-    backButton.addEventListener("click", () => {
-      location.href = webrings[currentIndex].href + webrings[currentIndex].prev;
-    });
-
-    skipButton.addEventListener("click", () => {
-      location.href = webrings[currentIndex].href + webrings[currentIndex].next;
-    });
-  </script>
 </Base>

@@ -1,5 +1,6 @@
 ---
 import BaseHead from "@components/BaseHead.astro";
+import ThemeSwitcher from "@components/ThemeSwitcher.astro";
 
 interface Props {
   title: string;
@@ -17,8 +18,9 @@ const props = Astro.props;
   </head>
 
   <body
-    class="bg-bg text-fg min-h-screen flex flex-col items-center justify-center"
+    class="bg-bg text-fg min-h-screen p-4 pt-16 pb-24 leading-relaxed flex flex-col items-center"
   >
     <slot />
+    <ThemeSwitcher />
   </body>
 </html>

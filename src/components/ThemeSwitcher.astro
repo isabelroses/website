@@ -1,0 +1,76 @@
+---
+import { Icon } from "astro-icon/components";
+---
+
+<div class="fixed bottom-4 right-4">
+  <div class="relative">
+    <button
+      id="theme-toggle"
+      class="flex items-center justify-center w-10 h-10 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all"
+      aria-label="Change theme"
+    >
+      <Icon name="fa7-solid:palette" class="w-5 h-5 text-fg-lighter" />
+    </button>
+    <div
+      id="theme-menu"
+      class="hidden absolute bottom-12 right-0 w-48 bg-card rounded-lg shadow-lg overflow-hidden"
+    >
+      <button data-theme="dark" class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-special transition-colors">
+        Dark
+      </button>
+      <button data-theme="light" class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-special transition-colors">
+        Light
+      </button>
+      <button data-theme="catppuccin_mocha" class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-special transition-colors">
+        Catppuccin Mocha
+      </button>
+      <button data-theme="catppuccin_macchiato" class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-special transition-colors">
+        Catppuccin Macchiato
+      </button>
+      <button data-theme="catppuccin_frappe" class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-special transition-colors">
+        Catppuccin Frappé
+      </button>
+      <button data-theme="catppuccin_latte" class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-special transition-colors">
+        Catppuccin Latte
+      </button>
+      <button data-theme="evergarden" class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-special transition-colors">
+        Evergarden
+      </button>
+      <button data-theme="cuddlefish" class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-special transition-colors">
+        Cuddlefish
+      </button>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  document.addEventListener("astro:page-load", () => {
+    const toggle = document.getElementById("theme-toggle");
+    const menu = document.getElementById("theme-menu");
+    const options = document.querySelectorAll(".theme-option");
+
+    if (!toggle || !menu) return;
+
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("hidden");
+    });
+
+    options.forEach((option) => {
+      option.addEventListener("click", () => {
+        const theme = option.getAttribute("data-theme");
+        if (theme) {
+          localStorage.setItem("theme", theme);
+          document.documentElement.setAttribute("data-theme", theme);
+        }
+        menu.classList.add("hidden");
+      });
+    });
+
+    // Close menu when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!toggle.contains(e.target) && !menu.contains(e.target)) {
+        menu.classList.add("hidden");
+      }
+    });
+  });
+</script>

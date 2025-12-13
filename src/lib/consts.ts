@@ -20,29 +20,12 @@ export const SITE_DESCRIPTIONS = {
 // stars are barely updated
 export const PROJECTS = [
   {
-    name: "This Site",
-    description: "This site that your currently on.",
-    icon: null,
-    banner: null,
-    href: "https://isabelroses.com",
-    repo: "https://github.com/isabelroses/website",
-    stars: 24,
-  },
-  {
     name: "Catppuccin Nix",
     description: "Soothing pastel colors for nix",
     icon: catppuccinNix.src,
     href: null,
     repo: "https://github.com/catppuccin/nix",
-    stars: 582,
-  },
-  {
-    name: "freeze.nvim",
-    description: "A wrapper for charm's freeze cli tool for usage in neovim",
-    icon: freezeNvim.src,
-    href: null,
-    repo: "https://github.com/charm-community/freeze.nvim",
-    stars: 80,
+    stars: 640,
   },
   {
     name: "izrss",
@@ -50,7 +33,7 @@ export const PROJECTS = [
     icon: null,
     href: null,
     repo: "https://github.com/isabelroses/izrss",
-    stars: 32,
+    stars: 46,
   },
   {
     name: "Dotfiles",
@@ -58,7 +41,24 @@ export const PROJECTS = [
     icon: dotfiles.src,
     href: null,
     repo: "https://github.com/isabelroses/dotfiles",
-    stars: 305,
+    stars: 333,
+  },
+  {
+    name: "freeze.nvim",
+    description: "A wrapper for charm's freeze cli tool for usage in neovim",
+    icon: freezeNvim.src,
+    href: null,
+    repo: "https://github.com/charm-community/freeze.nvim",
+    stars: 84,
+  },
+{
+    name: "This Site",
+    description: "This site that your currently on.",
+    icon: null,
+    banner: null,
+    href: "https://isabelroses.com",
+    repo: "https://github.com/isabelroses/website",
+    stars: 26,
   },
   {
     name: "Bellado",

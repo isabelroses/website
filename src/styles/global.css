@@ -1,14 +1,6 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
-.share-icon {
-  @apply w-6 h-6 text-fg hover:text-special transition-colors duration-200 fill-current;
-}
-
-.left-\[21\%\] {
-  left: 21%;
-}
-
 @layer utilities {
   .prose {
     --tw-prose-body: var(--color-fg);
@@ -50,7 +42,7 @@
 
   --color-bg: #0e0f15;
 
-  --color-card: #1e1f2a;
+  --color-card: #161b22;
   --color-special: var(--color-blue);
 
   --color-blue: #83c4e6; /* snow */
@@ -67,7 +59,7 @@
 
     --color-bg: #000;
 
-    --color-card: #1f1f1f;
+    --color-card: #161b22;
     --color-special: var(--color-blue);
 
     --color-blue: #74c7ec;

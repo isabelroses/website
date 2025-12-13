@@ -7,7 +7,7 @@
   typescript,
 }:
 let
-  mainPkg = callPackage ./default.nix { };
+  mainPkg = callPackage ./package.nix { };
 in
 mkShell {
   inputsFrom = [ mainPkg ];

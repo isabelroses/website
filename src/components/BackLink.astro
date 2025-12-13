@@ -1,0 +1,15 @@
+---
+interface Props {
+  href: string;
+  label?: string;
+}
+
+const { href, label = "back home" } = Astro.props;
+---
+
+<a
+  href={href}
+  class="text-fg-lighter hover:text-special transition-colors text-sm"
+>
+  ← {label}
+</a>

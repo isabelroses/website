@@ -1,9 +1,8 @@
 ---
 import Base from "@layouts/Base.astro";
-import MusicPlayer from "@components/MusicPlayer.astro";
-import Song from "@components/Song.astro";
-
-import defaultAvatar from "@assets/me.webp";
+import PageHeader from "@components/PageHeader.astro";
+import BackLink from "@components/BackLink.astro";
+import ProjectCard from "@components/ProjectCard.astro";
 
 import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
 ---
@@ -11,82 +10,30 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
 <Base
   title={SITE_TITLES.projects}
   description={SITE_DESCRIPTIONS.projects}
-  image="/blog.png"
+  image="/projects.png"
 >
-  <div
-    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-52 mb-18 md:my-0"
-  >
-    <MusicPlayer
-      nowPlaying={PROJECTS[0].name}
-      playPercent={0}
-      playPositon="0:00"
-      playLength="1:00"
-    />
+  <div class="w-full max-w-2xl flex flex-col gap-12">
+    <PageHeader title="projects" description={SITE_DESCRIPTIONS.projects} />
 
-    <section class="flex flex-col w-full md:w-md">
-      <h2 class="text-xl">Up next</h2>
-      <ul class="flex flex-col mt-4">
+    <section class="flex flex-col gap-4">
+      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
         {
-          PROJECTS.entries().map(([i, project]) => (
-            <Song
-              index={i + 1}
-              title={project.name}
-              time={project.stars.toString()}
-              slug={project.href || project.repo || "#"}
-            />
+          PROJECTS.map((project) => (
+            <li>
+              <ProjectCard
+                href={project.href || project.repo || "#"}
+                name={project.name}
+                description={project.description}
+                icon={project.icon}
+                stars={project.stars}
+                repo={project.repo}
+              />
+            </li>
           ))
         }
       </ul>
     </section>
+
+    <BackLink href="/" />
   </div>
-
-  <script is:inline define:vars={{ projects: PROJECTS, defaultAvatar }}>
-    function formatSongLength(n) {
-      const s = n.toString();
-      if (s.length > 3) {
-        const mid = Math.floor(s.length / 2);
-        const left = s.slice(0, mid);
-        const right = s.slice(mid);
-        return `${left}:${right}`;
-      } else {
-        const padded = s.padStart(3, "0");
-        return `${padded[0]}:${padded.slice(1)}`;
-      }
-    }
-
-    const playButton = document.getElementById("play");
-    const backButton = document.getElementById("back");
-    const skipButton = document.getElementById("skip");
-
-    const title = document.getElementById("now-playing-title");
-    const playerImage = document.getElementById("player-image");
-    const listenTime = document.getElementById("listenTime");
-
-    let currentIndex = 0;
-
-    function updateNowPlaying() {
-      title.textContent = projects[currentIndex].name;
-      playerImage.src = projects[currentIndex].icon ?? defaultAvatar.src;
-      listenTime.textContent = formatSongLength(projects[currentIndex].stars);
-    }
-
-    playButton.addEventListener("click", () => {
-      location.href =
-        projects[currentIndex].href || projects[currentIndex].repo || "#";
-    });
-
-    backButton.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateNowPlaying();
-      }
-    });
-
-    skipButton.addEventListener("click", () => {
-      if (currentIndex < projects.length - 1) {
-        currentIndex++;
-        updateNowPlaying();
-      }
-    });
-  </script>
 </Base>

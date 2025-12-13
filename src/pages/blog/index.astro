@@ -2,18 +2,14 @@
 import { getCollection } from "astro:content";
 
 import Base from "@layouts/Base.astro";
-import MusicPlayer from "@components/MusicPlayer.astro";
-import Song from "@components/Song.astro";
+import PageHeader from "@components/PageHeader.astro";
+import BackLink from "@components/BackLink.astro";
+import Tag from "@components/Tag.astro";
+import PostCard from "@components/PostCard.astro";
 
-const postsLarge = await getCollection("blog", ({ data }) => {
+const posts = await getCollection("blog", ({ data }) => {
   return !data.draft && !data.archived;
 });
-
-const posts = postsLarge.map((p) => ({
-  readTime: p.data.readTime,
-  title: p.data.title,
-  slug: p.id,
-}));
 
 import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
 ---
@@ -23,65 +19,40 @@ import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
   description={SITE_DESCRIPTIONS.blog}
   image="/blog.png"
 >
-  <div
-    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-52 mb-18 md:my-0"
-  >
-    <MusicPlayer
-      nowPlaying={posts[0].title}
-      playPercent={0}
-      playPositon="0:00"
-      playLength=`${posts[0].readTime}:00`
-    />
+  <div class="w-full max-w-2xl flex flex-col gap-12">
+    <PageHeader title="blog" description={SITE_DESCRIPTIONS.blog} />
 
-    <section class="flex flex-col w-full md:w-md">
-      <h2 class="text-xl">Up next</h2>
-      <ul class="flex flex-col mt-4">
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl">tags</h2>
+      <div class="flex flex-wrap gap-2">
         {
-          posts
-            .entries()
-            .map(([i, post]) => (
-              <Song
-                index={i + 1}
-                title={post.title}
-                time={`${post.readTime} mins`}
-                slug={`/blog/${post.slug}`}
+          [...new Set(posts.flatMap((post) => post.data.tags))].map((tag) => (
+            <Tag tag={tag} />
+          ))
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl">all posts</h2>
+      <ul class="flex flex-col gap-3">
+        {
+          posts.map((post) => (
+            <li>
+              <PostCard
+                href={`/blog/${post.id}`}
+                title={post.data.title}
+                date={post.data.date}
+                description={post.data.description}
+                readTime={post.data.readTime}
+                tags={post.data.tags}
               />
-            ))
+            </li>
+          ))
         }
       </ul>
     </section>
+
+    <BackLink href="/" />
   </div>
-
-  <script is:inline define:vars={{ posts }}>
-    const playButton = document.getElementById("play");
-    const backButton = document.getElementById("back");
-    const skipButton = document.getElementById("skip");
-    const title = document.getElementById("now-playing-title");
-    const listenTime = document.getElementById("listenTime");
-
-    let currentIndex = 0;
-
-    function updateNowPlaying() {
-      title.textContent = posts[currentIndex].title;
-      listenTime.textContent = `${posts[currentIndex].readTime}:00`;
-    }
-
-    playButton.addEventListener("click", () => {
-      location.href = `/blog/${posts[currentIndex].slug}`;
-    });
-
-    backButton.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateNowPlaying();
-      }
-    });
-
-    skipButton.addEventListener("click", () => {
-      if (currentIndex < posts.length - 1) {
-        currentIndex++;
-        updateNowPlaying();
-      }
-    });
-  </script>
 </Base>

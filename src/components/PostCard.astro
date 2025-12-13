@@ -1,0 +1,63 @@
+---
+interface Props {
+  href: string;
+  title: string;
+  date: Date;
+  description?: string;
+  readTime?: number | string;
+  tags?: string[];
+  compact?: boolean;
+}
+
+const { href, title, date, description, readTime, tags, compact = false } = Astro.props;
+
+const formattedDate = date.toLocaleDateString("en-GB", {
+  day: "numeric",
+  month: "short",
+  year: "numeric",
+});
+---
+
+<a
+  href={href}
+  class:list={[
+    "group flex flex-col gap-1 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all",
+    compact ? "p-3 sm:flex-row sm:justify-between sm:items-center" : "gap-2 p-4",
+  ]}
+>
+  {
+    compact ? (
+      <>
+        <span class="group-hover:text-special transition-colors">{title}</span>
+        <span class="text-fg-lighter text-sm">{formattedDate}</span>
+      </>
+    ) : (
+      <>
+        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
+          <span class="font-medium group-hover:text-special transition-colors">
+            {title}
+          </span>
+          <span class="text-fg-lighter text-sm">{formattedDate}</span>
+        </div>
+
+        {description && <p class="text-fg-lighter text-sm">{description}</p>}
+
+        <div class="flex flex-row items-center gap-2 text-fg-lighter text-sm">
+          {readTime && <span>{readTime} min read</span>}
+
+          {tags && tags.length > 0 && (
+            <>
+              {readTime && <span>·</span>}
+              
+              <div class="flex flex-wrap gap-1">
+                {tags.slice(0, 3).map((tag) => (
+                  <span class="text-special">#{tag}</span>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+      </>
+    )
+  }
+</a>

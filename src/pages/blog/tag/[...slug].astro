@@ -1,18 +1,19 @@
 ---
-import { getCollection, type CollectionEntry } from "astro:content";
+import { getCollection } from "astro:content";
 
 import Base from "@layouts/Base.astro";
-import MusicPlayer from "@components/MusicPlayer.astro";
-import Song from "@components/Song.astro";
+import PageHeader from "@components/PageHeader.astro";
+import BackLink from "@components/BackLink.astro";
+import PostCard from "@components/PostCard.astro";
 
-import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
+import { SITE_TITLES } from "@lib/consts";
 
 interface Props {
-  posts: { title: string; readTime: number; slug: string }[];
-  nextSlug: string | null;
+  posts: { title: string; description: string; readTime: number; slug: string; date: Date }[];
+  tag: string;
 }
 
-const { posts } = Astro.props;
+const { posts, tag } = Astro.props;
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => {
@@ -34,81 +35,50 @@ export async function getStaticPaths() {
     const postsSmall = filteredPosts.map((p) => ({
       readTime: p.data.readTime,
       title: p.data.title,
+      description: p.data.description,
+      date: p.data.date,
       slug: p.id,
     }));
 
     return {
       params: { slug: tag },
-      props: { posts: postsSmall },
+      props: { posts: postsSmall, tag },
     };
   });
 }
 ---
 
 <Base
-  title={SITE_TITLES.blog}
-  description={SITE_DESCRIPTIONS.blog}
+  title={`#${tag} | ${SITE_TITLES.blog}`}
+  description={`Posts tagged with #${tag}`}
   image="/blog.png"
 >
-  <div
-    class="flex md:flex-row flex-col items-start px-6 gap-24 mt-52 mb-18 md:my-0"
-  >
-    <MusicPlayer
-      nowPlaying={posts[0].title}
-      playPercent={0}
-      playPositon="0:00"
-      playLength=`${posts[0].readTime}:00`
-    />
+  <div class="w-full max-w-2xl flex flex-col gap-12">
+    <PageHeader
+      title={`#${tag}`}
+      description={`${posts.length} post${posts.length !== 1 ? "s" : ""} tagged with #${tag}`}
+    >
+      <BackLink href="/blog" label="back to blog" slot="back" />
+    </PageHeader>
 
-    <section class="flex flex-col w-full md:w-md">
-      <h2 class="text-xl">Up next</h2>
-      <ul class="flex flex-col mt-4">
+    <section class="flex flex-col gap-4">
+      <ul class="flex flex-col gap-3">
         {
-          posts
-            .entries()
-            .map(([i, post]) => (
-              <Song
-                index={i + 1}
+          posts.map((post) => (
+            <li>
+              <PostCard
+                href={`/blog/${post.slug}`}
                 title={post.title}
-                time={`${post.readTime} mins`}
-                slug={`/blog/${post.slug}`}
+                date={post.date}
+                description={post.description}
+                readTime={post.readTime}
               />
-            ))
+            </li>
+          ))
         }
       </ul>
     </section>
+
+    <BackLink href="/" />
   </div>
-
-  <script is:inline define:vars={{ posts }}>
-    const playButton = document.getElementById("play");
-    const backButton = document.getElementById("back");
-    const skipButton = document.getElementById("skip");
-    const title = document.getElementById("now-playing-title");
-    const listenTime = document.getElementById("listenTime");
-
-    let currentIndex = 0;
-
-    function updateNowPlaying() {
-      title.textContent = posts[currentIndex].title;
-      listenTime.textContent = `${posts[currentIndex].readTime}:00`;
-    }
-
-    playButton.addEventListener("click", () => {
-      location.href = `/blog/${posts[currentIndex].slug}`;
-    });
-
-    backButton.addEventListener("click", () => {
-      if (currentIndex > 0) {
-        currentIndex--;
-        updateNowPlaying();
-      }
-    });
-
-    skipButton.addEventListener("click", () => {
-      if (currentIndex < posts.length - 1) {
-        currentIndex++;
-        updateNowPlaying();
-      }
-    });
-  </script>
 </Base>

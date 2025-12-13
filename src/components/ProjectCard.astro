@@ -1,0 +1,81 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  href: string;
+  name: string;
+  description?: string;
+  icon?: string | null;
+  stars: number;
+  repo?: string | null;
+  compact?: boolean;
+}
+
+const { href, name, description, icon, stars, repo, compact = false } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  class:list={[
+    "group flex gap-3 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all",
+    compact ? "flex-row items-center p-3" : "flex-col p-4 h-full",
+  ]}
+>
+  <div class:list={[
+    "flex flex-row items-center gap-3",
+    compact && "flex-1",
+  ]}>
+    {icon ? (
+      <img
+        src={icon}
+        alt={name}
+        width={compact ? 24 : 32}
+        height={compact ? 24 : 32}
+        class="rounded"
+      />
+    ) : (
+      <div class:list={[
+        "bg-bg rounded flex items-center justify-center",
+        compact ? "w-6 h-6" : "w-8 h-8",
+      ]}>
+        <Icon name="fa7-solid:code" class:list={[
+          "text-fg-lighter",
+          compact ? "w-3 h-3" : "w-4 h-4",
+        ]} />
+      </div>
+    )}
+    
+    <span class:list={[
+      "group-hover:text-special transition-colors",
+      !compact && "font-medium",
+    ]}>
+      {name}
+    </span>
+
+  </div>
+
+  {compact && (
+    <span class="text-fg-lighter text-sm flex items-center gap-1">
+      <Icon name="fa7-solid:star" class="w-3 h-3" />
+      {stars}
+    </span>
+  )}
+
+  {!compact && (
+    <>
+      {description && <p class="text-fg-lighter text-sm">{description}</p>}
+      <div class="flex flex-row items-center gap-2 mt-auto text-fg-lighter text-sm">
+        <Icon name="fa7-solid:star" class="w-3 h-3" />
+        <span>{stars}</span>
+        {repo && (
+          <>
+            <span class="mx-1">·</span>
+            <Icon name="fa7-brands:github" class="w-3 h-3" />
+          </>
+        )}
+      </div>
+    </>
+  )}
+</a>
