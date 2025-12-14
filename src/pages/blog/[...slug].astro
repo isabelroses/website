@@ -97,10 +97,11 @@ const { Content } = await render(post);
         </a>
         <button
           id="copy-link"
-          class="share-icon cursor-pointer"
+          class="share-icon cursor-pointer relative"
           aria-label="Copy link"
         >
-          <Icon name="fa7-solid:link" class="w-5 h-5" />
+          <Icon name="fa7-solid:link" class="w-5 h-5 copy-icon transition-all duration-200" />
+          <Icon name="fa7-solid:check" class="w-5 h-5 check-icon absolute inset-0 opacity-0 scale-0 transition-all duration-200" />
         </button>
       </div>
     </section>
@@ -135,10 +136,30 @@ const { Content } = await render(post);
     </nav>
   </article>
 
-  <script is:inline>
+  <script>
     document.addEventListener("astro:page-load", () => {
-      document.getElementById("copy-link")?.addEventListener("click", async () => {
+      const copyButton = document.getElementById("copy-link");
+      copyButton?.addEventListener("click", async () => {
         await navigator.clipboard.writeText(window.location.href);
+        
+        const linkIcon = copyButton.querySelector(".copy-icon");
+        const checkIcon = copyButton.querySelector(".check-icon");
+        
+        // Animate out the link icon
+        linkIcon?.classList.add("opacity-0", "scale-0");
+        linkIcon?.classList.remove("opacity-100", "scale-100");
+        
+        // Animate in the check icon
+        checkIcon?.classList.remove("opacity-0", "scale-0");
+        checkIcon?.classList.add("opacity-100", "scale-100", "text-green-500");
+        
+        // Reset after 2 seconds
+        setTimeout(() => {
+          checkIcon?.classList.add("opacity-0", "scale-0");
+          checkIcon?.classList.remove("opacity-100", "scale-100", "text-green-500");
+          linkIcon?.classList.remove("opacity-0", "scale-0");
+          linkIcon?.classList.add("opacity-100", "scale-100");
+        }, 2000);
       });
     });
   </script>
