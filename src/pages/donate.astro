@@ -21,6 +21,30 @@ const DONATION_OPTIONS = [
     color: "bg-[#24292e]",
   },
 ];
+
+const CRYPTO_OPTIONS = [
+  {
+    name: "Bitcoin",
+    description: "Click to copy BTC address.",
+    address: "bc1qu8e5xefa0f6vrfy2rp6n8k2usgph9vkqz33ul3",
+    icon: "fa7-brands:bitcoin",
+    color: "bg-[#F7931A]",
+  },
+  {
+    name: "Ethereum",
+    description: "Click to copy ETH address.",
+    address: "0xAe39F3172dD4075AaE695824Fbc702c096218C7a",
+    icon: "fa7-brands:ethereum",
+    color: "bg-[#627EEA]",
+  },
+  {
+    name: "Monero",
+    description: "Click to copy XMR address.",
+    address: "45pYxmERBuf7e8hT1MSUthML3fs8puswxSeTCm9AMq3oij1PCjxo4cqiJBKEmi2v71MJGMeXgKAr6f6p7sLE5LSzS338zJz",
+    icon: "fa7-brands:monero",
+    color: "bg-[#FF6600]",
+  },
+];
 ---
 
 <Base
@@ -78,6 +102,62 @@ const DONATION_OPTIONS = [
       </ul>
     </section>
 
+    <section class="flex flex-col gap-4">
+      <h2 class="text-xl">crypto</h2>
+      <ul class="flex flex-col gap-4">
+        {
+          CRYPTO_OPTIONS.map((option) => (
+            <li>
+              <button
+                type="button"
+                data-address={option.address}
+                class="crypto-copy group flex flex-row items-center gap-4 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all w-full text-left cursor-pointer"
+              >
+                <div class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}>
+                  <Icon name={option.icon} class="w-6 h-6 text-white" />
+                </div>
+                
+                <div class="flex flex-col flex-1">
+                  <span class="font-medium group-hover:text-special transition-colors">
+                    {option.name}
+                  </span>
+                  <span class="text-fg-lighter text-sm crypto-description">{option.description}</span>
+                </div>
+                <Icon name="fa7-solid:copy" class="w-4 h-4 text-fg-lighter" />
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
     <BackLink href="/" />
   </div>
 </Base>
+
+<script>
+  document.querySelectorAll('.crypto-copy').forEach((button) => {
+    button.addEventListener('click', async () => {
+      const address = button.getAttribute('data-address');
+      const description = button.querySelector('.crypto-description');
+      const originalText = description?.textContent;
+      
+      try {
+        await navigator.clipboard.writeText(address || '');
+        if (description) {
+          description.textContent = 'Copied to clipboard!';
+          setTimeout(() => {
+            description.textContent = originalText || '';
+          }, 2000);
+        }
+      } catch (err) {
+        if (description) {
+          description.textContent = 'Failed to copy';
+          setTimeout(() => {
+            description.textContent = originalText || '';
+          }, 2000);
+        }
+      }
+    });
+  });
+</script>
