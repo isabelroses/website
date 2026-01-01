@@ -1,14 +1,12 @@
 {
   lib,
   just,
+  pnpm,
+  nodejs,
   stdenvNoCC,
-  nodejs_24,
-  pnpm_10,
+  fetchPnpmDeps,
+  pnpmConfigHook,
 }:
-let
-  nodejs = nodejs_24;
-  pnpm = pnpm_10.override { inherit nodejs; };
-in
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "isabelroses-website";
   version = "0.10.0";
@@ -17,14 +15,15 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
   nativeBuildInputs = [
     just
+    pnpm
     nodejs
-    pnpm.configHook
+    pnpmConfigHook
   ];
 
-  pnpmDeps = pnpm.fetchDeps {
+  pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     fetcherVersion = 2;
-    hash = "sha256-0Cly8AhvYie3ppak0fYYCHMcEScxejwZ6VpK6ekALOE=";
+    hash = "sha256-ApnY0zCtcIFO1Qab1F+Fw80aaxzNEEncUMVaFCqG8AE=";
   };
 
   dontUseJustInstall = true;
