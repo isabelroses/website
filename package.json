@@ -20,7 +20,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.1.18",
     "@yeskunall/astro-umami": "^0.0.7",
-    "astro": "^5.16.11",
+    "astro": "^5.17.1",
     "astro-compress": "^2.3.9",
     "astro-expressive-code": "^0.41.6",
     "astro-icon": "^1.1.5",
@@ -29,9 +29,9 @@
     "feed": "^5.2.0",
     "markdown-it": "^14.1.0",
     "mdast-util-to-string": "^4.0.0",
-    "react": "^19.2.3",
+    "react": "^19.2.4",
     "reading-time": "^1.5.0",
-    "reading-time-estimator": "^2.0.4",
+    "reading-time-estimator": "^2.1.1",
     "sanitize-html": "^2.17.0",
     "satori": "^0.19.1",
     "sharp": "^0.34.5",
@@ -40,9 +40,9 @@
   },
   "devDependencies": {
     "@types/markdown-it": "^14.1.2",
-    "@types/react": "^19.2.8",
+    "@types/react": "^19.2.10",
     "@types/sanitize-html": "^2.16.0",
-    "prettier": "^3.8.0",
+    "prettier": "^3.8.1",
     "prettier-plugin-astro": "^0.14.1"
   }
 }
