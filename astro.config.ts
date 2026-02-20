@@ -41,6 +41,7 @@ export default defineConfig({
     "/blog/nixos-and-postgresql-1": "/blog/nixos-and-postgresql",
     // discord api
     "/api/discord": "https://discord.gg/8RVhHeJH3x",
+    "/api/discord/web": "https://discord.gg/8RVhHeJH3x",
   },
 
   vite: {
