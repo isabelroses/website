@@ -8,6 +8,7 @@ import ProjectCard from "@components/ProjectCard.astro";
 import NavCard from "@components/NavCard.astro";
 import SectionHeader from "@components/SectionHeader.astro";
 import SocialLinks from "@components/SocialLinks.astro";
+import { Icon } from "astro-icon/components";
 import me from "@assets/me.webp";
 
 const posts = await getCollection("blog", ({ data }) => {
@@ -43,6 +44,16 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
         i often write about my uses of these technologies on my blog, and share
         my projects as open source.
       </p>
+
+      <a
+        href="/isabel_roses_cv.pdf"
+        class="flex items-center gap-3 w-full px-4 py-3 rounded-lg border border-blue-500/40 bg-blue-500/10 text-sm text-blue-200 hover:bg-blue-500/15 transition-all"
+      >
+        <Icon name="fa7-solid:circle-info" class="w-4 h-4 shrink-0 text-blue-400" />
+        <p>i'm currently looking for work.
+          <span class="underline">click view my cv</span>
+        </p>
+      </a>
 
       <SocialLinks />
     </section>
