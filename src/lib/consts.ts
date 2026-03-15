@@ -52,8 +52,8 @@ export const PROJECTS = [
     stars: 84,
   },
 {
-    name: "This Site",
-    description: "This site that your currently on.",
+    name: "my websiteite",
+    description: "The site that you're currently on.",
     icon: null,
     banner: null,
     href: "https://isabelroses.com",
