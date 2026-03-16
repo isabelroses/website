@@ -8,10 +8,11 @@
     "preview": "astro preview",
     "astro": "astro",
     "check": "astro check",
-    "fmt": "prettier --write ."
+    "fmt": "prettier --write .",
+    "lint": "eslint ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.7",
+    "@astrojs/check": "^0.9.8",
     "@astrojs/sitemap": "^3.7.1",
     "@astrojs/ts-plugin": "^1.10.7",
     "@iconify-json/fa7-brands": "^1.2.2",
@@ -20,7 +21,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@tailwindcss/vite": "^4.2.1",
     "@yeskunall/astro-umami": "^0.0.7",
-    "astro": "^6.0.4",
+    "astro": "^6.0.5",
     "astro-compress": "^2.4.0",
     "astro-expressive-code": "^0.41.7",
     "astro-icon": "^1.1.5",
@@ -39,10 +40,14 @@
     "typescript": "^5.9.3"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
     "@types/markdown-it": "^14.1.2",
     "@types/react": "^19.2.14",
     "@types/sanitize-html": "^2.16.1",
+    "eslint": "^10.0.3",
+    "globals": "^17.4.0",
     "prettier": "^3.8.1",
-    "prettier-plugin-astro": "^0.14.1"
+    "prettier-plugin-astro": "^0.14.1",
+    "typescript-eslint": "^8.57.1"
   }
 }

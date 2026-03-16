@@ -10,9 +10,14 @@ const { title, href, linkLabel = "view all →" } = Astro.props;
 
 <div class="flex flex-row justify-between items-center">
   <h2 class="text-xl">{title}</h2>
-  {href && (
-    <a href={href} class="text-fg-lighter hover:text-special transition-colors text-sm">
-      {linkLabel}
-    </a>
-  )}
+  {
+    href && (
+      <a
+        href={href}
+        class="text-fg-lighter hover:text-special transition-colors text-sm"
+      >
+        {linkLabel}
+      </a>
+    )
+  }
 </div>

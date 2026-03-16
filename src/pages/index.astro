@@ -11,9 +11,9 @@ import SocialLinks from "@components/SocialLinks.astro";
 import { Icon } from "astro-icon/components";
 import me from "@assets/me.webp";
 
-const posts = await getCollection("blog", ({ data }) => {
+const posts = (await getCollection("blog", ({ data }) => {
   return !data.draft && !data.archived;
-});
+})).sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
 ---
@@ -40,17 +40,21 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
       </div>
 
       <p class="text-fg-lighter leading-relaxed">
-        hello. i'm a software developer who loves working with nix, rust, and go.
-        i often write about my uses of these technologies on my blog, and share
-        my projects as open source.
+        hello. i'm a software developer who loves working with nix, rust, and
+        go. i often write about my uses of these technologies on my blog, and
+        share my projects as open source.
       </p>
 
       <a
         href="/isabel_roses_cv.pdf"
         class="flex items-center gap-3 w-full px-4 py-3 rounded-lg border border-special/40 bg-special/10 text-sm text-special hover:bg-special/15 transition-all"
       >
-        <Icon name="fa7-solid:circle-info" class="w-4 h-4 shrink-0 text-special" />
-        <p>i'm currently looking for work.
+        <Icon
+          name="fa7-solid:circle-info"
+          class="w-4 h-4 shrink-0 text-special"
+        />
+        <p>
+          i'm currently looking for work.
           <span class="underline">click view my cv</span>
         </p>
       </a>

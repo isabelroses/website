@@ -1,6 +1,7 @@
 import { glob, type Loader } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
 import { readingTime } from "reading-time-estimator";
+import { z } from "astro/zod";
 
 const blog = z.object({
   title: z.string(),
@@ -17,7 +18,7 @@ const blog = z.object({
 
 type BlogPost = z.infer<typeof blog>;
 
-const customLoader: Loader = {
+const customLoader = {
   ...glob,
   name: "customLoader",
   load: async (loaderParams) => {
@@ -29,25 +30,19 @@ const customLoader: Loader = {
     });
     await baseLoader.load.call(this, loaderParams);
 
-    let items = [...store.values()];
+    const items = [...store.values()];
     store.clear();
 
-    const sorted = items.sort(
-      (a, b) =>
-        new Date((b.data as BlogPost).date).getTime() -
-        new Date((a.data as BlogPost).date).getTime(),
-    );
+    // we used to sort here but getCollection is none-deterministic so our sort
+    // order became jumbled as of astro v6 so we cannot do that anymore
 
     items.forEach((item) => {
-      const readTime = readingTime(item.body ?? "", 200);
+      const readTime = readingTime(item.body ?? "");
       item.data.readTime = readTime.minutes;
-    });
-
-    sorted.forEach((item) => {
       store.set({ ...item });
     });
   },
-};
+} satisfies Loader;
 
 const blogCollection = defineCollection({
   loader: customLoader,

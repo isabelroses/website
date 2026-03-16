@@ -51,7 +51,7 @@ export const PROJECTS = [
     repo: "https://github.com/charm-community/freeze.nvim",
     stars: 84,
   },
-{
+  {
     name: "my websiteite",
     description: "The site that you're currently on.",
     icon: null,
@@ -104,7 +104,7 @@ export const FRIENDS = [
   {
     name: "rooot",
     link: "https://rooot.gay",
-    image: "rooot.gif"
+    image: "rooot.gif",
   },
   {
     name: "autumn",

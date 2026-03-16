@@ -9,7 +9,13 @@ import PostCard from "@components/PostCard.astro";
 import { SITE_TITLES } from "@lib/consts";
 
 interface Props {
-  posts: { title: string; description: string; readTime: number; slug: string; date: Date }[];
+  posts: {
+    title: string;
+    description: string;
+    readTime: number;
+    slug: string;
+    date: Date;
+  }[];
   tag: string;
 }
 

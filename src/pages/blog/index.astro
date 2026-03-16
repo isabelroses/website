@@ -7,9 +7,9 @@ import BackLink from "@components/BackLink.astro";
 import Tag from "@components/Tag.astro";
 import PostCard from "@components/PostCard.astro";
 
-const posts = await getCollection("blog", ({ data }) => {
+const posts = (await getCollection("blog", ({ data }) => {
   return !data.draft && !data.archived;
-});
+})).sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
 
 import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
 ---

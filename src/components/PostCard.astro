@@ -9,7 +9,15 @@ interface Props {
   compact?: boolean;
 }
 
-const { href, title, date, description, readTime, tags, compact = false } = Astro.props;
+const {
+  href,
+  title,
+  date,
+  description,
+  readTime,
+  tags,
+  compact = false,
+} = Astro.props;
 
 const formattedDate = date.toLocaleDateString("en-GB", {
   day: "numeric",
@@ -22,7 +30,9 @@ const formattedDate = date.toLocaleDateString("en-GB", {
   href={href}
   class:list={[
     "group flex flex-col gap-1 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all",
-    compact ? "p-3 sm:flex-row sm:justify-between sm:items-center" : "gap-2 p-4",
+    compact
+      ? "p-3 sm:flex-row sm:justify-between sm:items-center"
+      : "gap-2 p-4",
   ]}
 >
   {
@@ -48,7 +58,7 @@ const formattedDate = date.toLocaleDateString("en-GB", {
           {tags && tags.length > 0 && (
             <>
               {readTime && <span>·</span>}
-              
+
               <div class="flex flex-wrap gap-1">
                 {tags.slice(0, 3).map((tag) => (
                   <span class="text-special">#{tag}</span>

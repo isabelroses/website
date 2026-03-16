@@ -40,17 +40,15 @@ const CRYPTO_OPTIONS = [
   {
     name: "Monero",
     description: "Click to copy XMR address.",
-    address: "45pYxmERBuf7e8hT1MSUthML3fs8puswxSeTCm9AMq3oij1PCjxo4cqiJBKEmi2v71MJGMeXgKAr6f6p7sLE5LSzS338zJz",
+    address:
+      "45pYxmERBuf7e8hT1MSUthML3fs8puswxSeTCm9AMq3oij1PCjxo4cqiJBKEmi2v71MJGMeXgKAr6f6p7sLE5LSzS338zJz",
     icon: "fa7-brands:monero",
     color: "bg-[#FF6600]",
   },
 ];
 ---
 
-<Base
-  title="donate | isabel"
-  description="support my open source work"
->
+<Base title="donate | isabel" description="support my open source work">
   <div class="w-full max-w-2xl flex flex-col gap-12">
     <PageHeader
       title="donate"
@@ -74,7 +72,9 @@ const CRYPTO_OPTIONS = [
                 rel="noopener noreferrer"
                 class="group flex flex-row items-center gap-4 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all"
               >
-                <div class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}>
+                <div
+                  class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}
+                >
                   {option.icon === "kofi" ? (
                     <svg
                       viewBox="0 0 24 24"
@@ -87,14 +87,19 @@ const CRYPTO_OPTIONS = [
                     <Icon name={option.icon} class="w-6 h-6 text-white" />
                   )}
                 </div>
-                
+
                 <div class="flex flex-col flex-1">
                   <span class="font-medium group-hover:text-special transition-colors">
                     {option.name}
                   </span>
-                  <span class="text-fg-lighter text-sm">{option.description}</span>
+                  <span class="text-fg-lighter text-sm">
+                    {option.description}
+                  </span>
                 </div>
-                <Icon name="fa7-solid:arrow-up-right-from-square" class="w-4 h-4 text-fg-lighter" />
+                <Icon
+                  name="fa7-solid:arrow-up-right-from-square"
+                  class="w-4 h-4 text-fg-lighter"
+                />
               </a>
             </li>
           ))
@@ -113,15 +118,19 @@ const CRYPTO_OPTIONS = [
                 data-address={option.address}
                 class="crypto-copy group flex flex-row items-center gap-4 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all w-full text-left cursor-pointer"
               >
-                <div class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}>
+                <div
+                  class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}
+                >
                   <Icon name={option.icon} class="w-6 h-6 text-white" />
                 </div>
-                
+
                 <div class="flex flex-col flex-1">
                   <span class="font-medium group-hover:text-special transition-colors">
                     {option.name}
                   </span>
-                  <span class="text-fg-lighter text-sm crypto-description">{option.description}</span>
+                  <span class="text-fg-lighter text-sm crypto-description">
+                    {option.description}
+                  </span>
                 </div>
                 <Icon name="fa7-solid:copy" class="w-4 h-4 text-fg-lighter" />
               </button>
@@ -136,25 +145,25 @@ const CRYPTO_OPTIONS = [
 </Base>
 
 <script>
-  document.querySelectorAll('.crypto-copy').forEach((button) => {
-    button.addEventListener('click', async () => {
-      const address = button.getAttribute('data-address');
-      const description = button.querySelector('.crypto-description');
+  document.querySelectorAll(".crypto-copy").forEach((button) => {
+    button.addEventListener("click", async () => {
+      const address = button.getAttribute("data-address");
+      const description = button.querySelector(".crypto-description");
       const originalText = description?.textContent;
-      
+
       try {
-        await navigator.clipboard.writeText(address || '');
+        await navigator.clipboard.writeText(address || "");
         if (description) {
-          description.textContent = 'Copied to clipboard!';
+          description.textContent = "Copied to clipboard!";
           setTimeout(() => {
-            description.textContent = originalText || '';
+            description.textContent = originalText || "";
           }, 2000);
         }
       } catch (err) {
         if (description) {
-          description.textContent = 'Failed to copy';
+          description.textContent = "Failed to copy";
           setTimeout(() => {
-            description.textContent = originalText || '';
+            description.textContent = originalText || "";
           }, 2000);
         }
       }
