@@ -356,45 +356,27 @@ In nginx this will look like such
     virtualHosts.${pdsSettings.PDS_HOSTNAME} = {
       serverAliases = [ ".${pdsSettings.PDS_HOSTNAME}" ];
 
-      locations =
-        let
-          mkAgeAssured = state: {
-            return = "200 '${builtins.toJSON state}'";
-            extraConfig = ''
-              add_header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy" always;
-              add_header access-control-allow-origin "*" always;
-              add_header X-Frame-Options SAMEORIGIN always;
-              add_header X-Content-Type-Options nosniff;
-              default_type application/json;
-            '';
-          };
-        in
-        {
-          # i am of age but i don't want to prove it lol
-          # https://gist.github.com/mary-ext/6e27b24a83838202908808ad528b3318
-          "/xrpc/app.bsky.unspecced.getAgeAssuranceState" = mkAgeAssured {
-            lastInitiatedAt = "2025-07-14T15:11:05.487Z";
-            status = "assured";
-          };
-          "/xrpc/app.bsky.ageassurance.getConfig" = mkAgeAssured {
-            regions = [ ];
-          };
-          "/xrpc/app.bsky.ageassurance.getState" = mkAgeAssured {
-            state = {
-              lastInitiatedAt = "2025-07-14T15:11:05.487Z";
-              status = "assured";
-              access = "full";
-            };
-            metadata = {
-              accountCreatedAt = "2022-11-17T00:35:16.391Z";
-            };
-          };
-
-          # pass everything else to the pds
-          "/" = {
-            proxyPass = "http://${cfg.host}:${toString cfg.port}";
-            proxyWebsockets = true;
-          };
+      locations = {
+        "/xrpc/app.bsky.ageassurance.getState" = {
+          return = "200 '${
+            builtins.toJSON {
+              state = {
+                lastInitiatedAt = "2025-07-14T15:11:05.487Z";
+                status = "assured";
+                access = "full";
+              };
+              metadata = {
+                accountCreatedAt = "2022-11-17T00:35:16.391Z";
+              };
+            }
+          }'";
+          extraConfig = ''
+            add_header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy" always;
+            add_header access-control-allow-origin "*" always;
+            add_header X-Frame-Options SAMEORIGIN always;
+            add_header X-Content-Type-Options nosniff;
+            default_type application/json;
+          '';
         };
       };
     };
@@ -417,19 +399,6 @@ And with caddy
         import common
         reverse_proxy http://127.0.0.1:${toString pdsSettings.PDS_PORT}
 
-        handle /xrpc/app.bsky.unspecced.getAgeAssuranceState {
-          header content-type "application/json"
-          header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy"
-          header access-control-allow-origin "*"
-          respond `{"lastInitiatedAt":"2025-07-14T14:22:43.912Z","status":"assured"}` 200
-        }
-
-        handle /xrpc/app.bsky.ageassurance.getConfig {
-          header content-type "application/json"
-          header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy"
-          header access-control-allow-origin "*"
-          respond `{"regions":[]}` 200
-        }
         handle /xrpc/app.bsky.ageassurance.getState {
           header content-type "application/json"
           header access-control-allow-headers "authorization,dpop,atproto-accept-labelers,atproto-proxy"
