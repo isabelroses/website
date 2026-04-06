@@ -326,7 +326,7 @@ need to change how the original `flake.nix` works though.
 ```
 
 Furthermore, notice how I lied about settings `nixpkgs.hostPlatform`. If your curious why, maybe you
-should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad-im-disapointed-10). (Shameless plug)
+should read [my last blog post about it](https://isabelroses.com/blog/im-not-mad-im-disappointed). (Shameless plug)
 
 ### Darwin compatibility
 
