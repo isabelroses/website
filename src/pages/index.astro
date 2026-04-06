@@ -9,7 +9,6 @@ import NavCard from "@components/NavCard.astro";
 import SectionHeader from "@components/SectionHeader.astro";
 import SocialLinks from "@components/SocialLinks.astro";
 import { Icon } from "astro-icon/components";
-import me from "@assets/me.webp";
 
 const posts = (await getCollection("blog", ({ data }) => {
   return !data.draft && !data.archived;
@@ -27,8 +26,8 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
     <section class="flex flex-col gap-6">
       <div class="flex flex-row gap-4 items-center">
         <Image
-          src={me}
-          alt="Avatar"
+          src="/me.webp"
+          alt="my avatar"
           width={64}
           height={64}
           class="rounded-full"

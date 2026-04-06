@@ -1,8 +1,3 @@
-import catppuccinNix from "@assets/repos/catppuccin-nix.webp";
-import freezeNvim from "@assets/repos/freeze.webp";
-import dotfiles from "@assets/repos/dotfiles.svg";
-import bellado from "@assets/repos/bellado.webp";
-
 export const SITE_TITLES = {
   index: "isabel",
   blog: "isabel's blog",
@@ -22,7 +17,7 @@ export const PROJECTS = [
   {
     name: "Catppuccin Nix",
     description: "Soothing pastel colors for nix",
-    icon: catppuccinNix.src,
+    icon: "/repos/catppuccin-nix.webp",
     href: null,
     repo: "https://github.com/catppuccin/nix",
     stars: 686,
@@ -38,7 +33,7 @@ export const PROJECTS = [
   {
     name: "Dotfiles",
     description: "My over complex system configurations",
-    icon: dotfiles.src,
+    icon: "/repos/dotfiles.svg",
     href: null,
     repo: "https://github.com/isabelroses/dotfiles",
     stars: 354,
@@ -46,7 +41,7 @@ export const PROJECTS = [
   {
     name: "freeze.nvim",
     description: "A wrapper for charm's freeze cli tool for usage in neovim",
-    icon: freezeNvim.src,
+    icon: "/repos/freeze.webp",
     href: null,
     repo: "https://github.com/charm-community/freeze.nvim",
     stars: 84,
@@ -63,7 +58,7 @@ export const PROJECTS = [
   {
     name: "Bellado",
     description: "A fast and once simple cli todo tool",
-    icon: bellado.src,
+    icon: "/repos/bellado.webp",
     href: null,
     repo: "https://github.com/isabelroses/bellado",
     stars: 13,
