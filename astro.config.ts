@@ -39,9 +39,6 @@ export default defineConfig({
     "/blog/my-workflow-3": "/blog/my-workflow",
     "/blog/self-healing-urls-2": "/blog/self-healing-urls",
     "/blog/nixos-and-postgresql-1": "/blog/nixos-and-postgresql",
-    // discord api
-    "/api/discord": "https://discord.gg/8RVhHeJH3x",
-    "/api/discord/web": "https://discord.gg/8RVhHeJH3x",
   },
 
   vite: {
