@@ -137,11 +137,6 @@ export const FRIENDS = [
     image: "robin.gif",
   },
   {
-    name: "sketch",
-    link: "https://sketchni.uk",
-    image: "sketch.png",
-  },
-  {
     name: "slonking",
     link: "https://slonk.ing",
     image: "slonking.webp",
