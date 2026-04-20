@@ -2,6 +2,7 @@
 title: My custom lib.nixosSystem
 description: How I came to write my own lib.nixosSystem
 date: 2025-02-07
+updated: 2026-04-20
 tags:
   - learning
   - nix
@@ -422,7 +423,7 @@ the output dependent on the host platform, if a system dependent output exists,
 otherwise it will leave it as is. We can achieve that with the following code:
 
 ```nix
-inputs' = lib.mapAttrs (_: lib.mapAttrs (_: v: v.${config.nixpkgs.hostPlatform} or v)) inputs;
+inputs' = lib.mapAttrs (_: lib.mapAttrs (_: v: v.${config.nixpkgs.hostPlatform.system} or v)) inputs;
 ```
 
 Or if you are using flake-parts, you may prefer using the following code instead:
@@ -463,7 +464,7 @@ name:
           _module.args = {
             inherit baseModules modules;
 
-            inputs' = lib.mapAttrs (_: lib.mapAttrs (_: v: v.${config.nixpkgs.hostPlatform} or v)) inputs;
+            inputs' = lib.mapAttrs (_: lib.mapAttrs (_: v: v.${config.nixpkgs.hostPlatform.system} or v)) inputs;
           };
 
           networking.hostName = name;
