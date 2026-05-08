@@ -94,7 +94,6 @@ keep editing them.
 
 Once the file is encrypted you will still need to introduce your config to it. sops-nix
 ships a module that does the heavy lifting, so a typical config may look like:
-look like:
 
 ```nix
 {
@@ -133,7 +132,7 @@ file:
 
 ## Agenix
 
-Agenix is a takes a different approach from sops-nix making it feel a lot more
+Agenix takes a different approach from sops-nix making it feel a lot more
 like nix since you configure all the secrets and who can access them through
 the `secrets.nix` file. It is important to note that you can also configure
 what keys have access to what secret. This file might look a little like so:
@@ -223,10 +222,12 @@ limitation in the age cli. But rather due to sops-nix not supporting
 Post-Quantum age keys
 [sops-nix#885](https://github.com/Mic92/sops-nix/issues/885).~~ 
 
-Since writing I have been corrected in saying this as age and sops do support
+Since writing I have been corrected in saying this, as age and sops do support
 post-quantum secure encryption keys. Since
 [age#578](https://github.com/FiloSottile/age/issues/578) was closed and
 [v1.3.0](https://github.com/FiloSottile/age/releases/tag/v1.3.0) was released.
+When generating your age key change the command to include `-pq` so the command
+might now look like `age-keygen -pq -o key.txt`.
 
 ## Conclusion
 
