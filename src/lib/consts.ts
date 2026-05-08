@@ -20,7 +20,7 @@ export const PROJECTS = [
     icon: "/repos/catppuccin-nix.webp",
     href: null,
     repo: "https://github.com/catppuccin/nix",
-    stars: 709,
+    stars: 717,
   },
   {
     name: "izrss",
@@ -28,7 +28,7 @@ export const PROJECTS = [
     icon: null,
     href: null,
     repo: "https://github.com/isabelroses/izrss",
-    stars: 56,
+    stars: 58,
   },
   {
     name: "Dotfiles",
@@ -36,7 +36,7 @@ export const PROJECTS = [
     icon: "/repos/dotfiles.svg",
     href: null,
     repo: "https://github.com/isabelroses/dotfiles",
-    stars: 392,
+    stars: 397,
   },
   {
     name: "freeze.nvim",
