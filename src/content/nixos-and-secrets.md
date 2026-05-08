@@ -215,12 +215,18 @@ more than a couple of services that each want a bundle of related secrets,
 sops-nix will scale better. If you're starting from scratch and you mostly have
 a handful of standalone tokens, agenix will get you there with less ceremony.
 
-It is also important to note at this current moment of time agenix is [**NOT**
-post quantum safe](https://github.com/ryantm/agenix#threat-modelwarnings).
-However, the same issue applies to sops-nix but not because of a limitation of
-sops like agenix's limitation in the age cli. But rather due to sops-nix not
-supporting Post-Quantum age keys
-[sops-nix#885](https://github.com/Mic92/sops-nix/issues/885).
+~~It is also important to note at this current moment of time agenix is
+[**NOT** post quantum
+safe](https://github.com/ryantm/agenix#threat-modelwarnings). However, the same
+issue applies to sops-nix but not because of a limitation of sops like agenix's
+limitation in the age cli. But rather due to sops-nix not supporting
+Post-Quantum age keys
+[sops-nix#885](https://github.com/Mic92/sops-nix/issues/885).~~ 
+
+Since writing I have been corrected in saying this as age and sops do support
+post-quantum secure encryption keys. Since
+[age#578](https://github.com/FiloSottile/age/issues/578) was closed and
+[v1.3.0](https://github.com/FiloSottile/age/releases/tag/v1.3.0) was released.
 
 ## Conclusion
 
