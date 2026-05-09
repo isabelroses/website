@@ -32,7 +32,7 @@
       content: none;
     }
 
-    @apply md:max-w-[65ch] max-w-[80vw];
+    @apply md:max-w-[70ch] max-w-[80vw] mx-auto;
   }
 }
 

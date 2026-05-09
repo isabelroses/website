@@ -36,7 +36,7 @@ const { Content } = await render(post);
   description={post.data.description}
   image={`/blog/${post.id}.png`}
 >
-  <article class="w-full max-w-2xl flex flex-col gap-8">
+  <article class="w-full max-w-2xl lg:max-w-3xl flex flex-col gap-8">
     <header class="flex flex-col gap-4">
       <BackLink href="/blog" label="back to blog" />
       <h1 class="text-3xl font-bold">{post.data.title}</h1>
