@@ -19,7 +19,7 @@
     "@iconify-json/fa7-solid": "^1.2.4",
     "@resvg/resvg-js": "^2.6.2",
     "@tailwindcss/typography": "^0.5.19",
-    "@tailwindcss/vite": "^4.2.4",
+    "@tailwindcss/vite": "^4.3.0",
     "@yeskunall/astro-umami": "^0.0.8",
     "astro": "^6.3.1",
     "astro-compress": "^2.4.1",
@@ -34,7 +34,7 @@
     "sanitize-html": "^2.17.3",
     "satori": "^0.26.0",
     "sharp": "^0.34.5",
-    "tailwindcss": "^4.2.4",
+    "tailwindcss": "^4.3.0",
     "typescript": "^6.0.3"
   },
   "devDependencies": {
@@ -46,6 +46,6 @@
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
-    "typescript-eslint": "^8.59.2"
+    "typescript-eslint": "^8.59.3"
   }
 }
