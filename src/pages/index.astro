@@ -8,11 +8,14 @@ import ProjectCard from "@components/ProjectCard.astro";
 import NavCard from "@components/NavCard.astro";
 import SectionHeader from "@components/SectionHeader.astro";
 import SocialLinks from "@components/SocialLinks.astro";
-import { Icon } from "astro-icon/components";
 
-const posts = (await getCollection("blog", ({ data }) => {
-  return !data.draft && !data.archived;
-})).sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime());
+const posts = (
+  await getCollection("blog", ({ data }) => {
+    return !data.draft && !data.archived;
+  })
+).sort(
+  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
+);
 
 import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
 ---
@@ -40,11 +43,16 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
 
       <p class="text-fg-lighter leading-relaxed">
         hello. i'm isabel. and i am a
-        <a href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md" target="_blank" class="text-special underline">nixpkgs commiter (i can merge prs)</a>,
-        and for a little fun i also
-        <a href="https://catppuccin.com/community/"  class="text-special underline">moderator for catppuccin</a>.
-        i write a lot of nix so your going to see a lot of my thoughts on that
-        on this site.
+        <a
+          href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md"
+          target="_blank"
+          class="text-special underline">nixpkgs commiter (i can merge prs)</a
+        >, and for a little fun i also
+        <a
+          href="https://catppuccin.com/community/"
+          class="text-special underline">moderator for catppuccin</a
+        >. i write a lot of nix so your going to see a lot of my thoughts on
+        that on this site.
       </p>
 
       <!-- <a -->

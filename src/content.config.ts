@@ -16,8 +16,6 @@ const blog = z.object({
   archived: z.boolean().default(false),
 });
 
-type BlogPost = z.infer<typeof blog>;
-
 const customLoader = {
   ...glob,
   name: "customLoader",
