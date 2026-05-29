@@ -20,7 +20,7 @@ export const PROJECTS = [
     icon: "/repos/catppuccin-nix.webp",
     href: null,
     repo: "https://github.com/catppuccin/nix",
-    stars: 717,
+    stars: 728,
   },
   {
     name: "izrss",
@@ -28,7 +28,7 @@ export const PROJECTS = [
     icon: null,
     href: null,
     repo: "https://github.com/isabelroses/izrss",
-    stars: 58,
+    stars: 59,
   },
   {
     name: "Dotfiles",
@@ -36,7 +36,7 @@ export const PROJECTS = [
     icon: "/repos/dotfiles.svg",
     href: null,
     repo: "https://github.com/isabelroses/dotfiles",
-    stars: 397,
+    stars: 412,
   },
   {
     name: "freeze.nvim",
@@ -44,7 +44,7 @@ export const PROJECTS = [
     icon: "/repos/freeze.webp",
     href: null,
     repo: "https://github.com/charm-community/freeze.nvim",
-    stars: 87,
+    stars: 89,
   },
   {
     name: "my website",
@@ -53,7 +53,7 @@ export const PROJECTS = [
     banner: null,
     href: "https://isabelroses.com",
     repo: "https://github.com/isabelroses/website",
-    stars: 29,
+    stars: 30,
   },
   {
     name: "Bellado",
