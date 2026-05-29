@@ -61,7 +61,7 @@ creation_rules:
 
 Then you can use the `sops` command line tool to encrypt and decrypt the
 secrets. This command may look like `sops secrets/shush.yaml`. This will then
-open your chosen editor to allow you to configure a yaml file. 
+open your chosen editor to allow you to configure a yaml file.
 
 ```yaml title=secrets/shush.yaml
 hello: sops
@@ -72,21 +72,21 @@ Upon exiting the editor the data will then be encrypted and may look something l
 ```yaml title=secrets/shush.yaml
 hello: ENC[AES256_GCM,data:5ar0KQ==,iv:WpVEI/BetAloDP/9+4y28udJ04Loh4EBXFm5E8Sln7s=,tag:15IWu728tKQUYJHx9roVrQ==,type:str]
 sops:
-    age:
-        - recipient: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMQDiHbMSinj8twL9cTgPOfI6OMexrTZyHX27T8gnMj2
-          enc: |
-            -----BEGIN AGE ENCRYPTED FILE-----
-            YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IHNzaC1lZDI1NTE5IDk1NDQzZyBuYnhk
-            djVoS2F4dHZMUE9LUE5xb3htamVDTnpoTVBPN05BOEZheFJ6a3hJCk1tZ0JoMlhJ
-            WWdrVEViUC91VXk3emVETUdSV2tDcHd5dTlKYlJjWGhxcm8KLS0tIFlaczBRRXVQ
-            emtZZlUvdEFhU29YSnc3dHNOWHdlamtORCtwN0wxdGQ2ekUKNYpnUt83rFILe/A2
-            RiXGYQoDTj3NF6t5szFWeCWXftWZFmsLBhQ59PDpfnrk+cHWXILhxIifrJjlDoHh
-            9+i8Yw==
-            -----END AGE ENCRYPTED FILE-----
-    lastmodified: "2026-05-08T15:21:51Z"
-    mac: ENC[AES256_GCM,data:o7aa6vz7qAkS93XPK9adlT5b5382n5c1egTGGft847mYkCM6A2TAOQhMdcrHsN90aY7f64rglt0LaKFrUBOAh8hN04cSvNLykJ7iYYFq+rnADt3HQbjyVcYcZKTeMJ+797Uus26CW24reFENTtqum6VeL1FU78bVEh6/eS03V0E=,iv:Z2w4RbPC4c16VvxAPi4kydR+cNoEkKr4KsXoKHjn+OY=,tag:i+2eSHAscqBvHdZI9T250A==,type:str]
-    unencrypted_suffix: _unencrypted
-    version: 3.12.2
+  age:
+    - recipient: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMQDiHbMSinj8twL9cTgPOfI6OMexrTZyHX27T8gnMj2
+      enc: |
+        -----BEGIN AGE ENCRYPTED FILE-----
+        YWdlLWVuY3J5cHRpb24ub3JnL3YxCi0+IHNzaC1lZDI1NTE5IDk1NDQzZyBuYnhk
+        djVoS2F4dHZMUE9LUE5xb3htamVDTnpoTVBPN05BOEZheFJ6a3hJCk1tZ0JoMlhJ
+        WWdrVEViUC91VXk3emVETUdSV2tDcHd5dTlKYlJjWGhxcm8KLS0tIFlaczBRRXVQ
+        emtZZlUvdEFhU29YSnc3dHNOWHdlamtORCtwN0wxdGQ2ekUKNYpnUt83rFILe/A2
+        RiXGYQoDTj3NF6t5szFWeCWXftWZFmsLBhQ59PDpfnrk+cHWXILhxIifrJjlDoHh
+        9+i8Yw==
+        -----END AGE ENCRYPTED FILE-----
+  lastmodified: "2026-05-08T15:21:51Z"
+  mac: ENC[AES256_GCM,data:o7aa6vz7qAkS93XPK9adlT5b5382n5c1egTGGft847mYkCM6A2TAOQhMdcrHsN90aY7f64rglt0LaKFrUBOAh8hN04cSvNLykJ7iYYFq+rnADt3HQbjyVcYcZKTeMJ+797Uus26CW24reFENTtqum6VeL1FU78bVEh6/eS03V0E=,iv:Z2w4RbPC4c16VvxAPi4kydR+cNoEkKr4KsXoKHjn+OY=,tag:i+2eSHAscqBvHdZI9T250A==,type:str]
+  unencrypted_suffix: _unencrypted
+  version: 3.12.2
 ```
 
 This is totally normal, and you can use the same command as you used before to
@@ -171,7 +171,7 @@ At boot the host's SSH key is used to decrypt each `.age` file into
 `/run/agenix/<name>`, again on a tmpfs. The bit that catches most people out is
 rekeying. Every time that you add a new host or rotate a key, every secret in
 `secrets.nix` whose `publicKeys` list has changed will need to be re-encrypted.
-The `agenix --rekey` command will do this for you, but it needs the *current*
+The `agenix --rekey` command will do this for you, but it needs the _current_
 private key for one of the recipients to read the existing ciphertext first. In
 practice this means rekeying happens on the machine you trust most, not on the
 new host you're trying to bring up.
@@ -188,8 +188,8 @@ server at 2am.
 The thing to avoid is `builtins.readFile "/var/lib/myservice/token"` or
 similar. That reads the file at evaluation time and embeds the contents into
 the nix store, which is world-readable and is exactly the failure mode the
-intro warned about. Always pass the *path* to the service via options like
-[services.*.environmentFiles](https://search.nixos.org/options?channel=unstable&query=services.*.environmentFiles).
+intro warned about. Always pass the _path_ to the service via options like
+[services.\*.environmentFiles](https://search.nixos.org/options?channel=unstable&query=services.*.environmentFiles).
 
 For a single server or laptop this maybe fine. For anything you'd describe as a
 fleet, or anything you want to be able to rebuild from scratch from just your
@@ -220,7 +220,7 @@ safe](https://github.com/ryantm/agenix#threat-modelwarnings). However, the same
 issue applies to sops-nix but not because of a limitation of sops like agenix's
 limitation in the age cli. But rather due to sops-nix not supporting
 Post-Quantum age keys
-[sops-nix#885](https://github.com/Mic92/sops-nix/issues/885).~~ 
+[sops-nix#885](https://github.com/Mic92/sops-nix/issues/885).~~
 
 Since writing I have been corrected in saying this, as age and sops do support
 post-quantum secure encryption keys. Since
