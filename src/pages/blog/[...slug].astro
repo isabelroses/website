@@ -7,9 +7,7 @@ import BackLink from "@components/BackLink.astro";
 import Tag from "@components/Tag.astro";
 
 export async function getStaticPaths() {
-  const posts = (
-    await getCollection("blog", ({ data }) => !data.draft)
-  ).sort(
+  const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
     (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
   );
 

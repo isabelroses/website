@@ -1,12 +1,13 @@
 import { defineConfig } from "astro/config";
 import sitemap from "@astrojs/sitemap";
 import tailwindcss from "@tailwindcss/vite";
-import expressiveCode from "astro-expressive-code";
+import expressiveCode from "satteri-expressive-code";
 import umami from "@yeskunall/astro-umami";
 import icon from "astro-icon";
 import mailObfuscation from "astro-mail-obfuscation";
 import autoprefixer from "autoprefixer";
 import compress from "astro-compress";
+import { satteri } from "@astrojs/markdown-satteri";
 
 // https://astro.build/config
 export default defineConfig({
@@ -16,7 +17,6 @@ export default defineConfig({
 
   integrations: [
     sitemap(),
-    expressiveCode(),
     icon(),
     umami({
       endpointUrl: "https://analytics.isabelroses.com/script.js",
@@ -39,6 +39,47 @@ export default defineConfig({
     "/blog/my-workflow-3": "/blog/my-workflow",
     "/blog/self-healing-urls-2": "/blog/self-healing-urls",
     "/blog/nixos-and-postgresql-1": "/blog/nixos-and-postgresql",
+  },
+
+  // faster markdown processing
+  markdown: {
+    // let expressive-code own code blocks instead of satteri's built-in shiki,
+    // which would otherwise highlight them first and leave EC nothing to do
+    syntaxHighlight: false,
+    processor: satteri({
+      features: { directive: true },
+      hastPlugins: [
+        expressiveCode({
+          themes: [
+            "github-light",
+            "github-dark-high-contrast",
+            "catppuccin-latte",
+            "catppuccin-mocha",
+            "catppuccin-macchiato",
+            "catppuccin-frappe",
+            "everforest-dark",
+            "poimandres",
+          ],
+          customizeTheme: (theme) => {
+            const newName =
+              {
+                "github-light": "light",
+                "github-dark-high-contrast": "dark",
+                "catppuccin-latte": "catppuccin_latte",
+                "catppuccin-mocha": "catppuccin_mocha",
+                "catppuccin-macchiato": "catppuccin_macchiato",
+                "catppuccin-frappe": "catppuccin_frappe",
+                // closest bundled matches for the site's custom themes
+                "everforest-dark": "evergarden",
+                poimandres: "cuddlefish",
+              }[theme.name] || theme.name;
+
+            theme.name = newName;
+            return theme;
+          },
+        }),
+      ],
+    }),
   },
 
   vite: {
