@@ -43,7 +43,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
       mit
       cc-by-nc-sa-40
     ];
-    mainProgram = "isabelroses.com";
     maintainers = with lib.maintainers; [ isabelroses ];
   };
 })
