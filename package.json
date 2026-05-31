@@ -1,7 +1,7 @@
 {
   "name": "isabelroses.com",
   "type": "module",
-  "version": "0.10.0",
+  "version": "0.11.2",
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
@@ -43,10 +43,11 @@
     "@types/markdown-it": "^14.1.2",
     "@types/react": "^19.2.15",
     "@types/sanitize-html": "^2.16.1",
-    "eslint": "^10.4.0",
+    "eslint": "^10.4.1",
     "globals": "^17.6.0",
     "prettier": "^3.8.3",
     "prettier-plugin-astro": "^0.14.1",
+    "sequoia-cli": "^0.5.6",
     "typescript-eslint": "^8.60.0"
   }
 }

@@ -5,6 +5,8 @@ date: 2025-01-09
 updated: 2025-02-07
 tags:
   - nix
+image: im-not-mad-im-disappointed.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpcdx3l22"
 ---
 
 ## Introduction

@@ -6,6 +6,8 @@ tags:
   - vuejs
   - learning
   - webdev
+image: self-healing-urls.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpdd3nn22"
 ---
 
 I have been working on the creation of this [version](https://github.com/isabelroses/website/commit/8c53b9f3576d98a2ebe71976a3f921a30e6ad052) of my website for a while and when I finally thought I was done, I was introduced to the concept of self-healing URLs.

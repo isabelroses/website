@@ -6,6 +6,8 @@ tags:
   - learning
   - neovim
   - nix
+image: my-workflow.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpd7y3v22"
 ---
 
 In order to keep myself on track I wanted to document my workflow. So in order

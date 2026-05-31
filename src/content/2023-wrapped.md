@@ -5,6 +5,8 @@ date: 2024-01-02
 tags:
   - meta
   - wrapped
+image: 2023-wrapped.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpd4oci22"
 ---
 
 During the course of 2023, I learned and did a lot of different things. And this post is here to summarize the most important things that I did and learned.

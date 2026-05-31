@@ -5,6 +5,8 @@ date: 2024-05-25
 tags:
   - learning
   - nix
+image: experimenting-with-nix.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpcovga22"
 ---
 
 ## Introduction

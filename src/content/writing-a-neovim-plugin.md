@@ -5,6 +5,8 @@ date: 2024-03-29
 tags:
   - learning
   - neovim
+image: writing-a-neovim-plugin.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpcvq3t22"
 ---
 
 ## Introduction

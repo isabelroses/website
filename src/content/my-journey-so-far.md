@@ -4,6 +4,8 @@ description: A in depth look at my linux and development journey so far
 date: 2024-01-28
 tags:
   - learning
+image: my-journey-so-far.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpcz7wj22"
 ---
 
 ## The prelude

@@ -2,6 +2,9 @@ alias b := build
 alias r := run
 alias u := update
 
+# build ouput path
+prefix := "dist"
+
 default: build
 
 build:
@@ -15,3 +18,7 @@ nix:
 
 update:
   pnpm upgrade
+
+install:
+  mkdir -p "{{ prefix }}"
+  cp -r dist/* "{{ prefix }}"

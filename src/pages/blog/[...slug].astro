@@ -41,6 +41,7 @@ const { Content } = await render(post);
   title={post.data.title}
   description={post.data.description}
   image={`/blog/${post.id}.png`}
+  aturi={post.data.atUri}
 >
   <article
     class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl flex flex-col gap-8"

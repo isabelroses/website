@@ -5,6 +5,8 @@ date: 2026-05-08
 tags:
   - nixos
   - secrets
+image: nixos-and-secrets.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpbpwam22"
 ---
 
 To start this off I will say that I've been using NixOS for 3 years now and I

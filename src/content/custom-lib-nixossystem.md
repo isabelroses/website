@@ -6,6 +6,8 @@ updated: 2026-04-20
 tags:
   - learning
   - nix
+image: custom-lib-nixossystem.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpcabyt22"
 ---
 
 ## Introduction

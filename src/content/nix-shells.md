@@ -5,6 +5,8 @@ date: 2024-06-07
 updated: 2025-08-05
 tags:
   - nix
+image: nix-shells.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpcl5gp22"
 ---
 
 ## Introduction

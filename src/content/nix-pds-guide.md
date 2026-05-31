@@ -7,6 +7,8 @@ tags:
   - guide
   - nix
   - nixos
+image: nix-pds-guide.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpbwhmq22"
 ---
 
 ## Introduction

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://tangled.org/stevedylan.dev/sequoia/raw/main/sequoia.schema.json",
+  "siteUrl": "https://isabelroses.com",
+  "contentDir": "./src/content",
+  "imagesDir": "./dist/blog",
+  "outputDir": "./dist",
+  "pathPrefix": "/blog",
+  "publicationUri": "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.publication/3mn5hmwkcmb22",
+  "frontmatter": {
+    "publishDate": "date",
+    "updatedAt": "updated",
+    "coverImage": "image"
+  },
+  "publishContent": true
+}

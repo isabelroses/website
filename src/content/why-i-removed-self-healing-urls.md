@@ -4,6 +4,8 @@ description: the act of removing my self healing URLs
 date: 2025-07-07
 tags:
   - webdev
+image: why-i-removed-self-healing-urls.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpc2oig22"
 ---
 
 In the past, I wrote about how I used [self-healing URLs](https://isabelroses.com/blog/self-healing-urls/). But while rewriting my website for the roughly the sixth time, a realization hit me: _who am I really building this for?_

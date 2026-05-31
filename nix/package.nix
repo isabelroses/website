@@ -9,7 +9,7 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "isabelroses-website";
-  version = "0.11.1";
+  version = "0.11.2";
 
   src = ../.;
 
@@ -23,22 +23,18 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   pnpmDeps = fetchPnpmDeps {
     inherit (finalAttrs) pname version src;
     fetcherVersion = 4;
-    hash = "sha256-DEvwavzMeeke43QSoABbGa844d14ajDJHBDJRx1mBcE=";
+    hash = "sha256-y/j0Wxxy2DHYmgzMkpVfrpTSMxBAVH6QpmLbYrdmT3U=";
   };
 
-  dontUseJustInstall = true;
   dontUseJustCheck = true;
 
+  justFlags = [
+    "--set"
+    "prefix"
+    (placeholder "out")
+  ];
+
   env.ASTRO_TELEMETRY_DISABLED = 1;
-
-  installPhase = ''
-    runHook preInstall
-
-    mkdir -p "$out"
-    cp -r dist/* "$out"
-
-    runHook postInstall
-  '';
 
   meta = {
     description = "isabelroses.com";

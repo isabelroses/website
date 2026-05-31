@@ -6,6 +6,8 @@ tags:
   - nix
   - postgresql
 archived: true
+image: nixos-and-postgresql.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpdg7uq22"
 ---
 
 When upgrading to version 15 from 14, there was an issue. None of my data was

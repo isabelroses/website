@@ -8,11 +8,12 @@ interface Props {
   title: string;
   description: string;
   image?: string;
+  aturi?: string;
 }
 
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 
-const { title, description, image } = Astro.props;
+const { title, description, image, aturi } = Astro.props;
 ---
 
 <!-- Global Metadata -->
@@ -62,6 +63,10 @@ const { title, description, image } = Astro.props;
 <meta property="twitter:title" content={title} />
 <meta property="twitter:description" content={description} />
 {image && <meta property="twitter:image" content={new URL(image, Astro.url)} />}
+
+<!-- standard.site -->
+{aturi && <link rel="site.standard.document" href={aturi}>}
+<link rel="site.standard.publication" href="at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.publication/3mn5hmwkcmb22" />
 
 <script is:inline>
   // set theme on intial load

@@ -14,6 +14,7 @@ const blog = z.object({
   readTime: z.string().optional(),
   draft: z.boolean().default(false),
   archived: z.boolean().default(false),
+  atUri: z.string(),
 });
 
 const customLoader = {

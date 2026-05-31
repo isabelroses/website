@@ -5,6 +5,8 @@ date: 2024-12-29
 tags:
   - meta
   - wrapped
+image: 2024-wrapped.png
+atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpchebr22"
 ---
 
 Welcome to my 2024 Wrapped! This is a recall of all that happened this year, and a look at what's to come in 2025.
