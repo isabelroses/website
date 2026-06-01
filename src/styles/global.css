@@ -34,6 +34,39 @@
 
     @apply max-w-[80vw] md:max-w-[75ch] lg:max-w-[85ch] mx-auto;
   }
+
+  .smallcaps {
+    font-variant: small-caps;
+  }
+
+  .hover-special {
+    @apply transition-colors hover:text-special;
+  }
+
+  .group-hover-special {
+    @apply transition-colors group-hover:text-special;
+  }
+
+  .panel {
+    @apply border border-card border-l-2 border-l-special/40 bg-card/20;
+  }
+
+  .panel-link {
+    @apply border border-card border-l-2 border-l-special/40 bg-card/20 transition-all hover:bg-card/40 hover:border-special hover:border-l-special;
+  }
+}
+
+.expressive-code {
+  --ec-codeBg: transparent !important;
+  --ec-frm-edBg: transparent !important;
+  --ec-frm-trmBg: transparent !important;
+  --ec-brdCol: var(--color-card) !important;
+  --ec-brdWd: 1px;
+  --ec-frm-edActTabBrdCol: var(--color-card) !important;
+  --ec-frm-edTabBarBrdCol: var(--color-card) !important;
+  --ec-frm-edTabBarBrdBtmCol: var(--color-card) !important;
+  --ec-frm-trmTtbBg: transparent !important;
+  --ec-frm-trmTtbBrdBtmCol: var(--color-card) !important;
 }
 
 @theme {

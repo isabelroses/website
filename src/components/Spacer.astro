@@ -1,0 +1,18 @@
+---
+interface Props {
+  glyph?: string;
+}
+
+const { glyph = "✦" } = Astro.props;
+---
+
+<div
+  class="flex items-center justify-center gap-4 text-fg-lighter select-none"
+  aria-hidden="true"
+>
+  <span class="h-px flex-1 max-w-24 bg-gradient-to-r from-transparent to-card"
+  ></span>
+  <span class="text-special text-sm leading-none">{glyph}</span>
+  <span class="h-px flex-1 max-w-24 bg-gradient-to-l from-transparent to-card"
+  ></span>
+</div>

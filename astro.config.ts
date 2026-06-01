@@ -64,14 +64,13 @@ export default defineConfig({
             const newName =
               {
                 "github-light": "light",
-                "github-dark-high-contrast": "dark",
                 "catppuccin-latte": "catppuccin_latte",
                 "catppuccin-mocha": "catppuccin_mocha",
                 "catppuccin-macchiato": "catppuccin_macchiato",
                 "catppuccin-frappe": "catppuccin_frappe",
-                // closest bundled matches for the site's custom themes
                 "everforest-dark": "evergarden",
-                poimandres: "cuddlefish",
+                poimandres: "dark",
+                "github-dark-high-contrast": "cuddlefish",
               }[theme.name] || theme.name;
 
             theme.name = newName;

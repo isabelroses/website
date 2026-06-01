@@ -1,39 +1,32 @@
 ---
-import Base from "@layouts/Base.astro";
-import PageHeader from "@components/PageHeader.astro";
-import BackLink from "@components/BackLink.astro";
+import PageLayout from "@layouts/PageLayout.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 
 import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
 ---
 
-<Base
-  title={SITE_TITLES.projects}
+<PageLayout
+  title="projects"
   description={SITE_DESCRIPTIONS.projects}
+  metaTitle={SITE_TITLES.projects}
   image="/projects.png"
 >
-  <div class="w-full max-w-2xl flex flex-col gap-12">
-    <PageHeader title="projects" description={SITE_DESCRIPTIONS.projects} />
-
-    <section class="flex flex-col gap-4">
-      <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {
-          PROJECTS.map((project) => (
-            <li>
-              <ProjectCard
-                href={project.href || project.repo || "#"}
-                name={project.name}
-                description={project.description}
-                icon={project.icon}
-                stars={project.stars}
-                repo={project.repo}
-              />
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <BackLink href="/" />
-  </div>
-</Base>
+  <section class="flex flex-col gap-4">
+    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      {
+        PROJECTS.map((project) => (
+          <li>
+            <ProjectCard
+              href={project.href || project.repo || "#"}
+              name={project.name}
+              description={project.description}
+              icon={project.icon}
+              stars={project.stars}
+              repo={project.repo}
+            />
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</PageLayout>

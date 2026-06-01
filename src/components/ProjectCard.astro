@@ -27,7 +27,7 @@ const {
   target="_blank"
   rel="noopener noreferrer"
   class:list={[
-    "group flex gap-3 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all",
+    "group flex gap-3 panel-link",
     compact ? "flex-row items-center p-3" : "flex-col p-4 h-full",
   ]}
 >
@@ -39,12 +39,15 @@ const {
           alt={name}
           width={compact ? 24 : 32}
           height={compact ? 24 : 32}
-          class="rounded"
+          class:list={[
+            "rounded shrink-0 object-contain",
+            compact ? "w-6 h-6" : "w-8 h-8",
+          ]}
         />
       ) : (
         <div
           class:list={[
-            "bg-bg rounded flex items-center justify-center",
+            "bg-bg rounded flex items-center justify-center shrink-0",
             compact ? "w-6 h-6" : "w-8 h-8",
           ]}
         >
@@ -58,7 +61,7 @@ const {
 
     <span
       class:list={[
-        "group-hover:text-special transition-colors",
+        "group-hover-special",
         !compact && "font-medium",
       ]}
     >
@@ -80,12 +83,12 @@ const {
       <>
         {description && <p class="text-fg-lighter text-sm">{description}</p>}
         <div class="flex flex-row items-center gap-2 mt-auto text-fg-lighter text-sm">
-          <Icon name="fa7-solid:star" class="w-3 h-3" />
+          <Icon name="fa7-solid:star" class="w-5 h-5" />
           <span>{stars}</span>
           {repo && (
             <>
               <span class="mx-1">·</span>
-              <Icon name="fa7-brands:github" class="w-3 h-3" />
+              <Icon name="fa7-brands:github" class="w-5 h-5" />
             </>
           )}
         </div>

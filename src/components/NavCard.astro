@@ -12,11 +12,14 @@ const { href, label, icon } = Astro.props;
 
 <a
   href={href}
-  class="group flex flex-row items-center gap-3 p-3 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all"
+  class="group flex flex-row items-center gap-3 p-3 panel-link"
 >
   <Icon
     name={icon}
-    class="w-5 h-5 text-fg-lighter group-hover:text-special transition-colors"
+    class="w-5 h-5 text-fg-lighter group-hover-special"
   />
-  <span class="group-hover:text-special transition-colors">{label}</span>
+  <span
+    class="smallcaps tracking-[0.08em] group-hover-special"
+    >{label}</span
+  >
 </a>

@@ -56,14 +56,14 @@ const defaultLinks: SocialLink[] = [
 const { links = defaultLinks } = Astro.props;
 ---
 
-<div class="flex flex-row gap-4 flex-wrap">
+<div class="flex flex-row gap-4 flex-wrap justify-center">
   {
     links.map((link) => (
       <a
         target="_blank"
         href={link.href}
         aria-label={link.label}
-        class="text-fg-lighter hover:text-special transition-colors"
+        class="text-fg-lighter hover-special"
       >
         {link.icon ? (
           <Icon name={link.icon} class="w-6 h-6" />

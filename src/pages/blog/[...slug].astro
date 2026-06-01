@@ -43,12 +43,12 @@ const { Content } = await render(post);
   image={`/blog/${post.id}.png`}
   aturi={post.data.atUri}
 >
-  <article
-    class="w-full max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl flex flex-col gap-8"
-  >
+  <article class="w-full flex flex-col gap-8">
     <header class="flex flex-col gap-4">
       <BackLink href="/blog" label="back to blog" />
-      <h1 class="text-3xl font-bold">{post.data.title}</h1>
+      <h1 class="text-3xl font-bold smallcaps tracking-[0.04em]">
+        {post.data.title}
+      </h1>
       <div class="flex flex-wrap items-center gap-3 text-fg-lighter text-sm">
         <time datetime={post.data.date.toISOString()}>
           {
@@ -82,12 +82,14 @@ const { Content } = await render(post);
       </div>
     </header>
 
-    <div class="prose">
+    <div class="prose font-sans">
       <Content />
     </div>
 
     <section class="flex flex-col gap-4 pt-8 border-t border-card">
-      <h2 class="text-lg font-medium">share this post</h2>
+      <h2 class="text-lg font-medium smallcaps tracking-[0.1em]">
+        share this post
+      </h2>
       <div class="flex flex-row gap-4">
         <a
           href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(`https://isabelroses.com/blog/${post.id}`)}`}
@@ -131,10 +133,10 @@ const { Content } = await render(post);
         prevPost ? (
           <a
             href={`/blog/${prevPost.id}`}
-            class="group flex flex-col gap-1 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all flex-1"
+            class="group flex flex-col gap-1 p-4 panel-link flex-1"
           >
             <span class="text-fg-lighter text-sm">← previous</span>
-            <span class="group-hover:text-special transition-colors">
+            <span class="group-hover-special">
               {prevPost.data.title}
             </span>
           </a>
@@ -146,10 +148,10 @@ const { Content } = await render(post);
         nextPost ? (
           <a
             href={`/blog/${nextPost.id}`}
-            class="group flex flex-col gap-1 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all flex-1 text-right"
+            class="group flex flex-col gap-1 p-4 border border-card border-r-2 border-r-special/40 bg-card/20 hover:bg-card/40 hover:border-special hover:border-r-special transition-all flex-1 text-right"
           >
             <span class="text-fg-lighter text-sm">next →</span>
-            <span class="group-hover:text-special transition-colors">
+            <span class="group-hover-special">
               {nextPost.data.title}
             </span>
           </a>

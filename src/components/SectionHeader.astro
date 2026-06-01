@@ -8,13 +8,18 @@ interface Props {
 const { title, href, linkLabel = "view all →" } = Astro.props;
 ---
 
-<div class="flex flex-row justify-between items-center">
-  <h2 class="text-xl">{title}</h2>
+<div class="flex flex-row items-center gap-4">
+  <h2
+    class="text-xl shrink-0 smallcaps tracking-[0.12em] text-fg"
+  >
+    {title}
+  </h2>
+  <span class="h-px flex-1 bg-card"></span>
   {
     href && (
       <a
         href={href}
-        class="text-fg-lighter hover:text-special transition-colors text-sm"
+        class="shrink-0 text-fg-lighter hover-special text-sm"
       >
         {linkLabel}
       </a>

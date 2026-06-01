@@ -1,9 +1,7 @@
 ---
 import { Icon } from "astro-icon/components";
 
-import Base from "@layouts/Base.astro";
-import PageHeader from "@components/PageHeader.astro";
-import BackLink from "@components/BackLink.astro";
+import PageLayout from "@layouts/PageLayout.astro";
 
 const DONATION_OPTIONS = [
   {
@@ -48,20 +46,21 @@ const CRYPTO_OPTIONS = [
 ];
 ---
 
-<Base title="donate | isabel" description="support my open source work">
-  <div class="w-full max-w-2xl flex flex-col gap-12">
-    <PageHeader
-      title="donate"
-      description={`
-        i spend a lot of my free time working on open source projects, writing blog posts,
-        and maintaining various tools that help the community. your support helps me
-        continue doing what i love. any amount is greatly appreciated! thank you for
-        considering supporting my work.
-      `}
-    />
-
+<PageLayout
+  title="donate"
+  metaTitle="donate | isabel"
+  metaDescription="support my open source work"
+  description={`
+    i spend a lot of my free time working on open source projects, writing blog posts,
+    and maintaining various tools that help the community. your support helps me
+    continue doing what i love. any amount is greatly appreciated! thank you for
+    considering supporting my work.
+  `}
+>
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl">ways to support</h2>
+      <h2 class="text-xl smallcaps tracking-[0.12em]">
+        ways to support
+      </h2>
       <ul class="flex flex-col gap-4">
         {
           DONATION_OPTIONS.map((option) => (
@@ -70,7 +69,7 @@ const CRYPTO_OPTIONS = [
                 href={option.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group flex flex-row items-center gap-4 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all"
+                class="group flex flex-row items-center gap-4 p-4 panel-link"
               >
                 <div
                   class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}
@@ -89,7 +88,7 @@ const CRYPTO_OPTIONS = [
                 </div>
 
                 <div class="flex flex-col flex-1">
-                  <span class="font-medium group-hover:text-special transition-colors">
+                  <span class="font-medium group-hover-special">
                     {option.name}
                   </span>
                   <span class="text-fg-lighter text-sm">
@@ -108,7 +107,7 @@ const CRYPTO_OPTIONS = [
     </section>
 
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl">crypto</h2>
+      <h2 class="text-xl smallcaps tracking-[0.12em]">crypto</h2>
       <ul class="flex flex-col gap-4">
         {
           CRYPTO_OPTIONS.map((option) => (
@@ -116,7 +115,7 @@ const CRYPTO_OPTIONS = [
               <button
                 type="button"
                 data-address={option.address}
-                class="crypto-copy group flex flex-row items-center gap-4 p-4 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all w-full text-left cursor-pointer"
+                class="crypto-copy group flex flex-row items-center gap-4 p-4 panel-link w-full text-left cursor-pointer"
               >
                 <div
                   class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}
@@ -125,7 +124,7 @@ const CRYPTO_OPTIONS = [
                 </div>
 
                 <div class="flex flex-col flex-1">
-                  <span class="font-medium group-hover:text-special transition-colors">
+                  <span class="font-medium group-hover-special">
                     {option.name}
                   </span>
                   <span class="text-fg-lighter text-sm crypto-description">
@@ -139,10 +138,7 @@ const CRYPTO_OPTIONS = [
         }
       </ul>
     </section>
-
-    <BackLink href="/" />
-  </div>
-</Base>
+</PageLayout>
 
 <script>
   document.querySelectorAll(".crypto-copy").forEach((button) => {

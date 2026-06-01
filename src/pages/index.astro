@@ -8,6 +8,7 @@ import ProjectCard from "@components/ProjectCard.astro";
 import NavCard from "@components/NavCard.astro";
 import SectionHeader from "@components/SectionHeader.astro";
 import SocialLinks from "@components/SocialLinks.astro";
+import Spacer from "@components/Spacer.astro";
 
 const posts = (
   await getCollection("blog", ({ data }) => {
@@ -25,24 +26,28 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
   description={SITE_DESCRIPTIONS.index}
   image="/index.png"
 >
-  <div class="w-full max-w-2xl flex flex-col gap-12 justify-between h-full">
+  <div class="w-full max-w-2xl flex flex-col gap-10 justify-between h-full">
     <section class="flex flex-col gap-6">
-      <div class="flex flex-row gap-4 items-center">
+      <div class="flex flex-col items-center text-center gap-3">
         <Image
           src="/me.webp"
           alt="my avatar"
-          width={64}
-          height={64}
-          class="rounded-full"
+          width={88}
+          height={88}
+          class="rounded-full ring-1 ring-special/40 ring-offset-4 ring-offset-bg"
         />
-        <div class="flex flex-col">
-          <h1 class="text-2xl font-semibold">isabel</h1>
-          <p class="text-fg-lighter">{SITE_DESCRIPTIONS.index}</p>
-        </div>
+        <h1
+          class="text-4xl font-semibold smallcaps tracking-[0.18em]"
+        >
+          isabel
+        </h1>
+        <p class="text-fg-lighter">{SITE_DESCRIPTIONS.index}</p>
       </div>
 
-      <p class="text-fg-lighter leading-relaxed">
-        hello. i'm isabel. and i am a
+      <Spacer />
+
+      <p class="text-fg-lighter leading-relaxed text-center text-balance">
+        i am a
         <a
           href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md"
           target="_blank"
@@ -50,7 +55,7 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
         >, and for a little fun i also
         <a
           href="https://catppuccin.com/community/"
-          class="text-special underline">moderator for catppuccin</a
+          class="text-special underline">moderate for catppuccin</a
         >. i write a lot of nix so your going to see a lot of my thoughts on
         that on this site.
       </p>
@@ -72,8 +77,10 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
       <SocialLinks />
     </section>
 
+    <Spacer />
+
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl">explore</h2>
+      <h2 class="text-xl smallcaps tracking-[0.12em]">explore</h2>
       <nav class="grid grid-cols-2 gap-3">
         <NavCard href="/blog" label="blog" icon="fa7-solid:pen-nib" />
         <NavCard href="/projects" label="projects" icon="fa7-solid:code" />

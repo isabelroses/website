@@ -1,68 +1,41 @@
 ---
 import { Icon } from "astro-icon/components";
+
+const THEMES = [
+  { id: "dark", label: "Dark" },
+  { id: "light", label: "Light" },
+  { id: "catppuccin_mocha", label: "Catppuccin Mocha" },
+  { id: "catppuccin_macchiato", label: "Catppuccin Macchiato" },
+  { id: "catppuccin_frappe", label: "Catppuccin Frappé" },
+  { id: "catppuccin_latte", label: "Catppuccin Latte" },
+  { id: "evergarden", label: "Evergarden" },
+  { id: "cuddlefish", label: "Cuddlefish" },
+];
 ---
 
-<div class="fixed bottom-4 right-4">
+<div class="fixed bottom-4 right-4 z-50">
   <div class="relative">
     <button
       id="theme-toggle"
-      class="flex items-center justify-center w-10 h-10 bg-card rounded-lg hover:ring-1 hover:ring-special transition-all cursor-pointer"
+      class="flex items-center justify-center w-10 h-10 bg-bg border border-fg-lighter/25 outline outline-1 outline-offset-2 outline-fg-lighter/15 hover:border-special hover:text-special transition-all cursor-pointer"
       aria-label="Change theme"
     >
       <Icon name="fa7-solid:palette" class="w-5 h-5 text-fg-lighter" />
     </button>
     <div
       id="theme-menu"
-      class="hidden absolute bottom-12 right-0 w-48 bg-card rounded-lg shadow-lg overflow-hidden"
+      class="hidden absolute bottom-14 right-0 w-48 bg-bg border border-fg-lighter/25 shadow-lg overflow-hidden"
     >
-      <button
-        data-theme="dark"
-        class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-fg transition-colors cursor-pointer"
-      >
-        Dark
-      </button>
-      <button
-        data-theme="light"
-        class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-fg transition-colors cursor-pointer"
-      >
-        Light
-      </button>
-      <button
-        data-theme="catppuccin_mocha"
-        class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-fg transition-colors cursor-pointer"
-      >
-        Catppuccin Mocha
-      </button>
-      <button
-        data-theme="catppuccin_macchiato"
-        class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-fg transition-colors cursor-pointer"
-      >
-        Catppuccin Macchiato
-      </button>
-      <button
-        data-theme="catppuccin_frappe"
-        class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-fg transition-colors cursor-pointer"
-      >
-        Catppuccin Frappé
-      </button>
-      <button
-        data-theme="catppuccin_latte"
-        class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-fg transition-colors cursor-pointer"
-      >
-        Catppuccin Latte
-      </button>
-      <button
-        data-theme="evergarden"
-        class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-fg transition-colors cursor-pointer"
-      >
-        Evergarden
-      </button>
-      <button
-        data-theme="cuddlefish"
-        class="theme-option w-full px-4 py-2 text-left hover:bg-bg hover:text-fg transition-colors cursor-pointer"
-      >
-        Cuddlefish
-      </button>
+      {
+        THEMES.map((theme) => (
+          <button
+            data-theme={theme.id}
+            class="theme-option w-full px-4 py-2 text-left hover:bg-card hover:text-fg transition-colors cursor-pointer"
+          >
+            {theme.label}
+          </button>
+        ))
+      }
     </div>
   </div>
 </div>
