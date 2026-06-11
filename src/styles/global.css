@@ -32,7 +32,7 @@
       content: none;
     }
 
-    @apply max-w-[80vw] md:max-w-[75ch] lg:max-w-[85ch] mx-auto;
+    @apply max-w-[min(80vw,100%)] md:max-w-[min(75ch,100%)] lg:max-w-[min(85ch,100%)] mx-auto;
   }
 
   .smallcaps {
