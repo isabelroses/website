@@ -1,0 +1,143 @@
+---
+import { Icon } from "astro-icon/components";
+import { LASTFM_PROFILE } from "@lib/consts";
+---
+
+<a
+  class="panel-link p-3 group flex items-center gap-3"
+  data-nowplaying
+  href={LASTFM_PROFILE}
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  <div class="relative w-14 h-14 shrink-0">
+    <div
+      class="absolute inset-0 grid place-items-center rounded bg-card text-fg-lighter"
+      data-np-art-fallback
+    >
+      <Icon name="fa7-solid:music" class="w-5 h-5" />
+    </div>
+    <img
+      data-np-art
+      alt=""
+      width="56"
+      height="56"
+      class="absolute inset-0 w-14 h-14 rounded object-cover"
+      hidden
+    />
+  </div>
+
+  <div class="min-w-0">
+    <div data-np-title class="font-bold text-fg truncate group-hover-special">
+      loading…
+    </div>
+    <div data-np-artist class="text-fg-lighter text-sm truncate">
+      connecting…
+    </div>
+    <div data-np-state class="section-label text-xs mt-1 normal-case">
+      ♫ last.fm
+    </div>
+  </div>
+</a>
+
+<script>
+  import { ATPROTO, LASTFM_PROFILE } from "@lib/consts";
+
+  const { did, pds } = ATPROTO;
+  const STATUS_URL = `${pds}/xrpc/com.atproto.repo.getRecord?repo=${did}&collection=fm.teal.alpha.actor.status&rkey=self`;
+  const PLAY_URL = `${pds}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=fm.teal.alpha.feed.play&limit=1`;
+
+  const coverArt = (releaseMbId?: string) => {
+    const id = (releaseMbId || "").replace(/^mbid:/, "");
+    return id ? `https://coverartarchive.org/release/${id}/front-250` : "";
+  };
+
+  const artistNames = (artists: unknown): string =>
+    Array.isArray(artists)
+      ? artists
+          .map((a) => (typeof a === "string" ? a : a?.artistName))
+          .filter(Boolean)
+          .join(", ")
+      : "";
+
+  async function getJson(url: string) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`${res.status}`);
+    return res.json();
+  }
+
+  async function updateNowPlaying() {
+    const root = document.querySelector<HTMLAnchorElement>("[data-nowplaying]");
+    if (!root) return;
+
+    const titleEl = root.querySelector<HTMLElement>("[data-np-title]")!;
+    const artistEl = root.querySelector<HTMLElement>("[data-np-artist]")!;
+    const stateEl = root.querySelector<HTMLElement>("[data-np-state]")!;
+    const artEl = root.querySelector<HTMLImageElement>("[data-np-art]")!;
+    const fallbackEl = root.querySelector<HTMLElement>(
+      "[data-np-art-fallback]",
+    )!;
+
+    const showFallback = (msg: string) => {
+      titleEl.textContent = "not scrobbling";
+      artistEl.textContent = msg;
+      stateEl.textContent = "♫ last.fm";
+      root.href = LASTFM_PROFILE;
+      artEl.hidden = true;
+      fallbackEl.hidden = false;
+    };
+
+    try {
+      let track: any = null;
+      let live = false;
+
+      const status = await getJson(STATUS_URL).catch(() => null);
+      const item = status?.value?.item;
+      const expiry = status?.value?.expiry;
+      const fresh = !expiry || Date.parse(expiry) > Date.now();
+      if (item?.trackName && fresh) {
+        track = item;
+        live = true;
+      }
+
+      if (!track) {
+        const plays = await getJson(PLAY_URL);
+        track = plays?.records?.[0]?.value ?? null;
+      }
+
+      if (!track?.trackName) {
+        showFallback("nothing playing right now");
+        return;
+      }
+
+      titleEl.textContent = track.trackName;
+      artistEl.textContent = artistNames(track.artists) || "unknown artist";
+      stateEl.textContent = live
+        ? "▶ now playing · last.fm"
+        : "♫ last played · last.fm";
+      root.href = track.originUrl || LASTFM_PROFILE;
+
+      const art = coverArt(track.releaseMbId);
+      if (art) {
+        artEl.onload = () => {
+          artEl.hidden = false;
+          fallbackEl.hidden = true;
+        };
+        artEl.onerror = () => {
+          artEl.hidden = true;
+          fallbackEl.hidden = false;
+        };
+        artEl.hidden = true;
+        fallbackEl.hidden = false;
+        artEl.src = art;
+      } else {
+        artEl.hidden = true;
+        fallbackEl.hidden = false;
+      }
+    } catch {
+      showFallback("couldn't reach last.fm");
+    }
+  }
+
+  document.addEventListener("astro:page-load", updateNowPlaying);
+</script>

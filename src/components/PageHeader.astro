@@ -1,23 +1,15 @@
 ---
 interface Props {
   title: string;
-  description?: string;
 }
 
-const { title, description } = Astro.props;
+const { title } = Astro.props;
 ---
 
 <section class="flex flex-col gap-4">
   <slot name="back" />
-  <div class="flex flex-col gap-3">
-    <h1 class="text-3xl font-semibold smallcaps tracking-[0.08em]">
-      {title}
-    </h1>
-    <div class="flex items-center gap-3 text-fg-lighter" aria-hidden="true">
-      <span class="text-special text-sm leading-none">✦</span>
-      <span class="h-px flex-1 bg-gradient-to-r from-card to-transparent"></span>
-    </div>
-  </div>
-  {description && <p class="text-fg-lighter">{description}</p>}
+  <h1 class="text-3xl font-bold lowercase tracking-tight">
+    {title}
+  </h1>
   <slot />
 </section>

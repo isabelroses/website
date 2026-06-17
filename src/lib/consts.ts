@@ -12,6 +12,46 @@ export const SITE_DESCRIPTIONS = {
   friends: "badges and webrings",
 };
 
+export const ATPROTO = {
+  did: "did:plc:qxichs7jsycphrsmbujwqbfb",
+  pds: "https://pds.isabelroses.com",
+};
+
+export const LASTFM_PROFILE = "https://www.last.fm/user/isabelroses";
+
+export const LINKS = [
+  {
+    label: "email",
+    handle: "isabel@isabelroses.com",
+    href: "mailto:isabel@isabelroses.com",
+    icon: "fa7-solid:envelope",
+  },
+  {
+    label: "github",
+    handle: "@isabelroses",
+    href: "https://github.com/isabelroses",
+    icon: "fa7-brands:github",
+  },
+  {
+    label: "fediverse",
+    handle: "@isabel@akko.isabelroses.com",
+    href: "https://akko.isabelroses.com/isabel",
+    icon: "fa7-brands:mastodon",
+  },
+  {
+    label: "bluesky",
+    handle: "@isabelroses",
+    href: "https://bsky.app/profile/did:plc:qxichs7jsycphrsmbujwqbfb",
+    icon: "fa7-brands:bluesky",
+  },
+  {
+    label: "twitter",
+    handle: "@isabelrosesss",
+    href: "https://x.com/isabelrosesss",
+    icon: "fa7-brands:x-twitter",
+  },
+];
+
 // stars are barely updated
 export const PROJECTS = [
   {
@@ -20,7 +60,7 @@ export const PROJECTS = [
     icon: "/repos/catppuccin-nix.webp",
     href: null,
     repo: "https://github.com/catppuccin/nix",
-    stars: 728,
+    stars: 740,
   },
   {
     name: "izrss",
@@ -28,7 +68,7 @@ export const PROJECTS = [
     icon: null,
     href: null,
     repo: "https://github.com/isabelroses/izrss",
-    stars: 59,
+    stars: 60,
   },
   {
     name: "Dotfiles",
@@ -36,7 +76,7 @@ export const PROJECTS = [
     icon: "/repos/dotfiles.svg",
     href: null,
     repo: "https://github.com/isabelroses/dotfiles",
-    stars: 412,
+    stars: 421,
   },
   {
     name: "freeze.nvim",
@@ -44,7 +84,7 @@ export const PROJECTS = [
     icon: "/repos/freeze.webp",
     href: null,
     repo: "https://github.com/charm-community/freeze.nvim",
-    stars: 89,
+    stars: 90,
   },
   {
     name: "my website",

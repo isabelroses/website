@@ -1,14 +1,9 @@
 ---
 import { getCollection } from "astro:content";
-import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
 
 import Base from "@layouts/Base.astro";
-import PostCard from "@components/PostCard.astro";
-import ProjectCard from "@components/ProjectCard.astro";
-import NavCard from "@components/NavCard.astro";
-import SectionHeader from "@components/SectionHeader.astro";
-import SocialLinks from "@components/SocialLinks.astro";
-import Spacer from "@components/Spacer.astro";
+import NowPlaying from "@components/NowPlaying.astro";
 
 const posts = (
   await getCollection("blog", ({ data }) => {
@@ -18,7 +13,16 @@ const posts = (
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
-import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
+const latest = posts[0];
+const latestDate = latest
+  ? new Date(latest.data.date).toLocaleDateString("en-GB", {
+      day: "numeric",
+      month: "short",
+      year: "numeric",
+    })
+  : "";
+
+import { SITE_TITLES, SITE_DESCRIPTIONS, LINKS } from "@lib/consts";
 ---
 
 <Base
@@ -26,27 +30,10 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
   description={SITE_DESCRIPTIONS.index}
   image="/index.png"
 >
-  <div class="w-full max-w-2xl flex flex-col gap-10 justify-between h-full">
-    <section class="flex flex-col gap-6">
-      <div class="flex flex-col items-center text-center gap-3">
-        <Image
-          src="/me.webp"
-          alt="my avatar"
-          width={88}
-          height={88}
-          class="rounded-full ring-1 ring-special/40 ring-offset-4 ring-offset-bg"
-        />
-        <h1
-          class="text-4xl font-semibold smallcaps tracking-[0.18em]"
-        >
-          isabel
-        </h1>
-        <p class="text-fg-lighter">{SITE_DESCRIPTIONS.index}</p>
-      </div>
-
-      <Spacer />
-
-      <p class="text-fg-lighter leading-relaxed text-center text-balance">
+  <div class="w-full flex flex-col gap-8">
+    <section class="flex flex-col gap-4">
+      <h1 class="sr-only">isabel — the nix witch</h1>
+      <p class="text-fg-lighter leading-relaxed">
         i am a
         <a
           href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md"
@@ -56,74 +43,67 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
         <a
           href="https://catppuccin.com/community/"
           class="text-special underline">moderate for catppuccin</a
-        >. i write a lot of nix so your going to see a lot of my thoughts on
-        that on this site.
+        >. i write a lot of nix so your going to see a lot of my thoughts on that
+        on this site.
       </p>
-
-      <!-- <a -->
-      <!--   href="/isabel_roses_cv.pdf" -->
-      <!--   class="flex items-center gap-3 w-full px-4 py-3 rounded-lg border border-special/40 bg-special/10 text-sm text-special hover:bg-special/15 transition-all" -->
-      <!-- > -->
-      <!--   <Icon -->
-      <!--     name="fa7-solid:circle-info" -->
-      <!--     class="w-4 h-4 shrink-0 text-special" -->
-      <!--   /> -->
-      <!--   <p> -->
-      <!--     i'm currently looking for work. -->
-      <!--     <span class="underline">click view my cv</span> -->
-      <!--   </p> -->
-      <!-- </a> -->
-
-      <SocialLinks />
     </section>
 
-    <Spacer />
+    <section class="flex flex-col gap-3">
+      <h2 class="section-label">currently up to</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+        <NowPlaying />
 
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl smallcaps tracking-[0.12em]">explore</h2>
-      <nav class="grid grid-cols-2 gap-3">
-        <NavCard href="/blog" label="blog" icon="fa7-solid:pen-nib" />
-        <NavCard href="/projects" label="projects" icon="fa7-solid:code" />
-        <NavCard href="/friends" label="friends" icon="fa7-solid:user-group" />
-        <NavCard href="/donate" label="donate" icon="fa7-solid:heart" />
-      </nav>
-    </section>
-
-    <section class="flex flex-col gap-4">
-      <SectionHeader title="projects" href="/projects" />
-      <ul class="flex flex-col gap-3">
         {
-          PROJECTS.slice(0, 3).map((project) => (
-            <li>
-              <ProjectCard
-                href={project.href || project.repo || "#"}
-                name={project.name}
-                icon={project.icon}
-                stars={project.stars}
-                compact
+          latest && (
+            <a
+              href={`/blog/${latest.id}`}
+              class="panel-link p-3 group flex items-center gap-3"
+            >
+              <div class="w-14 h-14 shrink-0 grid place-items-center rounded bg-card text-fg-lighter">
+                <Icon name="fa7-solid:pen-nib" class="w-5 h-5" />
+              </div>
+              <div class="min-w-0">
+                <div class="font-bold text-fg truncate group-hover-special">
+                  {latest.data.title}
+                </div>
+                <div class="text-fg-lighter text-sm truncate">{latestDate}</div>
+                <div class="section-label text-xs mt-1 normal-case">
+                  ✎ latest post
+                </div>
+              </div>
+            </a>
+          )
+        }
+      </div>
+    </section>
+
+    <section class="flex flex-col gap-3">
+      <h2 class="section-label">socials</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {
+          LINKS.map((link) => (
+            <a
+              href={link.href}
+              target="_blank"
+              rel="me noopener noreferrer"
+              class="group flex items-center gap-3 panel-link p-3"
+            >
+              <Icon
+                name={link.icon}
+                class="w-5 h-5 shrink-0 text-fg-lighter group-hover-special"
               />
-            </li>
+              <span class="flex flex-col min-w-0">
+                <span class="text-fg font-bold lowercase group-hover-special">
+                  {link.label}
+                </span>
+                <span class="text-fg-lighter text-sm truncate">
+                  {link.handle}
+                </span>
+              </span>
+            </a>
           ))
         }
-      </ul>
-    </section>
-
-    <section class="flex flex-col gap-4">
-      <SectionHeader title="recent posts" href="/blog" />
-      <ul class="flex flex-col gap-3">
-        {
-          posts.slice(0, 5).map((post) => (
-            <li>
-              <PostCard
-                href={`/blog/${post.id}`}
-                title={post.data.title}
-                date={post.data.date}
-                compact
-              />
-            </li>
-          ))
-        }
-      </ul>
+      </div>
     </section>
   </div>
 </Base>

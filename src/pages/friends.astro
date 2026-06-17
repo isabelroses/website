@@ -4,17 +4,16 @@ import { Icon } from "astro-icon/components";
 
 import PageLayout from "@layouts/PageLayout.astro";
 
-import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
+import { SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
 ---
 
 <PageLayout
   title="friends"
   description={SITE_DESCRIPTIONS.friends}
-  metaTitle={SITE_TITLES.friends}
   image="/friends.png"
 >
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl smallcaps tracking-[0.12em]">my badge</h2>
+      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">my badge</h2>
       <div class="flex flex-col gap-2">
         <img
           src="/badges/me.gif"
@@ -28,7 +27,7 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
     </section>
 
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl smallcaps tracking-[0.12em]">friends</h2>
+      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">friends</h2>
       <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
         {
           FRIENDS.map((friend) => (
@@ -53,7 +52,7 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
     </section>
 
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl smallcaps tracking-[0.12em]">webrings</h2>
+      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">webrings</h2>
       <ul class="flex flex-col gap-3">
         {
           WEBRINGS.map((webring) => (

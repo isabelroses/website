@@ -50,30 +50,14 @@ export default defineConfig({
       features: { directive: true },
       hastPlugins: [
         expressiveCode({
-          themes: [
-            "github-light",
-            "github-dark-high-contrast",
-            "catppuccin-latte",
-            "catppuccin-mocha",
-            "catppuccin-macchiato",
-            "catppuccin-frappe",
-            "everforest-dark",
-            "poimandres",
-          ],
+          themes: ["github-light", "github-dark-high-contrast"],
           customizeTheme: (theme) => {
-            const newName =
+            theme.name =
               {
                 "github-light": "light",
-                "catppuccin-latte": "catppuccin_latte",
-                "catppuccin-mocha": "catppuccin_mocha",
-                "catppuccin-macchiato": "catppuccin_macchiato",
-                "catppuccin-frappe": "catppuccin_frappe",
-                "everforest-dark": "evergarden",
-                poimandres: "dark",
-                "github-dark-high-contrast": "cuddlefish",
+                "github-dark-high-contrast": "dark",
               }[theme.name] || theme.name;
 
-            theme.name = newName;
             return theme;
           },
         }),

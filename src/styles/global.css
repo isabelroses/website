@@ -1,6 +1,38 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-400.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-700.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "IBM Plex Mono";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("/fonts/ibm-plex-mono-700-italic.woff2") format("woff2");
+}
+
 @layer utilities {
   .prose {
     --tw-prose-body: var(--color-fg);
@@ -16,6 +48,9 @@
     --tw-prose-th-borders: var(--color-card);
     --tw-prose-td-borders: var(--color-fg);
     --tw-prose-links: var(--color-special);
+
+    font-size: 0.95rem;
+    line-height: 1.85;
 
     :where(code):not(
       :where([class~="not-prose"], [class~="not-prose"] *, pre code)
@@ -48,11 +83,15 @@
   }
 
   .panel {
-    @apply border border-card border-l-2 border-l-special/40 bg-card/20;
+    @apply border border-card bg-card/20;
   }
 
   .panel-link {
-    @apply border border-card border-l-2 border-l-special/40 bg-card/20 transition-all hover:bg-card/40 hover:border-special hover:border-l-special;
+    @apply border border-card bg-card/20 transition-all hover:bg-card/40 hover:border-special;
+  }
+
+  .section-label {
+    @apply text-special text-sm font-bold lowercase tracking-[0.15em];
   }
 }
 
@@ -70,19 +109,21 @@
 }
 
 @theme {
-  --color-fg: #ced1f0;
-  --color-fg-lighter: #b6b8de;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
 
-  --color-bg: #0e0f15;
+  --color-fg: #d1d5db;
+  --color-fg-lighter: #9ca3af;
+
+  --color-bg: #000;
 
   --color-card: #161b22;
   --color-special: var(--color-blue);
 
-  --color-blue: #83c4e6; /* snow */
-  --color-green: #91e478;
-  --color-yellow: #ede874;
-  --color-purple: #8b79e8;
-  --color-red: #f6598e;
+  --color-blue: #74c7ec;
+  --color-green: #a6e3a1;
+  --color-yellow: #f9e2af;
+  --color-purple: #cba6f7;
+  --color-red: #f38ba8;
 }
 
 @layer base {
@@ -102,22 +143,6 @@
     --color-red: #f38ba8;
   }
 
-  [data-theme="cuddlefish"] {
-    --color-fg: #ced1f0;
-    --color-fg-lighter: #b6b8de;
-
-    --color-bg: #0e0f15;
-
-    --color-card: #1e1f2a;
-    --color-special: var(--color-blue);
-
-    --color-blue: #83c4e6; /* snow */
-    --color-green: #91e478;
-    --color-yellow: #ede874;
-    --color-purple: #8b79e8;
-    --color-red: #f6598e;
-  }
-
   [data-theme="light"] {
     --color-fg: #3a3d4a;
     --color-fg-lighter: #555a6b;
@@ -125,7 +150,7 @@
     --color-bg: #f8f9fc;
 
     --color-card: #d0d5df;
-    --color-special: var(--blue);
+    --color-special: var(--color-blue);
 
     --color-blue: #1a90c4;
     --color-green: #40a02b;
@@ -134,83 +159,13 @@
     --color-red: #d20f39;
   }
 
-  [data-theme="catppuccin_mocha"] {
-    --color-fg: #cdd6f4;
-    --color-fg-lighter: #a6adc8;
-
-    --color-bg: #181825;
-
-    --color-card: #313244;
-    --color-special: var(--color-blue);
-
-    --color-blue: #74c7ec;
-    --color-green: #a6e3a1;
-    --color-yellow: #f9e2af;
-    --color-purple: #cba6f7;
-    --color-red: #f38ba8;
+  html {
+    font-size: 106.25%;
+    scrollbar-gutter: stable;
   }
 
-  [data-theme="catppuccin_macchiato"] {
-    --color-fg: #cad3f5;
-    --color-fg-lighter: #a5adcb;
-
-    --color-bg: #1e2030;
-
-    --color-card: #363a4f;
-    --color-special: var(--color-blue);
-
-    --color-blue: #7dc4e4;
-    --color-green: #a6da95;
-    --color-yellow: #eed49f;
-    --color-purple: #c6a0f6;
-    --color-red: #ed8796;
-  }
-
-  [data-theme="catppuccin_frappe"] {
-    --color-fg: #c6d0f5;
-    --color-fg-lighter: #a5adce;
-
-    --color-bg: #292c3c;
-
-    --color-card: #414559;
-    --color-special: var(--color-blue);
-
-    --color-blue: #85c1dc;
-    --color-green: #a6d189;
-    --color-yellow: #e5c890;
-    --color-purple: #ca9ee6;
-    --color-red: #e78284;
-  }
-
-  [data-theme="catppuccin_latte"] {
-    --color-fg: #4c4f69;
-    --color-fg-lighter: #6c6f85;
-
-    --color-bg: #eff1f5;
-
-    --color-card: #ccd0da;
-    --color-special: var(--color-blue);
-
-    --color-blue: #209fb5;
-    --color-green: #40a02b;
-    --color-yellow: #df8e1d;
-    --color-purple: #8839ef;
-    --color-red: #d20f39;
-  }
-
-  [data-theme="evergarden"] {
-    --color-fg: #dddecf;
-    --color-fg-lighter: #94aaa0;
-
-    --color-bg: #1c2225;
-
-    --color-card: #313b40;
-    --color-special: var(--color-blue);
-
-    --color-blue: #9bb5cf;
-    --color-purple: #e3a8d1;
-    --color-red: #e67e80;
-    --color-yellow: #dbbc7f;
-    --color-green: #b2c98f;
+  body {
+    font-family: var(--font-mono);
+    background-color: var(--color-bg);
   }
 }

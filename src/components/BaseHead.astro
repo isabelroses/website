@@ -32,8 +32,20 @@ const { title, description, image, aturi } = Astro.props;
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
-<!-- <link rel="preload" href="/fonts/atkinson-regular.woff" as="font" type="font/woff" crossorigin /> -->
-<!-- <link rel="preload" href="/fonts/atkinson-bold.woff" as="font" type="font/woff" crossorigin /> -->
+<link
+  rel="preload"
+  href="/fonts/ibm-plex-mono-400.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
+<link
+  rel="preload"
+  href="/fonts/ibm-plex-mono-700.woff2"
+  as="font"
+  type="font/woff2"
+  crossorigin
+/>
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -69,33 +81,27 @@ const { title, description, image, aturi } = Astro.props;
 <link rel="site.standard.publication" href="at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.publication/3mn5hmwkcmb22" />
 
 <script is:inline>
-  // set theme on intial load
   setTheme(getTheme());
 
   document.addEventListener("astro:page-load", () => {
     setTheme(getTheme());
-
-    const themes = document.getElementById("themes");
-    if (themes == null) return;
-    themes.addEventListener("change", (event) => {
-      setTheme(event.target.value);
-    });
   });
 
   function setTheme(theme) {
+    if (theme !== "light") theme = "dark";
     localStorage.setItem("theme", theme);
     document.documentElement.setAttribute("data-theme", theme);
-    const themes = document.getElementById("themes");
-    if (themes) themes.value = theme;
+    document.dispatchEvent(
+      new CustomEvent("themechange", { detail: { theme } }),
+    );
   }
 
   function getTheme() {
     const theme = localStorage.getItem("theme");
-    if (theme) return theme;
-    if (!window.matchMedia) return "dark";
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches)
-      return "dark";
-    return "light";
+    if (theme === "light" || theme === "dark") return theme;
+    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches)
+      return "light";
+    return "dark";
   }
 </script>
 

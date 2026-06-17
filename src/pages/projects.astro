@@ -2,13 +2,12 @@
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 
-import { SITE_TITLES, SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
+import { SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
 ---
 
 <PageLayout
   title="projects"
   description={SITE_DESCRIPTIONS.projects}
-  metaTitle={SITE_TITLES.projects}
   image="/projects.png"
 >
   <section class="flex flex-col gap-4">

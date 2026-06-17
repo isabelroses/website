@@ -13,17 +13,16 @@ const posts = (
   (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
 );
 
-import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
+import { SITE_DESCRIPTIONS } from "@lib/consts";
 ---
 
 <PageLayout
   title="blog"
   description={SITE_DESCRIPTIONS.blog}
-  metaTitle={SITE_TITLES.blog}
   image="/blog.png"
 >
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl smallcaps tracking-[0.12em]">tags</h2>
+      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">tags</h2>
       <div class="flex flex-wrap gap-2">
         {
           [...new Set(posts.flatMap((post) => post.data.tags))].map((tag) => (
@@ -34,7 +33,7 @@ import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
     </section>
 
     <section class="flex flex-col gap-4">
-      <h2 class="text-xl smallcaps tracking-[0.12em]">all posts</h2>
+      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">all posts</h2>
       <ul class="flex flex-col gap-3">
         {
           posts.map((post) => (

@@ -1,6 +1,5 @@
 ---
 import Base from "@layouts/Base.astro";
-import PageHeader from "@components/PageHeader.astro";
 import BackLink from "@components/BackLink.astro";
 
 interface Props {
@@ -16,7 +15,7 @@ interface Props {
 const {
   title,
   description,
-  metaTitle = title,
+  metaTitle = `isabel | ${title}`,
   metaDescription = description ?? "",
   image,
   aturi,
@@ -24,16 +23,9 @@ const {
 } = Astro.props;
 ---
 
-<Base
-  title={metaTitle}
-  description={metaDescription}
-  image={image}
-  aturi={aturi}
->
-  <div class="w-full max-w-2xl flex flex-col gap-12">
-    <PageHeader title={title} description={description}>
-      <slot name="back" slot="back" />
-    </PageHeader>
+<Base title={metaTitle} description={metaDescription} image={image} aturi={aturi}>
+  <div class="w-full flex flex-col gap-12">
+    <h1 class="sr-only">{title}</h1>
 
     <slot />
 

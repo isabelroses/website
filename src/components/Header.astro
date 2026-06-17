@@ -1,0 +1,59 @@
+---
+import { Image } from "astro:assets";
+import ThemeSwitcher from "@components/ThemeSwitcher.astro";
+
+interface NavItem {
+  href: string;
+  label: string;
+  match: string;
+}
+
+const NAV: NavItem[] = [
+  { href: "/", label: "home", match: "/" },
+  { href: "/blog", label: "blog", match: "/blog" },
+  { href: "/projects", label: "projects", match: "/projects" },
+  { href: "/friends", label: "friends", match: "/friends" },
+  { href: "/donate", label: "donate", match: "/donate" },
+];
+
+const path = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isActive = (match: string) =>
+  match === "/" ? path === "/" : path === match || path.startsWith(match + "/");
+---
+
+<header
+  class="w-full flex flex-wrap items-center justify-between gap-4 border-b border-fg-lighter/15 pb-4 mb-8"
+>
+  <a href="/" class="group flex items-center gap-3 shrink-0">
+    <Image
+      src="/me.webp"
+      alt="my avatar"
+      width={56}
+      height={56}
+      class="w-14 h-14 rounded-full ring-1 ring-special/40 group-hover:ring-special transition-all"
+    />
+    <span class="text-lg font-bold lowercase tracking-[0.05em] group-hover-special"
+      >isabel</span
+    >
+  </a>
+
+  <nav class="flex flex-wrap items-center gap-2">
+    <ThemeSwitcher />
+    {
+      NAV.map((item) => (
+        <a
+          href={item.href}
+          aria-current={isActive(item.match) ? "page" : undefined}
+          class:list={[
+            "px-2.5 py-1 text-sm lowercase border transition-all",
+            isActive(item.match)
+              ? "border-special text-special bg-special/10"
+              : "border-fg-lighter/25 text-fg-lighter hover:border-special hover:text-special",
+          ]}
+        >
+          {item.label}
+        </a>
+      ))
+    }
+  </nav>
+</header>
