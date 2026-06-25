@@ -68,6 +68,15 @@ export default defineConfig({
   vite: {
     plugins: [tailwindcss()],
 
+    // opengraph.tsx uses satori's React JSX. astro has no react integration,
+    // so tell vite/oxc to transform the jsx itself (classic runtime matches
+    // the `import React` in that file).
+    esbuild: {
+      jsx: "transform",
+      jsxFactory: "React.createElement",
+      jsxFragment: "React.Fragment",
+    },
+
     css: {
       postcss: {
         plugins: [autoprefixer()],
