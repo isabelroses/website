@@ -23,7 +23,12 @@ export default defineConfig({
       id: "be210218-aad1-4b3a-a6a3-366952e22d8e",
     }),
     mailObfuscation(),
-    compress(),
+    compress({
+      // csso can't parse the media query range syntax tailwind v4 emits
+      // (`@media (width >= 40rem)`) and silently drops those rules, which
+      // strips every responsive breakpoint from the production css
+      CSS: { csso: false, lightningcss: { minify: true } },
+    }),
   ],
 
   redirects: {
