@@ -34,8 +34,8 @@ export const LINKS = [
   },
   {
     label: "fediverse",
-    handle: "@isabel@akko.isabelroses.com",
-    href: "https://akko.isabelroses.com/isabel",
+    handle: "@isabel@bbs.619.hu",
+    href: "https://bbs.619.hu/@isabel",
     icon: "fa7-brands:mastodon",
   },
   {
