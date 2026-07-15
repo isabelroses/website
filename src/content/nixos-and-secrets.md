@@ -1,6 +1,6 @@
 ---
 title: NixOS and Secrets
-description: My takes and experinces with secrets management on NixOS
+description: My takes and experiences with secrets management on NixOS
 date: 2026-05-08
 tags:
   - nixos

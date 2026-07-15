@@ -2,7 +2,7 @@ alias b := build
 alias r := run
 alias u := update
 
-# build ouput path
+# build output path
 prefix := "dist"
 
 default: build

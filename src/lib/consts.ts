@@ -132,9 +132,9 @@ export const FRIENDS = [
     image: "kaya.gif",
   },
   {
-    name: "aubrey",
-    link: "https://aubrey.rs",
-    image: "aubrey.png",
+    name: "april",
+    link: "https://aprl.pet",
+    image: "april.png",
   },
   {
     name: "rooot",
@@ -158,7 +158,7 @@ export const FRIENDS = [
   },
   {
     name: "arimelody",
-    link: "https://arimelody.me",
+    link: "https://arimelody.space",
     image: "arimelody.gif",
   },
   {
@@ -193,7 +193,7 @@ export const FRIENDS = [
   },
   {
     name: "da157",
-    link: "https://0xda157.id",
+    link: "https://da157.id",
     image: "0xda157.png",
   },
   {
@@ -210,11 +210,6 @@ export const FRIENDS = [
     name: "tasky",
     link: "https://tasky.nuxt.dev",
     image: "tasky.webp",
-  },
-  {
-    name: "april",
-    link: "https://aprl.cat",
-    image: "april.png",
   },
   {
     name: "sydney",
