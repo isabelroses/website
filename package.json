@@ -22,15 +22,15 @@
     "@tailwindcss/typography": "^0.5.20",
     "@tailwindcss/vite": "^4.3.3",
     "@yeskunall/astro-umami": "^0.0.9",
-    "astro": "^7.1.6",
-    "astro-compress": "^2.4.1",
+    "astro": "^7.2.0",
+    "astro-compress": "^2.4.3",
     "astro-icon": "^1.1.5",
     "astro-mail-obfuscation": "^2.3.4",
     "autoprefixer": "^10.5.4",
     "feed": "^6.0.0",
     "markdown-it": "^15.0.0",
     "react": "^19.2.8",
-    "reading-time-estimator": "^2.9.0",
+    "reading-time-estimator": "^2.13.0",
     "sanitize-html": "^2.17.6",
     "satori": "^0.29.0",
     "satteri-expressive-code": "^0.1.18",
@@ -43,11 +43,11 @@
     "@types/markdown-it": "^14.1.2",
     "@types/react": "^19.2.18",
     "@types/sanitize-html": "^2.16.1",
-    "eslint": "^10.8.0",
-    "globals": "^17.8.0",
+    "eslint": "^10.8.1",
+    "globals": "^17.9.0",
     "prettier": "^3.9.6",
     "prettier-plugin-astro": "^0.14.1",
     "sequoia-cli": "^0.5.7",
-    "typescript-eslint": "^8.65.0"
+    "typescript-eslint": "^8.66.0"
   }
 }
