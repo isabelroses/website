@@ -167,6 +167,11 @@ export const FRIENDS = [
     image: "ezri.png",
   },
   {
+    name: "abigail",
+    link: "https://abigail.sh",
+    image: "abigail.png",
+  },
+  {
     name: "notnite",
     link: "https://notnite.com",
     image: "notnite.png",
