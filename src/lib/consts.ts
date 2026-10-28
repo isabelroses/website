@@ -226,6 +226,11 @@ export const FRIENDS = [
     link: "https://blooym.dev",
     image: "lyna.webp",
   },
+  {
+    name: "quinn",
+    link: "https://emo.gay",
+    image: "quinn.png",
+  },
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",
