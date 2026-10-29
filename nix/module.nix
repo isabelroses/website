@@ -21,6 +21,7 @@ in
         expires max;
       '';
       extraConfig = ''
+        rewrite ^/(.+)/$ /$1 permanent;
         error_page 404 /404.html;
       '';
     };
