@@ -34,6 +34,29 @@
         isabelroses-website = pkgs.callPackage ./nix/package.nix { };
       });
 
+      checks = forAllSystems (
+        pkgs:
+        let
+          website = self.packages.${pkgs.stdenv.hostPlatform.system}.isabelroses-website;
+        in
+        {
+          inherit website;
+
+          lint = website.overrideAttrs {
+            pname = "isabelroses-website-lint";
+
+            buildPhase = ''
+              runHook preBuild
+              pnpm run check
+              pnpm run lint
+              runHook postBuild
+            '';
+
+            installPhase = "touch $out";
+          };
+        }
+      );
+
       devShells = forAllSystems (pkgs: {
         default = pkgs.callPackage ./nix/shell.nix { };
       });

@@ -1,10 +1,13 @@
 ---
-import { Image } from "astro:assets";
-import { Icon } from "astro-icon/components";
-
 import PageLayout from "@layouts/PageLayout.astro";
+import CopyLabel from "@components/CopyLabel.astro";
+import WebringArrow from "@components/WebringArrow.astro";
+import Section from "@components/Section.astro";
 
 import { SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
+
+const site = Astro.site!.origin;
+const badgeHtml = `<a href="${site}"><img src="${site}/badges/me.gif" alt="isabel roses" width="88" height="31"></a>`;
 ---
 
 <PageLayout
@@ -12,76 +15,95 @@ import { SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
   description={SITE_DESCRIPTIONS.friends}
   image="/friends.png"
 >
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">my badge</h2>
-      <div class="flex flex-col gap-2">
+  <Section id="friends" title="the coven">
+    <ul class="grid grid-cols-[repeat(auto-fill,88px)] justify-between gap-2">
+      {FRIENDS.map((friend) => (
+        <li class="relative">
+          <a
+            href={friend.link}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="group block active:scale-95"
+          >
+            <img
+              src={`/badges/friends/${friend.image}`}
+              alt={friend.name}
+              width="88"
+              height="31"
+              loading="lazy"
+              decoding="async"
+              class="block w-[88px] h-[31px]"
+              style="image-rendering: pixelated"
+            />
+            <span
+              aria-hidden="true"
+              class="pointer-events-none absolute left-0 top-full z-10 mt-1 whitespace-nowrap bg-card px-1.5 text-meta opacity-0 transition-opacity group-hover:opacity-100 group-focus-visible:opacity-100"
+            >
+              {friend.name}
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <section class="grid gap-12 lg:grid-cols-12" aria-labelledby="webrings">
+    <div class="lg:col-span-4 flex flex-col gap-6">
+      <h2 id="webrings" class="heading">
+        webrings
+      </h2>
+      <p class="max-w-[34ch]">
+        that's my badge, feel free to add it to your site!
+      </p>
+      <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
         <img
           src="/badges/me.gif"
           alt="isabel roses"
           width={88}
           height={31}
+          class="w-[88px] h-[31px]"
           style="image-rendering: pixelated"
         />
-        <p class="text-fg-lighter text-sm">feel free to add it to your site!</p>
+        <button
+          type="button"
+          data-copy={badgeHtml}
+          class="group py-2 cursor-pointer"
+        >
+          <CopyLabel label="copy html" what="for my badge" />
+        </button>
       </div>
-    </section>
+    </div>
 
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">friends</h2>
-      <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-2">
-        {
-          FRIENDS.map((friend) => (
-            <a
-              href={friend.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="hover:scale-105 transition-transform"
-              title={friend.name}
-            >
-              <Image
-                src={`/badges/friends/${friend.image}`}
-                alt={friend.name}
-                width={88}
-                height={31}
-                style="image-rendering: pixelated"
-              />
-            </a>
-          ))
-        }
-      </div>
-    </section>
-
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">webrings</h2>
-      <ul class="flex flex-col gap-3">
-        {
-          WEBRINGS.map((webring) => (
-            <li class="flex flex-row items-center gap-2 panel overflow-hidden">
-              <a
-                href={webring.href + webring.prev}
-                class="flex items-center justify-center w-12 h-12 text-fg-lighter hover-special"
-                aria-label="Previous"
-              >
-                <Icon name="fa7-solid:chevron-left" class="w-4 h-4" />
-              </a>
-              <a
-                href={webring.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex-1 py-3 text-center hover-special"
-              >
-                {webring.name}
-              </a>
-              <a
-                href={webring.href + webring.next}
-                class="flex items-center justify-center w-12 h-12 text-fg-lighter hover-special"
-                aria-label="Next"
-              >
-                <Icon name="fa7-solid:chevron-right" class="w-4 h-4" />
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+    <ul class="lg:col-start-6 lg:col-span-7 flex flex-col">
+      {WEBRINGS.map((webring, i) => (
+        <li
+          class:list={[
+            "grid grid-cols-[1fr_3rem_3rem] items-center",
+            i % 2 === 0 && "bg-card",
+          ]}
+        >
+          <a
+            href={webring.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="py-5 pl-4 item-title hover-special"
+          >
+            {webring.name}
+          </a>
+          <WebringArrow
+            webring={webring}
+            dir="prev"
+            size="w-5 h-5"
+            class="h-full min-h-16 text-fg-lighter"
+          />
+          <WebringArrow
+            webring={webring}
+            dir="next"
+            size="w-5 h-5"
+            class="h-full min-h-16 text-fg-lighter"
+          />
+        </li>
+      ))}
+    </ul>
+  </section>
 </PageLayout>

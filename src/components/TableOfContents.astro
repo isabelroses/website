@@ -1,0 +1,63 @@
+---
+import type { MarkdownHeading } from "astro";
+
+interface Props {
+  headings: MarkdownHeading[];
+  class?: string;
+}
+
+const { headings, class: className } = Astro.props;
+const sections = headings.filter((heading) => heading.depth === 2);
+---
+
+{sections.length >= 4 && (
+  <nav
+    aria-labelledby="toc-label"
+    data-toc
+    class:list={["flex flex-col", className]}
+  >
+    <span id="toc-label" class="text-fg-lighter">
+      contents
+    </span>
+    <ol class="flex flex-col">
+      {sections.map((heading) => (
+        <li>
+          <a
+            href={`#${heading.slug}`}
+            class="block py-0.5 hover-special aria-[current]:text-special"
+          >
+            {heading.text}
+          </a>
+        </li>
+      ))}
+    </ol>
+  </nav>
+)}
+
+<script>
+  let links: HTMLAnchorElement[] = [];
+  let targets: HTMLElement[] = [];
+
+  function update() {
+    const current =
+      targets.findLast((el) => el.getBoundingClientRect().top < 120) ??
+      targets[0];
+    links.forEach((link, i) =>
+      targets[i] === current
+        ? link.setAttribute("aria-current", "location")
+        : link.removeAttribute("aria-current"),
+    );
+  }
+
+  document.addEventListener("astro:page-load", () => {
+    links = [...document.querySelectorAll<HTMLAnchorElement>("[data-toc] a")];
+    targets = links.map(
+      (link) => document.getElementById(link.hash.slice(1)) as HTMLElement,
+    );
+    update();
+  });
+
+  addEventListener("scroll", () => requestAnimationFrame(update), {
+    passive: true,
+  });
+</script>

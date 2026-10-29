@@ -1,82 +1,46 @@
 ---
-import { getCollection } from "astro:content";
+import type { CollectionEntry } from "astro:content";
 
 import PageLayout from "@layouts/PageLayout.astro";
-import BackLink from "@components/BackLink.astro";
 import PostCard from "@components/PostCard.astro";
 
 import { SITE_TITLES } from "@lib/consts";
+import { getPosts, getTags } from "@lib/posts";
 
 interface Props {
-  posts: {
-    title: string;
-    description: string;
-    readTime: number;
-    slug: string;
-    date: Date;
-  }[];
+  posts: CollectionEntry<"blog">[];
   tag: string;
 }
 
 const { posts, tag } = Astro.props;
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog", ({ data }) => {
-    return !data.draft && !data.archived;
-  });
-
-  const tags: Set<string> = new Set();
-
-  for (const post of posts) {
-    if (Array.isArray(post.data.tags)) {
-      for (const tag of post.data.tags) {
-        tags.add(tag);
-      }
-    }
-  }
-
-  return Array.from(tags).map((tag) => {
-    const filteredPosts = posts.filter((post) => post.data.tags.includes(tag));
-    const postsSmall = filteredPosts.map((p) => ({
-      readTime: p.data.readTime,
-      title: p.data.title,
-      description: p.data.description,
-      date: p.data.date,
-      slug: p.id,
-    }));
-
-    return {
-      params: { slug: tag },
-      props: { posts: postsSmall, tag },
-    };
-  });
+  const posts = await getPosts();
+  return getTags(posts).map((tag) => ({
+    params: { slug: tag },
+    props: { posts: posts.filter((post) => post.data.tags.includes(tag)), tag },
+  }));
 }
 ---
 
 <PageLayout
+  kicker="blog"
   title={`#${tag}`}
   description={`${posts.length} post${posts.length !== 1 ? "s" : ""} tagged with #${tag}`}
   metaTitle={`#${tag} | ${SITE_TITLES.blog}`}
-  metaDescription={`Posts tagged with #${tag}`}
-  image="/blog.png"
+  metaDescription={`posts tagged with #${tag}`}
+  image="/blog/index.png"
 >
-    <BackLink href="/blog" label="back to blog" slot="back" />
-
-    <section class="flex flex-col gap-4">
-      <ul class="flex flex-col gap-3">
-        {
-          posts.map((post) => (
-            <li>
-              <PostCard
-                href={`/blog/${post.slug}`}
-                title={post.title}
-                date={post.date}
-                description={post.description}
-                readTime={post.readTime}
-              />
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+  <section class="flex flex-col gap-6" aria-labelledby="tagged">
+    <h2 id="tagged" class="heading">
+      posts
+    </h2>
+    <ul class="flex flex-col max-w-5xl">
+      {posts.map((post) => (
+        <li>
+          <PostCard post={post} />
+        </li>
+      ))}
+    </ul>
+  </section>
 </PageLayout>

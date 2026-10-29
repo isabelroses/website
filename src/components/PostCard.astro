@@ -1,73 +1,45 @@
 ---
+import type { CollectionEntry } from "astro:content";
+import { formatDate, formatReadTime } from "@lib/format";
+import { postPath } from "@lib/url";
+
 interface Props {
-  href: string;
-  title: string;
-  date: Date;
-  description?: string;
-  readTime?: number | string;
-  tags?: string[];
-  compact?: boolean;
+  post: CollectionEntry<"blog">;
+  withYear?: boolean;
+  showTags?: boolean;
 }
 
-const {
-  href,
-  title,
-  date,
-  description,
-  readTime,
-  tags,
-  compact = false,
-} = Astro.props;
-
-const formattedDate = date.toLocaleDateString("en-GB", {
-  day: "numeric",
-  month: "short",
-  year: "numeric",
-});
+const { post, withYear = true, showTags = false } = Astro.props;
+const { title, date, description, readTime, tags } = post.data;
+const id = `post-${post.id}`;
 ---
 
 <a
-  href={href}
-  class:list={[
-    "group flex flex-col gap-1 panel-link",
-    compact
-      ? "p-3 sm:flex-row sm:justify-between sm:items-center"
-      : "gap-2 p-4",
-  ]}
+  href={postPath(post)}
+  aria-labelledby={`${id}-title`}
+  aria-describedby={`${id}-desc ${id}-meta`}
+  class="row-link group grid gap-x-8 gap-y-1 py-4 sm:grid-cols-[1fr_auto] sm:items-baseline"
 >
-  {
-    compact ? (
-      <>
-        <span class="group-hover-special">{title}</span>
-        <span class="text-fg-lighter text-sm">{formattedDate}</span>
-      </>
-    ) : (
-      <>
-        <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-1">
-          <span class="font-medium group-hover-special">
-            {title}
-          </span>
-          <span class="text-fg-lighter text-sm">{formattedDate}</span>
-        </div>
-
-        {description && <p class="text-fg-lighter text-sm">{description}</p>}
-
-        <div class="flex flex-row items-center gap-2 text-fg-lighter text-sm">
-          {readTime && <span>{readTime} min read</span>}
-
-          {tags && tags.length > 0 && (
-            <>
-              {readTime && <span>·</span>}
-
-              <div class="flex flex-wrap gap-1">
-                {tags.slice(0, 3).map((tag) => (
-                  <span class="text-special">#{tag}</span>
-                ))}
-              </div>
-            </>
-          )}
-        </div>
-      </>
-    )
-  }
+  <span class="flex flex-col gap-1">
+    <span id={`${id}-title`} class="item-title group-hover-special">
+      {title}
+    </span>
+    <span id={`${id}-desc`}>{description}</span>
+    {showTags && (
+      <span class="flex flex-wrap gap-x-3 text-meta text-fg-lighter">
+        {tags.map((tag) => (
+          <span>#{tag}</span>
+        ))}
+      </span>
+    )}
+  </span>
+  <span
+    id={`${id}-meta`}
+    class="text-meta text-fg-lighter tabular-nums whitespace-nowrap sm:text-right"
+  >
+    <time datetime={date.toISOString()}>
+      {formatDate(date, "short", withYear)}
+    </time>
+    · {formatReadTime(readTime)}
+  </span>
 </a>

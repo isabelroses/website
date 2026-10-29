@@ -1,23 +1,37 @@
 import satori from "satori";
-import React from "react";
 import { readFile } from "node:fs/promises";
 import { Resvg } from "@resvg/resvg-js";
+import { formatDate } from "@lib/format";
+import { OG_IMAGE } from "@lib/consts";
+
+const COLORS = {
+  fg: "#ece4da",
+  fgLighter: "#a99d93",
+  bg: "#0c0a0b",
+  special: "#e2596b",
+  blood: "#7a1325",
+};
+
+const fonts = Promise.all([
+  readFile("./src/lib/unifraktur-maguntia.ttf"),
+  readFile("./src/lib/grenze.ttf"),
+]);
 
 export const generateOpenGraph = async (
   title: string,
   description: string,
   date?: Date,
 ) => {
-  const nixLogoSvg = await readFile("./public/svg/nix.svg", "utf-8");
-  const nixLogoDataUrl = `data:image/svg+xml;base64,${Buffer.from(nixLogoSvg).toString("base64")}`;
+  const [display, sans] = await fonts;
 
-  const formattedDate = date
-    ? new Date(date).toLocaleDateString("en-GB", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : null;
+  const isPost = Boolean(date);
+  const titleSize = isPost
+    ? title.length > 30
+      ? 60
+      : 72
+    : title.length > 16
+      ? 104
+      : 128;
 
   const svg = await satori(
     <div
@@ -26,118 +40,93 @@ export const generateOpenGraph = async (
         width: "100%",
         display: "flex",
         flexDirection: "column",
-        backgroundColor: "#000",
-        color: "#d1d5db",
-        padding: "60px",
-        fontFamily: "IBM Plex Mono",
+        backgroundColor: COLORS.bg,
+        color: COLORS.fg,
+        fontFamily: "Grenze",
+        borderLeft: `24px solid ${COLORS.blood}`,
+        padding: "56px 72px 56px 64px",
+        // satori sizes `width: 100%` as content-box, so padding would
+        // otherwise push the right and bottom edges off the canvas
+        boxSizing: "border-box",
       }}
     >
       <div
         style={{
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "60px",
+          alignItems: "baseline",
           width: "100%",
         }}
       >
-        <img
-          src={nixLogoDataUrl}
-          alt="Nix Logo"
-          width={56}
-          height={56}
-          style={{
-            objectFit: "contain",
-          }}
-        />
         <div
           style={{
-            fontSize: "22px",
-            color: "#74c7ec",
-            fontWeight: "500",
-            letterSpacing: "0.5px",
+            fontFamily: "UnifrakturMaguntia",
+            fontSize: "56px",
+            color: COLORS.special,
+            lineHeight: 1,
           }}
         >
+          isabel
+        </div>
+        <div style={{ fontSize: "28px", color: COLORS.fgLighter }}>
           isabelroses.com
         </div>
       </div>
+
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          alignItems: "flex-start",
-          justifyContent: "center",
+          justifyContent: "flex-end",
           flex: 1,
-          textAlign: "left",
-          gap: "32px",
+          gap: "24px",
         }}
       >
-        <h1
+        <div
           style={{
-            fontSize: title.length > 30 ? "42px" : "52px",
-            fontWeight: "700",
-            color: "#ffffff",
-            margin: "0",
-            lineHeight: 1.1,
-            maxWidth: "90%",
-            letterSpacing: "-0.02em",
+            fontFamily: isPost ? "Grenze" : "UnifrakturMaguntia",
+            fontSize: `${titleSize}px`,
+            lineHeight: isPost ? 1.05 : 0.9,
+            maxWidth: "95%",
           }}
         >
           {title}
-        </h1>
-        <p
+        </div>
+        <div
           style={{
-            fontSize: "28px",
-            color: "#a1a1aa",
-            margin: "0",
+            fontSize: "34px",
+            color: COLORS.fgLighter,
             lineHeight: 1.3,
-            maxWidth: "85%",
-            letterSpacing: "0.01em",
+            maxWidth: "88%",
           }}
         >
-          {description.length <= 100
+          {description.length <= 110
             ? description
-            : description.substring(0, 97) + "..."}
-        </p>
-        {formattedDate && (
-          <div
-            style={{
-              fontSize: "20px",
-              color: "#74c7ec",
-              fontWeight: "500",
-              letterSpacing: "0.5px",
-            }}
-          >
-            {formattedDate}
+            : description.substring(0, 107).trimEnd() + "…"}
+        </div>
+        {date && (
+          <div style={{ fontSize: "28px", color: COLORS.special }}>
+            {formatDate(date, "long")}
           </div>
         )}
       </div>
     </div>,
     {
-      width: 1200,
-      height: 630,
+      ...OG_IMAGE,
       fonts: [
         {
-          name: "IBM Plex Mono",
+          name: "UnifrakturMaguntia",
+          data: display,
           weight: 400,
           style: "normal",
-          data: await readFile("./src/lib/ibm-plex-mono-400.ttf"),
         },
-        {
-          name: "IBM Plex Mono",
-          weight: 700,
-          style: "normal",
-          data: await readFile("./src/lib/ibm-plex-mono-700.ttf"),
-        },
+        { name: "Grenze", data: sans, weight: 400, style: "normal" },
       ],
     },
   );
 
-  const resvg = new Resvg(svg, {
-    background: "#000000",
+  const png = new Resvg(svg, { background: COLORS.bg }).render().asPng();
+  return new Response(new Uint8Array(png), {
+    headers: { "Content-Type": "image/png" },
   });
-  const pngData = resvg.render();
-  const pngBuffer = pngData.asPng();
-
-  return new Uint8Array(pngBuffer);
 };

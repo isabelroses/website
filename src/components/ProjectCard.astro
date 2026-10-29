@@ -1,98 +1,59 @@
 ---
+import { Image } from "astro:assets";
+import type { ImageMetadata } from "astro";
 import { Icon } from "astro-icon/components";
+import type { PROJECTS } from "@lib/consts";
+
+// resolved here rather than in consts so the client bundle never pulls images
+const icons = import.meta.glob<{ default: ImageMetadata }>(
+  "/src/assets/repos/*",
+  { eager: true },
+);
 
 interface Props {
-  href: string;
-  name: string;
-  description?: string;
-  icon?: string | null;
-  stars: number;
-  repo?: string | null;
-  compact?: boolean;
+  project: (typeof PROJECTS)[number];
+  truncate?: boolean;
 }
 
-const {
-  href,
-  name,
-  description,
-  icon,
-  stars,
-  repo,
-  compact = false,
-} = Astro.props;
+const { project, truncate = false } = Astro.props;
+const { name, description, icon, stars } = project;
+const href = project.href ?? project.repo;
+const iconSrc = icon ? icons[`/src/assets/repos/${icon}`]?.default : undefined;
 ---
 
 <a
   href={href}
   target="_blank"
   rel="noopener noreferrer"
-  class:list={[
-    "group flex gap-3 panel-link",
-    compact ? "flex-row items-center p-3" : "flex-col p-4 h-full",
-  ]}
+  class="row-link icon-row group"
 >
-  <div class:list={["flex flex-row items-center gap-3", compact && "flex-1"]}>
-    {
-      icon ? (
-        <img
-          src={icon}
-          alt={name}
-          width={compact ? 24 : 32}
-          height={compact ? 24 : 32}
-          class:list={[
-            "rounded shrink-0 object-contain",
-            compact ? "w-6 h-6" : "w-8 h-8",
-          ]}
-        />
-      ) : (
-        <div
-          class:list={[
-            "bg-bg rounded flex items-center justify-center shrink-0",
-            compact ? "w-6 h-6" : "w-8 h-8",
-          ]}
-        >
-          <Icon
-            name="fa7-solid:code"
-            class:list={["text-fg-lighter", compact ? "w-3 h-3" : "w-4 h-4"]}
-          />
-        </div>
-      )
-    }
-
-    <span
-      class:list={[
-        "group-hover-special",
-        !compact && "font-medium",
-      ]}
-    >
-      {name}
-    </span>
-  </div>
-
-  {
-    compact && (
-      <span class="text-fg-lighter text-sm flex items-center gap-1">
-        <Icon name="fa7-solid:star" class="w-3 h-3" />
-        {stars}
+  <span class="icon-tile">
+    {iconSrc ? (
+      <Image
+        src={iconSrc}
+        alt=""
+        width={96}
+        height={96}
+        class="w-[68%] h-[68%] object-contain"
+      />
+    ) : (
+      <span
+        aria-hidden="true"
+        class="font-display text-[1.75rem] leading-none text-fg-lighter group-hover:text-on-blood transition-colors"
+      >
+        {name.charAt(0)}
       </span>
-    )
-  }
-
-  {
-    !compact && (
-      <>
-        {description && <p class="text-fg-lighter text-sm">{description}</p>}
-        <div class="flex flex-row items-center gap-2 mt-auto text-fg-lighter text-sm">
-          <Icon name="fa7-solid:star" class="w-5 h-5" />
-          <span>{stars}</span>
-          {repo && (
-            <>
-              <span class="mx-1">·</span>
-              <Icon name="fa7-brands:github" class="w-5 h-5" />
-            </>
-          )}
-        </div>
-      </>
-    )
-  }
+    )}
+  </span>
+  <span class="flex flex-col gap-1 min-w-0">
+    <span class="item-title group-hover-special">{name}</span>
+    <span class:list={["text-fg-lighter", truncate && "truncate"]}>
+      {description}
+    </span>
+  </span>
+  <span class="flex items-center gap-2 shrink-0 text-meta text-fg-lighter tabular-nums">
+    <Icon aria-hidden="true" name="fa7-solid:star" class="w-4 h-4" />
+    {stars}
+    <span class="sr-only">stars</span>
+  </span>
 </a>

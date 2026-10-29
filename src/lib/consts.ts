@@ -7,10 +7,12 @@ export const SITE_TITLES = {
 
 export const SITE_DESCRIPTIONS = {
   index: "the nix witch",
-  blog: "my personal blog",
-  projects: "a collection of my open source projects",
-  friends: "badges and webrings",
+  blog: "nix, nixos and whatever else i'm thinking about",
+  projects: "open source things i've built, mostly nix and terminal tools",
+  friends: "the people i like, and the webrings i'm part of",
 };
+
+export const OG_IMAGE = { width: 1080, height: 600 };
 
 export const ATPROTO = {
   did: "did:plc:qxichs7jsycphrsmbujwqbfb",
@@ -52,15 +54,15 @@ export const LINKS = [
   },
 ];
 
-// stars are barely updated
+// stars are a snapshot; refresh them with scripts/update-stars.sh
 export const PROJECTS = [
   {
     name: "Catppuccin Nix",
     description: "Soothing pastel colors for nix",
-    icon: "/repos/catppuccin-nix.webp",
+    icon: "catppuccin-nix.webp",
     href: null,
     repo: "https://github.com/catppuccin/nix",
-    stars: 740,
+    stars: 774,
   },
   {
     name: "izrss",
@@ -73,24 +75,23 @@ export const PROJECTS = [
   {
     name: "Dotfiles",
     description: "My over complex system configurations",
-    icon: "/repos/dotfiles.svg",
+    icon: "dotfiles.svg",
     href: null,
     repo: "https://github.com/isabelroses/dotfiles",
-    stars: 421,
+    stars: 455,
   },
   {
     name: "freeze.nvim",
     description: "A wrapper for charm's freeze cli tool for usage in neovim",
-    icon: "/repos/freeze.webp",
+    icon: "freeze.webp",
     href: null,
     repo: "https://github.com/charm-community/freeze.nvim",
-    stars: 90,
+    stars: 89,
   },
   {
     name: "my website",
     description: "The site that you're currently on.",
     icon: null,
-    banner: null,
     href: "https://isabelroses.com",
     repo: "https://github.com/isabelroses/website",
     stars: 30,
@@ -98,7 +99,7 @@ export const PROJECTS = [
   {
     name: "Bellado",
     description: "A fast and once simple cli todo tool",
-    icon: "/repos/bellado.webp",
+    icon: "bellado.webp",
     href: null,
     repo: "https://github.com/isabelroses/bellado",
     stars: 14,

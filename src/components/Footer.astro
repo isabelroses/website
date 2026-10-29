@@ -1,0 +1,27 @@
+---
+import { LINKS } from "@lib/consts";
+
+const email = LINKS.find((link) => link.label === "email")!;
+---
+
+<footer class="mt-24 bg-card">
+  <div class="page-width flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-8 text-meta text-fg-lighter">
+    <p>
+      <!-- grenze draws © raised like a superscript; drop it onto the baseline -->
+      <span class="relative top-[0.14em]">©</span> isabel roses
+    </p>
+
+    <ul class="flex flex-wrap gap-x-6 gap-y-1">
+      <li>
+        <a href={email.href} class="hover-special">
+          {email.handle}
+        </a>
+      </li>
+      <li>
+        <a href="/feed.xml" class="hover-special">
+          rss
+        </a>
+      </li>
+    </ul>
+  </div>
+</footer>

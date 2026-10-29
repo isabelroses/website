@@ -1,0 +1,25 @@
+---
+import { Icon } from "astro-icon/components";
+import type { WEBRINGS } from "@lib/consts";
+
+interface Props {
+  webring: (typeof WEBRINGS)[number];
+  dir: "prev" | "next";
+  size: string;
+  class?: string;
+}
+
+const { webring, dir, size, class: className } = Astro.props;
+---
+
+<a
+  href={webring.href + webring[dir]}
+  class:list={["grid place-items-center hover-special", className]}
+  aria-label={`${dir === "prev" ? "previous" : "next"} site in the ${webring.name}`}
+>
+  <Icon
+    aria-hidden="true"
+    name={dir === "prev" ? "fa7-solid:chevron-left" : "fa7-solid:chevron-right"}
+    class={size}
+  />
+</a>

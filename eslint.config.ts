@@ -4,7 +4,7 @@ import tseslint from "typescript-eslint";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
-  { ignores: [".astro/", "dist/", "result", "result-*"] },
+  { ignores: [".astro/", ".remember/", "dist/", "result", "result-*"] },
   {
     files: ["**/*.{js,mjs,cjs,ts,mts,cts}"],
     plugins: { js },

@@ -4,33 +4,16 @@ import { Icon } from "astro-icon/components";
 
 <button
   id="theme-toggle"
-  class="theme-toggle inline-flex items-center justify-center px-2.5 py-1.5 border border-fg-lighter/25 text-fg-lighter hover:border-special hover:text-special transition-all cursor-pointer"
-  aria-label="Toggle dark / light theme"
-  title="toggle theme"
+  type="button"
+  class="inline-flex items-center justify-center w-11 h-11 -mr-3 text-fg hover:text-special transition-[color,scale] duration-150 active:scale-90 cursor-pointer"
+  title="switch theme"
 >
-  <Icon name="fa7-solid:moon" class="icon-moon w-4 h-4" />
-  <Icon name="fa7-solid:sun" class="icon-sun w-4 h-4" />
+  <Icon aria-hidden="true" name="fa7-solid:moon" class="light:hidden w-4 h-4" />
+  <Icon
+    aria-hidden="true"
+    name="fa7-solid:sun"
+    class="hidden light:inline-block w-4 h-4"
+  />
+  <span class="light:hidden sr-only">switch to light theme</span>
+  <span class="hidden light:inline sr-only">switch to dark theme</span>
 </button>
-
-<style>
-  .theme-toggle .icon-sun {
-    display: none;
-  }
-  :global([data-theme="light"]) .theme-toggle .icon-moon {
-    display: none;
-  }
-  :global([data-theme="light"]) .theme-toggle .icon-sun {
-    display: inline-block;
-  }
-</style>
-
-<script is:inline>
-  document.addEventListener("astro:page-load", () => {
-    const toggle = document.getElementById("theme-toggle");
-    if (!toggle || toggle.dataset.bound) return;
-    toggle.dataset.bound = "true";
-    toggle.addEventListener("click", () =>
-      setTheme(getTheme() === "dark" ? "light" : "dark"),
-    );
-  });
-</script>

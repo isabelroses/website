@@ -8,7 +8,7 @@ image: why-i-removed-self-healing-urls.png
 atUri: "at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.document/3mn5hpc2oig22"
 ---
 
-In the past, I wrote about how I used [self-healing URLs](https://isabelroses.com/blog/self-healing-urls/). But while rewriting my website for the roughly the sixth time, a realization hit me: _who am I really building this for?_
+In the past, I wrote about how I used [self-healing URLs](/blog/self-healing-urls). But while rewriting my website for the roughly the sixth time, a realization hit me: _who am I really building this for?_
 
 That question completely shifted how I approached my site. I had been optimizing for SEO, but the real purpose of my site is self-documentation and sharing what I learn with others who want to learn alongside me.
 

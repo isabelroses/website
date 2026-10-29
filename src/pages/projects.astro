@@ -10,22 +10,11 @@ import { SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
   description={SITE_DESCRIPTIONS.projects}
   image="/projects.png"
 >
-  <section class="flex flex-col gap-4">
-    <ul class="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {
-        PROJECTS.map((project) => (
-          <li>
-            <ProjectCard
-              href={project.href || project.repo || "#"}
-              name={project.name}
-              description={project.description}
-              icon={project.icon}
-              stars={project.stars}
-              repo={project.repo}
-            />
-          </li>
-        ))
-      }
-    </ul>
-  </section>
+  <ul class="checker grid md:grid-cols-2">
+    {PROJECTS.map((project) => (
+      <li class="min-w-0">
+        <ProjectCard project={project} />
+      </li>
+    ))}
+  </ul>
 </PageLayout>

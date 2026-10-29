@@ -5,6 +5,6 @@ Website: https://isabelroses.com
 Location: United Kingdom
 
 /* SITE */
-Last update: 2024/03/29
+Last update: 2026/10/29
 Standards: HTML5, CSS3
-Software: Go, Neovim, NixOS
+Software: Astro, Tailwind CSS, Neovim, NixOS

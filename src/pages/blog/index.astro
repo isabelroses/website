@@ -1,54 +1,45 @@
 ---
-import { getCollection } from "astro:content";
-
 import PageLayout from "@layouts/PageLayout.astro";
 import Tag from "@components/Tag.astro";
 import PostCard from "@components/PostCard.astro";
 
-const posts = (
-  await getCollection("blog", ({ data }) => {
-    return !data.draft && !data.archived;
-  })
-).sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-);
-
 import { SITE_DESCRIPTIONS } from "@lib/consts";
+import { getPosts, getTags } from "@lib/posts";
+
+const posts = await getPosts();
+
+const years = Map.groupBy(posts, (post) => post.data.date.getFullYear());
 ---
 
 <PageLayout
   title="blog"
   description={SITE_DESCRIPTIONS.blog}
-  image="/blog.png"
+  image="/blog/index.png"
 >
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">tags</h2>
-      <div class="flex flex-wrap gap-2">
-        {
-          [...new Set(posts.flatMap((post) => post.data.tags))].map((tag) => (
-            <Tag tag={tag} />
-          ))
-        }
-      </div>
-    </section>
+  <nav aria-label="tags" class="flex flex-wrap gap-x-5 gap-y-1 -mt-6">
+    {getTags(posts).map((tag) => (
+      <Tag tag={tag} />
+    ))}
+  </nav>
 
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">all posts</h2>
-      <ul class="flex flex-col gap-3">
-        {
-          posts.map((post) => (
-            <li>
-              <PostCard
-                href={`/blog/${post.id}`}
-                title={post.data.title}
-                date={post.data.date}
-                description={post.data.description}
-                readTime={post.data.readTime}
-                tags={post.data.tags}
-              />
-            </li>
-          ))
-        }
+  {[...years].map(([year, yearPosts]) => (
+    <section
+      class="grid gap-x-12 gap-y-2 lg:grid-cols-[8rem_minmax(0,1fr)]"
+      aria-labelledby={`year-${year}`}
+    >
+      <h2
+        id={`year-${year}`}
+        class="heading tabular-nums lg:sticky lg:top-10 lg:self-start lg:py-5"
+      >
+        {year}
+      </h2>
+      <ul class="flex flex-col">
+        {yearPosts.map((post) => (
+          <li>
+            <PostCard post={post} withYear={false} showTags />
+          </li>
+        ))}
       </ul>
     </section>
+  ))}
 </PageLayout>

@@ -2,46 +2,40 @@
 import { Icon } from "astro-icon/components";
 
 import PageLayout from "@layouts/PageLayout.astro";
+import CopyLabel from "@components/CopyLabel.astro";
+import Section from "@components/Section.astro";
 
 const DONATION_OPTIONS = [
   {
     name: "Ko-fi",
-    description: "Buy me a coffee! One-time or monthly support.",
+    description: "buy me a coffee, one-off or monthly.",
     href: "https://ko-fi.com/isabelroses",
     icon: "kofi",
-    color: "bg-[#FF5E5B]",
   },
   {
     name: "GitHub Sponsors",
-    description: "Sponsor me directly through GitHub.",
+    description: "sponsor me directly through github.",
     href: "https://github.com/sponsors/isabelroses",
     icon: "fa7-brands:github",
-    color: "bg-[#24292e]",
   },
 ];
 
 const CRYPTO_OPTIONS = [
   {
     name: "Bitcoin",
-    description: "Click to copy BTC address.",
     address: "bc1qu8e5xefa0f6vrfy2rp6n8k2usgph9vkqz33ul3",
     icon: "fa7-brands:bitcoin",
-    color: "bg-[#F7931A]",
   },
   {
     name: "Ethereum",
-    description: "Click to copy ETH address.",
     address: "0xAe39F3172dD4075AaE695824Fbc702c096218C7a",
     icon: "fa7-brands:ethereum",
-    color: "bg-[#627EEA]",
   },
   {
     name: "Monero",
-    description: "Click to copy XMR address.",
     address:
       "45pYxmERBuf7e8hT1MSUthML3fs8puswxSeTCm9AMq3oij1PCjxo4cqiJBKEmi2v71MJGMeXgKAr6f6p7sLE5LSzS338zJz",
     icon: "fa7-brands:monero",
-    color: "bg-[#FF6600]",
   },
 ];
 ---
@@ -49,119 +43,63 @@ const CRYPTO_OPTIONS = [
 <PageLayout
   title="donate"
   metaDescription="support my open source work"
-  description={`
-    i spend a lot of my free time working on open source projects, writing blog posts,
-    and maintaining various tools that help the community. your support helps me
-    continue doing what i love. any amount is greatly appreciated! thank you for
-    considering supporting my work.
-  `}
+  description="i spend a lot of my free time on open source projects and writing blog posts. any amount is greatly appreciated, thank you."
 >
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">
-        ways to support
-      </h2>
-      <ul class="flex flex-col gap-4">
-        {
-          DONATION_OPTIONS.map((option) => (
-            <li>
-              <a
-                href={option.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="group flex flex-row items-center gap-4 p-4 panel-link"
+  <Section id="support" title="ways to support">
+    <ul class="grid gap-x-12 md:grid-cols-2">
+      {DONATION_OPTIONS.map((option) => (
+        <li>
+          <a
+            href={option.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="row-link icon-row group"
+          >
+            <span class="icon-tile">
+              <Icon aria-hidden="true" name={option.icon} class="w-7 h-7" />
+            </span>
+            <span class="flex flex-col gap-1 min-w-0">
+              <span class="item-title group-hover-special">{option.name}</span>
+              <span class="text-fg-lighter">{option.description}</span>
+            </span>
+            <Icon
+              aria-hidden="true"
+              name="fa7-solid:arrow-up-right-from-square"
+              class="w-4 h-4 shrink-0 text-fg-lighter"
+            />
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section id="crypto" title="crypto">
+    <ul class="flex flex-col">
+      {CRYPTO_OPTIONS.map((option) => (
+        <li>
+          <button
+            type="button"
+            data-copy={option.address}
+            class="row-link group grid w-full grid-cols-[auto_minmax(0,1fr)_auto] items-start gap-x-4 py-4 text-left cursor-pointer"
+          >
+            <Icon
+              aria-hidden="true"
+              name={option.icon}
+              class="w-8 h-8 text-fg-lighter"
+            />
+            <span class="flex flex-col gap-1">
+              <span class="item-title group-hover-special">{option.name}</span>
+              <code
+                aria-hidden="true"
+                class="font-mono text-meta text-fg-lighter break-all"
               >
-                <div
-                  class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}
-                >
-                  {option.icon === "kofi" ? (
-                    <svg
-                      viewBox="0 0 24 24"
-                      xmlns="http://www.w3.org/2000/svg"
-                      class="w-6 h-6 fill-white"
-                    >
-                      <path d="M23.881 8.948c-.773-4.085-4.859-4.593-4.859-4.593H.723c-.604 0-.679.798-.679.798s-.082 7.324-.022 11.822c.164 2.424 2.586 2.672 2.586 2.672s8.267-.023 11.966-.049c2.438-.426 2.683-2.566 2.658-3.734 4.352.24 7.422-2.831 6.649-6.916zm-11.062 3.511c-1.246 1.453-4.011 3.976-4.011 3.976s-.121.119-.31.023c-.076-.057-.108-.09-.108-.09-.443-.441-3.368-3.049-4.034-3.954-.709-.965-1.041-2.7-.091-3.71.951-1.01 3.005-1.086 4.363.407 0 0 1.565-1.782 3.468-.963 1.904.82 1.832 3.011.723 4.311zm6.173.478c-.928.116-1.682.028-1.682.028V7.284h1.77s1.971.551 1.971 2.638c0 1.913-.985 2.667-2.059 3.015z" />
-                    </svg>
-                  ) : (
-                    <Icon name={option.icon} class="w-6 h-6 text-white" />
-                  )}
-                </div>
-
-                <div class="flex flex-col flex-1">
-                  <span class="font-medium group-hover-special">
-                    {option.name}
-                  </span>
-                  <span class="text-fg-lighter text-sm">
-                    {option.description}
-                  </span>
-                </div>
-                <Icon
-                  name="fa7-solid:arrow-up-right-from-square"
-                  class="w-4 h-4 text-fg-lighter"
-                />
-              </a>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
-
-    <section class="flex flex-col gap-4">
-      <h2 class="text-xl lowercase tracking-[0.12em] text-special font-bold">crypto</h2>
-      <ul class="flex flex-col gap-4">
-        {
-          CRYPTO_OPTIONS.map((option) => (
-            <li>
-              <button
-                type="button"
-                data-address={option.address}
-                class="crypto-copy group flex flex-row items-center gap-4 p-4 panel-link w-full text-left cursor-pointer"
-              >
-                <div
-                  class={`w-12 h-12 ${option.color} rounded-lg flex items-center justify-center`}
-                >
-                  <Icon name={option.icon} class="w-6 h-6 text-white" />
-                </div>
-
-                <div class="flex flex-col flex-1">
-                  <span class="font-medium group-hover-special">
-                    {option.name}
-                  </span>
-                  <span class="text-fg-lighter text-sm crypto-description">
-                    {option.description}
-                  </span>
-                </div>
-                <Icon name="fa7-solid:copy" class="w-4 h-4 text-fg-lighter" />
-              </button>
-            </li>
-          ))
-        }
-      </ul>
-    </section>
+                {option.address}
+              </code>
+            </span>
+            <CopyLabel what="address" />
+          </button>
+        </li>
+      ))}
+    </ul>
+  </Section>
 </PageLayout>
-
-<script>
-  document.querySelectorAll(".crypto-copy").forEach((button) => {
-    button.addEventListener("click", async () => {
-      const address = button.getAttribute("data-address");
-      const description = button.querySelector(".crypto-description");
-      const originalText = description?.textContent;
-
-      try {
-        await navigator.clipboard.writeText(address || "");
-        if (description) {
-          description.textContent = "Copied to clipboard!";
-          setTimeout(() => {
-            description.textContent = originalText || "";
-          }, 2000);
-        }
-      } catch (err) {
-        if (description) {
-          description.textContent = "Failed to copy";
-          setTimeout(() => {
-            description.textContent = originalText || "";
-          }, 2000);
-        }
-      }
-    });
-  });
-</script>

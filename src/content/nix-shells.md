@@ -27,7 +27,7 @@ First we are going to create a basic file tree, such that you can understand how
 
 At first when seeing this tree you may think why are we polluting our root directory with all these files. But in this is a good way to help us write less Nix!
 
-Now, we're going to create a flake.nix file. Unlike some other files mentioned later in this post, it's quite agnostic about the language of your project. Since I won't be explaining this part in detail, I recommend you read my previous blog post [experimenting with nix](/blog/7).
+Now, we're going to create a flake.nix file. Unlike some other files mentioned later in this post, it's quite agnostic about the language of your project. Since I won't be explaining this part in detail, I recommend you read my previous blog post [experimenting with nix](/blog/experimenting-with-nix).
 
 ```nix
 {
@@ -288,7 +288,7 @@ fi
 
 Nix allows you to create reproducible templates for your project, so you only have to set these up one time and then you can reuse them for all your projects.
 
-For example you can use my templates like so `nix flake init -t github:tgirlcloud/nix-templates#go` which will create a new go project in your current directory, or you can use `nix flake new -t github:tgirlcloud/nix-templates#rust cheese` which will create a new directory called `cheese` with the rust template defined [here](https://github.com/tgirlcloud/nix-templates/tree/main/rust).
+For example you can use my templates like so `nix flake init -t github:tgirlcloud/nix-templates#go` which will create a new go project in your current directory, or you can use `nix flake new -t github:tgirlcloud/nix-templates#rust cheese` which will create a new directory called `cheese` with the [rust template](https://github.com/tgirlcloud/nix-templates/tree/main/rust).
 
 Here we will create a quick example for a basic flake, but you can do this with littrally anything you want.
 

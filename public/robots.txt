@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://isabelroses.com/sitemap-index.xml

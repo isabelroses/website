@@ -1,21 +1,17 @@
 ---
+import { tagPath } from "@lib/url";
+
 interface Props {
   tag: string;
-  linked?: boolean;
+  class?: string;
 }
 
-const { tag, linked = true } = Astro.props;
+const { tag, class: className } = Astro.props;
 ---
 
-{
-  linked ? (
-    <a
-      href={`/blog/tag/${tag}`}
-      class="px-3 py-1 border border-card text-sm text-fg-lighter hover:border-special hover-special"
-    >
-      #{tag}
-    </a>
-  ) : (
-    <span class="text-special">#{tag}</span>
-  )
-}
+<a
+  href={tagPath(tag)}
+  class:list={["inline-block py-1 text-fg-lighter hover-special", className]}
+>
+  #{tag}
+</a>

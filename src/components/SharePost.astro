@@ -1,0 +1,61 @@
+---
+import { Icon } from "astro-icon/components";
+import CopyIcons from "@components/CopyIcons.astro";
+
+interface Props {
+  title: string;
+  url: string;
+  class?: string;
+}
+
+const { title, url, class: className } = Astro.props;
+
+const SHARE = [
+  {
+    label: "bluesky",
+    icon: "fa7-brands:bluesky",
+    href: `https://bsky.app/intent/compose?text=${encodeURIComponent(`${title} ${url}`)}`,
+  },
+  {
+    label: "twitter",
+    icon: "fa7-brands:x-twitter",
+    href: `https://x.com/intent/post?text=${encodeURIComponent(title)}&url=${encodeURIComponent(url)}`,
+  },
+  {
+    label: "linkedin",
+    icon: "fa7-brands:linkedin",
+    href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`,
+  },
+];
+---
+
+<section
+  aria-label="share this post"
+  class:list={[
+    "flex flex-wrap items-center gap-x-1 text-meta text-fg-lighter lg:-ml-3",
+    className,
+  ]}
+>
+  <span class="relative -top-[0.1em] mr-1 lg:static lg:mr-0 lg:w-full lg:pl-3">
+    share
+  </span>
+  {SHARE.map((target) => (
+    <a
+      href={target.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="icon-btn"
+      aria-label={`share on ${target.label}`}
+    >
+      <Icon aria-hidden="true" name={target.icon} class="w-5 h-5" />
+    </a>
+  ))}
+  <button
+    type="button"
+    data-copy={url}
+    class="icon-btn group cursor-pointer"
+    aria-label="copy link"
+  >
+    <CopyIcons icon="fa7-solid:link" size="w-5 h-5" />
+  </button>
+</section>

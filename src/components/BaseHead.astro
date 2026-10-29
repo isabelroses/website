@@ -1,6 +1,8 @@
 ---
 import "../styles/global.css";
-import { SITE_TITLES } from "@lib/consts";
+import { OG_IMAGE, SITE_TITLES } from "@lib/consts";
+import { pagePath } from "@lib/url";
+import { publicationUri } from "../../sequoia.json";
 
 import { ClientRouter } from "astro:transitions";
 
@@ -9,11 +11,22 @@ interface Props {
   description: string;
   image?: string;
   aturi?: string;
+  published?: Date;
+  updated?: Date;
 }
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const canonicalURL = new URL(pagePath(Astro.url), Astro.site);
 
-const { title, description, image, aturi } = Astro.props;
+const {
+  title,
+  description,
+  image = "/index.png",
+  aturi,
+  published,
+  updated,
+} = Astro.props;
+
+const PRELOAD_FONTS = ["unifraktur-maguntia", "grenze"];
 ---
 
 <!-- Global Metadata -->
@@ -22,7 +35,7 @@ const { title, description, image, aturi } = Astro.props;
 <meta name="color-scheme" content="light dark" />
 <meta name="darkreader-lock" />
 <link rel="icon" type="image/ico" href="/favicon.ico" />
-<link rel="sitemap" href="/sitemap.xml" />
+<link rel="sitemap" href="/sitemap-index.xml" />
 <link
   rel="alternate"
   type="application/atom+xml"
@@ -32,20 +45,15 @@ const { title, description, image, aturi } = Astro.props;
 <meta name="generator" content={Astro.generator} />
 
 <!-- Font preloads -->
-<link
-  rel="preload"
-  href="/fonts/ibm-plex-mono-400.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
-<link
-  rel="preload"
-  href="/fonts/ibm-plex-mono-700.woff2"
-  as="font"
-  type="font/woff2"
-  crossorigin
-/>
+{PRELOAD_FONTS.map((font) => (
+  <link
+    rel="preload"
+    href={`/fonts/${font}.woff2`}
+    as="font"
+    type="font/woff2"
+    crossorigin
+  />
+))}
 
 <!-- Canonical URL -->
 <link rel="canonical" href={canonicalURL} />
@@ -54,54 +62,75 @@ const { title, description, image, aturi } = Astro.props;
 
 <!-- Primary Meta Tags -->
 <title>{title}</title>
-<meta name="title" content={title} />
 <meta name="description" content={description} />
 <meta name="author" content="isabel roses" />
-<meta
-  name="keywords"
-  content="isabel roses, blog, go, rust, personal, tech, programming, web development, software engineering"
-/>
 
 <!-- Open Graph / Facebook -->
-<meta property="og:type" content="website" />
-<meta property="og:url" content={Astro.url} />
+<meta property="og:type" content={published ? "article" : "website"} />
+{published && (
+  <meta property="article:published_time" content={published.toISOString()} />
+)}
+{updated && (
+  <meta property="article:modified_time" content={updated.toISOString()} />
+)}
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:site_name" content={SITE_TITLES.index} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
-{image && <meta property="og:image" content={new URL(image, Astro.url)} />}
+<meta property="og:image" content={new URL(image, Astro.site)} />
+<meta property="og:image:width" content={String(OG_IMAGE.width)} />
+<meta property="og:image:height" content={String(OG_IMAGE.height)} />
 
 <!-- Twitter -->
-<meta property="twitter:card" content="summary_large_image" />
-<meta property="twitter:url" content={Astro.url} />
-<meta property="twitter:title" content={title} />
-<meta property="twitter:description" content={description} />
-{image && <meta property="twitter:image" content={new URL(image, Astro.url)} />}
+<meta name="twitter:card" content="summary_large_image" />
 
 <!-- standard.site -->
-{aturi && <link rel="site.standard.document" href={aturi}>}
-<link rel="site.standard.publication" href="at://did:plc:qxichs7jsycphrsmbujwqbfb/site.standard.publication/3mn5hmwkcmb22" />
+{aturi && <link rel="site.standard.document" href={aturi} />}
+<link rel="site.standard.publication" href={publicationUri} />
 
 <script is:inline>
-  setTheme(getTheme());
+  applyTheme(getTheme());
 
-  document.addEventListener("astro:page-load", () => {
-    setTheme(getTheme());
+  // the client router replaces <html>'s attributes on navigation; after-swap runs before paint
+  document.addEventListener("astro:after-swap", () => applyTheme(getTheme()));
+
+  window
+    .matchMedia("(prefers-color-scheme: light)")
+    .addEventListener("change", () => {
+      if (!storedTheme()) applyTheme(getTheme());
+    });
+
+  // delegated so it survives the header being swapped on navigation
+  document.addEventListener("click", (event) => {
+    if (!event.target.closest?.("#theme-toggle")) return;
+    const theme =
+      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
+    // only an explicit toggle is remembered, so untouched visitors keep following the os
+    try {
+      localStorage.setItem("theme-choice", theme);
+    } catch {}
+    applyTheme(theme);
   });
 
-  function setTheme(theme) {
-    if (theme !== "light") theme = "dark";
-    localStorage.setItem("theme", theme);
-    document.documentElement.setAttribute("data-theme", theme);
-    document.dispatchEvent(
-      new CustomEvent("themechange", { detail: { theme } }),
-    );
+  function storedTheme() {
+    try {
+      const theme = localStorage.getItem("theme-choice");
+      if (theme === "light" || theme === "dark") return theme;
+    } catch {}
+    return null;
   }
 
   function getTheme() {
-    const theme = localStorage.getItem("theme");
-    if (theme === "light" || theme === "dark") return theme;
-    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches)
-      return "light";
-    return "dark";
+    return (
+      storedTheme() ??
+      (window.matchMedia("(prefers-color-scheme: light)").matches
+        ? "light"
+        : "dark")
+    );
+  }
+
+  function applyTheme(theme) {
+    document.documentElement.setAttribute("data-theme", theme);
   }
 </script>
 

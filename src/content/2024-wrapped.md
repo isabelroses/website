@@ -24,7 +24,7 @@ Switching from WezTerm to Ghostty might seem odd, but the decision was clear: Gh
 
 ### Languages
 
-This year I didn't learn any new languages, but rather I decided to focus on improving my existing skills in Go, Java and Rust. I found during that time that I really do prefer Rust, this is largly due to the developer support through rust-analyzer and cargo clippy.
+This year I didn't learn any new languages, but rather I decided to focus on improving my existing skills in Go, Java and Rust. I found during that time that I really do prefer Rust, this is largely due to the developer support through rust-analyzer and cargo clippy.
 
 ### New Projects
 
@@ -34,7 +34,7 @@ And that is where Tera, a rust based templating engine like jinja2 and Django. I
 
 However, before the website was rewritten in rust I tried to create a new Go project [izrss](https://github.com/isabelroses/izrss) which was a terminal RSS feed reader. It's not feature rich but it was created to look pretty due to my dissatisfaction with newsboat.
 
-This year, I abstracted by neovim configuration incredibly through the use of [chainix](https://github.com/catgardens/chainix). I later decided to remove a significant amount of the nix abstraction through [izvim](https://github.com/isabelroses/nvim), where I made a package around the lua rather then using nix to generate the lua. During this year I also wrote the [freeze.nvim](https://github.com/charm-and-friends/freeze.nvim) plugin, which I wrote a blog post about. You can find the jeorney here: [neovim blog post](https://isabelroses.com/blog/writing-a-neovim-plugin-6).
+This year, I abstracted by neovim configuration incredibly through the use of [chainix](https://github.com/catgardens/chainix). I later decided to remove a significant amount of the nix abstraction through [izvim](https://github.com/isabelroses/nvim), where I made a package around the lua rather then using nix to generate the lua. During this year I also wrote the [freeze.nvim](https://github.com/charm-and-friends/freeze.nvim) plugin, which I wrote a blog post about. You can find the jeorney here: [neovim blog post](/blog/writing-a-neovim-plugin).
 
 ## My goals for 2025
 

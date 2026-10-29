@@ -12,10 +12,8 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@astrojs/check": "^0.9.12",
     "@astrojs/markdown-satteri": "^0.4.5",
     "@astrojs/sitemap": "^3.7.4",
-    "@astrojs/ts-plugin": "^1.10.12",
     "@iconify-json/fa7-brands": "^1.2.4",
     "@iconify-json/fa7-solid": "^1.2.5",
     "@resvg/resvg-js": "^2.6.2",
@@ -26,21 +24,19 @@
     "astro-compress": "^2.4.3",
     "astro-icon": "^1.2.0",
     "astro-mail-obfuscation": "^3.0.1",
-    "autoprefixer": "^10.6.2",
     "feed": "^6.0.0",
-    "markdown-it": "^15.0.3",
     "react": "^19.3.1",
     "reading-time-estimator": "^2.15.0",
     "sanitize-html": "^2.18.1",
     "satori": "^0.63.2",
     "satteri-expressive-code": "^0.1.30",
     "sharp": "^0.35.5",
-    "tailwindcss": "^4.3.3",
-    "typescript": "^7.0.2"
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
+    "@astrojs/check": "^0.9.12",
+    "@astrojs/ts-plugin": "^1.10.12",
     "@eslint/js": "^10.0.1",
-    "@types/markdown-it": "^14.2.0",
     "@types/react": "^19.3.0",
     "@types/sanitize-html": "^2.16.2",
     "eslint": "^10.13.0",
@@ -48,6 +44,7 @@
     "prettier": "^3.9.10",
     "prettier-plugin-astro": "^1.1.2",
     "sequoia-cli": "^0.5.7",
+    "typescript": "^6.0.3",
     "typescript-eslint": "^8.72.1"
   }
 }

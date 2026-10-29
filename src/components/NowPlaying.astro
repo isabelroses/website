@@ -1,42 +1,48 @@
 ---
 import { Icon } from "astro-icon/components";
-import { LASTFM_PROFILE } from "@lib/consts";
+import { ATPROTO, LASTFM_PROFILE } from "@lib/consts";
 ---
 
+<link rel="preconnect" href={ATPROTO.pds} crossorigin />
+<link rel="preconnect" href="https://coverartarchive.org" />
+<link rel="preconnect" href="https://archive.org" />
+<link rel="dns-prefetch" href="https://itunes.apple.com" />
+<link rel="dns-prefetch" href="https://is1-ssl.mzstatic.com" />
+
 <a
-  class="panel-link p-3 group flex items-center gap-3"
+  class="group grid grid-cols-[7rem_1fr] sm:grid-cols-[9rem_1fr] gap-5 items-end lg:grid-cols-1 lg:items-start lg:w-56 lg:justify-self-end"
   data-nowplaying
   href={LASTFM_PROFILE}
   target="_blank"
   rel="noopener noreferrer"
 >
-  <div class="relative w-14 h-14 shrink-0">
+  <div class="relative aspect-square bg-card overflow-hidden">
     <div
-      class="absolute inset-0 grid place-items-center rounded bg-card text-fg-lighter"
+      class="absolute inset-0 grid place-items-center text-fg-lighter"
       data-np-art-fallback
     >
-      <Icon name="fa7-solid:music" class="w-5 h-5" />
+      <Icon aria-hidden="true" name="fa7-solid:music" class="w-8 h-8" />
     </div>
     <img
       data-np-art
       alt=""
-      width="56"
-      height="56"
-      class="absolute inset-0 w-14 h-14 rounded object-cover"
+      width="500"
+      height="500"
+      class="absolute inset-0 w-full h-full object-cover"
       hidden
     />
   </div>
 
-  <div class="min-w-0">
-    <div data-np-title class="font-bold text-fg truncate group-hover-special">
+  <div class="min-w-0 flex flex-col gap-1 pb-1">
+    <p data-np-state class="text-meta text-fg-lighter">
+      on last.fm
+    </p>
+    <p data-np-title class="item-title break-words group-hover-special">
       loading…
-    </div>
-    <div data-np-artist class="text-fg-lighter text-sm truncate">
+    </p>
+    <p data-np-artist class="text-meta text-fg-lighter truncate">
       connecting…
-    </div>
-    <div data-np-state class="section-label text-xs mt-1 normal-case">
-      ♫ last.fm
-    </div>
+    </p>
   </div>
 </a>
 
@@ -44,15 +50,49 @@ import { LASTFM_PROFILE } from "@lib/consts";
   import { ATPROTO, LASTFM_PROFILE } from "@lib/consts";
 
   const { did, pds } = ATPROTO;
-  const STATUS_URL = `${pds}/xrpc/com.atproto.repo.getRecord?repo=${did}&collection=fm.teal.alpha.actor.status&rkey=self`;
-  const PLAY_URL = `${pds}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=fm.teal.alpha.feed.play&limit=1`;
+  const STATUS_URL = `${pds}/xrpc/com.atproto.repo.getRecord?repo=${did}&collection=fm.teal.actor.status&rkey=self`;
+  const PLAY_URL = `${pds}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=fm.teal.feed.play&limit=1`;
+
+  interface Track {
+    trackName?: string;
+    artists?: (string | { artistName?: string })[];
+    releaseName?: string;
+    releaseMbId?: string;
+    originUri?: string;
+  }
+  interface StatusRecord {
+    value?: { item?: Track; expiry?: string };
+  }
+  interface PlayList {
+    records?: { value: Track }[];
+  }
+  interface ItunesSearch {
+    results?: { artistName: string; artworkUrl100?: string }[];
+  }
 
   const coverArt = (releaseMbId?: string) => {
     const id = (releaseMbId || "").replace(/^mbid:/, "");
-    return id ? `https://coverartarchive.org/release/${id}/front-250` : "";
+    return id ? `https://coverartarchive.org/release/${id}/front-500` : "";
   };
 
-  const artistNames = (artists: unknown): string =>
+  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
+  // drop "(feat. …)", "[…]" and " - 2021 Remaster" style suffixes
+  const baseTitle = (s: string) => s.replace(/\s*[([].*?[)\]]|\s+-\s+.*$/g, "");
+
+  // keyless fallback for tracks musicbrainz couldn't match; only trust
+  // results from the same artist so we never show someone else's cover
+  async function itunesArt(artist: string, title: string) {
+    const term = encodeURIComponent(`${artist} ${baseTitle(title)}`);
+    const data = await getJson<ItunesSearch>(
+      `https://itunes.apple.com/search?media=music&entity=song&limit=10&term=${term}`,
+    ).catch(() => null);
+    const hit = data?.results?.find((r) => norm(r.artistName) === norm(artist));
+    return (
+      hit?.artworkUrl100?.replace(/100x100bb\.\w+$/, "500x500bb.webp") ?? ""
+    );
+  }
+
+  const artistNames = (artists: Track["artists"]): string =>
     Array.isArray(artists)
       ? artists
           .map((a) => (typeof a === "string" ? a : a?.artistName))
@@ -60,7 +100,7 @@ import { LASTFM_PROFILE } from "@lib/consts";
           .join(", ")
       : "";
 
-  async function getJson(url: string) {
+  async function getJson<T>(url: string): Promise<T> {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`${res.status}`);
     return res.json();
@@ -81,58 +121,57 @@ import { LASTFM_PROFILE } from "@lib/consts";
     const showFallback = (msg: string) => {
       titleEl.textContent = "not scrobbling";
       artistEl.textContent = msg;
-      stateEl.textContent = "♫ last.fm";
+      stateEl.textContent = "on last.fm";
       root.href = LASTFM_PROFILE;
       artEl.hidden = true;
       fallbackEl.hidden = false;
     };
 
     try {
-      let track: any = null;
-      let live = false;
-
-      const status = await getJson(STATUS_URL).catch(() => null);
+      // request both at once so a stale status doesn't cost a second round trip
+      const playsReq = getJson<PlayList>(PLAY_URL);
+      playsReq.catch(() => {});
+      const status = await getJson<StatusRecord>(STATUS_URL).catch(() => null);
       const item = status?.value?.item;
       const expiry = status?.value?.expiry;
-      const fresh = !expiry || Date.parse(expiry) > Date.now();
-      if (item?.trackName && fresh) {
-        track = item;
-        live = true;
-      }
+      const live =
+        !!item?.trackName && (!expiry || Date.parse(expiry) > Date.now());
+      const track = live ? item : (await playsReq).records?.[0]?.value;
+      const trackName = track?.trackName;
 
-      if (!track) {
-        const plays = await getJson(PLAY_URL);
-        track = plays?.records?.[0]?.value ?? null;
-      }
-
-      if (!track?.trackName) {
+      if (!track || !trackName) {
         showFallback("nothing playing right now");
         return;
       }
 
-      titleEl.textContent = track.trackName;
+      titleEl.textContent = trackName;
       artistEl.textContent = artistNames(track.artists) || "unknown artist";
       stateEl.textContent = live
-        ? "▶ now playing · last.fm"
-        : "♫ last played · last.fm";
-      root.href = track.originUrl || LASTFM_PROFILE;
+        ? "listening to, right now"
+        : "last listened to";
+      root.href = track.originUri || LASTFM_PROFILE;
 
-      const art = coverArt(track.releaseMbId);
-      if (art) {
-        artEl.onload = () => {
-          artEl.hidden = false;
-          fallbackEl.hidden = true;
-        };
-        artEl.onerror = () => {
-          artEl.hidden = true;
-          fallbackEl.hidden = false;
-        };
-        artEl.hidden = true;
-        fallbackEl.hidden = false;
-        artEl.src = art;
+      artEl.hidden = true;
+      fallbackEl.hidden = false;
+      artEl.alt = `cover of ${track.releaseName || trackName}`;
+      artEl.onload = () => {
+        artEl.hidden = false;
+        fallbackEl.hidden = true;
+      };
+
+      const firstArtist = artistNames(track.artists?.slice(0, 1));
+      const loadItunes = async () => {
+        artEl.onerror = null;
+        const art = firstArtist && (await itunesArt(firstArtist, trackName));
+        if (art) artEl.src = art;
+      };
+
+      const caa = coverArt(track.releaseMbId);
+      if (caa) {
+        artEl.onerror = loadItunes;
+        artEl.src = caa;
       } else {
-        artEl.hidden = true;
-        fallbackEl.hidden = false;
+        await loadItunes();
       }
     } catch {
       showFallback("couldn't reach last.fm");

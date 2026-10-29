@@ -1,21 +1,37 @@
+import type { APIRoute } from "astro";
 import { Feed } from "feed";
-import { getCollection } from "astro:content";
 import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
+import { getPosts } from "@lib/posts";
+import { postPath } from "@lib/url";
 import sanitizeHtml from "sanitize-html";
-import MarkdownIt from "markdown-it";
 
-export async function GET() {
-  const posts = await getCollection("blog", ({ data }) => {
-    return !data.draft && !data.archived;
-  });
+// feed readers resolve relative urls against the feed, not the post
+const resolveAttr =
+  (attr: string, base: string) =>
+  (tagName: string, attribs: sanitizeHtml.Attributes) => {
+    const url = attribs[attr];
+    if (!url || /^[a-z][a-z\d+.-]*:/i.test(url)) return { tagName, attribs };
+    return {
+      tagName,
+      attribs: { ...attribs, [attr]: new URL(url, base).href },
+    };
+  };
 
-  const siteUrl = "https://isabelroses.com";
+const SANITIZE: sanitizeHtml.IOptions = {
+  allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
+  allowedAttributes: {
+    ...sanitizeHtml.defaults.allowedAttributes,
+    img: ["src", "alt", "title"],
+    a: ["href", "name", "target", "rel"],
+  },
+  nonTextTags: ["style", "script", "textarea", "option", "noscript"],
+};
 
-  const md = new MarkdownIt({
-    html: true,
-    breaks: true,
-    linkify: true,
-  });
+export const GET: APIRoute = async ({ site }) => {
+  const posts = await getPosts();
+  const siteUrl = site!.origin;
+  const lastChanged = (post: (typeof posts)[number]) =>
+    post.data.updated ?? post.data.date;
 
   const feed = new Feed({
     title: SITE_TITLES.index,
@@ -24,74 +40,41 @@ export async function GET() {
     link: siteUrl,
     language: "en",
     favicon: `${siteUrl}/favicon.ico`,
-    copyright: `All rights reserved ${new Date().getFullYear()}`,
+    copyright: "content licensed under CC BY-NC-SA 4.0",
     feedLinks: {
-      rss: `${siteUrl}/feed.xml`,
+      atom: `${siteUrl}/feed.xml`,
     },
     author: {
       name: "isabel roses",
     },
-    updated: new Date(),
+    updated: posts
+      .map(lastChanged)
+      .sort((a, b) => b.getTime() - a.getTime())[0],
   });
 
-  posts.forEach((post) => {
-    const htmlContent = md.render(post.body ?? "");
-
-    const sanitizedContent = sanitizeHtml(htmlContent, {
-      allowedTags: sanitizeHtml.defaults.allowedTags.concat([
-        "img",
-        "h1",
-        "h2",
-        "h3",
-      ]),
-      allowedAttributes: {
-        ...sanitizeHtml.defaults.allowedAttributes,
-        img: ["src", "alt", "title"],
-        a: ["href", "name", "target", "rel"],
-      },
-      // Transform relative URLs to absolute URLs
+  for (const post of posts) {
+    const postUrl = `${siteUrl}${postPath(post)}`;
+    const sanitizedContent = sanitizeHtml(post.rendered?.html ?? "", {
+      ...SANITIZE,
       transformTags: {
-        a: (tagName, attribs) => {
-          if (attribs.href && attribs.href.startsWith("/")) {
-            return {
-              tagName: "a",
-              attribs: {
-                ...attribs,
-                href: `${siteUrl}${attribs.href}`,
-                target: "_blank",
-                rel: "noopener",
-              },
-            };
-          }
-          return { tagName, attribs };
-        },
-        img: (tagName, attribs) => {
-          if (attribs.src && attribs.src.startsWith("/")) {
-            return {
-              tagName: "img",
-              attribs: {
-                ...attribs,
-                src: `${siteUrl}${attribs.src}`,
-              },
-            };
-          }
-          return { tagName, attribs };
-        },
+        a: resolveAttr("href", postUrl),
+        img: resolveAttr("src", postUrl),
       },
     });
 
     feed.addItem({
       title: post.data.title,
       description: post.data.description,
-      date: post.data.date,
+      date: lastChanged(post),
+      published: post.data.date,
       content: sanitizedContent,
-      link: `${siteUrl}/blog/${post.id}/`,
+      link: postUrl,
     });
-  });
+  }
 
   return new Response(feed.atom1(), {
     headers: {
-      "Content-Type": "application/xml",
+      "Content-Type": "application/atom+xml; charset=utf-8",
     },
   });
-}
+};

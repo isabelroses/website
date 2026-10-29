@@ -1,30 +1,16 @@
-import { getCollection } from "astro:content";
-import type { APIRoute } from "astro";
+import type { APIRoute, GetStaticPaths } from "astro";
+import type { CollectionEntry } from "astro:content";
 import { generateOpenGraph } from "@lib/opengraph";
+import { getPosts } from "@lib/posts";
 
-const posts = await getCollection("blog");
+export const getStaticPaths = (async () => {
+  const posts = await getPosts({ includeArchived: true });
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}) satisfies GetStaticPaths;
 
-export async function getStaticPaths() {
-  return posts.map(({ id }) => ({
-    params: { slug: id },
-  }));
-}
-
-export const GET: APIRoute = async ({ params }) => {
-  const postData = posts.find((post) => post.id === params.slug);
-
-  if (!postData) {
-    return new Response("Not found", { status: 404 });
-  }
-
-  const png = await generateOpenGraph(
-    postData.data.title,
-    postData.data.description,
-    postData.data.date,
+export const GET: APIRoute<{ post: CollectionEntry<"blog"> }> = ({ props }) =>
+  generateOpenGraph(
+    props.post.data.title,
+    props.post.data.description,
+    props.post.data.date,
   );
-
-  return new Response(png, {
-    status: 200,
-    headers: { "Content-Type": "image/png" },
-  });
-};

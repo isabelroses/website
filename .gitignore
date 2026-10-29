@@ -2,14 +2,12 @@
 .direnv
 
 # project specific
-.env
-donos.json
+.sequoia-state.json
 
 # Build residue
 tmp
 result
 result-*
-static/styles.css
 
 # build output
 dist/
@@ -25,9 +23,6 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-pnpm-lock.yaml
-
-
 # environment variables
 .env
 .env.production
@@ -37,5 +32,3 @@ pnpm-lock.yaml
 
 # jetbrains setting folder
 .idea/
-
-.sequoia-state.json

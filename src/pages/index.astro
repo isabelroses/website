@@ -1,28 +1,24 @@
 ---
-import { getCollection } from "astro:content";
-import { Icon } from "astro-icon/components";
+import { Image } from "astro:assets";
 
 import Base from "@layouts/Base.astro";
+import { Icon } from "astro-icon/components";
+
 import NowPlaying from "@components/NowPlaying.astro";
+import ProjectCard from "@components/ProjectCard.astro";
+import Section from "@components/Section.astro";
 
-const posts = (
-  await getCollection("blog", ({ data }) => {
-    return !data.draft && !data.archived;
-  })
-).sort(
-  (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-);
+import { SITE_TITLES, SITE_DESCRIPTIONS, LINKS, PROJECTS } from "@lib/consts";
+import { formatDate, formatReadTime } from "@lib/format";
+import { getPosts } from "@lib/posts";
+import { postPath } from "@lib/url";
 
-const latest = posts[0];
-const latestDate = latest
-  ? new Date(latest.data.date).toLocaleDateString("en-GB", {
-      day: "numeric",
-      month: "short",
-      year: "numeric",
-    })
-  : "";
+import avatar from "../assets/me.webp";
 
-import { SITE_TITLES, SITE_DESCRIPTIONS, LINKS } from "@lib/consts";
+const posts = await getPosts();
+
+const [latest, ...rest] = posts;
+const recent = rest.slice(0, 3);
 ---
 
 <Base
@@ -30,80 +26,140 @@ import { SITE_TITLES, SITE_DESCRIPTIONS, LINKS } from "@lib/consts";
   description={SITE_DESCRIPTIONS.index}
   image="/index.png"
 >
-  <div class="w-full flex flex-col gap-8">
-    <section class="flex flex-col gap-4">
-      <h1 class="sr-only">isabel — the nix witch</h1>
-      <p class="text-fg-lighter leading-relaxed">
-        i am a
-        <a
-          href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md"
-          target="_blank"
-          class="text-special underline">nixpkgs committer (i can merge prs)</a
-        >, and for a little fun i also
-        <a
-          href="https://catppuccin.com/community/"
-          class="text-special underline">moderate for catppuccin</a
-        >. i write a lot of nix so your going to see a lot of my thoughts on
-        that on this site.
-      </p>
-    </section>
-
-    <section class="flex flex-col gap-3">
-      <h2 class="section-label">currently up to</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        <NowPlaying />
-
-        {
-          latest && (
-            <a
-              href={`/blog/${latest.id}`}
-              class="panel-link p-3 group flex items-center gap-3"
-            >
-              <div class="w-14 h-14 shrink-0 grid place-items-center rounded bg-card text-fg-lighter">
-                <Icon name="fa7-solid:pen-nib" class="w-5 h-5" />
-              </div>
-              <div class="min-w-0">
-                <div class="font-bold text-fg truncate group-hover-special">
-                  {latest.data.title}
-                </div>
-                <div class="text-fg-lighter text-sm truncate">{latestDate}</div>
-                <div class="section-label text-xs mt-1 normal-case">
-                  ✎ latest post
-                </div>
-              </div>
-            </a>
-          )
-        }
+  <section class="grid gap-10 pt-10 lg:pt-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
+    <div class="flex flex-col gap-8">
+      <div class="flex items-end gap-5 sm:gap-8">
+        <Image
+          src={avatar}
+          alt="isabel's avatar: a drawn girl with long blonde hair and a dark top"
+          width={112}
+          densities={[1, 2]}
+          loading="eager"
+          fetchpriority="high"
+          class="w-20 h-20 sm:w-28 sm:h-28 object-cover shrink-0"
+        />
+        <h1 class="hero-name font-display leading-[0.8] text-[clamp(4.5rem,11vw,9rem)] -mb-[0.06em]">
+          isabel<span class="sr-only">, the nix witch</span>
+        </h1>
       </div>
-    </section>
 
-    <section class="flex flex-col gap-3">
-      <h2 class="section-label">socials</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
-        {
-          LINKS.map((link) => (
+      <!-- reflowing this puts spaces inside the links, before the punctuation -->
+      <!-- prettier-ignore -->
+      <p class="lede">
+        i am a <a href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md" target="_blank" rel="noopener noreferrer" class="link">nixpkgs committer (i can merge prs)</a>,
+        and for a little fun i also <a href="https://catppuccin.com/community/" target="_blank" rel="noopener noreferrer" class="link">moderate for catppuccin</a>.
+        i write a lot of nix so you're going to see a lot of my thoughts on that on this site.
+      </p>
+      <a href="/isabel_roses_cv.pdf" class="link self-start -mt-4">
+        my cv (pdf) →
+      </a>
+    </div>
+    <NowPlaying />
+  </section>
+
+  <Section
+    id="writing"
+    title="posts"
+    link={{ href: "/blog", label: "all posts" }}
+    class="mt-16 lg:mt-24"
+  >
+    <div class="grid gap-x-12 gap-y-6 lg:grid-cols-2">
+      {latest && (
+        <a
+          href={postPath(latest)}
+          aria-labelledby="latest-title"
+          aria-describedby="latest-desc latest-meta"
+          class="group -mx-3 flex flex-col gap-1 bg-card px-3 py-4 md:mx-0 md:gap-3 md:p-6"
+        >
+          <span
+            id="latest-title"
+            class="text-body md:text-heading font-semibold leading-tight text-balance group-hover-special"
+          >
+            {latest.data.title}
+          </span>
+          <span id="latest-desc">{latest.data.description}</span>
+          <span id="latest-meta" class="mt-auto text-meta text-fg-lighter">
+            latest · {formatDate(latest.data.date)} ·{" "}
+            {formatReadTime(latest.data.readTime)}
+          </span>
+        </a>
+      )}
+
+      <ol class="flex flex-col">
+        {recent.map((post) => (
+          <li class="flex flex-1 flex-col">
             <a
-              href={link.href}
-              target="_blank"
-              rel="me noopener noreferrer"
-              class="group flex items-center gap-3 panel-link p-3"
+              href={postPath(post)}
+              class="row-link group grid flex-1 content-center gap-x-6 gap-y-1 py-4 sm:grid-cols-[1fr_auto] sm:items-baseline"
             >
-              <Icon
-                name={link.icon}
-                class="w-5 h-5 shrink-0 text-fg-lighter group-hover-special"
-              />
-              <span class="flex flex-col min-w-0">
-                <span class="text-fg font-bold lowercase group-hover-special">
-                  {link.label}
-                </span>
-                <span class="text-fg-lighter text-sm truncate">
-                  {link.handle}
-                </span>
+              <span class="item-title group-hover-special">
+                {post.data.title}
+              </span>
+              <span class="text-meta text-fg-lighter tabular-nums whitespace-nowrap sm:text-right">
+                {formatDate(post.data.date)} ·{" "}
+                {formatReadTime(post.data.readTime)}
               </span>
             </a>
-          ))
-        }
-      </div>
-    </section>
-  </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </Section>
+
+  <Section
+    id="projects"
+    title="projects"
+    link={{ href: "/projects", label: "all projects" }}
+    class="mt-16 lg:mt-24"
+  >
+    <ul class="grid gap-x-12 md:grid-cols-2">
+      {PROJECTS.slice(0, 4).map((project) => (
+        <li class="min-w-0">
+          <ProjectCard project={project} truncate />
+        </li>
+      ))}
+    </ul>
+  </Section>
+
+  <Section id="elsewhere" title="elsewhere" class="mt-16 lg:mt-24">
+    <ul class="flex flex-col gap-y-4 md:grid md:grid-cols-3 md:gap-x-10 xl:flex xl:flex-row xl:justify-between xl:gap-x-6">
+      {LINKS.map((link) => (
+        <li>
+          <a
+            href={link.href}
+            target="_blank"
+            rel="me noopener noreferrer"
+            class="group flex items-center gap-3 py-1"
+          >
+            <Icon
+              aria-hidden="true"
+              name={link.icon}
+              class="w-5 h-5 shrink-0 text-fg-lighter group-hover-special"
+            />
+            <span class="flex flex-col leading-tight">
+              <span class="font-semibold group-hover-special">
+                {link.label}
+              </span>
+              <span class="text-fg-lighter">{link.handle}</span>
+            </span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
 </Base>
+
+<style>
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-name {
+      animation: rise 1400ms var(--ease-out-quint) both;
+    }
+
+    @keyframes rise {
+      from {
+        transform: translateY(12%);
+        opacity: 0;
+      }
+    }
+  }
+</style>

@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  icon: string;
+  size: string;
+  class?: string;
+}
+
+const { icon, size, class: className } = Astro.props;
+const swap = "col-start-1 row-start-1 transition-[opacity,scale] duration-200";
+---
+
+<span class:list={["grid", className]}>
+  <Icon
+    aria-hidden="true"
+    name={icon}
+    class:list={[
+      swap,
+      size,
+      "group-data-copied:opacity-0 group-data-copied:scale-50",
+    ]}
+  />
+  <Icon
+    aria-hidden="true"
+    name="fa7-solid:check"
+    class:list={[
+      swap,
+      size,
+      "opacity-0 scale-50 text-special group-data-copied:opacity-100 group-data-copied:scale-100",
+    ]}
+  />
+</span>

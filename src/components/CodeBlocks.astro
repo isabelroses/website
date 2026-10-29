@@ -1,0 +1,49 @@
+---
+import CopyLabel from "@components/CopyLabel.astro";
+---
+
+<template data-code-copy>
+  <button
+    type="button"
+    data-copy
+    class="group absolute right-2 top-2 z-10 bg-card px-2 py-1 cursor-pointer opacity-0 transition-opacity group-hover/code:opacity-100 focus-visible:opacity-100 data-copied:opacity-100 pointer-coarse:opacity-100"
+  >
+    <CopyLabel what="code" />
+  </button>
+</template>
+
+<script>
+  document.addEventListener("astro:page-load", () => {
+    const template = document.querySelector<HTMLTemplateElement>(
+      "template[data-code-copy]",
+    );
+    if (!template) return;
+
+    const blocks = document.querySelectorAll<HTMLElement>(
+      ".prose > .expressive-code",
+    );
+    blocks.forEach((block, i) => {
+      const pre = block.querySelector("pre");
+      if (!pre) return;
+
+      // expressive-code makes overflowing blocks focusable regions; give each a distinct name
+      const lang = pre.dataset.language;
+      pre.setAttribute(
+        "aria-label",
+        `${lang ? `${lang} code` : "code"}, block ${i + 1} of ${blocks.length}`,
+      );
+
+      // expressive-code resets every style inside its own wrapper, so the button sits beside it
+      const wrapper = document.createElement("div");
+      wrapper.className = "relative group/code";
+      block.before(wrapper);
+      wrapper.append(block);
+
+      const button = template.content.firstElementChild!.cloneNode(
+        true,
+      ) as HTMLButtonElement;
+      button.dataset.copy = pre.innerText.replace(/\n$/, "");
+      wrapper.append(button);
+    });
+  });
+</script>

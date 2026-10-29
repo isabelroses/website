@@ -3,7 +3,6 @@
   "include": [".astro/types.d.ts", "**/*"],
   "exclude": ["dist", "result", "result-*"],
   "compilerOptions": {
-    "baseUrl": ".",
     "strictNullChecks": true,
     "plugins": [
       {
@@ -11,9 +10,9 @@
       }
     ],
     "paths": {
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@lib/*": ["src/lib/*"]
+      "@components/*": ["./src/components/*"],
+      "@layouts/*": ["./src/layouts/*"],
+      "@lib/*": ["./src/lib/*"]
     }
   }
 }

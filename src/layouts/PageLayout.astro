@@ -1,34 +1,48 @@
 ---
 import Base from "@layouts/Base.astro";
-import BackLink from "@components/BackLink.astro";
 
 interface Props {
   title: string;
+  kicker?: string;
   description?: string;
   metaTitle?: string;
   metaDescription?: string;
   image?: string;
-  aturi?: string;
-  back?: boolean;
 }
 
 const {
   title,
+  kicker,
   description,
   metaTitle = `isabel | ${title}`,
   metaDescription = description ?? "",
   image,
-  aturi,
-  back = true,
 } = Astro.props;
 ---
 
-<Base title={metaTitle} description={metaDescription} image={image} aturi={aturi}>
-  <div class="w-full flex flex-col gap-12">
-    <h1 class="sr-only">{title}</h1>
+<Base title={metaTitle} description={metaDescription} image={image}>
+  <div class="flex flex-col gap-6 pt-10 lg:pt-14">
+    <div class="flex flex-col gap-2">
+      {kicker && (
+        <p class="font-display leading-none text-fg-lighter text-[clamp(2rem,3.5vw,2.75rem)]">
+          {kicker}
+        </p>
+      )}
+      <h1
+        class:list={[
+          "leading-none break-words",
+          kicker
+            ? "font-semibold text-[clamp(2.75rem,5vw,3.75rem)]"
+            : "font-display text-[clamp(3rem,6vw,4.5rem)]",
+        ]}
+      >
+        {title}
+      </h1>
+    </div>
+    {description && <p class="lede text-fg-lighter">{description}</p>}
+  </div>
 
+  <div class="flex flex-col gap-16 mt-10 lg:mt-12 lg:gap-24">
     <slot />
-
-    {back && <BackLink href="/" />}
   </div>
 </Base>

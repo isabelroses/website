@@ -9,42 +9,33 @@ const blog = z.object({
   // Transform string to Date object
   date: z.coerce.date(),
   updated: z.coerce.date().optional(),
+  // sequoia's coverImage, resolved against dist/blog (the generated og image)
   image: z.string().optional(),
   tags: z.array(z.string()),
-  readTime: z.string().optional(),
+  readTime: z.number().default(1),
   draft: z.boolean().default(false),
   archived: z.boolean().default(false),
   atUri: z.string(),
 });
 
-const customLoader = {
-  ...glob,
-  name: "customLoader",
-  load: async (loaderParams) => {
-    const { store } = loaderParams;
+const blogLoader: Loader = {
+  name: "blog",
+  load: async (context) => {
+    await glob({ base: "./src/content", pattern: "**/*.md" }).load(context);
 
-    const baseLoader = glob({
-      base: "./src/content",
-      pattern: "**/*.md",
-    });
-    await baseLoader.load.call(this, loaderParams);
-
-    const items = [...store.values()];
-    store.clear();
-
-    // we used to sort here but getCollection is none-deterministic so our sort
-    // order became jumbled as of astro v6 so we cannot do that anymore
-
-    items.forEach((item) => {
-      const readTime = readingTime(item.body ?? "");
-      item.data.readTime = readTime.minutes;
-      store.set({ ...item });
-    });
+    for (const item of context.store.values()) {
+      // round up: the library rounds to nearest, which undersells and can give 0
+      const { words } = readingTime(item.body ?? "");
+      const readTime = Math.max(1, Math.ceil(words / 200));
+      // set() is a no-op when the digest is unchanged, which it is right after glob
+      context.store.delete(item.id);
+      context.store.set({ ...item, data: { ...item.data, readTime } });
+    }
   },
-} satisfies Loader;
+};
 
 const blogCollection = defineCollection({
-  loader: customLoader,
+  loader: blogLoader,
   schema: blog,
 });
 

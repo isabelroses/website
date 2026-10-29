@@ -1,0 +1,36 @@
+---
+import PageLayout from "@layouts/PageLayout.astro";
+import Section from "@components/Section.astro";
+import { getPosts } from "@lib/posts";
+import { postPath } from "@lib/url";
+
+const posts = (await getPosts()).slice(0, 3);
+
+const links = [
+  { href: "/", label: "home" },
+  ...posts.map((post) => ({
+    href: postPath(post),
+    label: post.data.title,
+  })),
+  { href: "/blog", label: "every post" },
+];
+---
+
+<PageLayout
+  kicker="lost"
+  title="404"
+  metaTitle="isabel | not found"
+  description="nothing lives at this address. it may have moved, or it never existed."
+>
+  <Section id="elsewhere" title="try one of these">
+    <ul class="flex flex-col">
+      {links.map((link) => (
+        <li>
+          <a href={link.href} class="row-link group block py-4">
+            <span class="item-title group-hover-special">{link.label}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </Section>
+</PageLayout>

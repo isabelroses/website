@@ -1,27 +1,29 @@
 ---
-import { type CollectionEntry, getCollection, render } from "astro:content";
-import { Icon } from "astro-icon/components";
+import { type CollectionEntry, render } from "astro:content";
 
 import Base from "@layouts/Base.astro";
-import BackLink from "@components/BackLink.astro";
+import SharePost from "@components/SharePost.astro";
+import HeadingLinks from "@components/HeadingLinks.astro";
+import CodeBlocks from "@components/CodeBlocks.astro";
+import TableOfContents from "@components/TableOfContents.astro";
 import Tag from "@components/Tag.astro";
 
-export async function getStaticPaths() {
-  const posts = (await getCollection("blog", ({ data }) => !data.draft)).sort(
-    (a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime(),
-  );
+import { formatDate, formatReadTime } from "@lib/format";
+import { getPosts } from "@lib/posts";
+import { postPath } from "@lib/url";
 
+export async function getStaticPaths() {
+  const posts = await getPosts({ includeArchived: true });
   const visible = posts.filter((post) => !post.data.archived);
 
   return posts.map((post) => {
-    const index = visible.findIndex((p) => p.id === post.id);
-
+    const i = visible.indexOf(post);
     return {
       params: { slug: post.id },
       props: {
         post,
-        prevPost: index === -1 ? null : visible[index + 1] || null,
-        nextPost: index === -1 ? null : visible[index - 1] || null,
+        prevPost: i === -1 ? null : (visible[i + 1] ?? null),
+        nextPost: i === -1 ? null : (visible[i - 1] ?? null),
       },
     };
   });
@@ -34,163 +36,108 @@ interface Props {
 }
 
 const { post, prevPost, nextPost } = Astro.props;
-const { Content } = await render(post);
+const { Content, headings } = await render(post);
+const postUrl = new URL(postPath(post), Astro.site).href;
 ---
 
 <Base
   title={`isabel | ${post.data.title}`}
   description={post.data.description}
-  image={`/blog/${post.id}.png`}
+  image={`${postPath(post)}.png`}
   aturi={post.data.atUri}
+  published={post.data.date}
+  updated={post.data.updated}
 >
-  <article class="w-full flex flex-col gap-8">
-    <header class="flex flex-col gap-4">
-      <BackLink href="/blog" label="back to blog" />
-      <h1 class="text-3xl font-bold tracking-tight">
-        {post.data.title}
-      </h1>
-      <div class="flex flex-wrap items-center gap-3 text-fg-lighter text-sm">
-        <time datetime={post.data.date.toISOString()}>
-          {
-            post.data.date.toLocaleDateString("en-GB", {
-              day: "numeric",
-              month: "long",
-              year: "numeric",
-            })
-          }
-        </time>
-        <span>·</span>
-        <span>{post.data.readTime} min read</span>
-        {
-          post.data.updated && (
-            <>
-              <span>·</span>
-              <span>
-                updated{" "}
-                {post.data.updated.toLocaleDateString("en-GB", {
-                  day: "numeric",
-                  month: "short",
-                  year: "numeric",
-                })}
-              </span>
-            </>
-          )
-        }
-      </div>
-      <div class="flex flex-wrap gap-2">
-        {post.data.tags.map((tag: string) => <Tag tag={tag} />)}
-      </div>
-    </header>
+  <article class="grid gap-y-10 pt-10 lg:pt-14 lg:grid-cols-[11rem_minmax(0,72ch)] lg:justify-center lg:gap-x-16 lg:gap-y-12">
+    <h1 class="lg:col-start-2 text-[clamp(2.25rem,4vw,3.25rem)] font-semibold leading-[1.1] text-balance">
+      {post.data.title}
+    </h1>
 
-    <div class="prose">
-      <Content />
+    {/* below lg this dissolves so share can be ordered after the post */}
+    <div class="max-lg:contents lg:flex flex-col gap-3 lg:col-start-1 lg:row-start-2 lg:row-span-2 lg:text-meta">
+      <dl class="flex flex-wrap gap-x-3 gap-y-1 text-meta max-lg:text-fg-lighter lg:flex-col lg:gap-3">
+        <div>
+          <dt class="max-lg:sr-only text-fg-lighter">published</dt>
+          <dd>
+            <time datetime={post.data.date.toISOString()}>
+              {formatDate(post.data.date, "long")}
+            </time>
+          </dd>
+        </div>
+        {post.data.updated && (
+          <div class="max-lg:order-1 max-lg:basis-full">
+            <dt class="max-lg:sr-only text-fg-lighter">updated</dt>
+            <dd>
+              <span class="lg:hidden" aria-hidden="true">
+                updated{" "}
+              </span>
+              <time datetime={post.data.updated.toISOString()}>
+                {formatDate(post.data.updated, "long")}
+              </time>
+            </dd>
+          </div>
+        )}
+        <div class="max-lg:before:content-['·'] max-lg:before:mr-3 max-lg:flex">
+          <dt class="max-lg:sr-only text-fg-lighter">reading</dt>
+          <dd>
+            {formatReadTime(post.data.readTime)}
+            <span class="lg:hidden"> read</span>
+          </dd>
+        </div>
+        <div class="max-lg:hidden">
+          <dt class="max-lg:sr-only text-fg-lighter">tags</dt>
+          {post.data.tags.map((tag) => (
+            <dd>
+              <Tag tag={tag} class="lg:py-0 lg:text-fg" />
+            </dd>
+          ))}
+        </div>
+      </dl>
+      <div class="max-lg:contents lg:sticky lg:top-10 lg:mt-6 lg:flex lg:flex-col lg:gap-6">
+        <TableOfContents headings={headings} class="max-lg:hidden" />
+        <SharePost
+          title={post.data.title}
+          url={postUrl}
+          class="max-lg:order-1"
+        />
+      </div>
     </div>
 
-    <section class="flex flex-col gap-4 pt-8 border-t border-card">
-      <h2 class="text-lg font-bold lowercase tracking-[0.1em] text-special">
-        share this post
-      </h2>
-      <div class="flex flex-row gap-4">
-        <a
-          href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(post.data.title)}&url=${encodeURIComponent(`https://isabelroses.com/blog/${post.id}`)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="share-icon"
-          aria-label="Share on Twitter"
-        >
-          <Icon name="fa7-brands:x-twitter" class="w-5 h-5" />
-        </a>
-        <a
-          href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://isabelroses.com/blog/${post.id}`)}&title=${encodeURIComponent(post.data.title)}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="share-icon"
-          aria-label="Share on LinkedIn"
-        >
-          <Icon name="fa7-brands:linkedin" class="w-5 h-5" />
-        </a>
-        <button
-          id="copy-link"
-          class="share-icon cursor-pointer relative"
-          aria-label="Copy link"
-        >
-          <Icon
-            name="fa7-solid:link"
-            class="w-5 h-5 copy-icon transition-all duration-200"
-          />
-          <Icon
-            name="fa7-solid:check"
-            class="w-5 h-5 check-icon absolute inset-0 opacity-0 scale-0 transition-all duration-200"
-          />
-        </button>
-      </div>
-    </section>
+    <div class="prose min-w-0 lg:col-start-2 lg:row-start-2">
+      <Content />
+    </div>
+    <HeadingLinks />
+    <CodeBlocks />
 
     <nav
-      class="flex flex-col sm:flex-row justify-between gap-4 pt-8 border-t border-card"
+      aria-label="more posts"
+      class:list={[
+        "grid gap-x-8 gap-y-2 max-lg:order-2 lg:col-start-2 lg:row-start-3",
+        prevPost && nextPost && "sm:grid-cols-2",
+      ]}
     >
-      {
-        prevPost ? (
-          <a
-            href={`/blog/${prevPost.id}`}
-            class="group flex flex-col gap-1 p-4 panel-link flex-1"
-          >
-            <span class="text-fg-lighter text-sm">← previous</span>
-            <span class="group-hover-special">
-              {prevPost.data.title}
-            </span>
-          </a>
-        ) : (
-          <div class="flex-1" />
-        )
-      }
-      {
-        nextPost ? (
-          <a
-            href={`/blog/${nextPost.id}`}
-            class="group flex flex-col gap-1 p-4 border border-card bg-card/20 hover:bg-card/40 hover:border-special transition-all flex-1 text-right"
-          >
-            <span class="text-fg-lighter text-sm">next →</span>
-            <span class="group-hover-special">
-              {nextPost.data.title}
-            </span>
-          </a>
-        ) : (
-          <div class="flex-1" />
-        )
-      }
+      {prevPost && (
+        <a
+          href={postPath(prevPost)}
+          class="row-link group flex flex-col gap-1 py-4"
+        >
+          <span class="text-meta text-fg-lighter">← previous</span>
+          <span class="item-title group-hover-special">
+            {prevPost.data.title}
+          </span>
+        </a>
+      )}
+      {nextPost && (
+        <a
+          href={postPath(nextPost)}
+          class="row-link group flex flex-col gap-1 py-4 sm:text-right"
+        >
+          <span class="text-meta text-fg-lighter">next →</span>
+          <span class="item-title group-hover-special">
+            {nextPost.data.title}
+          </span>
+        </a>
+      )}
     </nav>
   </article>
-
-  <script>
-    document.addEventListener("astro:page-load", () => {
-      const copyButton = document.getElementById("copy-link");
-      copyButton?.addEventListener("click", async () => {
-        await navigator.clipboard.writeText(window.location.href);
-
-        const linkIcon = copyButton.querySelector(".copy-icon");
-        const checkIcon = copyButton.querySelector(".check-icon");
-
-        // Animate out the link icon
-        linkIcon?.classList.add("opacity-0", "scale-0");
-        linkIcon?.classList.remove("opacity-100", "scale-100");
-
-        // Animate in the check icon
-        checkIcon?.classList.remove("opacity-0", "scale-0");
-        checkIcon?.classList.add("opacity-100", "scale-100", "text-green-500");
-
-        // Reset after 2 seconds
-        setTimeout(() => {
-          checkIcon?.classList.add("opacity-0", "scale-0");
-          checkIcon?.classList.remove(
-            "opacity-100",
-            "scale-100",
-            "text-green-500",
-          );
-          linkIcon?.classList.remove("opacity-0", "scale-0");
-          linkIcon?.classList.add("opacity-100", "scale-100");
-        }, 2000);
-      });
-    });
-  </script>
 </Base>

@@ -1,0 +1,24 @@
+---
+interface Props {
+  id: string;
+  title: string;
+  link?: { href: string; label: string };
+  class?: string;
+}
+
+const { id, title, link, class: className } = Astro.props;
+---
+
+<section class:list={["flex flex-col gap-6", className]} aria-labelledby={id}>
+  <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+    <h2 id={id} class="heading">
+      {title}
+    </h2>
+    {link && (
+      <a href={link.href} class="link">
+        {link.label} →
+      </a>
+    )}
+  </div>
+  <slot />
+</section>

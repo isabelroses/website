@@ -1,6 +1,35 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
 
+@custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
+
+@font-face {
+  font-family: "UnifrakturMaguntia";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/unifraktur-maguntia.woff2") format("woff2");
+  /* subset to ascii: it only sets the name, page titles and tags */
+  unicode-range: U+0020-007E;
+}
+
+@font-face {
+  font-family: "Grenze";
+  font-style: normal;
+  font-weight: 400 600;
+  font-display: swap;
+  src: url("/fonts/grenze.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Grenze";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("/fonts/grenze-400-italic.woff2") format("woff2");
+}
+
+/* plex mono is kept for code only */
 @font-face {
   font-family: "IBM Plex Mono";
   font-style: normal;
@@ -11,26 +40,89 @@
 
 @font-face {
   font-family: "IBM Plex Mono";
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("/fonts/ibm-plex-mono-400-italic.woff2") format("woff2");
-}
-
-@font-face {
-  font-family: "IBM Plex Mono";
   font-style: normal;
   font-weight: 700;
   font-display: swap;
   src: url("/fonts/ibm-plex-mono-700.woff2") format("woff2");
 }
 
-@font-face {
-  font-family: "IBM Plex Mono";
-  font-style: italic;
-  font-weight: 700;
-  font-display: swap;
-  src: url("/fonts/ibm-plex-mono-700-italic.woff2") format("woff2");
+@theme {
+  --font-sans: "Grenze", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-display: "UnifrakturMaguntia", "Grenze", Georgia, serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  /* bone on near-black, with one oxblood accent */
+  --color-fg: #ece4da;
+  --color-fg-lighter: #a99d93;
+  --color-bg: #0c0a0b;
+  --color-card: #1a1517;
+  --color-special: #e2596b;
+  --color-blood: #7a1325;
+  --color-on-blood: #f3e9e0;
+
+  /* the whole type scale; display sizes are set where the blackletter is */
+  --text-meta: 1.125rem;
+  --text-body: 1.25rem;
+  --text-sub: 1.5rem;
+  --text-heading: 1.875rem;
+
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@layer base {
+  /* dark is the @theme default; light only overrides what differs */
+  :root,
+  [data-theme="dark"] {
+    color-scheme: dark;
+  }
+
+  [data-theme="light"] {
+    color-scheme: light;
+    --color-fg: #141213;
+    --color-fg-lighter: #56514f;
+    --color-bg: #e7e6e4;
+    --color-card: #d9d7d4;
+    --color-special: #8c1729;
+  }
+
+  :root {
+    --gutter: clamp(20px, 3.2vw, 48px);
+  }
+
+  html {
+    scrollbar-gutter: stable;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    font-size: var(--text-body);
+    line-height: 1.5;
+    background-color: var(--color-bg);
+    color: var(--color-fg);
+    font-kerning: normal;
+  }
+
+  ::selection {
+    background: var(--color-blood);
+    color: var(--color-on-blood);
+  }
+
+  /* announce new-tab links to screen readers; absolutely positioned so it
+     never becomes a grid/flex item in card links */
+  a[target="_blank"]::after {
+    content: "" / " (opens in a new tab)";
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-special);
+    outline-offset: 3px;
+  }
 }
 
 @layer utilities {
@@ -41,21 +133,51 @@
     --tw-prose-pre-bg: var(--color-card);
     --tw-prose-bold: var(--color-fg);
     --tw-prose-quotes: var(--color-fg);
-    --tw-prose-quote-borders: var(--color-card);
-    --tw-prose-bullets: var(--color-fg);
-    --tw-prose-hr: var(--color-fg);
-    --tw-prose-captions: var(--color-card);
+    --tw-prose-quote-borders: var(--color-blood);
+    --tw-prose-bullets: var(--color-special);
+    --tw-prose-counters: var(--color-fg-lighter);
+    --tw-prose-hr: var(--color-card);
+    --tw-prose-captions: var(--color-fg-lighter);
     --tw-prose-th-borders: var(--color-card);
-    --tw-prose-td-borders: var(--color-fg);
+    --tw-prose-td-borders: var(--color-card);
     --tw-prose-links: var(--color-special);
 
-    font-size: 0.95rem;
-    line-height: 1.85;
+    font-size: var(--text-body);
+    line-height: 1.6;
+    max-width: none;
+
+    :where(h1, h2, h3, h4):not(:where([class~="not-prose"] *)) {
+      font-weight: 600;
+      line-height: 1.2;
+    }
+
+    :where(h2):not(:where([class~="not-prose"] *)) {
+      font-size: var(--text-heading);
+    }
+
+    :where(h3):not(:where([class~="not-prose"] *)) {
+      font-size: var(--text-sub);
+    }
+
+    :where(h4):not(:where([class~="not-prose"] *)) {
+      font-size: var(--text-body);
+    }
+
+    :where(a):not(:where([class~="not-prose"] *)) {
+      text-underline-offset: 0.18em;
+      text-decoration-thickness: 1px;
+      transition: color 160ms;
+    }
+
+    :where(a):not(:where([class~="not-prose"] *)):hover {
+      color: var(--color-fg);
+    }
 
     :where(code):not(
       :where([class~="not-prose"], [class~="not-prose"] *, pre code)
     ) {
-      @apply rounded-sm ring-1 ring-inset ring-card px-1 py-[0.2rem] font-normal;
+      @apply rounded-sm bg-card px-1.5 py-[0.15rem] font-normal text-[0.82em];
+      overflow-wrap: anywhere;
     }
 
     :where(code):not(
@@ -66,106 +188,118 @@
       )::after {
       content: none;
     }
-
-    @apply max-w-[min(80vw,100%)] md:max-w-[min(75ch,100%)] lg:max-w-[min(85ch,100%)] mx-auto;
   }
 
-  .smallcaps {
-    font-variant: small-caps;
+  /* section headings: the text face, so they read */
+  .heading {
+    font-size: var(--text-heading);
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  /* titles in lists: posts, projects, donate rows */
+  .item-title {
+    font-size: var(--text-body);
+    font-weight: 600;
+    line-height: 1.25;
+  }
+
+  .font-display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-synthesis: none;
   }
 
   .hover-special {
-    @apply transition-colors hover:text-special;
+    @apply transition-colors duration-150 hover:text-special;
   }
 
   .group-hover-special {
-    @apply transition-colors group-hover:text-special;
+    @apply transition-colors duration-150 group-hover:text-special;
   }
 
-  .panel {
-    @apply border border-card bg-card/20;
+  /* inline links outside prose */
+  .link {
+    @apply text-special underline underline-offset-4 decoration-1 hover:text-fg;
   }
 
-  .panel-link {
-    @apply border border-card bg-card/20 transition-all hover:bg-card/40 hover:border-special;
+  /* 44px icon-only button */
+  .icon-btn {
+    @apply grid place-items-center w-11 h-11 text-fg-lighter transition-colors duration-150 hover:text-special;
   }
 
-  .section-label {
-    @apply text-special text-sm font-bold lowercase tracking-[0.15em];
+  /* square icon well at the start of a .row-link; lights up with its .group */
+  .icon-tile {
+    @apply grid place-items-center aspect-square shrink-0 bg-(--tile,var(--color-card)) text-fg transition-colors duration-200 group-hover:bg-blood group-hover:text-on-blood;
+  }
+
+  /* a .row-link led by an .icon-tile, with a trailing meta column */
+  .icon-row {
+    @apply grid grid-cols-[3.5rem_1fr_auto] items-center gap-x-4 py-4;
+  }
+
+  /* gapless grid of .row-links; shaded cells alternate in one column, swap sides each row in two */
+  .checker .row-link {
+    @apply mx-0 px-4 bg-(--cell);
+  }
+  .checker > * {
+    --cell: transparent;
+    --tile: var(--color-card);
+  }
+  .checker > :nth-child(odd) {
+    --cell: var(--color-card);
+    --tile: var(--color-bg);
+  }
+  @variant md {
+    .checker > :nth-child(odd) {
+      --cell: transparent;
+      --tile: var(--color-card);
+    }
+    .checker > :nth-child(4n + 1),
+    .checker > :nth-child(4n) {
+      --cell: var(--color-card);
+      --tile: var(--color-bg);
+    }
+  }
+
+  /* the intro paragraph under a page title */
+  .lede {
+    @apply leading-[1.45] max-w-[52ch];
+  }
+
+  /* a row in a list: separated by tone on hover, never by lines */
+  .row-link {
+    @apply -mx-3 px-3 transition-colors duration-150 hover:bg-card;
+  }
+
+  /* the middle column that header, main and footer share */
+  .page-width {
+    @apply w-full max-w-6xl mx-auto;
+    padding-inline: var(--gutter);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
 
 .expressive-code {
-  --ec-codeBg: transparent !important;
-  --ec-frm-edBg: transparent !important;
-  --ec-frm-trmBg: transparent !important;
-  --ec-brdCol: var(--color-card) !important;
-  --ec-brdWd: 1px;
-  --ec-frm-edActTabBrdCol: var(--color-card) !important;
-  --ec-frm-edTabBarBrdCol: var(--color-card) !important;
-  --ec-frm-edTabBarBrdBtmCol: var(--color-card) !important;
+  --ec-codeBg: var(--color-card) !important;
+  --ec-frm-edBg: var(--color-card) !important;
+  --ec-frm-trmBg: var(--color-card) !important;
+  --ec-brdCol: transparent !important;
+  --ec-brdWd: 0px;
+  --ec-frm-edActTabBrdCol: transparent !important;
+  --ec-frm-edTabBarBrdCol: transparent !important;
+  --ec-frm-edTabBarBrdBtmCol: transparent !important;
   --ec-frm-trmTtbBg: transparent !important;
-  --ec-frm-trmTtbBrdBtmCol: var(--color-card) !important;
-}
-
-@theme {
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
-
-  --color-fg: #d1d5db;
-  --color-fg-lighter: #9ca3af;
-
-  --color-bg: #000;
-
-  --color-card: #161b22;
-  --color-special: var(--color-blue);
-
-  --color-blue: #74c7ec;
-  --color-green: #a6e3a1;
-  --color-yellow: #f9e2af;
-  --color-purple: #cba6f7;
-  --color-red: #f38ba8;
-}
-
-@layer base {
-  [data-theme="dark"] {
-    --color-fg: #d1d5db;
-    --color-fg-lighter: #9ca3af;
-
-    --color-bg: #000;
-
-    --color-card: #161b22;
-    --color-special: var(--color-blue);
-
-    --color-blue: #74c7ec;
-    --color-green: #a6e3a1;
-    --color-yellow: #f9e2af;
-    --color-purple: #cba6f7;
-    --color-red: #f38ba8;
-  }
-
-  [data-theme="light"] {
-    --color-fg: #3a3d4a;
-    --color-fg-lighter: #555a6b;
-
-    --color-bg: #f8f9fc;
-
-    --color-card: #d0d5df;
-    --color-special: var(--color-blue);
-
-    --color-blue: #1a90c4;
-    --color-green: #40a02b;
-    --color-yellow: #df8e1d;
-    --color-purple: #8839ef;
-    --color-red: #d20f39;
-  }
-
-  html {
-    font-size: 106.25%;
-    scrollbar-gutter: stable;
-  }
-
-  body {
-    font-family: var(--font-mono);
-    background-color: var(--color-bg);
-  }
+  --ec-frm-trmTtbBrdBtmCol: transparent !important;
+  --ec-frm-frameBoxShdCssVal: none !important;
 }

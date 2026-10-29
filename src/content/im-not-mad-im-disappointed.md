@@ -224,8 +224,8 @@ reproducible like your system type. Instead, consider writing:
 ```
 
 You may also recall my earlier posts titled [Experimenting with
-nix](/blog/experimenting-with-nix-7) and or [Dev
-dependencies](https://isabelroses.com/blog/nix-shells-8), where I refer to a
+nix](/blog/experimenting-with-nix) and or [Dev
+dependencies](/blog/nix-shells), where I refer to a
 function called `forAllSystems` to improve upon this pattern further. For the
 sake of completion I will bring one of those examples back and use it to
 generate the system based outputs of packages.

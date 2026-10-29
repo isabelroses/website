@@ -1,6 +1,6 @@
 ---
 title: My Journey So Far
-description: A in depth look at my linux and development journey so far
+description: An in-depth look at my linux and development journey so far
 date: 2024-01-28
 tags:
   - learning
