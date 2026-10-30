@@ -4,17 +4,13 @@ import CopyLabel from "@components/CopyLabel.astro";
 import WebringArrow from "@components/WebringArrow.astro";
 import Section from "@components/Section.astro";
 
-import { SITE_DESCRIPTIONS, WEBRINGS, FRIENDS } from "@lib/consts";
+import { PAGES, WEBRINGS, FRIENDS } from "@lib/consts";
 
 const site = Astro.site!.origin;
 const badgeHtml = `<a href="${site}"><img src="${site}/badges/me.gif" alt="isabel roses" width="88" height="31"></a>`;
 ---
 
-<PageLayout
-  title="friends"
-  description={SITE_DESCRIPTIONS.friends}
-  image="/friends.png"
->
+<PageLayout title="friends" page={PAGES.friends}>
   <Section id="friends" title="the coven">
     <ul class="grid grid-cols-[repeat(auto-fill,88px)] justify-between gap-2">
       {FRIENDS.map((friend) => (

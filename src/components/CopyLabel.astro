@@ -4,13 +4,14 @@ import CopyIcons from "@components/CopyIcons.astro";
 interface Props {
   what: string;
   label?: string;
+  inline?: boolean;
 }
 
-const { what, label = "copy" } = Astro.props;
+const { what, label = "copy", inline } = Astro.props;
 ---
 
 <span class="flex items-center gap-2 text-meta text-fg-lighter group-hover-special">
-  <CopyIcons icon="fa7-solid:copy" size="w-5 h-5" />
+  <CopyIcons icon="fa7-solid:copy" size="w-5 h-5" inline={inline} />
   <span class="grid">
     <span class="col-start-1 row-start-1 group-data-copied:invisible">
       {label}

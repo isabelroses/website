@@ -1,5 +1,5 @@
 ---
-title: A NixOS PDS Hosting Guide
+title: A NixOS PDS hosting guide
 description: How to host your own personal data server using NixOS
 date: 2025-11-04
 updated: 2025-12-09

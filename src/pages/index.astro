@@ -8,7 +8,7 @@ import NowPlaying from "@components/NowPlaying.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 import Section from "@components/Section.astro";
 
-import { SITE_TITLES, SITE_DESCRIPTIONS, LINKS, PROJECTS } from "@lib/consts";
+import { PAGES, LINKS, PROJECTS, pageTitle } from "@lib/consts";
 import { formatDate, formatReadTime } from "@lib/format";
 import { getPosts } from "@lib/posts";
 import { postPath } from "@lib/url";
@@ -22,9 +22,9 @@ const recent = rest.slice(0, 3);
 ---
 
 <Base
-  title={SITE_TITLES.index}
-  description={SITE_DESCRIPTIONS.index}
-  image="/index.png"
+  title={pageTitle()}
+  description={PAGES.index.description}
+  image={PAGES.index.image}
 >
   <section class="grid gap-10 pt-10 lg:pt-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
     <div class="flex flex-col gap-8">
@@ -48,7 +48,7 @@ const recent = rest.slice(0, 3);
       <p class="lede">
         i am a <a href="https://github.com/NixOS/org/blob/main/doc/nixpkgs-committers.md" target="_blank" rel="noopener noreferrer" class="link">nixpkgs committer (i can merge prs)</a>,
         and for a little fun i also <a href="https://catppuccin.com/community/" target="_blank" rel="noopener noreferrer" class="link">moderate for catppuccin</a>.
-        i write a lot of nix so you're going to see a lot of my thoughts on that on this site.
+        i write a lot of nix, so expect plenty of my thoughts on that here.
       </p>
       <a href="/isabel_roses_cv.pdf" class="link self-start -mt-4">
         my cv (pdf) →
@@ -79,8 +79,11 @@ const recent = rest.slice(0, 3);
           </span>
           <span id="latest-desc">{latest.data.description}</span>
           <span id="latest-meta" class="mt-auto text-meta text-fg-lighter">
-            latest · {formatDate(latest.data.date)} ·{" "}
-            {formatReadTime(latest.data.readTime)}
+            latest ·{" "}
+            <time datetime={latest.data.date.toISOString()}>
+              {formatDate(latest.data.date)}
+            </time>{" "}
+            · {formatReadTime(latest.data.readTime)}
           </span>
         </a>
       )}
@@ -96,8 +99,10 @@ const recent = rest.slice(0, 3);
                 {post.data.title}
               </span>
               <span class="text-meta text-fg-lighter tabular-nums whitespace-nowrap sm:text-right">
-                {formatDate(post.data.date)} ·{" "}
-                {formatReadTime(post.data.readTime)}
+                <time datetime={post.data.date.toISOString()}>
+                  {formatDate(post.data.date)}
+                </time>{" "}
+                · {formatReadTime(post.data.readTime)}
               </span>
             </a>
           </li>
@@ -150,6 +155,10 @@ const recent = rest.slice(0, 3);
 </Base>
 
 <style>
+  .lede {
+    max-width: 64ch;
+  }
+
   @media (prefers-reduced-motion: no-preference) {
     .hero-name {
       animation: rise 1400ms var(--ease-out-quint) both;

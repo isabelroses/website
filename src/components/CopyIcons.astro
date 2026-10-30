@@ -4,16 +4,18 @@ import { Icon } from "astro-icon/components";
 interface Props {
   icon: string;
   size: string;
+  inline?: boolean;
   class?: string;
 }
 
-const { icon, size, class: className } = Astro.props;
+const { icon, size, inline = false, class: className } = Astro.props;
 const swap = "col-start-1 row-start-1 transition-[opacity,scale] duration-200";
 ---
 
 <span class:list={["grid", className]}>
   <Icon
     aria-hidden="true"
+    is:inline={inline}
     name={icon}
     class:list={[
       swap,
@@ -23,6 +25,7 @@ const swap = "col-start-1 row-start-1 transition-[opacity,scale] duration-200";
   />
   <Icon
     aria-hidden="true"
+    is:inline={inline}
     name="fa7-solid:check"
     class:list={[
       swap,

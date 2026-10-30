@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { Feed } from "feed";
-import { SITE_TITLES, SITE_DESCRIPTIONS } from "@lib/consts";
+import { PAGES, SITE_NAME } from "@lib/consts";
 import { getPosts } from "@lib/posts";
 import { postPath } from "@lib/url";
 import sanitizeHtml from "sanitize-html";
@@ -34,8 +34,8 @@ export const GET: APIRoute = async ({ site }) => {
     post.data.updated ?? post.data.date;
 
   const feed = new Feed({
-    title: SITE_TITLES.index,
-    description: SITE_DESCRIPTIONS.index,
+    title: SITE_NAME,
+    description: PAGES.index.description,
     id: siteUrl,
     link: siteUrl,
     language: "en",

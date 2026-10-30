@@ -1,5 +1,5 @@
 ---
-title: why I removed my self-healing URLs
+title: Why I removed my self-healing URLs
 description: the act of removing my self healing URLs
 date: 2025-07-07
 tags:

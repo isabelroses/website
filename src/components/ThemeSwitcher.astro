@@ -3,7 +3,7 @@ import { Icon } from "astro-icon/components";
 ---
 
 <button
-  id="theme-toggle"
+  data-theme-toggle
   type="button"
   class="inline-flex items-center justify-center w-11 h-11 -mr-3 text-fg hover:text-special transition-[color,scale] duration-150 active:scale-90 cursor-pointer"
   title="switch theme"
@@ -17,3 +17,19 @@ import { Icon } from "astro-icon/components";
   <span class="light:hidden sr-only">switch to light theme</span>
   <span class="hidden light:inline sr-only">switch to dark theme</span>
 </button>
+
+<script>
+  import { THEME_KEY } from "@lib/theme";
+
+  // delegated so it survives the header being swapped on navigation
+  document.addEventListener("click", (event) => {
+    if (!(event.target as Element).closest("[data-theme-toggle]")) return;
+    const root = document.documentElement;
+    const theme = root.dataset.theme === "dark" ? "light" : "dark";
+    // only an explicit toggle is remembered, so untouched visitors keep following the os
+    try {
+      localStorage.setItem(THEME_KEY, theme);
+    } catch {}
+    root.dataset.theme = theme;
+  });
+</script>

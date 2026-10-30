@@ -1,5 +1,5 @@
 ---
-import { type CollectionEntry, render } from "astro:content";
+import { render } from "astro:content";
 
 import Base from "@layouts/Base.astro";
 import SharePost from "@components/SharePost.astro";
@@ -9,31 +9,18 @@ import TableOfContents from "@components/TableOfContents.astro";
 import Tag from "@components/Tag.astro";
 
 import { formatDate, formatReadTime } from "@lib/format";
-import { getPosts } from "@lib/posts";
+import { pageTitle } from "@lib/consts";
+import { getPostPages, type PostPage } from "@lib/posts";
 import { postPath } from "@lib/url";
 
 export async function getStaticPaths() {
-  const posts = await getPosts({ includeArchived: true });
-  const visible = posts.filter((post) => !post.data.archived);
-
-  return posts.map((post) => {
-    const i = visible.indexOf(post);
-    return {
-      params: { slug: post.id },
-      props: {
-        post,
-        prevPost: i === -1 ? null : (visible[i + 1] ?? null),
-        nextPost: i === -1 ? null : (visible[i - 1] ?? null),
-      },
-    };
-  });
+  return (await getPostPages()).map((props) => ({
+    params: { slug: props.post.id },
+    props,
+  }));
 }
 
-interface Props {
-  post: CollectionEntry<"blog">;
-  prevPost: CollectionEntry<"blog"> | null;
-  nextPost: CollectionEntry<"blog"> | null;
-}
+type Props = PostPage;
 
 const { post, prevPost, nextPost } = Astro.props;
 const { Content, headings } = await render(post);
@@ -41,7 +28,7 @@ const postUrl = new URL(postPath(post), Astro.site).href;
 ---
 
 <Base
-  title={`isabel | ${post.data.title}`}
+  title={pageTitle(post.data.title)}
   description={post.data.description}
   image={`${postPath(post)}.png`}
   aturi={post.data.atUri}

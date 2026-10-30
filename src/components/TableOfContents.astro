@@ -35,29 +35,39 @@ const sections = headings.filter((heading) => heading.depth === 2);
 )}
 
 <script>
-  let links: HTMLAnchorElement[] = [];
-  let targets: HTMLElement[] = [];
+  let entries: { link: HTMLAnchorElement; target: HTMLElement }[] = [];
+  let queued = false;
 
   function update() {
+    queued = false;
     const current =
-      targets.findLast((el) => el.getBoundingClientRect().top < 120) ??
-      targets[0];
-    links.forEach((link, i) =>
-      targets[i] === current
-        ? link.setAttribute("aria-current", "location")
-        : link.removeAttribute("aria-current"),
+      entries.findLast(
+        ({ target }) => target.getBoundingClientRect().top < 120,
+      ) ?? entries[0];
+    entries.forEach((entry) =>
+      entry === current
+        ? entry.link.setAttribute("aria-current", "location")
+        : entry.link.removeAttribute("aria-current"),
     );
   }
 
   document.addEventListener("astro:page-load", () => {
-    links = [...document.querySelectorAll<HTMLAnchorElement>("[data-toc] a")];
-    targets = links.map(
-      (link) => document.getElementById(link.hash.slice(1)) as HTMLElement,
-    );
+    entries = [
+      ...document.querySelectorAll<HTMLAnchorElement>("[data-toc] a"),
+    ].flatMap((link) => {
+      const target = document.getElementById(link.hash.slice(1));
+      return target ? [{ link, target }] : [];
+    });
     update();
   });
 
-  addEventListener("scroll", () => requestAnimationFrame(update), {
-    passive: true,
-  });
+  addEventListener(
+    "scroll",
+    () => {
+      if (queued || !entries.length) return;
+      queued = true;
+      requestAnimationFrame(update);
+    },
+    { passive: true },
+  );
 </script>

@@ -1,5 +1,5 @@
 ---
-title: Self-Healing URLs
+title: Self-healing URLs
 description: Creating self-healing URLs within my Vue.js website
 date: 2023-12-10
 tags:

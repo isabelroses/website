@@ -1,6 +1,7 @@
 ---
 import "../styles/global.css";
-import { OG_IMAGE, SITE_TITLES } from "@lib/consts";
+import { OG_IMAGE, PAGES, SITE_NAME } from "@lib/consts";
+import { THEME_KEY } from "@lib/theme";
 import { pagePath } from "@lib/url";
 import { publicationUri } from "../../sequoia.json";
 
@@ -20,7 +21,7 @@ const canonicalURL = new URL(pagePath(Astro.url), Astro.site);
 const {
   title,
   description,
-  image = "/index.png",
+  image = PAGES.index.image,
   aturi,
   published,
   updated,
@@ -34,12 +35,12 @@ const PRELOAD_FONTS = ["unifraktur-maguntia", "grenze"];
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <meta name="color-scheme" content="light dark" />
 <meta name="darkreader-lock" />
-<link rel="icon" type="image/ico" href="/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link
   rel="alternate"
   type="application/atom+xml"
-  title={SITE_TITLES.index}
+  title={SITE_NAME}
   href={new URL("feed.xml", Astro.site)}
 />
 <meta name="generator" content={Astro.generator} />
@@ -74,12 +75,13 @@ const PRELOAD_FONTS = ["unifraktur-maguntia", "grenze"];
   <meta property="article:modified_time" content={updated.toISOString()} />
 )}
 <meta property="og:url" content={canonicalURL} />
-<meta property="og:site_name" content={SITE_TITLES.index} />
+<meta property="og:site_name" content={SITE_NAME} />
 <meta property="og:title" content={title} />
 <meta property="og:description" content={description} />
 <meta property="og:image" content={new URL(image, Astro.site)} />
 <meta property="og:image:width" content={String(OG_IMAGE.width)} />
 <meta property="og:image:height" content={String(OG_IMAGE.height)} />
+<meta property="og:image:alt" content={title} />
 
 <!-- Twitter -->
 <meta name="twitter:card" content="summary_large_image" />
@@ -88,7 +90,7 @@ const PRELOAD_FONTS = ["unifraktur-maguntia", "grenze"];
 {aturi && <link rel="site.standard.document" href={aturi} />}
 <link rel="site.standard.publication" href={publicationUri} />
 
-<script is:inline>
+<script is:inline define:vars={{ THEME_KEY }}>
   applyTheme(getTheme());
 
   // the client router replaces <html>'s attributes on navigation; after-swap runs before paint
@@ -100,21 +102,9 @@ const PRELOAD_FONTS = ["unifraktur-maguntia", "grenze"];
       if (!storedTheme()) applyTheme(getTheme());
     });
 
-  // delegated so it survives the header being swapped on navigation
-  document.addEventListener("click", (event) => {
-    if (!event.target.closest?.("#theme-toggle")) return;
-    const theme =
-      document.documentElement.dataset.theme === "dark" ? "light" : "dark";
-    // only an explicit toggle is remembered, so untouched visitors keep following the os
-    try {
-      localStorage.setItem("theme-choice", theme);
-    } catch {}
-    applyTheme(theme);
-  });
-
   function storedTheme() {
     try {
-      const theme = localStorage.getItem("theme-choice");
+      const theme = localStorage.getItem(THEME_KEY);
       if (theme === "light" || theme === "dark") return theme;
     } catch {}
     return null;

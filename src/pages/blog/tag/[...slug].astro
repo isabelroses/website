@@ -4,7 +4,7 @@ import type { CollectionEntry } from "astro:content";
 import PageLayout from "@layouts/PageLayout.astro";
 import PostCard from "@components/PostCard.astro";
 
-import { SITE_TITLES } from "@lib/consts";
+import { PAGES } from "@lib/consts";
 import { getPosts, getTags } from "@lib/posts";
 
 interface Props {
@@ -27,9 +27,9 @@ export async function getStaticPaths() {
   kicker="blog"
   title={`#${tag}`}
   description={`${posts.length} post${posts.length !== 1 ? "s" : ""} tagged with #${tag}`}
-  metaTitle={`#${tag} | ${SITE_TITLES.blog}`}
+  metaTitle={`#${tag} | ${PAGES.blog.card}`}
   metaDescription={`posts tagged with #${tag}`}
-  image="/blog/index.png"
+  image={PAGES.blog.image}
 >
   <section class="flex flex-col gap-6" aria-labelledby="tagged">
     <h2 id="tagged" class="heading">

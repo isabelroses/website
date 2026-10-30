@@ -6,7 +6,6 @@ import { z } from "astro/zod";
 const blog = z.object({
   title: z.string(),
   description: z.string(),
-  // Transform string to Date object
   date: z.coerce.date(),
   updated: z.coerce.date().optional(),
   // sequoia's coverImage, resolved against dist/blog (the generated og image)

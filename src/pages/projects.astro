@@ -2,14 +2,10 @@
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 
-import { SITE_DESCRIPTIONS, PROJECTS } from "@lib/consts";
+import { PAGES, PROJECTS } from "@lib/consts";
 ---
 
-<PageLayout
-  title="projects"
-  description={SITE_DESCRIPTIONS.projects}
-  image="/projects.png"
->
+<PageLayout title="projects" page={PAGES.projects}>
   <ul class="checker grid md:grid-cols-2">
     {PROJECTS.map((project) => (
       <li class="min-w-0">

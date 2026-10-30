@@ -1,8 +1,10 @@
 ---
 import Base from "@layouts/Base.astro";
+import { pageTitle, type Page } from "@lib/consts";
 
 interface Props {
   title: string;
+  page?: Page;
   kicker?: string;
   description?: string;
   metaTitle?: string;
@@ -12,11 +14,12 @@ interface Props {
 
 const {
   title,
+  page,
   kicker,
-  description,
-  metaTitle = `isabel | ${title}`,
+  description = page?.description,
+  metaTitle = pageTitle(title),
   metaDescription = description ?? "",
-  image,
+  image = page?.image,
 } = Astro.props;
 ---
 

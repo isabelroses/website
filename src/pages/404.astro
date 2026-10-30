@@ -1,6 +1,7 @@
 ---
 import PageLayout from "@layouts/PageLayout.astro";
 import Section from "@components/Section.astro";
+import { pageTitle } from "@lib/consts";
 import { getPosts } from "@lib/posts";
 import { postPath } from "@lib/url";
 
@@ -19,7 +20,7 @@ const links = [
 <PageLayout
   kicker="lost"
   title="404"
-  metaTitle="isabel | not found"
+  metaTitle={pageTitle("not found")}
   description="nothing lives at this address. it may have moved, or it never existed."
 >
   <Section id="elsewhere" title="try one of these">

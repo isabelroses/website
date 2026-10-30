@@ -3,7 +3,7 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Tag from "@components/Tag.astro";
 import PostCard from "@components/PostCard.astro";
 
-import { SITE_DESCRIPTIONS } from "@lib/consts";
+import { PAGES } from "@lib/consts";
 import { getPosts, getTags } from "@lib/posts";
 
 const posts = await getPosts();
@@ -11,11 +11,7 @@ const posts = await getPosts();
 const years = Map.groupBy(posts, (post) => post.data.date.getFullYear());
 ---
 
-<PageLayout
-  title="blog"
-  description={SITE_DESCRIPTIONS.blog}
-  image="/blog/index.png"
->
+<PageLayout title="blog" page={PAGES.blog}>
   <nav aria-label="tags" class="flex flex-wrap gap-x-5 gap-y-1 -mt-6">
     {getTags(posts).map((tag) => (
       <Tag tag={tag} />

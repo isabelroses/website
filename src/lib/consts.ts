@@ -1,16 +1,32 @@
-export const SITE_TITLES = {
-  index: "isabel",
-  blog: "isabel's blog",
-  projects: "isabel's projects",
-  friends: "isabel's friends",
+export const SITE_NAME = "isabel";
+
+export const pageTitle = (title?: string) =>
+  title ? `${SITE_NAME} | ${title}` : SITE_NAME;
+
+export const PAGES = {
+  index: {
+    card: SITE_NAME,
+    description: "the nix witch",
+    image: "/index.png",
+  },
+  blog: {
+    card: "isabel's blog",
+    description: "nix, nixos and whatever else i'm thinking about",
+    image: "/blog/index.png",
+  },
+  projects: {
+    card: "isabel's projects",
+    description: "open source things i've built, mostly nix and terminal tools",
+    image: "/projects.png",
+  },
+  friends: {
+    card: "isabel's friends",
+    description: "the people i like, and the webrings i'm part of",
+    image: "/friends.png",
+  },
 };
 
-export const SITE_DESCRIPTIONS = {
-  index: "the nix witch",
-  blog: "nix, nixos and whatever else i'm thinking about",
-  projects: "open source things i've built, mostly nix and terminal tools",
-  friends: "the people i like, and the webrings i'm part of",
-};
+export type Page = (typeof PAGES)[keyof typeof PAGES];
 
 export const OG_IMAGE = { width: 1080, height: 600 };
 
