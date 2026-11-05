@@ -17,6 +17,21 @@ const resolveAttr =
     };
   };
 
+// readers re-highlight from textContent, so expressive-code's per-line divs
+// must become newlines and the language must use the language-* convention
+const flattenCodeBlocks = (html: string) =>
+  html.replace(
+    /<pre\b[^>]*?\bdata-language="?([\w+#.-]+)"?[^>]*><code>([\s\S]*?)<\/code><\/pre>/g,
+    (_, lang: string, inner: string) => {
+      const text = inner
+        .split(/<div class="?ec-line\b[^>]*>/)
+        .map((line) => line.replace(/<[^>]*>/g, "").replace(/\n$/, ""))
+        .filter((line, i) => i > 0 || line !== "")
+        .join("\n");
+      return `<pre><code class="language-${lang}">${text}</code></pre>`;
+    },
+  );
+
 const SANITIZE: sanitizeHtml.IOptions = {
   allowedTags: sanitizeHtml.defaults.allowedTags.concat(["img"]),
   allowedAttributes: {
@@ -24,6 +39,7 @@ const SANITIZE: sanitizeHtml.IOptions = {
     img: ["src", "alt", "title"],
     a: ["href", "name", "target", "rel"],
   },
+  allowedClasses: { code: ["language-*"] },
   nonTextTags: ["style", "script", "textarea", "option", "noscript"],
 };
 
@@ -54,13 +70,16 @@ export const GET: APIRoute = async ({ site }) => {
 
   for (const post of posts) {
     const postUrl = `${siteUrl}${postPath(post)}`;
-    const sanitizedContent = sanitizeHtml(post.rendered?.html ?? "", {
-      ...SANITIZE,
-      transformTags: {
-        a: resolveAttr("href", postUrl),
-        img: resolveAttr("src", postUrl),
+    const sanitizedContent = sanitizeHtml(
+      flattenCodeBlocks(post.rendered?.html ?? ""),
+      {
+        ...SANITIZE,
+        transformTags: {
+          a: resolveAttr("href", postUrl),
+          img: resolveAttr("src", postUrl),
+        },
       },
-    });
+    );
 
     feed.addItem({
       title: post.data.title,
