@@ -47,64 +47,8 @@ import { ATPROTO, LASTFM_PROFILE } from "@lib/consts";
 </a>
 
 <script>
-  import { ATPROTO, LASTFM_PROFILE } from "@lib/consts";
-
-  const { did, pds } = ATPROTO;
-  const STATUS_URL = `${pds}/xrpc/com.atproto.repo.getRecord?repo=${did}&collection=fm.teal.actor.status&rkey=self`;
-  const PLAY_URL = `${pds}/xrpc/com.atproto.repo.listRecords?repo=${did}&collection=fm.teal.feed.play&limit=1`;
-
-  interface Track {
-    trackName?: string;
-    artists?: (string | { artistName?: string })[];
-    releaseName?: string;
-    releaseMbId?: string;
-    originUri?: string;
-  }
-  interface StatusRecord {
-    value?: { item?: Track; expiry?: string };
-  }
-  interface PlayList {
-    records?: { value: Track }[];
-  }
-  interface ItunesSearch {
-    results?: { artistName: string; artworkUrl100?: string }[];
-  }
-
-  const coverArt = (releaseMbId?: string) => {
-    const id = (releaseMbId || "").replace(/^mbid:/, "");
-    return id ? `https://coverartarchive.org/release/${id}/front-500` : "";
-  };
-
-  const norm = (s: string) => s.toLowerCase().replace(/[^a-z0-9]/g, "");
-  // drop "(feat. …)", "[…]" and " - 2021 Remaster" style suffixes
-  const baseTitle = (s: string) => s.replace(/\s*[([].*?[)\]]|\s+-\s+.*$/g, "");
-
-  // keyless fallback for tracks musicbrainz couldn't match; only trust
-  // results from the same artist so we never show someone else's cover
-  async function itunesArt(artist: string, title: string) {
-    const term = encodeURIComponent(`${artist} ${baseTitle(title)}`);
-    const data = await getJson<ItunesSearch>(
-      `https://itunes.apple.com/search?media=music&entity=song&limit=10&term=${term}`,
-    ).catch(() => null);
-    const hit = data?.results?.find((r) => norm(r.artistName) === norm(artist));
-    return (
-      hit?.artworkUrl100?.replace(/100x100bb\.\w+$/, "500x500bb.webp") ?? ""
-    );
-  }
-
-  const artistNames = (artists: Track["artists"]): string =>
-    Array.isArray(artists)
-      ? artists
-          .map((a) => (typeof a === "string" ? a : a?.artistName))
-          .filter(Boolean)
-          .join(", ")
-      : "";
-
-  async function getJson<T>(url: string): Promise<T> {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`${res.status}`);
-    return res.json();
-  }
+  import { LASTFM_PROFILE } from "@lib/consts";
+  import { currentTrack, itunesArt } from "@lib/now-playing";
 
   async function updateNowPlaying() {
     const root = document.querySelector<HTMLAnchorElement>("[data-nowplaying]");
@@ -128,48 +72,36 @@ import { ATPROTO, LASTFM_PROFILE } from "@lib/consts";
     };
 
     try {
-      // request both at once so a stale status doesn't cost a second round trip
-      const playsReq = getJson<PlayList>(PLAY_URL);
-      playsReq.catch(() => {});
-      const status = await getJson<StatusRecord>(STATUS_URL).catch(() => null);
-      const item = status?.value?.item;
-      const expiry = status?.value?.expiry;
-      const live =
-        !!item?.trackName && (!expiry || Date.parse(expiry) > Date.now());
-      const track = live ? item : (await playsReq).records?.[0]?.value;
-      const trackName = track?.trackName;
-
-      if (!track || !trackName) {
+      const track = await currentTrack(fetch);
+      if (!track) {
         showFallback("nothing playing right now");
         return;
       }
 
-      titleEl.textContent = trackName;
-      artistEl.textContent = artistNames(track.artists) || "unknown artist";
-      stateEl.textContent = live
+      titleEl.textContent = track.title;
+      artistEl.textContent = track.artist;
+      stateEl.textContent = track.live
         ? "listening to, right now"
         : "last listened to";
-      root.href = track.originUri || LASTFM_PROFILE;
+      root.href = track.href;
 
       artEl.hidden = true;
       fallbackEl.hidden = false;
-      artEl.alt = `cover of ${track.releaseName || trackName}`;
+      artEl.alt = `cover of ${track.album}`;
       artEl.onload = () => {
         artEl.hidden = false;
         fallbackEl.hidden = true;
       };
 
-      const firstArtist = artistNames(track.artists?.slice(0, 1));
       const loadItunes = async () => {
         artEl.onerror = null;
-        const art = firstArtist && (await itunesArt(firstArtist, trackName));
+        const art = await itunesArt(fetch, track);
         if (art) artEl.src = art;
       };
 
-      const caa = coverArt(track.releaseMbId);
-      if (caa) {
+      if (track.coverArt) {
         artEl.onerror = loadItunes;
-        artEl.src = caa;
+        artEl.src = track.coverArt;
       } else {
         await loadItunes();
       }
