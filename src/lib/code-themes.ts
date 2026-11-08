@@ -1,5 +1,8 @@
+import { PALETTE } from "./palette";
+import type { Theme } from "./theme";
+
 interface Palette {
-  type: "dark" | "light";
+  type: Theme;
   bg: string;
   fg: string;
   comment: string;
@@ -90,8 +93,8 @@ const theme = (p: Palette) => ({
 
 export const darkCode = theme({
   type: "dark",
-  bg: "#1a1517",
-  fg: "#ece4da",
+  bg: PALETTE.dark.card,
+  fg: PALETTE.dark.fg,
   comment: "#9a8d83",
   keyword: "#e8707f",
   string: "#dcb98f",
@@ -99,13 +102,13 @@ export const darkCode = theme({
   type_: "#e9a7ae",
   func: "#f3eadf",
   variable: "#cdbfb3",
-  punct: "#a99d93",
+  punct: PALETTE.dark["fg-lighter"],
 });
 
 export const lightCode = theme({
   type: "light",
-  bg: "#d9d7d4",
-  fg: "#141213",
+  bg: PALETTE.light.card,
+  fg: PALETTE.light.fg,
   comment: "#554943",
   keyword: "#8a1528",
   string: "#6a3f0c",

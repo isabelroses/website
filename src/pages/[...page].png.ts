@@ -1,10 +1,10 @@
 import type { APIRoute, GetStaticPaths } from "astro";
 import { generateOpenGraph } from "@lib/opengraph";
-import { PAGES, type Page } from "@lib/consts";
+import { PAGES, ogSlug, type Page } from "@lib/pages";
 
 export const getStaticPaths = (() =>
-  Object.values(PAGES).map((page) => ({
-    params: { page: page.image.slice(1, -".png".length) },
+  Object.values<Page>(PAGES).map((page) => ({
+    params: { page: ogSlug(page) },
     props: page,
   }))) satisfies GetStaticPaths;
 

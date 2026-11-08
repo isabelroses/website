@@ -1,16 +1,14 @@
 import type { APIRoute, GetStaticPaths } from "astro";
-import type { CollectionEntry } from "astro:content";
 import { generateOpenGraph } from "@lib/opengraph";
-import { getPostPages } from "@lib/posts";
+import { getCatalogue, type Post } from "@lib/posts";
 
-export const getStaticPaths = (async () => {
-  return (await getPostPages()).map(({ post }) => ({
+export const getStaticPaths = (async () =>
+  (await getCatalogue()).pages.map(({ post }) => ({
     params: { slug: post.id },
     props: { post },
-  }));
-}) satisfies GetStaticPaths;
+  }))) satisfies GetStaticPaths;
 
-export const GET: APIRoute<{ post: CollectionEntry<"blog"> }> = ({ props }) =>
+export const GET: APIRoute<{ post: Post }> = ({ props }) =>
   generateOpenGraph(
     props.post.data.title,
     props.post.data.description,

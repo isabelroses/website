@@ -1,7 +1,9 @@
 ---
 import "../styles/global.css";
-import { OG_IMAGE, PAGES, SITE_NAME } from "@lib/consts";
-import { THEME_KEY } from "@lib/theme";
+import { SITE_NAME } from "@lib/consts";
+import { OG_IMAGE, PAGES, pageImage } from "@lib/pages";
+import { FONTS } from "@lib/palette";
+import { THEME_KEY, initTheme } from "@lib/theme";
 import { pagePath } from "@lib/url";
 import { publicationUri } from "../../sequoia.json";
 
@@ -21,13 +23,13 @@ const canonicalURL = new URL(pagePath(Astro.url), Astro.site);
 const {
   title,
   description,
-  image = PAGES.index.image,
+  image = pageImage(PAGES.index),
   aturi,
   published,
   updated,
 } = Astro.props;
 
-const PRELOAD_FONTS = ["unifraktur-maguntia", "grenze"];
+const PRELOAD_FONTS = [FONTS.display.file, FONTS.sans.file];
 ---
 
 <!-- Global Metadata -->
@@ -90,38 +92,5 @@ const PRELOAD_FONTS = ["unifraktur-maguntia", "grenze"];
 {aturi && <link rel="site.standard.document" href={aturi} />}
 <link rel="site.standard.publication" href={publicationUri} />
 
-<script is:inline define:vars={{ THEME_KEY }}>
-  applyTheme(getTheme());
-
-  // the client router replaces <html>'s attributes on navigation; after-swap runs before paint
-  document.addEventListener("astro:after-swap", () => applyTheme(getTheme()));
-
-  window
-    .matchMedia("(prefers-color-scheme: light)")
-    .addEventListener("change", () => {
-      if (!storedTheme()) applyTheme(getTheme());
-    });
-
-  function storedTheme() {
-    try {
-      const theme = localStorage.getItem(THEME_KEY);
-      if (theme === "light" || theme === "dark") return theme;
-    } catch {}
-    return null;
-  }
-
-  function getTheme() {
-    return (
-      storedTheme() ??
-      (window.matchMedia("(prefers-color-scheme: light)").matches
-        ? "light"
-        : "dark")
-    );
-  }
-
-  function applyTheme(theme) {
-    document.documentElement.setAttribute("data-theme", theme);
-  }
-</script>
-
+<script is:inline set:html={`(${initTheme})(${JSON.stringify(THEME_KEY)})`} />
 <ClientRouter />
