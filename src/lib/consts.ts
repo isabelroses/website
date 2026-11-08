@@ -125,7 +125,7 @@ export const FRIENDS = [
     image: "thermia.gif",
   },
   { name: "da157", link: "https://da157.id", image: "0xda157.png" },
-  { name: "dbw", link: "https://dbw.neocities.org", image: "dbw.png" },
+  { name: "dbw", link: "https://dbw.neocities.org", image: "dbw.gif" },
   { name: "elissa", link: "https://elissa.moe", image: "elissa.png" },
   { name: "tasky", link: "https://tasky.nuxt.dev", image: "tasky.webp" },
   { name: "sydney", link: "https://sydney.blue", image: "sydney.png" },
