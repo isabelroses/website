@@ -1,35 +1,60 @@
 import { getCollection, type CollectionEntry } from "astro:content";
 
-type Post = CollectionEntry<"blog">;
+export type Post = CollectionEntry<"blog">;
 
 export interface PostPage {
   post: Post;
   prevPost: Post | null;
   nextPost: Post | null;
+  tags: string[];
 }
 
-const getPublished = async () =>
-  (await getCollection("blog", ({ data }) => !data.draft)).sort(
-    (a, b) => b.data.date.getTime() - a.data.date.getTime(),
-  );
+export interface TagPage {
+  tag: string;
+  posts: Post[];
+}
 
-export const getPosts = async () =>
-  (await getPublished()).filter((post) => !post.data.archived);
+export const lastChanged = (post: Post) => post.data.updated ?? post.data.date;
 
-export async function getPostPages(): Promise<PostPage[]> {
-  const published = await getPublished();
-  const listed = published.filter((post) => !post.data.archived);
+// injected into the rendered frontmatter by @xsynaptic/satteri-reading-time
+type ReadingFrontmatter = { minutesRead?: number };
 
-  return published.map((post) => {
-    const i = listed.indexOf(post);
+export const readTime = (post: Post) =>
+  (post.rendered?.metadata?.frontmatter as ReadingFrontmatter | undefined)
+    ?.minutesRead ?? 1;
+
+export function catalogue(entries: Post[]) {
+  const published = entries
+    .filter((post) => !post.data.draft)
+    .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  const posts = published.filter((post) => !post.data.archived);
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
+  const linkable = new Set(tags);
+
+  const pages = published.map((post) => {
+    const i = posts.indexOf(post);
     return {
       post,
-      prevPost: i === -1 ? null : (listed[i + 1] ?? null),
-      nextPost: i === -1 ? null : (listed[i - 1] ?? null),
+      prevPost: i === -1 ? null : (posts[i + 1] ?? null),
+      nextPost: i === -1 ? null : (posts[i - 1] ?? null),
+      tags: post.data.tags.filter((tag) => linkable.has(tag)),
     };
   });
+
+  const tagPages = tags.map((tag) => ({
+    tag,
+    posts: posts.filter((post) => post.data.tags.includes(tag)),
+  }));
+
+  const years = [...Map.groupBy(posts, (post) => post.data.date.getFullYear())];
+
+  return { posts, pages, tags, tagPages, years };
 }
 
-export const getTags = (posts: Post[]) => [
-  ...new Set(posts.flatMap((post) => post.data.tags)),
-];
+let built: Promise<ReturnType<typeof catalogue>> | undefined;
+
+// dev re-reads content on every call so edited posts show up without a restart
+export const getCatalogue = () =>
+  import.meta.env.PROD
+    ? (built ??= getCollection("blog").then(catalogue))
+    : getCollection("blog").then(catalogue);
