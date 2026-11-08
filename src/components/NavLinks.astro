@@ -1,0 +1,28 @@
+---
+import { NAV } from "@lib/pages";
+import { pagePath } from "@lib/url";
+
+interface Props {
+  class?: string;
+}
+
+const { class: className } = Astro.props;
+
+const path = pagePath(Astro.url);
+const isActive = (href: string) => path === href || path.startsWith(href + "/");
+---
+
+<nav aria-label="main" class:list={["flex flex-wrap", className]}>
+  {NAV.map((page) => {
+    const active = isActive(page.path);
+    return (
+      <a
+        href={page.path}
+        aria-current={active ? "page" : undefined}
+        class:list={["py-2", active ? "text-special" : "hover-special"]}
+      >
+        {page.name}
+      </a>
+    );
+  })}
+</nav>

@@ -1,51 +1,50 @@
 ---
 import Base from "@layouts/Base.astro";
-import { pageTitle, type Page } from "@lib/consts";
+import Label from "@components/Label.astro";
+import Ring from "@components/Ring.astro";
+import Stats from "@components/Stats.astro";
+import { pageImage, pageTitle, type Page } from "@lib/pages";
+import type { ComponentProps } from "astro/types";
 
 interface Props {
-  title: string;
-  page?: Page;
-  kicker?: string;
+  page: Page;
+  title?: string;
+  label?: string;
   description?: string;
-  metaTitle?: string;
   metaDescription?: string;
-  image?: string;
+  stats?: ComponentProps<typeof Stats>["items"];
 }
 
 const {
-  title,
   page,
-  kicker,
-  description = page?.description,
-  metaTitle = pageTitle(title),
-  metaDescription = description ?? "",
-  image = page?.image,
+  title = page.name,
+  label = page.label,
+  description = page.description,
+  metaDescription = description,
+  stats,
 } = Astro.props;
 ---
 
-<Base title={metaTitle} description={metaDescription} image={image}>
-  <div class="flex flex-col gap-6 pt-10 lg:pt-14">
-    <div class="flex flex-col gap-2">
-      {kicker && (
-        <p class="font-display leading-none text-fg-lighter text-[clamp(2rem,3.5vw,2.75rem)]">
-          {kicker}
-        </p>
-      )}
-      <h1
-        class:list={[
-          "leading-none break-words",
-          kicker
-            ? "font-semibold text-[clamp(2.75rem,5vw,3.75rem)]"
-            : "font-display text-[clamp(3rem,6vw,4.5rem)]",
-        ]}
-      >
+<Base
+  title={pageTitle(title)}
+  description={metaDescription}
+  image={pageImage(page)}
+>
+  <div class="grid gap-10 pt-10 lg:pt-14 lg:grid-cols-12 lg:items-center lg:gap-16">
+    <div class="flex flex-col gap-6 lg:col-span-8">
+      {label && <Label text={label} />}
+      <h1 class="font-display leading-none break-words text-[clamp(3rem,6vw,4.5rem)]">
         {title}
       </h1>
+      <p class="lede text-fg-lighter">{description}</p>
+      {stats && <Stats items={stats} />}
     </div>
-    {description && <p class="lede text-fg-lighter">{description}</p>}
+    <div class="max-lg:hidden lg:col-span-4 flex justify-center">
+      <Ring class="w-64 opacity-60" />
+    </div>
   </div>
 
-  <div class="flex flex-col gap-16 mt-10 lg:mt-12 lg:gap-24">
+  <div class="flex flex-col gap-16 mt-12 lg:mt-16 lg:gap-24">
     <slot />
   </div>
 </Base>

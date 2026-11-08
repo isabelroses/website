@@ -1,0 +1,16 @@
+---
+interface Props {
+  text: string;
+}
+
+const { text } = Astro.props;
+---
+
+<div class="flex items-end gap-5 sm:gap-8">
+  <slot />
+  <span class="mono text-fg-lighter">{text}</span>
+  <span
+    aria-hidden="true"
+    class="h-px flex-1 bg-fg-lighter/20 mb-[0.6em]"
+  ></span>
+</div>

@@ -1,0 +1,59 @@
+---
+import Ring from "@components/Ring.astro";
+import ThemeSwitcher from "@components/ThemeSwitcher.astro";
+import NavLinks from "@components/NavLinks.astro";
+---
+
+<header class="portal relative isolate w-full overflow-hidden border-b border-fg-lighter/15">
+  <div
+    aria-hidden="true"
+    class="absolute inset-0 -z-10 grid place-items-center"
+  >
+    <Ring class="w-[min(92vw,800px)]" />
+  </div>
+
+  <div class="absolute top-3 right-[var(--gutter)]">
+    <ThemeSwitcher />
+  </div>
+
+  <div class="page-width flex flex-col items-center text-center">
+    <p class="mono text-fg-lighter opacity-60 tracking-[0.12em] sm:tracking-[0.5em]">
+      digital necromancy // nix witch
+    </p>
+    <p
+      aria-hidden="true"
+      class="hero-name font-display leading-none text-[clamp(4.5rem,12vw,8rem)] mt-2"
+    >
+      isabel
+    </p>
+    <NavLinks class="justify-center gap-x-8 gap-y-2 mt-10 text-sub" />
+  </div>
+</header>
+
+<style>
+  .portal {
+    display: grid;
+    place-items: center;
+    min-height: 27.5rem;
+    padding-block: 3rem;
+  }
+
+  @media (min-width: 64rem) {
+    .portal {
+      min-height: 37.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .hero-name {
+      animation: rise 1400ms var(--ease-out-quint) both;
+    }
+
+    @keyframes rise {
+      from {
+        transform: translateY(12%);
+        opacity: 0;
+      }
+    }
+  }
+</style>

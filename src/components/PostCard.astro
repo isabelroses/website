@@ -1,45 +1,76 @@
 ---
-import type { CollectionEntry } from "astro:content";
-import { formatDate, formatReadTime } from "@lib/format";
+import PostMeta from "@components/PostMeta.astro";
+import type { Post } from "@lib/posts";
 import { postPath } from "@lib/url";
 
 interface Props {
-  post: CollectionEntry<"blog">;
+  post: Post;
+  variant?: "full" | "compact" | "featured";
   withYear?: boolean;
   showTags?: boolean;
 }
 
-const { post, withYear = true, showTags = false } = Astro.props;
-const { title, date, description, readTime, tags } = post.data;
+const {
+  post,
+  variant = "full",
+  withYear = true,
+  showTags = false,
+} = Astro.props;
+const { title, description, tags } = post.data;
 const id = `post-${post.id}`;
+const href = postPath(post);
+const compact = variant === "compact";
 ---
 
-<a
-  href={postPath(post)}
-  aria-labelledby={`${id}-title`}
-  aria-describedby={`${id}-desc ${id}-meta`}
-  class="row-link group grid gap-x-8 gap-y-1 py-4 sm:grid-cols-[1fr_auto] sm:items-baseline"
->
-  <span class="flex flex-col gap-1">
-    <span id={`${id}-title`} class="item-title group-hover-special">
+{variant === "featured" && (
+  <a
+    href={href}
+    aria-labelledby={`${id}-title`}
+    aria-describedby={`${id}-desc ${id}-meta`}
+    class="group -mx-3 flex flex-col gap-1 bg-card px-3 py-4 md:mx-0 md:gap-3 md:p-6"
+  >
+    <span
+      id={`${id}-title`}
+      class="text-body md:text-heading font-semibold leading-tight text-balance group-hover-special"
+    >
       {title}
     </span>
     <span id={`${id}-desc`}>{description}</span>
-    {showTags && (
-      <span class="flex flex-wrap gap-x-3 text-meta text-fg-lighter">
-        {tags.map((tag) => (
-          <span>#{tag}</span>
-        ))}
-      </span>
-    )}
-  </span>
-  <span
-    id={`${id}-meta`}
-    class="text-meta text-fg-lighter tabular-nums whitespace-nowrap sm:text-right"
+    <span id={`${id}-meta`} class="mt-auto text-meta text-fg-lighter">
+      latest ·
+      <PostMeta post={post} withYear={withYear} />
+    </span>
+  </a>
+)}
+
+{variant !== "featured" && (
+  <a
+    href={href}
+    aria-labelledby={`${id}-title`}
+    aria-describedby={compact ? `${id}-meta` : `${id}-desc ${id}-meta`}
+    class:list={[
+      "row-link group grid gap-y-1 py-4 sm:grid-cols-[1fr_auto] sm:items-baseline",
+      compact ? "flex-1 content-center gap-x-6" : "gap-x-8",
+    ]}
   >
-    <time datetime={date.toISOString()}>
-      {formatDate(date, "short", withYear)}
-    </time>
-    · {formatReadTime(readTime)}
-  </span>
-</a>
+    <span class="flex flex-col gap-1">
+      <span id={`${id}-title`} class="item-title group-hover-special">
+        {title}
+      </span>
+      {!compact && <span id={`${id}-desc`}>{description}</span>}
+      {showTags && (
+        <span class="flex flex-wrap gap-x-3 text-meta text-fg-lighter">
+          {tags.map((tag) => (
+            <span>#{tag}</span>
+          ))}
+        </span>
+      )}
+    </span>
+    <span
+      id={`${id}-meta`}
+      class="text-meta text-fg-lighter tabular-nums whitespace-nowrap sm:text-right"
+    >
+      <PostMeta post={post} withYear={withYear} />
+    </span>
+  </a>
+)}

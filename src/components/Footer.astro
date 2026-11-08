@@ -13,12 +13,15 @@ const email = LINKS.find((link) => link.label === "email")!;
 
     <ul class="flex flex-wrap gap-x-6 gap-y-1">
       <li>
-        <a href={email.href} class="hover-special">
+        <a href={email.href} class="inline-block py-2 -my-2 hover-special">
           {email.handle}
         </a>
       </li>
       <li>
-        <a href="/feed.xml" class="hover-special">
+        <a
+          href="/feed.xml"
+          class="inline-block py-2 -my-2 px-2 -mx-2 hover-special"
+        >
           rss
         </a>
       </li>

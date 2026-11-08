@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "satteri-heading-link/preset.css" layer(base);
 @plugin "@tailwindcss/typography";
 
 @custom-variant light (&:where([data-theme="light"], [data-theme="light"] *));
@@ -54,8 +55,8 @@
   /* bone on near-black, with one oxblood accent */
   --color-fg: #ece4da;
   --color-fg-lighter: #a99d93;
-  --color-bg: #0c0a0b;
-  --color-card: #1a1517;
+  --color-bg: #070304;
+  --color-card: #0f0e0e;
   --color-special: #e2596b;
   --color-blood: #7a1325;
   --color-on-blood: #f3e9e0;
@@ -125,6 +126,19 @@
   }
 }
 
+/* small uppercase labels: kickers, stat names, section links */
+@utility mono {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* the smaller, quieter label: stat names, post meta, previous/next */
+@utility caption {
+  @apply mono text-[0.75rem] text-fg-lighter;
+}
+
 @layer utilities {
   .prose {
     --tw-prose-body: var(--color-fg);
@@ -190,11 +204,43 @@
     }
   }
 
-  /* section headings: the text face, so they read */
+  /* heading permalinks: layout comes from the plugin's preset (imported above) */
+  .prose .satteri-heading-link {
+    @apply leading-[1.2] text-fg;
+  }
+  .prose .satteri-heading-link--h2 {
+    @apply text-heading mt-[2em] mb-[1em] pb-0 border-0;
+  }
+  .prose .satteri-heading-link--h3 {
+    @apply text-sub mt-[1.6em] mb-[0.6em];
+  }
+  .prose .satteri-heading-link--h4 {
+    @apply text-body mt-[1.5em] mb-[0.5em];
+  }
+  .prose .satteri-heading-link__heading {
+    @apply m-0 [font:inherit] text-inherit;
+  }
+  .satteri-heading-link__link {
+    @apply text-fg-lighter no-underline transition-[opacity,color] duration-150 hover:text-special data-copied:text-special data-copied:opacity-100;
+  }
+  .satteri-heading-link__icon {
+    @apply inline-grid size-[0.6em];
+  }
+  .satteri-heading-link__icon > svg {
+    @apply col-start-1 row-start-1 transition-[opacity,scale] duration-200;
+  }
+  .satteri-heading-link__link:not([data-copied]) svg:last-child,
+  .satteri-heading-link__link[data-copied] svg:first-child {
+    @apply opacity-0 scale-50;
+  }
+
+  /* section headings, in blackletter */
   .heading {
-    font-size: var(--text-heading);
-    font-weight: 600;
-    line-height: 1.15;
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-synthesis: none;
+    font-size: clamp(2rem, 3.5vw, 2.5rem);
+    line-height: 1;
   }
 
   /* titles in lists: posts, projects, donate rows */

@@ -1,0 +1,15 @@
+---
+import { formatDate, formatReadTime } from "@lib/format";
+import { readTime, type Post } from "@lib/posts";
+
+interface Props {
+  post: Post;
+  withYear?: boolean;
+}
+
+const { post, withYear = true } = Astro.props;
+const { date } = post.data;
+---
+
+<time datetime={date.toISOString()}>{formatDate(date, "short", withYear)}</time>
+· {formatReadTime(readTime(post))}

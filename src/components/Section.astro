@@ -15,7 +15,7 @@ const { id, title, link, class: className } = Astro.props;
       {title}
     </h2>
     {link && (
-      <a href={link.href} class="link">
+      <a href={link.href} class="link mono inline-block py-3 -my-3">
         {link.label} →
       </a>
     )}

@@ -1,44 +1,17 @@
 ---
 import ThemeSwitcher from "@components/ThemeSwitcher.astro";
-import { pagePath } from "@lib/url";
-
-const NAV = [
-  { href: "/blog", label: "blog" },
-  { href: "/projects", label: "projects" },
-  { href: "/friends", label: "friends" },
-  { href: "/donate", label: "donate" },
-];
-
-const path = pagePath(Astro.url);
-const isActive = (href: string) => path === href || path.startsWith(href + "/");
+import NavLinks from "@components/NavLinks.astro";
 ---
 
 <header class="page-width flex flex-wrap items-center gap-x-6 gap-y-2 pt-5 pb-4">
   <a
     href="/"
-    class="font-display text-[1.75rem] leading-none hover-special"
-    aria-current={path === "/" ? "page" : undefined}
+    class="font-display text-[1.75rem] leading-none py-2 -my-2 hover-special"
   >
     isabel
   </a>
 
-  <nav
-    aria-label="main"
-    class="max-sm:order-last max-sm:w-full sm:ml-auto flex flex-wrap items-center gap-x-5 gap-y-1 text-meta"
-  >
-    {NAV.map((item) => {
-      const active = isActive(item.href);
-      return (
-        <a
-          href={item.href}
-          aria-current={active ? "page" : undefined}
-          class:list={["py-2", active ? "text-special" : "hover-special"]}
-        >
-          {item.label}
-        </a>
-      );
-    })}
-  </nav>
+  <NavLinks class="max-sm:order-last max-sm:w-full sm:ml-auto items-center gap-x-5 gap-y-1 text-meta" />
   <div class="max-sm:ml-auto">
     <ThemeSwitcher />
   </div>
