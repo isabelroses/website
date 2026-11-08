@@ -4,18 +4,21 @@ import { Image } from "astro:assets";
 import Base from "@layouts/Base.astro";
 import { Icon } from "astro-icon/components";
 
+import Label from "@components/Label.astro";
 import NowPlaying from "@components/NowPlaying.astro";
+import Portal from "@components/Portal.astro";
+import PostCard from "@components/PostCard.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 import Section from "@components/Section.astro";
+import Stats from "@components/Stats.astro";
 
-import { PAGES, LINKS, PROJECTS, pageTitle } from "@lib/consts";
-import { formatDate, formatReadTime } from "@lib/format";
-import { getPosts } from "@lib/posts";
-import { postPath } from "@lib/url";
+import { LINKS, PROJECTS, TOTAL_STARS } from "@lib/consts";
+import { PAGES, pageImage, pageTitle } from "@lib/pages";
+import { getCatalogue } from "@lib/posts";
 
 import avatar from "../assets/me.webp";
 
-const posts = await getPosts();
+const { posts } = await getCatalogue();
 
 const [latest, ...rest] = posts;
 const recent = rest.slice(0, 3);
@@ -24,11 +27,19 @@ const recent = rest.slice(0, 3);
 <Base
   title={pageTitle()}
   description={PAGES.index.description}
-  image={PAGES.index.image}
+  image={pageImage(PAGES.index)}
 >
-  <section class="grid gap-10 pt-10 lg:pt-16 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end lg:gap-16">
-    <div class="flex flex-col gap-8">
-      <div class="flex items-end gap-5 sm:gap-8">
+  <Portal slot="portal" />
+
+  <section
+    aria-labelledby="intro-title"
+    class="grid gap-12 pt-16 lg:pt-24 lg:grid-cols-12 lg:items-center lg:gap-16"
+  >
+    <div class="flex flex-col gap-8 lg:col-span-8">
+      <h1 id="intro-title" class="sr-only">
+        isabel, the nix witch
+      </h1>
+      <Label text="intro.v1.0.0">
         <Image
           src={avatar}
           alt="isabel's avatar: a drawn girl with long blonde hair and a dark top"
@@ -38,10 +49,7 @@ const recent = rest.slice(0, 3);
           fetchpriority="high"
           class="w-20 h-20 sm:w-28 sm:h-28 object-cover shrink-0"
         />
-        <h1 class="hero-name font-display leading-[0.8] text-[clamp(4.5rem,11vw,9rem)] -mb-[0.06em]">
-          isabel<span class="sr-only">, the nix witch</span>
-        </h1>
-      </div>
+      </Label>
 
       <!-- reflowing this puts spaces inside the links, before the punctuation -->
       <!-- prettier-ignore -->
@@ -50,61 +58,44 @@ const recent = rest.slice(0, 3);
         and for a little fun i also <a href="https://catppuccin.com/community/" target="_blank" rel="noopener noreferrer" class="link">moderate for catppuccin</a>.
         i write a lot of nix, so expect plenty of my thoughts on that here.
       </p>
-      <a href="/isabel_roses_cv.pdf" class="link self-start -mt-4">
+      <a href="/isabel_roses_cv.pdf" class="link self-start py-2 -my-2 -mt-4">
         my cv (pdf) →
       </a>
+
+      <Stats
+        items={[
+          { label: "logs_published", value: posts.length },
+          { label: "artifact_stars", value: TOTAL_STARS },
+        ]}
+      />
     </div>
-    <NowPlaying />
+
+    <div class="relative flex items-center justify-center lg:col-span-4 lg:py-12">
+      <div
+        aria-hidden="true"
+        class="absolute size-72 rotate-45 border border-blood/40 max-lg:hidden"
+      ></div>
+      <div
+        aria-hidden="true"
+        class="absolute size-72 border border-special/20 max-lg:hidden"
+      ></div>
+      <NowPlaying />
+    </div>
   </section>
 
   <Section
     id="writing"
-    title="posts"
-    link={{ href: "/blog", label: "all posts" }}
     class="mt-16 lg:mt-24"
+    title={PAGES.blog.name}
+    link={{ href: PAGES.blog.path, label: "view all posts" }}
   >
     <div class="grid gap-x-12 gap-y-6 lg:grid-cols-2">
-      {latest && (
-        <a
-          href={postPath(latest)}
-          aria-labelledby="latest-title"
-          aria-describedby="latest-desc latest-meta"
-          class="group -mx-3 flex flex-col gap-1 bg-card px-3 py-4 md:mx-0 md:gap-3 md:p-6"
-        >
-          <span
-            id="latest-title"
-            class="text-body md:text-heading font-semibold leading-tight text-balance group-hover-special"
-          >
-            {latest.data.title}
-          </span>
-          <span id="latest-desc">{latest.data.description}</span>
-          <span id="latest-meta" class="mt-auto text-meta text-fg-lighter">
-            latest ·{" "}
-            <time datetime={latest.data.date.toISOString()}>
-              {formatDate(latest.data.date)}
-            </time>{" "}
-            · {formatReadTime(latest.data.readTime)}
-          </span>
-        </a>
-      )}
+      {latest && <PostCard post={latest} variant="featured" />}
 
       <ol class="flex flex-col">
         {recent.map((post) => (
           <li class="flex flex-1 flex-col">
-            <a
-              href={postPath(post)}
-              class="row-link group grid flex-1 content-center gap-x-6 gap-y-1 py-4 sm:grid-cols-[1fr_auto] sm:items-baseline"
-            >
-              <span class="item-title group-hover-special">
-                {post.data.title}
-              </span>
-              <span class="text-meta text-fg-lighter tabular-nums whitespace-nowrap sm:text-right">
-                <time datetime={post.data.date.toISOString()}>
-                  {formatDate(post.data.date)}
-                </time>{" "}
-                · {formatReadTime(post.data.readTime)}
-              </span>
-            </a>
+            <PostCard post={post} variant="compact" />
           </li>
         ))}
       </ol>
@@ -113,9 +104,9 @@ const recent = rest.slice(0, 3);
 
   <Section
     id="projects"
-    title="projects"
-    link={{ href: "/projects", label: "all projects" }}
     class="mt-16 lg:mt-24"
+    title={PAGES.projects.name}
+    link={{ href: PAGES.projects.path, label: "view full registry" }}
   >
     <ul class="grid gap-x-12 md:grid-cols-2">
       {PROJECTS.slice(0, 4).map((project) => (
@@ -126,7 +117,7 @@ const recent = rest.slice(0, 3);
     </ul>
   </Section>
 
-  <Section id="elsewhere" title="elsewhere" class="mt-16 lg:mt-24">
+  <Section id="elsewhere" title="channels" class="mt-16 lg:mt-24">
     <ul class="flex flex-col gap-y-4 md:grid md:grid-cols-3 md:gap-x-10 xl:flex xl:flex-row xl:justify-between xl:gap-x-6">
       {LINKS.map((link) => (
         <li>
@@ -157,18 +148,5 @@ const recent = rest.slice(0, 3);
 <style>
   .lede {
     max-width: 64ch;
-  }
-
-  @media (prefers-reduced-motion: no-preference) {
-    .hero-name {
-      animation: rise 1400ms var(--ease-out-quint) both;
-    }
-
-    @keyframes rise {
-      from {
-        transform: translateY(12%);
-        opacity: 0;
-      }
-    }
   }
 </style>

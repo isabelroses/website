@@ -3,22 +3,26 @@ import PageLayout from "@layouts/PageLayout.astro";
 import Tag from "@components/Tag.astro";
 import PostCard from "@components/PostCard.astro";
 
-import { PAGES } from "@lib/consts";
-import { getPosts, getTags } from "@lib/posts";
+import { PAGES } from "@lib/pages";
+import { getCatalogue } from "@lib/posts";
 
-const posts = await getPosts();
-
-const years = Map.groupBy(posts, (post) => post.data.date.getFullYear());
+const { posts, tags, years } = await getCatalogue();
 ---
 
-<PageLayout title="blog" page={PAGES.blog}>
+<PageLayout
+  page={PAGES.blog}
+  stats={[
+    { label: "logs_published", value: posts.length },
+    { label: "tags", value: tags.length },
+  ]}
+>
   <nav aria-label="tags" class="flex flex-wrap gap-x-5 gap-y-1 -mt-6">
-    {getTags(posts).map((tag) => (
+    {tags.map((tag) => (
       <Tag tag={tag} />
     ))}
   </nav>
 
-  {[...years].map(([year, yearPosts]) => (
+  {years.map(([year, yearPosts]) => (
     <section
       class="grid gap-x-12 gap-y-2 lg:grid-cols-[8rem_minmax(0,1fr)]"
       aria-labelledby={`year-${year}`}

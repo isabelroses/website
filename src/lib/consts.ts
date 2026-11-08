@@ -1,35 +1,5 @@
 export const SITE_NAME = "isabel";
 
-export const pageTitle = (title?: string) =>
-  title ? `${SITE_NAME} | ${title}` : SITE_NAME;
-
-export const PAGES = {
-  index: {
-    card: SITE_NAME,
-    description: "the nix witch",
-    image: "/index.png",
-  },
-  blog: {
-    card: "isabel's blog",
-    description: "nix, nixos and whatever else i'm thinking about",
-    image: "/blog/index.png",
-  },
-  projects: {
-    card: "isabel's projects",
-    description: "open source things i've built, mostly nix and terminal tools",
-    image: "/projects.png",
-  },
-  friends: {
-    card: "isabel's friends",
-    description: "the people i like, and the webrings i'm part of",
-    image: "/friends.png",
-  },
-};
-
-export type Page = (typeof PAGES)[keyof typeof PAGES];
-
-export const OG_IMAGE = { width: 1080, height: 600 };
-
 export const ATPROTO = {
   did: "did:plc:qxichs7jsycphrsmbujwqbfb",
   pds: "https://pds.isabelroses.com",
@@ -122,132 +92,45 @@ export const PROJECTS = [
   },
 ];
 
+export const TOTAL_STARS = PROJECTS.reduce(
+  (sum, project) => sum + project.stars,
+  0,
+);
+
 export const FRIENDS = [
-  {
-    name: "gen",
-    link: "https://genshibe.ca",
-    image: "gen.png",
-  },
-  {
-    name: "alyxia",
-    link: "https://alyxia.dev",
-    image: "alyxia.png",
-  },
-  {
-    name: "chloe",
-    link: "https://sapphic.moe",
-    image: "chloe.png",
-  },
-  {
-    name: "nax",
-    link: "https://nax.dev",
-    image: "nax.gif",
-  },
-  {
-    name: "kaya",
-    link: "https://tired.moe",
-    image: "kaya.gif",
-  },
-  {
-    name: "april",
-    link: "https://aprl.pet",
-    image: "april.png",
-  },
-  {
-    name: "rooot",
-    link: "https://rooot.gay",
-    image: "rooot.gif",
-  },
-  {
-    name: "autumn",
-    link: "https://autumn.town",
-    image: "autumn.webp",
-  },
-  {
-    name: "maeve",
-    link: "https://les.bi",
-    image: "maeve.png",
-  },
-  {
-    name: "basil",
-    link: "https://basil.cafe",
-    image: "basil.gif",
-  },
+  { name: "gen", link: "https://genshibe.ca", image: "gen.png" },
+  { name: "alyxia", link: "https://alyxia.dev", image: "alyxia.png" },
+  { name: "chloe", link: "https://sapphic.moe", image: "chloe.png" },
+  { name: "nax", link: "https://nax.dev", image: "nax.gif" },
+  { name: "kaya", link: "https://tired.moe", image: "kaya.gif" },
+  { name: "april", link: "https://aprl.pet", image: "april.png" },
+  { name: "rooot", link: "https://rooot.gay", image: "rooot.gif" },
+  { name: "autumn", link: "https://autumn.town", image: "autumn.webp" },
+  { name: "maeve", link: "https://les.bi", image: "maeve.png" },
+  { name: "basil", link: "https://basil.cafe", image: "basil.gif" },
   {
     name: "arimelody",
     link: "https://arimelody.space",
     image: "arimelody.gif",
   },
-  {
-    name: "ezri",
-    link: "https://ezri.pet",
-    image: "ezri.png",
-  },
-  {
-    name: "abigail",
-    link: "https://abigail.sh",
-    image: "abigail.png",
-  },
-  {
-    name: "notnite",
-    link: "https://notnite.com",
-    image: "notnite.png",
-  },
-  {
-    name: "robin",
-    link: "https://robinwobin.dev",
-    image: "robin.gif",
-  },
-  {
-    name: "sketch",
-    link: "https://sketchni.uk",
-    image: "sketch.png",
-  },
-  {
-    name: "slonking",
-    link: "https://slonk.ing",
-    image: "slonking.webp",
-  },
+  { name: "ezri", link: "https://ezri.pet", image: "ezri.png" },
+  { name: "abigail", link: "https://abigail.sh", image: "abigail.png" },
+  { name: "notnite", link: "https://notnite.com", image: "notnite.png" },
+  { name: "robin", link: "https://robinwobin.dev", image: "robin.gif" },
+  { name: "sketch", link: "https://sketchni.uk", image: "sketch.png" },
+  { name: "slonking", link: "https://slonk.ing", image: "slonking.webp" },
   {
     name: "thermia",
     link: "https://girlthi.ng/~thermia",
     image: "thermia.gif",
   },
-  {
-    name: "da157",
-    link: "https://da157.id",
-    image: "0xda157.png",
-  },
-  {
-    name: "dbw",
-    link: "https://dbw.neocities.org",
-    image: "dbw.png",
-  },
-  {
-    name: "elissa",
-    link: "https://elissa.moe",
-    image: "elissa.png",
-  },
-  {
-    name: "tasky",
-    link: "https://tasky.nuxt.dev",
-    image: "tasky.webp",
-  },
-  {
-    name: "sydney",
-    link: "https://sydney.blue",
-    image: "sydney.png",
-  },
-  {
-    name: "lyna",
-    link: "https://blooym.dev",
-    image: "lyna.webp",
-  },
-  {
-    name: "quinn",
-    link: "https://emo.gay",
-    image: "quinn.png",
-  },
+  { name: "da157", link: "https://da157.id", image: "0xda157.png" },
+  { name: "dbw", link: "https://dbw.neocities.org", image: "dbw.png" },
+  { name: "elissa", link: "https://elissa.moe", image: "elissa.png" },
+  { name: "tasky", link: "https://tasky.nuxt.dev", image: "tasky.webp" },
+  { name: "sydney", link: "https://sydney.blue", image: "sydney.png" },
+  { name: "lyna", link: "https://blooym.dev", image: "lyna.webp" },
+  { name: "quinn", link: "https://emo.gay", image: "quinn.png" },
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",

@@ -2,10 +2,17 @@
 import PageLayout from "@layouts/PageLayout.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 
-import { PAGES, PROJECTS } from "@lib/consts";
+import { PROJECTS, TOTAL_STARS } from "@lib/consts";
+import { PAGES } from "@lib/pages";
 ---
 
-<PageLayout title="projects" page={PAGES.projects}>
+<PageLayout
+  page={PAGES.projects}
+  stats={[
+    { label: "artifacts", value: PROJECTS.length },
+    { label: "total_stars", value: TOTAL_STARS },
+  ]}
+>
   <ul class="checker grid md:grid-cols-2">
     {PROJECTS.map((project) => (
       <li class="min-w-0">

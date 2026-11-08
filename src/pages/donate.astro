@@ -5,6 +5,8 @@ import PageLayout from "@layouts/PageLayout.astro";
 import CopyLabel from "@components/CopyLabel.astro";
 import Section from "@components/Section.astro";
 
+import { PAGES } from "@lib/pages";
+
 const DONATION_OPTIONS = [
   {
     name: "Ko-fi",
@@ -40,11 +42,7 @@ const CRYPTO_OPTIONS = [
 ];
 ---
 
-<PageLayout
-  title="donate"
-  metaDescription="support my open source work"
-  description="i spend a lot of my free time on open source projects and writing blog posts. any amount is greatly appreciated, thank you."
->
+<PageLayout page={PAGES.donate}>
   <Section id="support" title="ways to support">
     <ul class="grid gap-x-12 md:grid-cols-2">
       {DONATION_OPTIONS.map((option) => (

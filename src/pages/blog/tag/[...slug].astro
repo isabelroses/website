@@ -1,40 +1,31 @@
 ---
-import type { CollectionEntry } from "astro:content";
-
 import PageLayout from "@layouts/PageLayout.astro";
 import PostCard from "@components/PostCard.astro";
+import Section from "@components/Section.astro";
 
-import { PAGES } from "@lib/consts";
-import { getPosts, getTags } from "@lib/posts";
+import { PAGES } from "@lib/pages";
+import { getCatalogue, type TagPage } from "@lib/posts";
 
-interface Props {
-  posts: CollectionEntry<"blog">[];
-  tag: string;
-}
+type Props = TagPage;
 
 const { posts, tag } = Astro.props;
 
 export async function getStaticPaths() {
-  const posts = await getPosts();
-  return getTags(posts).map((tag) => ({
-    params: { slug: tag },
-    props: { posts: posts.filter((post) => post.data.tags.includes(tag)), tag },
+  return (await getCatalogue()).tagPages.map((props) => ({
+    params: { slug: props.tag },
+    props,
   }));
 }
 ---
 
 <PageLayout
-  kicker="blog"
+  page={PAGES.blog}
+  label="grimoire.tag"
   title={`#${tag}`}
   description={`${posts.length} post${posts.length !== 1 ? "s" : ""} tagged with #${tag}`}
-  metaTitle={`#${tag} | ${PAGES.blog.card}`}
   metaDescription={`posts tagged with #${tag}`}
-  image={PAGES.blog.image}
 >
-  <section class="flex flex-col gap-6" aria-labelledby="tagged">
-    <h2 id="tagged" class="heading">
-      posts
-    </h2>
+  <Section id="tagged" title="posts">
     <ul class="flex flex-col max-w-5xl">
       {posts.map((post) => (
         <li>
@@ -42,5 +33,5 @@ export async function getStaticPaths() {
         </li>
       ))}
     </ul>
-  </section>
+  </Section>
 </PageLayout>
