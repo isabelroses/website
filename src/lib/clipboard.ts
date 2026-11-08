@@ -9,12 +9,14 @@ async function copy(text: string) {
   }
 }
 
-// one listener for every [data-copy] control; capture runs it before the
+// one listener for every [data-copy] control and heading permalink; capture runs it before the
 // client router can treat a #heading link as navigation
 document.addEventListener(
   "click",
   async (event) => {
-    const el = (event.target as Element).closest<HTMLElement>("[data-copy]");
+    const el = (event.target as Element).closest<HTMLElement>(
+      "[data-copy], .satteri-heading-link__link",
+    );
     if (!el) return;
     event.preventDefault();
 

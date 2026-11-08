@@ -22,7 +22,7 @@ const props = Astro.props;
     >
       skip to content
     </a>
-    <Header />
+    {Astro.slots.has("portal") ? <slot name="portal" /> : <Header />}
     <main id="main" tabindex="-1" class="page-width flex-1 focus:outline-none">
       <slot />
     </main>

@@ -6,8 +6,13 @@ import umami from "@yeskunall/astro-umami";
 import icon from "astro-icon";
 import mailObfuscation from "astro-mail-obfuscation";
 import compress from "astro-compress";
-import { satteri } from "@astrojs/markdown-satteri";
+import { satteri, satteriHeadingIdsPlugin } from "@astrojs/markdown-satteri";
+import { readingTime } from "@xsynaptic/satteri-reading-time";
+import satteriExternalLinks from "satteri-external-links";
+import { satteriHeadingLink } from "satteri-heading-link";
 import { darkCode, lightCode } from "./src/lib/code-themes";
+import { codeBlockLabels } from "./src/lib/code-labels";
+import { copyIcon } from "./src/lib/copy-icon";
 
 // https://astro.build/config
 export default defineConfig({
@@ -53,12 +58,27 @@ export default defineConfig({
     syntaxHighlight: false,
     processor: satteri({
       features: { directive: true },
+      mdastPlugins: [readingTime({ countCodeBlocks: true })],
       hastPlugins: [
+        () => satteriHeadingIdsPlugin(),
+        satteriHeadingLink({ levels: [2, 3, 4], icon: copyIcon() }),
+        satteriExternalLinks({
+          target: "_blank",
+          rel: ["noopener", "noreferrer"],
+        }),
         expressiveCode({
           themes: [lightCode, darkCode],
-          // replaced by the site's own copy button (src/components/CodeBlocks.astro)
-          frames: { showCopyToClipboardButton: false },
+          styleOverrides: {
+            frames: {
+              inlineButtonBackground: "var(--color-card)",
+              inlineButtonForeground: "var(--color-fg-lighter)",
+              inlineButtonBorder: "transparent",
+              tooltipSuccessBackground: "var(--color-blood)",
+              tooltipSuccessForeground: "var(--color-on-blood)",
+            },
+          },
         }),
+        codeBlockLabels,
       ],
     }),
   },

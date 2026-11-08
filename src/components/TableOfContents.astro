@@ -1,5 +1,6 @@
 ---
 import type { MarkdownHeading } from "astro";
+import { CONTENTS_DEPTH, CONTENTS_MIN_SECTIONS } from "@lib/prose";
 
 interface Props {
   headings: MarkdownHeading[];
@@ -7,16 +8,16 @@ interface Props {
 }
 
 const { headings, class: className } = Astro.props;
-const sections = headings.filter((heading) => heading.depth === 2);
+const sections = headings.filter((heading) => heading.depth === CONTENTS_DEPTH);
 ---
 
-{sections.length >= 4 && (
+{sections.length >= CONTENTS_MIN_SECTIONS && (
   <nav
     aria-labelledby="toc-label"
     data-toc
     class:list={["flex flex-col", className]}
   >
-    <span id="toc-label" class="text-fg-lighter">
+    <span id="toc-label" class="caption pb-1">
       contents
     </span>
     <ol class="flex flex-col">
@@ -35,15 +36,19 @@ const sections = headings.filter((heading) => heading.depth === 2);
 )}
 
 <script>
+  import { currentSection } from "@lib/prose";
+
   let entries: { link: HTMLAnchorElement; target: HTMLElement }[] = [];
   let queued = false;
 
   function update() {
     queued = false;
     const current =
-      entries.findLast(
-        ({ target }) => target.getBoundingClientRect().top < 120,
-      ) ?? entries[0];
+      entries[
+        currentSection(
+          entries.map(({ target }) => target.getBoundingClientRect().top),
+        )
+      ];
     entries.forEach((entry) =>
       entry === current
         ? entry.link.setAttribute("aria-current", "location")

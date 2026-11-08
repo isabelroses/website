@@ -29,6 +29,9 @@ importers:
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.3.5(@types/node@26.1.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1))
+      '@xsynaptic/satteri-reading-time':
+        specifier: 0.3.1
+        version: 0.3.1(satteri@0.10.5)
       '@yeskunall/astro-umami':
         specifier: ^0.0.9
         version: 0.0.9(astro@7.4.2(@types/node@26.1.2)(@vercel/blob@2.8.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1))
@@ -50,18 +53,24 @@ importers:
       react:
         specifier: ^19.3.1
         version: 19.3.1
-      reading-time-estimator:
-        specifier: ^2.15.0
-        version: 2.15.0
       sanitize-html:
         specifier: ^2.18.1
         version: 2.18.1
       satori:
         specifier: ^0.63.2
         version: 0.63.2
+      satteri:
+        specifier: 0.10.5
+        version: 0.10.5
       satteri-expressive-code:
         specifier: ^0.1.30
         version: 0.1.30(satteri@0.10.5)
+      satteri-external-links:
+        specifier: 0.1.1
+        version: 0.1.1(satteri@0.10.5)
+      satteri-heading-link:
+        specifier: 0.3.0
+        version: 0.3.0(satteri@0.10.5)
       sharp:
         specifier: ^0.35.5
         version: 0.35.5(@types/node@26.1.2)
@@ -1426,6 +1435,14 @@ packages:
   '@vscode/l10n@0.0.18':
     resolution: {integrity: sha512-KYSIHVmslkaCDyw013pphY+d7x1qV8IZupYfeIfzNA+nsaWHbn5uPuQRvdRFsa9zFzGeudPuoGoZ1Op4jrJXIQ==}
 
+  '@xsynaptic/satteri-reading-time@0.3.1':
+    resolution: {integrity: sha512-X2RzwA6NL+08W0al3pHsUwvjnipKZdBJ69wRRNxjj6sY3T3FbdPMM+ibrBCv4UDTyqHMvIv9LQyAKPMjKkJw0g==}
+    peerDependencies:
+      satteri: ^0.10.0
+
+  '@xsynaptic/word-count@1.0.1':
+    resolution: {integrity: sha512-KWtaz9Vm17xoFfcekheEVlU7yCNqG5yOZvRGg0b+/a83VHL8/fNLqFLCBnQpqzfT745zXQNRR9kceuKH5L+T8A==}
+
   '@yeskunall/astro-umami@0.0.9':
     resolution: {integrity: sha512-qjjVxEjOxade46Cj0mZ8r1agBMJP2e6NgCVlbyMEfbREc3Jruptq6No7G8Q+81rATaS3WnrQ/KmH9PpVvnzIpQ==}
     peerDependencies:
@@ -1799,10 +1816,6 @@ packages:
   deepmerge-ts@7.1.5:
     resolution: {integrity: sha512-HOJkrhaYsweh+W+e74Yn7YStZOilkoPb6fycpwNLKzSPtruFs48nYis0zy5yJz1+ktUhHxoRDJ27RQAWLIJVJw==}
     engines: {node: '>=16.0.0'}
-
-  deepmerge@4.3.1:
-    resolution: {integrity: sha512-3sUqbMEc77XqpdNO7FRyRog+eW3ph+GYCbj+rK+uYyRMuwsVy0rMiVtPn+QJlKFvWP/1PYpapqYn0Me2knFn+A==}
-    engines: {node: '>=0.10.0'}
 
   default-browser-id@5.0.1:
     resolution: {integrity: sha512-x1VCxdX4t+8wVfd1so/9w+vQ4vx7lKd2Qp5tDRutErwmR85OgmfX7RlLRMWafRMY7hbEiXIbudNrjOAPa/hL8Q==}
@@ -2612,11 +2625,6 @@ packages:
   magicast@0.5.5:
     resolution: {integrity: sha512-UicdXN8zQ3JHlxVq+28afMXPr1z7WNY6+7EJnzTdQWkTAlMLF5fNCCKxJHBQwGaNGR11581EiQmQzx73+MvszA==}
 
-  marked@18.0.11:
-    resolution: {integrity: sha512-HnslJfsZkRPBDJRHvVtAaWlZHEpSu7u8LgQuJCELjRKuWR+hpq4A7sLq3p8HaI9ypVoXDXxV34CsQJEe1+J5Aw==}
-    engines: {node: '>= 20'}
-    hasBin: true
-
   math-intrinsics@1.1.0:
     resolution: {integrity: sha512-/IXtbwEk5HTPyEwyKX6hGkYXxM9nbj64B+ilVJnC/R6B0pH5G4V3b0pVbL7DBj4tkhBAppbQUlf6F6Xl9LHu1g==}
     engines: {node: '>= 0.4'}
@@ -2947,9 +2955,6 @@ packages:
     resolution: {integrity: sha512-Kko+Y5XQ6fM+Ce3dq3m9YGxnacYZYl9cA1wZjaF3Vbry2L3i1qVg8+CAgNPsXRArPMUMCaOR7oa9Nqntc43JKA==}
     engines: {node: '>= 20.19.0'}
 
-  reading-time-estimator@2.15.0:
-    resolution: {integrity: sha512-IlfEH2LsmLIVpPaqeIM+ILkG8c8PLwDiKVr8bJxiqWViGDeIptnobre38C7IkfD6DAUSi/afvMLsdZ9jiEfStw==}
-
   reflect-metadata@0.2.2:
     resolution: {integrity: sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==}
 
@@ -3012,10 +3017,6 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sanitize-html@2.17.7:
-    resolution: {integrity: sha512-PGtEkc9cbnedU3s9TmzDbpsZ8w086g/0Q8k8/oIO1NLNU3i5k9yn835CrjJSajp1KMmkisbO1qPXxNKO3welAg==}
-    engines: {node: '>=22.12.0'}
-
   sanitize-html@2.18.1:
     resolution: {integrity: sha512-2X5lC8fYla8YaT8g73Nj+HcLWXan5dLyCWLgVvaOmfw7JI78IRsyNtIDytTHdn7hBQbIkCah7Zbmd5jabzeDig==}
     engines: {node: '>=22.12.0'}
@@ -3032,6 +3033,17 @@ packages:
     resolution: {integrity: sha512-3uCHrFWEMOATNRc79dqb4ejAYiMmTUUFLfzB0vrklSv6ib9oIA4WZkZwlM3TXYsbYjXnmdued3y/JOgOq41JCg==}
     peerDependencies:
       satteri: '>=0.4.0'
+
+  satteri-external-links@0.1.1:
+    resolution: {integrity: sha512-E9jTXX4eYPLO2XaEQxd+/Ulhi4Q9ZA42ig+i4ZgnutNp9XomqN+wN8TFlyaEf8XT//D8jrW2NFwtKb0bHE0xiw==}
+    peerDependencies:
+      satteri: '>=0.7.0'
+
+  satteri-heading-link@0.3.0:
+    resolution: {integrity: sha512-RY0/WSECFxloG5gMt4hBiYNRcn+XsYxOf7k6nEFBb4AkWMYJvdyT34WTYhlKcNv3T9XsYdFw/fe1jAj5Bh49DA==}
+    engines: {node: '>=22.0.0'}
+    peerDependencies:
+      satteri: 0.10.5
 
   satteri@0.10.5:
     resolution: {integrity: sha512-Ao1LKpAEa9Wdg0otgbVKViZHEq9ebdXe4DMrp3s9vQAU0HNIuHnFEuMuOcm0ZIXyV0Yzxj91NvhLpvXZJO/5ZQ==}
@@ -4949,6 +4961,14 @@ snapshots:
 
   '@vscode/l10n@0.0.18': {}
 
+  '@xsynaptic/satteri-reading-time@0.3.1(satteri@0.10.5)':
+    dependencies:
+      '@xsynaptic/word-count': 1.0.1
+      satteri: 0.10.5
+      zod: 4.6.7
+
+  '@xsynaptic/word-count@1.0.1': {}
+
   '@yeskunall/astro-umami@0.0.9(astro@7.4.2(@types/node@26.1.2)(@vercel/blob@2.8.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1))':
     dependencies:
       astro: 7.4.2(@types/node@26.1.2)(@vercel/blob@2.8.2)(jiti@2.7.0)(terser@5.49.2)(yaml@2.9.1)
@@ -5430,8 +5450,6 @@ snapshots:
   deep-is@0.1.4: {}
 
   deepmerge-ts@7.1.5: {}
-
-  deepmerge@4.3.1: {}
 
   default-browser-id@5.0.1: {}
 
@@ -6230,8 +6248,6 @@ snapshots:
       '@babel/types': 7.29.11
       source-map-js: 1.2.2
 
-  marked@18.0.11: {}
-
   math-intrinsics@1.1.0: {}
 
   md5@2.3.0:
@@ -6548,11 +6564,6 @@ snapshots:
 
   readdirp@5.1.1: {}
 
-  reading-time-estimator@2.15.0:
-    dependencies:
-      marked: 18.0.11
-      sanitize-html: 2.17.7
-
   reflect-metadata@0.2.2: {}
 
   regex-recursion@6.0.2:
@@ -6622,16 +6633,6 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sanitize-html@2.17.7:
-    dependencies:
-      deepmerge: 4.3.1
-      escape-string-regexp: 4.0.0
-      htmlparser2: 12.0.0
-      is-plain-object: 5.1.0
-      launder: 1.7.2
-      parse-srcset: 1.0.2
-      postcss: 8.5.32
-
   sanitize-html@2.18.1:
     dependencies:
       escape-string-regexp: 4.0.0
@@ -6663,6 +6664,14 @@ snapshots:
   satteri-expressive-code@0.1.30(satteri@0.10.5):
     dependencies:
       expressive-code: 0.42.0
+      satteri: 0.10.5
+
+  satteri-external-links@0.1.1(satteri@0.10.5):
+    dependencies:
+      satteri: 0.10.5
+
+  satteri-heading-link@0.3.0(satteri@0.10.5):
+    dependencies:
       satteri: 0.10.5
 
   satteri@0.10.5:

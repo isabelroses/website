@@ -3,18 +3,17 @@ import { render } from "astro:content";
 
 import Base from "@layouts/Base.astro";
 import SharePost from "@components/SharePost.astro";
-import HeadingLinks from "@components/HeadingLinks.astro";
-import CodeBlocks from "@components/CodeBlocks.astro";
+import Label from "@components/Label.astro";
 import TableOfContents from "@components/TableOfContents.astro";
 import Tag from "@components/Tag.astro";
 
 import { formatDate, formatReadTime } from "@lib/format";
-import { pageTitle } from "@lib/consts";
-import { getPostPages, type PostPage } from "@lib/posts";
+import { pageTitle, postImage } from "@lib/pages";
+import { getCatalogue, readTime, type PostPage } from "@lib/posts";
 import { postPath } from "@lib/url";
 
 export async function getStaticPaths() {
-  return (await getPostPages()).map((props) => ({
+  return (await getCatalogue()).pages.map((props) => ({
     params: { slug: props.post.id },
     props,
   }));
@@ -22,7 +21,7 @@ export async function getStaticPaths() {
 
 type Props = PostPage;
 
-const { post, prevPost, nextPost } = Astro.props;
+const { post, prevPost, nextPost, tags } = Astro.props;
 const { Content, headings } = await render(post);
 const postUrl = new URL(postPath(post), Astro.site).href;
 ---
@@ -30,21 +29,24 @@ const postUrl = new URL(postPath(post), Astro.site).href;
 <Base
   title={pageTitle(post.data.title)}
   description={post.data.description}
-  image={`${postPath(post)}.png`}
+  image={postImage(post)}
   aturi={post.data.atUri}
   published={post.data.date}
   updated={post.data.updated}
 >
   <article class="grid gap-y-10 pt-10 lg:pt-14 lg:grid-cols-[11rem_minmax(0,72ch)] lg:justify-center lg:gap-x-16 lg:gap-y-12">
-    <h1 class="lg:col-start-2 text-[clamp(2.25rem,4vw,3.25rem)] font-semibold leading-[1.1] text-balance">
-      {post.data.title}
-    </h1>
+    <div class="lg:col-start-2 flex flex-col gap-6">
+      <Label text="grimoire.log" />
+      <h1 class="text-[clamp(2.25rem,4vw,3.25rem)] font-semibold leading-[1.1] text-balance">
+        {post.data.title}
+      </h1>
+    </div>
 
     {/* below lg this dissolves so share can be ordered after the post */}
     <div class="max-lg:contents lg:flex flex-col gap-3 lg:col-start-1 lg:row-start-2 lg:row-span-2 lg:text-meta">
       <dl class="flex flex-wrap gap-x-3 gap-y-1 text-meta max-lg:text-fg-lighter lg:flex-col lg:gap-3">
         <div>
-          <dt class="max-lg:sr-only text-fg-lighter">published</dt>
+          <dt class="max-lg:sr-only caption">published</dt>
           <dd>
             <time datetime={post.data.date.toISOString()}>
               {formatDate(post.data.date, "long")}
@@ -53,7 +55,7 @@ const postUrl = new URL(postPath(post), Astro.site).href;
         </div>
         {post.data.updated && (
           <div class="max-lg:order-1 max-lg:basis-full">
-            <dt class="max-lg:sr-only text-fg-lighter">updated</dt>
+            <dt class="max-lg:sr-only caption">updated</dt>
             <dd>
               <span class="lg:hidden" aria-hidden="true">
                 updated{" "}
@@ -65,20 +67,22 @@ const postUrl = new URL(postPath(post), Astro.site).href;
           </div>
         )}
         <div class="max-lg:before:content-['·'] max-lg:before:mr-3 max-lg:flex">
-          <dt class="max-lg:sr-only text-fg-lighter">reading</dt>
+          <dt class="max-lg:sr-only caption">reading</dt>
           <dd>
-            {formatReadTime(post.data.readTime)}
+            {formatReadTime(readTime(post))}
             <span class="lg:hidden"> read</span>
           </dd>
         </div>
-        <div class="max-lg:hidden">
-          <dt class="max-lg:sr-only text-fg-lighter">tags</dt>
-          {post.data.tags.map((tag) => (
-            <dd>
-              <Tag tag={tag} class="lg:py-0 lg:text-fg" />
-            </dd>
-          ))}
-        </div>
+        {tags.length > 0 && (
+          <div class="max-lg:hidden">
+            <dt class="max-lg:sr-only caption">tags</dt>
+            {tags.map((tag) => (
+              <dd>
+                <Tag tag={tag} class="lg:py-0 lg:text-fg" />
+              </dd>
+            ))}
+          </div>
+        )}
       </dl>
       <div class="max-lg:contents lg:sticky lg:top-10 lg:mt-6 lg:flex lg:flex-col lg:gap-6">
         <TableOfContents headings={headings} class="max-lg:hidden" />
@@ -93,8 +97,6 @@ const postUrl = new URL(postPath(post), Astro.site).href;
     <div class="prose min-w-0 lg:col-start-2 lg:row-start-2">
       <Content />
     </div>
-    <HeadingLinks />
-    <CodeBlocks />
 
     <nav
       aria-label="more posts"
@@ -108,7 +110,7 @@ const postUrl = new URL(postPath(post), Astro.site).href;
           href={postPath(prevPost)}
           class="row-link group flex flex-col gap-1 py-4"
         >
-          <span class="text-meta text-fg-lighter">← previous</span>
+          <span class="caption">← previous</span>
           <span class="item-title group-hover-special">
             {prevPost.data.title}
           </span>
@@ -119,7 +121,7 @@ const postUrl = new URL(postPath(post), Astro.site).href;
           href={postPath(nextPost)}
           class="row-link group flex flex-col gap-1 py-4 sm:text-right"
         >
-          <span class="text-meta text-fg-lighter">next →</span>
+          <span class="caption">next →</span>
           <span class="item-title group-hover-special">
             {nextPost.data.title}
           </span>
