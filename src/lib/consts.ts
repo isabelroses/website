@@ -131,6 +131,11 @@ export const FRIENDS = [
   { name: "sydney", link: "https://sydney.blue", image: "sydney.png" },
   { name: "lyna", link: "https://blooym.dev", image: "lyna.webp" },
   { name: "quinn", link: "https://emo.gay", image: "quinn.png" },
+  {
+    name: "foorloops",
+    link: "https://looparchive.pages.dev",
+    image: "foorloops.gif",
+  },
   //{
   //  link: "https://garfunkles.space",
   //  badge: "garfunkles.webp",
