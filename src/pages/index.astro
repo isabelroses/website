@@ -39,7 +39,7 @@ const recent = rest.slice(0, 3);
       <h1 id="intro-title" class="sr-only">
         isabel, the nix witch
       </h1>
-      <Label text="intro.v1.0.0">
+      <Label text="about me">
         <Image
           src={avatar}
           alt="isabel's avatar: a drawn girl with long blonde hair and a dark top"
@@ -64,8 +64,8 @@ const recent = rest.slice(0, 3);
 
       <Stats
         items={[
-          { label: "logs_published", value: posts.length },
-          { label: "artifact_stars", value: TOTAL_STARS },
+          { label: "entries", value: posts.length },
+          { label: "stars", value: TOTAL_STARS },
         ]}
       />
     </div>
@@ -74,10 +74,6 @@ const recent = rest.slice(0, 3);
       <div
         aria-hidden="true"
         class="absolute size-72 rotate-45 border border-blood/40 max-lg:hidden"
-      ></div>
-      <div
-        aria-hidden="true"
-        class="absolute size-72 border border-special/20 max-lg:hidden"
       ></div>
       <NowPlaying />
     </div>
@@ -118,8 +114,8 @@ const recent = rest.slice(0, 3);
   </Section>
 
   <Section id="elsewhere" title="channels" class="mt-16 lg:mt-24">
-    <ul class="flex flex-col gap-y-4 md:grid md:grid-cols-3 md:gap-x-10 xl:flex xl:flex-row xl:justify-between xl:gap-x-6">
-      {LINKS.map((link) => (
+    <ul class="grid grid-cols-2 gap-x-6 gap-y-4 md:grid-cols-3 md:gap-x-10 xl:flex xl:flex-row xl:justify-between xl:gap-x-6">
+      {LINKS.filter((link) => link.label !== "email").map((link) => (
         <li>
           <a
             href={link.href}

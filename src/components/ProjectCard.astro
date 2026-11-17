@@ -37,17 +37,12 @@ const iconSrc = icon ? icons[`/src/assets/repos/${icon}`]?.default : undefined;
         class="w-[68%] h-[68%] object-contain"
       />
     ) : (
-      <span
-        aria-hidden="true"
-        class="font-display text-[1.75rem] leading-none text-fg-lighter group-hover:text-on-blood transition-colors"
-      >
-        {name.charAt(0)}
-      </span>
+      <Icon aria-hidden="true" name="fa7-solid:code" class="w-7 h-7 text-fg-lighter group-hover:text-on-blood transition-colors" />
     )}
   </span>
   <span class="flex flex-col gap-1 min-w-0">
     <span class="item-title group-hover-special">{name}</span>
-    <span class:list={["text-fg-lighter", truncate && "truncate"]}>
+    <span class:list={["text-fg-lighter", truncate && "md:truncate"]}>
       {description}
     </span>
   </span>

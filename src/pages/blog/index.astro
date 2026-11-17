@@ -12,7 +12,7 @@ const { posts, tags, years } = await getCatalogue();
 <PageLayout
   page={PAGES.blog}
   stats={[
-    { label: "logs_published", value: posts.length },
+    { label: "entries", value: posts.length },
     { label: "tags", value: tags.length },
   ]}
 >
