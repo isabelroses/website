@@ -11,7 +11,8 @@ const { what, label = "copy" } = Astro.props;
 
 <span class="flex items-center gap-2 text-meta text-fg-lighter group-hover-special">
   <CopyIcons icon="fa7-solid:copy" size="w-5 h-5" />
-  <span class="grid">
+  <!-- end-aligned so "copy" sits flush right despite sharing a cell with the wider "copied" -->
+  <span class="grid justify-items-end">
     <span class="col-start-1 row-start-1 group-data-copied:invisible">
       {label}
       <span class="sr-only"> {what}</span>

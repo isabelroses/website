@@ -19,8 +19,15 @@ export function initTheme(key: string) {
   };
   const resolve = (): Theme =>
     stored() ?? (lightQuery.matches ? "light" : "dark");
-  const apply = (theme: Theme) =>
-    doc.documentElement.setAttribute("data-theme", theme);
+  // transitions are paused for the swap, otherwise anything with
+  // transition-colors fades in late and sits dark-on-dark for a moment
+  const apply = (theme: Theme) => {
+    const root = doc.documentElement;
+    root.setAttribute("data-theme-swap", "");
+    root.setAttribute("data-theme", theme);
+    getComputedStyle(root).color; // flush styles while transitions are off
+    requestAnimationFrame(() => root.removeAttribute("data-theme-swap"));
+  };
 
   apply(resolve());
 

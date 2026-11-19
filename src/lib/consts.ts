@@ -44,7 +44,7 @@ export const LINKS = [
 export const PROJECTS = [
   {
     name: "Catppuccin Nix",
-    description: "Soothing pastel colors for nix",
+    description: "soothing pastel colors for nix",
     icon: "catppuccin-nix.webp",
     href: null,
     repo: "https://github.com/catppuccin/nix",
@@ -52,7 +52,7 @@ export const PROJECTS = [
   },
   {
     name: "izrss",
-    description: "An RSS feed reader for the terminal",
+    description: "an RSS feed reader for the terminal",
     icon: null,
     href: null,
     repo: "https://github.com/isabelroses/izrss",
@@ -60,7 +60,7 @@ export const PROJECTS = [
   },
   {
     name: "Dotfiles",
-    description: "My over complex system configurations",
+    description: "my over complex system configurations",
     icon: "dotfiles.svg",
     href: null,
     repo: "https://github.com/isabelroses/dotfiles",
@@ -68,7 +68,7 @@ export const PROJECTS = [
   },
   {
     name: "freeze.nvim",
-    description: "A wrapper for charm's freeze cli tool for usage in neovim",
+    description: "a wrapper for charm's freeze cli tool for usage in neovim",
     icon: "freeze.webp",
     href: null,
     repo: "https://github.com/charm-community/freeze.nvim",
@@ -76,7 +76,7 @@ export const PROJECTS = [
   },
   {
     name: "my website",
-    description: "The site that you're currently on.",
+    description: "the site that you're currently on",
     icon: null,
     href: "https://isabelroses.com",
     repo: "https://github.com/isabelroses/website",
@@ -84,7 +84,7 @@ export const PROJECTS = [
   },
   {
     name: "Bellado",
-    description: "A fast and once simple cli todo tool",
+    description: "a fast and once simple cli todo tool",
     icon: "bellado.webp",
     href: null,
     repo: "https://github.com/isabelroses/bellado",

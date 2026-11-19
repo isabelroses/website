@@ -30,8 +30,8 @@ const {
   description={metaDescription}
   image={pageImage(page)}
 >
-  <div class="grid gap-10 pt-10 lg:pt-14 lg:grid-cols-12 lg:items-center lg:gap-16">
-    <div class="flex flex-col gap-6 lg:col-span-8">
+  <div class="grid gap-10 pt-10 lg:pt-14 lg:grid-cols-12 lg:items-start lg:gap-16">
+    <div class="flex flex-col gap-6 lg:col-span-8 lg:pt-6">
       {label && <Label text={label} />}
       <h1 class="font-display leading-none break-words text-[clamp(3rem,6vw,4.5rem)]">
         {title}
@@ -40,7 +40,7 @@ const {
       {stats && <Stats items={stats} />}
     </div>
     <div class="max-lg:hidden lg:col-span-4 flex justify-center">
-      <Ring class="w-64 opacity-60" />
+      <Ring class="w-64 opacity-60" glyph={page.glyph} />
     </div>
   </div>
 

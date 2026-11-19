@@ -1,9 +1,13 @@
 ---
+import { GLYPHS, type Glyph } from "@lib/glyphs";
+
 interface Props {
   class?: string;
+  // no glyph leaves the inner circle empty
+  glyph?: Glyph;
 }
 
-const { class: className } = Astro.props;
+const { class: className, glyph } = Astro.props;
 ---
 
 <svg
@@ -20,12 +24,14 @@ const { class: className } = Astro.props;
     <path d="M100 190 L10 50 L190 50 Z" />
   </g>
   <circle cx="100" cy="100" r="40" stroke-width="0.5" />
-  <path
-    class="sigil-ring-core"
-    d="M80 100 L100 80 L120 100 L100 120 Z"
-    fill="currentColor"
-    stroke="none"
-  />
+  {glyph && (
+    <path
+      class="sigil-ring-core"
+      d={GLYPHS[glyph]}
+      fill="currentColor"
+      stroke="none"
+    />
+  )}
   <path
     d="M40 40 L60 60 M140 140 L160 160 M40 160 L60 140 M160 40 L140 60"
     stroke-width="2"

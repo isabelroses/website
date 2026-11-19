@@ -10,9 +10,8 @@ import Portal from "@components/Portal.astro";
 import PostCard from "@components/PostCard.astro";
 import ProjectCard from "@components/ProjectCard.astro";
 import Section from "@components/Section.astro";
-import Stats from "@components/Stats.astro";
 
-import { LINKS, PROJECTS, TOTAL_STARS } from "@lib/consts";
+import { LINKS, PROJECTS } from "@lib/consts";
 import { PAGES, pageImage, pageTitle } from "@lib/pages";
 import { getCatalogue } from "@lib/posts";
 
@@ -33,7 +32,7 @@ const recent = rest.slice(0, 3);
 
   <section
     aria-labelledby="intro-title"
-    class="grid gap-12 pt-16 lg:pt-24 lg:grid-cols-12 lg:items-center lg:gap-16"
+    class="grid gap-12 pt-12 lg:pt-16 lg:grid-cols-12 lg:items-center lg:gap-16"
   >
     <div class="flex flex-col gap-8 lg:col-span-8">
       <h1 id="intro-title" class="sr-only">
@@ -61,13 +60,6 @@ const recent = rest.slice(0, 3);
       <a href="/isabel_roses_cv.pdf" class="link self-start py-2 -my-2 -mt-4">
         my cv (pdf) →
       </a>
-
-      <Stats
-        items={[
-          { label: "entries", value: posts.length },
-          { label: "stars", value: TOTAL_STARS },
-        ]}
-      />
     </div>
 
     <div class="relative flex items-center justify-center lg:col-span-4 lg:py-12">
@@ -114,9 +106,9 @@ const recent = rest.slice(0, 3);
   </Section>
 
   <Section id="elsewhere" title="channels" class="mt-16 lg:mt-24">
-    <ul class="grid grid-cols-2 gap-x-6 gap-y-4 md:grid-cols-3 md:gap-x-10 xl:flex xl:flex-row xl:justify-between xl:gap-x-6">
+    <ul class="grid grid-cols-1 min-[420px]:grid-cols-2 gap-x-6 gap-y-4 md:grid-cols-3 md:gap-x-10 xl:flex xl:flex-row xl:justify-between xl:gap-x-6">
       {LINKS.filter((link) => link.label !== "email").map((link) => (
-        <li>
+        <li class="min-w-0">
           <a
             href={link.href}
             target="_blank"
@@ -128,11 +120,11 @@ const recent = rest.slice(0, 3);
               name={link.icon}
               class="w-5 h-5 shrink-0 text-fg-lighter group-hover-special"
             />
-            <span class="flex flex-col leading-tight">
+            <span class="flex flex-col min-w-0 leading-tight">
               <span class="font-semibold group-hover-special">
                 {link.label}
               </span>
-              <span class="text-fg-lighter">{link.handle}</span>
+              <span class="text-fg-lighter [overflow-wrap:anywhere]">{link.handle}</span>
             </span>
           </a>
         </li>

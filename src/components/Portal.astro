@@ -9,7 +9,7 @@ import NavLinks from "@components/NavLinks.astro";
     aria-hidden="true"
     class="absolute inset-0 -z-10 grid place-items-center opacity-20"
   >
-    <Ring class="w-[min(92vw,800px)]" />
+    <Ring class="w-[min(92vw,640px)]" />
   </div>
 
   <div class="absolute top-3 right-[var(--gutter)]">
@@ -26,7 +26,7 @@ import NavLinks from "@components/NavLinks.astro";
     >
       isabel
     </p>
-    <NavLinks class="justify-center gap-x-8 gap-y-2 mt-10 text-sub" />
+    <NavLinks class="justify-center gap-x-5 sm:gap-x-8 gap-y-2 mt-8 sm:mt-10 text-body sm:text-sub" />
   </div>
 </header>
 
@@ -34,17 +34,13 @@ import NavLinks from "@components/NavLinks.astro";
   .portal {
     display: grid;
     place-items: center;
-    min-height: 27.5rem;
+    min-height: 22rem;
     padding-block: 3rem;
-  }
-
-  .portal :global(.sigil-ring-core) {
-    display: none;
   }
 
   @media (min-width: 64rem) {
     .portal {
-      min-height: 37.5rem;
+      min-height: 28rem;
     }
   }
 

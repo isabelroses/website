@@ -1,6 +1,7 @@
 import type { Post } from "./posts";
 import { SITE_NAME } from "./consts";
 import { postPath } from "./url";
+import type { Glyph } from "./glyphs";
 
 export const OG_IMAGE = { width: 1080, height: 600 };
 
@@ -10,6 +11,7 @@ export type Page = {
   label?: string;
   card: string;
   description: string;
+  glyph?: Glyph;
   nav?: boolean;
 };
 
@@ -24,6 +26,7 @@ export const PAGES = {
     path: "/blog",
     name: "grimoire",
     label: "grimoire.index",
+    glyph: "book",
     card: `${SITE_NAME}'s grimoire`,
     description: "my collection of ritual logs, mostly nix and nixos",
     nav: true,
@@ -32,6 +35,7 @@ export const PAGES = {
     path: "/projects",
     name: "artifacts",
     label: "artifacts.registry",
+    glyph: "stone",
     card: `${SITE_NAME}'s artifacts`,
     description:
       "things i've conjured in the open, mostly nix and terminal tools",
@@ -41,6 +45,7 @@ export const PAGES = {
     path: "/friends",
     name: "coven",
     label: "coven.members",
+    glyph: "coven",
     card: `${SITE_NAME}'s coven`,
     description: "the witches i keep close, and the webrings that bind us",
     nav: true,
@@ -49,6 +54,7 @@ export const PAGES = {
     path: "/donate",
     name: "donate",
     label: "donate.offerings",
+    glyph: "candle",
     card: `${SITE_NAME}'s offerings`,
     description:
       "every artifact and ritual log here is made in my free time. if any of it helped you, an offering of any size keeps the candles lit. thank you.",

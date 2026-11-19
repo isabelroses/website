@@ -55,9 +55,6 @@ const badgeHtml = `<a href="${site}"><img src="${site}/badges/me.gif" alt="isabe
       <h2 id="webrings" class="heading">
         webrings
       </h2>
-      <p class="max-w-[34ch]">
-        that's my badge, feel free to add it to your site!
-      </p>
       <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
         <img
           src="/badges/me.gif"
@@ -75,6 +72,10 @@ const badgeHtml = `<a href="${site}"><img src="${site}/badges/me.gif" alt="isabe
           <CopyLabel label="copy html" what="for my badge" />
         </button>
       </div>
+      <!-- after the badge so "that's" points at it, not at the rings -->
+      <p class="max-w-[34ch] text-fg-lighter -mt-2">
+        that's my badge, feel free to add it to your site!
+      </p>
     </div>
 
     <ul class="lg:col-start-6 lg:col-span-7 flex flex-col">
