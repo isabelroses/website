@@ -1,0 +1,21 @@
+---
+interface Props {
+  // the text placed on the clipboard
+  text: string;
+  label?: string;
+  class?: string;
+}
+
+// the only place that sets data-copy: clipboard.ts listens for it globally and
+// flips data-copied, which CopyIcons and CopyLabel style through group-data-copied
+const { text, label, class: className } = Astro.props;
+---
+
+<button
+  type="button"
+  data-copy={text}
+  aria-label={label}
+  class:list={["group cursor-pointer", className]}
+>
+  <slot />
+</button>

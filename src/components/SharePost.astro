@@ -1,5 +1,6 @@
 ---
 import { Icon } from "astro-icon/components";
+import CopyButton from "@components/CopyButton.astro";
 import CopyIcons from "@components/CopyIcons.astro";
 
 interface Props {
@@ -48,12 +49,7 @@ const SHARE = [
       <Icon aria-hidden="true" name={target.icon} class="w-5 h-5" />
     </a>
   ))}
-  <button
-    type="button"
-    data-copy={url}
-    class="icon-btn group cursor-pointer"
-    aria-label="copy link"
-  >
+  <CopyButton text={url} label="copy link" class="icon-btn">
     <CopyIcons icon="fa7-solid:link" size="w-5 h-5" />
-  </button>
+  </CopyButton>
 </section>

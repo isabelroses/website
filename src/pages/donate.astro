@@ -2,6 +2,7 @@
 import { Icon } from "astro-icon/components";
 
 import PageLayout from "@layouts/PageLayout.astro";
+import CopyButton from "@components/CopyButton.astro";
 import CopyLabel from "@components/CopyLabel.astro";
 import Section from "@components/Section.astro";
 
@@ -75,10 +76,9 @@ const CRYPTO_OPTIONS = [
     <ul class="flex flex-col">
       {CRYPTO_OPTIONS.map((option) => (
         <li>
-          <button
-            type="button"
-            data-copy={option.address}
-            class="row-link group grid w-[calc(100%+1.5rem)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 py-4 text-left cursor-pointer"
+          <CopyButton
+            text={option.address}
+            class="row-link grid w-[calc(100%+1.5rem)] grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-x-4 gap-y-1 py-4 text-left"
           >
             <Icon
               aria-hidden="true"
@@ -93,7 +93,7 @@ const CRYPTO_OPTIONS = [
             >
               {option.address}
             </code>
-          </button>
+          </CopyButton>
         </li>
       ))}
     </ul>
