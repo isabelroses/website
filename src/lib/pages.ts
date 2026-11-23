@@ -1,8 +1,6 @@
 import { SITE_NAME } from "./consts";
 import type { Glyph } from "./glyphs";
 
-export const OG_IMAGE = { width: 1080, height: 600 };
-
 export type Page = {
   path: string;
   name: string;
@@ -73,8 +71,4 @@ export const NAV = Object.values<Page>(PAGES).filter((page) => page.nav);
 export const pageTitle = (title?: string) =>
   title ? `${SITE_NAME} | ${title}` : SITE_NAME;
 
-export const ogSlug = (page: Page) =>
-  page.path === "/" ? "index" : page.path.slice(1);
-
-export const pageImage = (page: Page) => `/${ogSlug(page)}.png`;
 

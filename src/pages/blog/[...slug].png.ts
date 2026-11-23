@@ -1,16 +1,12 @@
 import type { APIRoute, GetStaticPaths } from "astro";
 import { generateOpenGraph } from "@lib/opengraph";
-import { getCatalogue, type Post } from "@lib/posts";
+import { postOg, type OgCard } from "@lib/og";
+import { getCatalogue } from "@lib/posts";
 
 export const getStaticPaths = (async () =>
-  (await getCatalogue()).pages.map(({ post }) => ({
-    params: { slug: post.id },
-    props: { post },
-  }))) satisfies GetStaticPaths;
+  (await getCatalogue()).pages.map(({ post }) => {
+    const { params, card } = postOg(post);
+    return { params, props: card };
+  })) satisfies GetStaticPaths;
 
-export const GET: APIRoute<{ post: Post }> = ({ props }) =>
-  generateOpenGraph(
-    props.post.data.title,
-    props.post.data.description,
-    props.post.data.date,
-  );
+export const GET: APIRoute<OgCard> = ({ props }) => generateOpenGraph(props);

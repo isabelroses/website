@@ -2,7 +2,7 @@ import satori from "satori";
 import { readFile } from "node:fs/promises";
 import { Resvg } from "@resvg/resvg-js";
 import { formatDate } from "@lib/format";
-import { OG_IMAGE } from "@lib/pages";
+import { OG_IMAGE, type OgCard } from "@lib/og";
 import { FONTS, PALETTE } from "@lib/palette";
 
 const { dark } = PALETTE;
@@ -12,14 +12,11 @@ const fonts = Promise.all([
   readFile(`./src/lib/${FONTS.sans.file}.ttf`),
 ]);
 
-export const generateOpenGraph = async (
-  title: string,
-  description: string,
-  date?: Date,
-) => {
+export const generateOpenGraph = async (card: OgCard) => {
   const [display, sans] = await fonts;
-
-  const isPost = Boolean(date);
+  const { title, description } = card;
+  const isPost = card.kind === "post";
+  const date = card.kind === "post" ? card.date : undefined;
   const titleSize = isPost
     ? title.length > 30
       ? 60
