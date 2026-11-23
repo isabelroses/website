@@ -8,9 +8,8 @@ import TableOfContents from "@components/TableOfContents.astro";
 import Tag from "@components/Tag.astro";
 
 import { formatDate, formatReadTime } from "@lib/format";
-import { pageTitle, postImage } from "@lib/pages";
-import { getCatalogue, readTime, type PostPage } from "@lib/posts";
-import { postPath } from "@lib/url";
+import { pageTitle } from "@lib/pages";
+import { getCatalogue, type PostPage } from "@lib/posts";
 
 export async function getStaticPaths() {
   return (await getCatalogue()).pages.map((props) => ({
@@ -21,15 +20,15 @@ export async function getStaticPaths() {
 
 type Props = PostPage;
 
-const { post, prevPost, nextPost, tags } = Astro.props;
+const { post, href, image, minutes, prev, next, tags } = Astro.props;
 const { Content, headings } = await render(post);
-const postUrl = new URL(postPath(post), Astro.site).href;
+const postUrl = new URL(href, Astro.site).href;
 ---
 
 <Base
   title={pageTitle(post.data.title)}
   description={post.data.description}
-  image={postImage(post)}
+  image={image}
   aturi={post.data.atUri}
   published={post.data.date}
   updated={post.data.updated}
@@ -69,7 +68,7 @@ const postUrl = new URL(postPath(post), Astro.site).href;
         <div class="max-lg:before:content-['·'] max-lg:before:mr-3 max-lg:flex">
           <dt class="max-lg:sr-only caption">reading</dt>
           <dd>
-            {formatReadTime(readTime(post))}
+            {formatReadTime(minutes)}
             <span class="lg:hidden"> read</span>
           </dd>
         </div>
@@ -102,28 +101,28 @@ const postUrl = new URL(postPath(post), Astro.site).href;
       aria-label="more posts"
       class:list={[
         "grid gap-x-8 gap-y-2 max-lg:order-2 lg:col-start-2 lg:row-start-3",
-        prevPost && nextPost && "sm:grid-cols-2",
+        prev && next && "sm:grid-cols-2",
       ]}
     >
-      {prevPost && (
+      {prev && (
         <a
-          href={postPath(prevPost)}
+          href={prev.href}
           class="row-link group flex flex-col gap-1 py-4"
         >
           <span class="caption">← previous</span>
           <span class="item-title group-hover-special">
-            {prevPost.data.title}
+            {prev.title}
           </span>
         </a>
       )}
-      {nextPost && (
+      {next && (
         <a
-          href={postPath(nextPost)}
+          href={next.href}
           class="row-link group flex flex-col gap-1 py-4 sm:text-right"
         >
           <span class="caption">next →</span>
           <span class="item-title group-hover-special">
-            {nextPost.data.title}
+            {next.title}
           </span>
         </a>
       )}

@@ -3,8 +3,7 @@ import { Feed } from "feed";
 import { SITE_NAME } from "@lib/consts";
 import { feedHtml } from "@lib/feed";
 import { PAGES } from "@lib/pages";
-import { getCatalogue, lastChanged } from "@lib/posts";
-import { postPath } from "@lib/url";
+import { getCatalogue, lastChanged, postPath } from "@lib/posts";
 
 export const GET: APIRoute = async ({ site }) => {
   const { posts } = await getCatalogue();

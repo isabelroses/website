@@ -2,8 +2,7 @@
 import PageLayout from "@layouts/PageLayout.astro";
 import Section from "@components/Section.astro";
 import { PAGES } from "@lib/pages";
-import { getCatalogue } from "@lib/posts";
-import { postPath } from "@lib/url";
+import { getCatalogue, postPath } from "@lib/posts";
 
 const posts = (await getCatalogue()).posts.slice(0, 3);
 

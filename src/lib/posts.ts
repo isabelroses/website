@@ -2,17 +2,10 @@ import { getCollection, type CollectionEntry } from "astro:content";
 
 export type Post = CollectionEntry<"blog">;
 
-export interface PostPage {
-  post: Post;
-  prevPost: Post | null;
-  nextPost: Post | null;
-  tags: string[];
-}
-
-export interface TagPage {
-  tag: string;
-  posts: Post[];
-}
+// the only place that knows where posts and tags live
+export const postPath = (post: Post) => `/blog/${post.id}`;
+export const tagPath = (tag: string) => `/blog/tag/${tag}`;
+export const postImage = (post: Post) => `${postPath(post)}.png`;
 
 export const lastChanged = (post: Post) => post.data.updated ?? post.data.date;
 
@@ -23,6 +16,27 @@ export const readTime = (post: Post) =>
   (post.rendered?.metadata?.frontmatter as ReadingFrontmatter | undefined)
     ?.minutesRead ?? 1;
 
+export interface PostLink {
+  title: string;
+  href: string;
+}
+
+export interface PostPage {
+  post: Post;
+  href: string;
+  image: string;
+  minutes: number;
+  prev: PostLink | null;
+  next: PostLink | null;
+  tags: string[];
+}
+
+export interface TagPage {
+  tag: string;
+  href: string;
+  posts: Post[];
+}
+
 export function catalogue(entries: Post[]) {
   const published = entries
     .filter((post) => !post.data.draft)
@@ -31,18 +45,29 @@ export function catalogue(entries: Post[]) {
   const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
   const linkable = new Set(tags);
 
-  const pages = published.map((post) => {
+  const link = (post: Post): PostLink => ({
+    title: post.data.title,
+    href: postPath(post),
+  });
+
+  const pages: PostPage[] = published.map((post) => {
     const i = posts.indexOf(post);
+    const prev = i === -1 ? undefined : posts[i + 1];
+    const next = i === -1 ? undefined : posts[i - 1];
     return {
       post,
-      prevPost: i === -1 ? null : (posts[i + 1] ?? null),
-      nextPost: i === -1 ? null : (posts[i - 1] ?? null),
+      href: postPath(post),
+      image: postImage(post),
+      minutes: readTime(post),
+      prev: prev ? link(prev) : null,
+      next: next ? link(next) : null,
       tags: post.data.tags.filter((tag) => linkable.has(tag)),
     };
   });
 
-  const tagPages = tags.map((tag) => ({
+  const tagPages: TagPage[] = tags.map((tag) => ({
     tag,
+    href: tagPath(tag),
     posts: posts.filter((post) => post.data.tags.includes(tag)),
   }));
 

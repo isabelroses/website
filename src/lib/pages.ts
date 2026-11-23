@@ -1,6 +1,4 @@
-import type { Post } from "./posts";
 import { SITE_NAME } from "./consts";
-import { postPath } from "./url";
 import type { Glyph } from "./glyphs";
 
 export const OG_IMAGE = { width: 1080, height: 600 };
@@ -80,4 +78,3 @@ export const ogSlug = (page: Page) =>
 
 export const pageImage = (page: Page) => `/${ogSlug(page)}.png`;
 
-export const postImage = (post: Post) => `${postPath(post)}.png`;
