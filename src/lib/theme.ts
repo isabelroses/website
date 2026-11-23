@@ -25,7 +25,7 @@ export function initTheme(key: string) {
     const root = doc.documentElement;
     root.setAttribute("data-theme-swap", "");
     root.setAttribute("data-theme", theme);
-    getComputedStyle(root).color; // flush styles while transitions are off
+    void getComputedStyle(root).color; // flush styles while transitions are off
     requestAnimationFrame(() => root.removeAttribute("data-theme-swap"));
   };
 
